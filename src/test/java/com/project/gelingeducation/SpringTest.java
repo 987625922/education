@@ -1,7 +1,9 @@
 package com.project.gelingeducation;
 
 import com.project.gelingeducation.config.HibernateConfig;
+import com.project.gelingeducation.domain.Subject;
 import com.project.gelingeducation.domain.Video;
+import com.project.gelingeducation.service.SubjectService;
 import com.project.gelingeducation.service.VideoService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -23,6 +25,9 @@ public class SpringTest {
     @Autowired
     private VideoService videoService;
 
+    @Autowired
+    private SubjectService subjectService;
+
     @Test
     public void test() {
         List<Video> list = videoService.findAll();
@@ -33,10 +38,13 @@ public class SpringTest {
 
     @Test
     public void test1() {
-        Video video = new Video();
-        video.setName("测试的视频名字");
-        video.setVideoUrl("测试的视频链接");
-        videoService.insert(video);
+//        Video video = new Video();
+//        video.setName("测试的视频名字");
+//        video.setVideoUrl("测试的视频链接");
+//        videoService.insert(video);
+        Subject subject = new Subject();
+        subject.setName("测试的专栏");
+        subjectService.insert(subject);
     }
 
     @Test
