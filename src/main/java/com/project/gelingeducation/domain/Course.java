@@ -1,13 +1,13 @@
 package com.project.gelingeducation.domain;
-//
+
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "video")
-public class Video {
+@Table(name = "course")
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +18,9 @@ public class Video {
     private String bigImg;
     @Column(name = "remark")
     private String remark;
-    @Column(name = "video_url")
-    private String videoUrl;
     @Column(name = "teacher_name")
     private String teacherName;
-    @Column(name = "is_free")
-    private int isFree;
-    @Column(name = "course_id")
-    private long courseId;
+    @Column(name = "price")
+    private double price;
 
 }

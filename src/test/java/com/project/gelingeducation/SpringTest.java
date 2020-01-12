@@ -34,9 +34,8 @@ public class SpringTest {
     @Test
     public void test1() {
         Video video = new Video();
-        video.setId(3);
-        video.setName("11");
-        video.setVideoUrl("1");
+        video.setName("测试的视频名字");
+        video.setVideoUrl("测试的视频链接");
         videoService.insert(video);
     }
 

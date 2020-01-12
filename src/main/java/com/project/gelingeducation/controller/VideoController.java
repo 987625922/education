@@ -1,12 +1,10 @@
 package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.domain.JsonData;
-import com.project.gelingeducation.domain.RequestBaseBean;
 import com.project.gelingeducation.domain.Video;
 import com.project.gelingeducation.service.VideoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +18,8 @@ public class VideoController {
     private VideoService videoService;
 
     @RequestMapping(value = "/findall")
-    public Object findAll() {
+    public Object findAll() throws Exception {
+//        return CommonDEUtils.getEncodedPostString(JsonData.buildSuccess(videoService.findAll()));
         return JsonData.buildSuccess(videoService.findAll());
     }
 
@@ -30,14 +29,16 @@ public class VideoController {
      * "sign":"1"
      * }
      *
-     * @param baseBean
      * @return
      */
     @RequestMapping(value = "/findbyid", method = RequestMethod.POST)
-    public Object findById(@RequestBody RequestBaseBean baseBean) {
-        log.debug(baseBean.toString());
-        return JsonData.buildSuccess(videoService.findById(2));
+    public Object findById(long id) throws Exception {
+        return videoService.findById(id);
     }
+//    public Object findById(@RequestBody RequestBaseBean baseBean) throws Exception {
+//        Video video = GsonUtils.GsonToBean(EncryptionUtils.encodeBASE64(baseBean.getData()), Video.class);
+//        return CommonDEUtils.getEncodedPostString(JsonData.buildSuccess(videoService.findById(video.getId())));
+//    }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object add(Video video) {
