@@ -13,7 +13,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -68,7 +67,12 @@ public class SpringTest {
 
     @Test
     public void test5() {
-        log.debug(new Date().toString());
+//        log.debug(new Date().toString());
+        Integer i = null;
+        String s = null;
+        System.out.println(i);
+        System.out.println(s);
+
     }
 
 }
