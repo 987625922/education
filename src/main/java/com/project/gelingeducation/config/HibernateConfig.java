@@ -24,9 +24,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setConfigLocation(context.getResource("classpath:hibernate.cfg.xml"));
-        factoryBean.setAnnotatedClasses(Video.class);
-        factoryBean.setAnnotatedClasses(Course.class);
-        factoryBean.setAnnotatedClasses(Subject.class);
+        factoryBean.setAnnotatedClasses(Subject.class,Course.class,Video.class);
         return factoryBean;
     }
 

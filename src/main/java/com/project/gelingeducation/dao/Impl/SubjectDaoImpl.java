@@ -24,7 +24,7 @@ public class SubjectDaoImpl implements SubjectDao {
 
     @Override
     public List<Subject> findAll() {
-        TypedQuery<Subject> query = getSession().createQuery("from subject");
+        TypedQuery<Subject> query = getSession().createQuery("from Subject");
         return query.getResultList();
     }
 
