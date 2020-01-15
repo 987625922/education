@@ -68,11 +68,14 @@ public class SpringTest {
     @Test
     public void test5() {
 //        log.debug(new Date().toString());
-        Integer i = null;
-        String s = null;
-        System.out.println(i);
-        System.out.println(s);
+//        Integer i = null;
+//        String s = null;
+//        System.out.println(i);
+//        System.out.println(s);
 
+//        System.out.println(getMonthLastDay(2020, 1));
+//        getCalendarData(2020, 1);
     }
+
 
 }
