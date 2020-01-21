@@ -1,5 +1,6 @@
 package com.project.gelingeducation.config;
 
+import com.project.gelingeducation.domain.AdminInfo;
 import com.project.gelingeducation.domain.Course;
 import com.project.gelingeducation.domain.Subject;
 import com.project.gelingeducation.domain.Video;
@@ -24,7 +25,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setConfigLocation(context.getResource("classpath:hibernate.cfg.xml"));
-        factoryBean.setAnnotatedClasses(Subject.class,Course.class,Video.class);
+        factoryBean.setAnnotatedClasses(Subject.class,Course.class,Video.class, AdminInfo.class);
         return factoryBean;
     }
 

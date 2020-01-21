@@ -13,6 +13,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -75,6 +77,15 @@ public class SpringTest {
 
 //        System.out.println(getMonthLastDay(2020, 1));
 //        getCalendarData(2020, 1);
+
+    }
+
+
+    public static Calendar getLastCalendar(int year, int month) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MONTH, -1);
+        return calendar;
     }
 
 
