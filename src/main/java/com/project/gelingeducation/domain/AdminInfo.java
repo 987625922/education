@@ -16,6 +16,8 @@ public class AdminInfo {
     private int phone;
     @Column(name = "password")
     private String password;
+    @Column(name = "user_name")
+    private String userName;
     @Column(name = "cover_img")
     private String coverImg;
 

@@ -9,7 +9,9 @@ public interface AdminInfoDao {
 
     AdminInfo findById(long id);
 
-    long insert(AdminInfo adminInfo);
+    AdminInfo findByPhone(int phone);
+
+    AdminInfo insert(AdminInfo adminInfo);
 
     void delect(long id);
 

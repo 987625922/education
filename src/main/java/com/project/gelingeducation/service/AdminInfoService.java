@@ -4,7 +4,7 @@ import com.project.gelingeducation.domain.AdminInfo;
 
 public interface AdminInfoService {
 
-    void register(AdminInfo adminInfo);
+    Object register(AdminInfo adminInfo);
 
-    boolean login();
+    Object login(AdminInfo adminInfo);
 }

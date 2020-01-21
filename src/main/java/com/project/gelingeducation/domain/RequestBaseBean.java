@@ -4,6 +4,10 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/***
+ * 解密用的bean
+ *
+ */
 @Data
 public class RequestBaseBean implements Serializable {
 
