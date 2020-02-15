@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 管理员controller
  */
+//@CrossOrigin(origins = {"/"}, maxAge = 72000L)
 @RestController
 @RequestMapping("/admin")
 public class AdminController {

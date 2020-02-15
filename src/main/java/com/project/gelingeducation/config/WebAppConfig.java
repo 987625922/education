@@ -2,6 +2,7 @@ package com.project.gelingeducation.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -18,5 +19,12 @@ public class WebAppConfig implements WebMvcConfigurer {
 //        registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**").excludePathPatterns("/a.do");
 //    }
 
-
+    //解决跨域问题
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH")
+                .allowCredentials(true).maxAge(3600);
+    }
 }

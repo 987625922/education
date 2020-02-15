@@ -43,9 +43,15 @@ public class SpringTest {
 //        video.setName("测试的视频名字");
 //        video.setVideoUrl("测试的视频链接");
 //        videoService.insert(video);
-        Subject subject = new Subject();
-        subject.setName("测试的专栏");
-        subjectService.insert(subject);
+//        Subject subject = new Subject();
+//        subject.setName("测试的专栏");
+//        subjectService.insert(subject);
+
+
+        String s = null;
+        assert s!=null?true:false;
+        assert false;
+        System.out.println("end");
     }
 
     @Test

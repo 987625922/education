@@ -12,9 +12,9 @@ public class AdminInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "phone")
-    private int phone;
-    @Column(name = "password")
+    @Column(name = "phone",nullable=false,length=11)
+    private String phone;
+    @Column(name = "password",nullable=false,length=32)
     private String password;
     @Column(name = "user_name")
     private String userName;

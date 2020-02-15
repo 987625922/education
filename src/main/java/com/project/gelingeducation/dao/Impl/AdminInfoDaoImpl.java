@@ -36,7 +36,7 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
     }
 
     @Override
-    public AdminInfo findByPhone(int phone) {
+    public AdminInfo findByPhone(String phone) {
         Query query = getSession().createQuery("from AdminInfo where phone=?");
         query.setParameter(0, phone);
         List<AdminInfo> list = query.list();
