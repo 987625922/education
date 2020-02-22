@@ -14,11 +14,12 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     @Autowired
     private AdminInfoDao adminInfoDao;
 
-
     @Override
     @Transactional
     public Object register(AdminInfo adminInfo) {
         if (adminInfoDao.findByPhone(adminInfo.getPhone()) == null) {
+            adminInfo.setUserName("管理员");
+            adminInfo.setIsAdaim(1);
             return adminInfoDao.insert(adminInfo);
         } else {
             throw new AllException(-100, "手机号码已存在");
@@ -29,10 +30,22 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     @Transactional
     public Object login(AdminInfo adminInfo) {
         AdminInfo info = adminInfoDao.findByPhone(adminInfo.getPhone());
-        if (info != null && info.getPassword().equals(adminInfo.getPassword())){
+        if (info != null && info.getPassword().equals(adminInfo.getPassword())) {
             return info;
-        }else {
+        } else {
             throw new AllException(-100, "账号密码错误");
         }
+    }
+
+    @Override
+    @Transactional
+    public AdminInfo findById(long id) {
+        return adminInfoDao.findById(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateCoverImg(long id, String coverImg) {
+        adminInfoDao.updateCoverImg(id,coverImg);
     }
 }

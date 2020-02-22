@@ -5,11 +5,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 import java.text.SimpleDateFormat;
 
 @Configuration
@@ -25,5 +23,13 @@ public class RootConfig {
         return simpleDateFormat;
     }
 
+    @Bean
+    public CommonsMultipartResolver multipartResolver(){
+        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+        commonsMultipartResolver.setMaxUploadSize(1024*500);
+        commonsMultipartResolver.setMaxInMemorySize(4096);
+        commonsMultipartResolver.setDefaultEncoding("utf-8");
+        return commonsMultipartResolver;
+    }
 
 }

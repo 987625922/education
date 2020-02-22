@@ -62,4 +62,10 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
     public void update(AdminInfo adminInfo) {
         getSession().update(adminInfo);
     }
+
+    @Override
+    public void updateCoverImg(long id, String coverImg) {
+        Query query = getSession().createQuery("update AdminInfo set coverImg = " + coverImg + " where id = " + id);
+        query.executeUpdate();
+    }
 }

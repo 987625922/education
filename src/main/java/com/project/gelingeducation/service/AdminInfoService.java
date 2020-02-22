@@ -7,4 +7,8 @@ public interface AdminInfoService {
     Object register(AdminInfo adminInfo);
 
     Object login(AdminInfo adminInfo);
+
+    AdminInfo findById(long id);
+
+    void updateCoverImg(long id,String coverImg);
 }

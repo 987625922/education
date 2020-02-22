@@ -16,4 +16,7 @@ public interface AdminInfoDao {
     void delect(long id);
 
     void update(AdminInfo adminInfo);
+
+    void updateCoverImg(long id, String coverImg);
+
 }
