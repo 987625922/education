@@ -20,13 +20,22 @@ public class AdminInfo {
     private String userName;
     @Column(name = "cover_img")
     private String coverImg;
+    //,columnDefinition = "是否是超级管理员"
     @Column(name = "isAdaim",length = 1)
     private int isAdaim;
     @Column(name = "email",length = 32)
-    private String EMail;
-    @Column(name = "sex",length = 1,columnDefinition = "1为男，2为女")
-    private int isMale;
+    private String eMail;
+    //DESCRIPTION
+    @Column(name = "ssex",length = 1)
+    private int sex;
+    //,columnDefinition = "备注"
     @Column(name = "note",length = 100)
     private String note;
-
+    //,columnDefinition = "状态 0锁定 1有效"
+    @Column(name = "status",length = 1)
+    private String status;
+    @Column(name = "create_time",length = 11)
+    private String createTime;
+    @Column(name = "modify_time",length = 11)
+    private String modifyTime;
 }

@@ -19,4 +19,7 @@ public interface AdminInfoDao {
 
     void updateCoverImg(long id, String coverImg);
 
+    void updateInfo(long id,String userName,String eMail,int sex,String note);
+
+    void updatePassword(long id,String newPassword);
 }

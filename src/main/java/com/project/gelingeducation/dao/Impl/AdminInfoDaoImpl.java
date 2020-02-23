@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -66,6 +67,44 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
     @Override
     public void updateCoverImg(long id, String coverImg) {
         Query query = getSession().createQuery("update AdminInfo set coverImg = " + coverImg + " where id = " + id);
+        query.executeUpdate();
+    }
+
+    @Override
+    public void updateInfo(long id, String userName, String eMail, int sex, String note) {
+        StringBuffer hql = new StringBuffer("update AdminInfo set ");
+        int index = 0;
+        if (!StringUtils.isEmpty(userName)) {
+            hql.append("user_name = '" + userName+"'");
+            index++;
+        }
+        if (!StringUtils.isEmpty(eMail)) {
+            if (index > 0) {
+                hql.append(" ,");
+            }
+            hql.append("email = '" + eMail+"'");
+            index++;
+        }
+        if (!StringUtils.isEmpty(sex)) {
+            if (index > 0) {
+                hql.append(" ,");
+            }
+            hql.append("ssex = '" + sex+"'");
+            index++;
+        }
+        if (!StringUtils.isEmpty(note)) {
+            if (index > 0) {
+                hql.append(" ,");
+            }
+            hql.append("note = '" + note+"'");
+        }
+        Query query = getSession().createQuery(hql.toString()+" where id = " + id);
+        query.executeUpdate();
+    }
+
+    @Override
+    public void updatePassword(long id, String newPassword) {
+        Query query = getSession().createQuery("update AdminInfo set password = '" + newPassword + "' where id = " + id);
         query.executeUpdate();
     }
 }

@@ -4,6 +4,7 @@ import com.project.gelingeducation.dao.AdminInfoDao;
 import com.project.gelingeducation.domain.AdminInfo;
 import com.project.gelingeducation.exception.AllException;
 import com.project.gelingeducation.service.AdminInfoService;
+import com.project.gelingeducation.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +31,7 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     @Transactional
     public Object login(AdminInfo adminInfo) {
         AdminInfo info = adminInfoDao.findByPhone(adminInfo.getPhone());
-        if (info != null && info.getPassword().equals(adminInfo.getPassword())) {
+        if (info != null && info.getPassword().equals(MD5Util.encrypt(adminInfo.getPhone(), adminInfo.getPassword()))) {
             return info;
         } else {
             throw new AllException(-100, "账号密码错误");
@@ -46,6 +47,29 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     @Override
     @Transactional
     public void updateCoverImg(long id, String coverImg) {
-        adminInfoDao.updateCoverImg(id,coverImg);
+        adminInfoDao.updateCoverImg(id, coverImg);
+    }
+
+    @Override
+    @Transactional
+    public void update(AdminInfo adminInfo) {
+        adminInfoDao.update(adminInfo);
+    }
+
+    @Override
+    @Transactional
+    public void updateInfo(long id, String userName, String eMail, int sex, String note) {
+        adminInfoDao.updateInfo(id, userName, eMail, sex, note);
+    }
+
+    @Override
+    @Transactional
+    public void updatePassword(long id, String oldPassword, String newPassword) {
+        AdminInfo adminInfo = adminInfoDao.findById(id);
+        if (adminInfo.getPassword().equals(oldPassword)) {
+            adminInfoDao.updatePassword(id, MD5Util.encrypt(adminInfo.getPhone(), newPassword));
+        } else {
+            throw new AllException(-100, "密码错误");
+        }
     }
 }

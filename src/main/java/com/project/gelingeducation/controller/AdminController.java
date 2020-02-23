@@ -2,8 +2,10 @@ package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.domain.AdminInfo;
 import com.project.gelingeducation.domain.JsonData;
+import com.project.gelingeducation.exception.AllException;
 import com.project.gelingeducation.service.AdminInfoService;
 import com.project.gelingeducation.utils.FileUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +19,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.logging.Logger;
+
 
 /**
  * 管理员controller
  */
 //跨域
 //@CrossOrigin(origins = {"/"}, maxAge = 72000L)
+@Slf4j
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -95,5 +100,31 @@ public class AdminController {
             return JsonData.buildError("图片上传失败");
         }
         return JsonData.buildSuccess(path);
+    }
+
+    /**
+     * 编辑个人信息
+     *
+     * @param adminInfo 个人信息
+     * @return
+     */
+    @RequestMapping(value = "/editinfo", method = RequestMethod.POST)
+    public Object update(@RequestBody AdminInfo adminInfo) {
+        adminInfoService.updateInfo(adminInfo.getId(), adminInfo.getUserName(), adminInfo.getEMail(), adminInfo.getSex(), adminInfo.getNote());
+        return JsonData.buildSuccess();
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @return
+     */
+    @RequestMapping(value = "/updatepassword", method = RequestMethod.POST)
+    public Object updatePassword(long id,String oldPassword, String newPassword) {
+//        log.debug("旧密码："+oldPassword);
+        adminInfoService.updatePassword(id,oldPassword,newPassword);
+        return JsonData.buildSuccess();
     }
 }

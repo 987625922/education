@@ -11,4 +11,10 @@ public interface AdminInfoService {
     AdminInfo findById(long id);
 
     void updateCoverImg(long id,String coverImg);
+
+    void update(AdminInfo adminInfo);
+
+    void updateInfo(long id, String userName, String eMail, int sex, String note);
+
+    void updatePassword(long id,String oldPassword,String newPassword);
 }
