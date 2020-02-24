@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class AdminInfoServiceImpl implements AdminInfoService {
 
@@ -42,6 +44,12 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     @Transactional
     public AdminInfo findById(long id) {
         return adminInfoDao.findById(id);
+    }
+
+    @Override
+    @Transactional
+    public List<AdminInfo> findAll() {
+        return adminInfoDao.findAll();
     }
 
     @Override

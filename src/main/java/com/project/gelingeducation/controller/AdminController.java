@@ -2,7 +2,6 @@ package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.domain.AdminInfo;
 import com.project.gelingeducation.domain.JsonData;
-import com.project.gelingeducation.exception.AllException;
 import com.project.gelingeducation.service.AdminInfoService;
 import com.project.gelingeducation.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.logging.Logger;
 
 
 /**
@@ -122,9 +120,20 @@ public class AdminController {
      * @return
      */
     @RequestMapping(value = "/updatepassword", method = RequestMethod.POST)
-    public Object updatePassword(long id,String oldPassword, String newPassword) {
+    public Object updatePassword(long id, String oldPassword, String newPassword) {
 //        log.debug("旧密码："+oldPassword);
-        adminInfoService.updatePassword(id,oldPassword,newPassword);
+        adminInfoService.updatePassword(id, oldPassword, newPassword);
         return JsonData.buildSuccess();
     }
+
+    /**
+     * 获取所有管理员
+     *
+     * @return
+     */
+    @RequestMapping(value = "/lists", method = RequestMethod.POST)
+    public Object lists() {
+        return JsonData.buildSuccess(adminInfoService.findAll());
+    }
+
 }

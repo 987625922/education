@@ -25,7 +25,7 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
 
     @Override
     public List<AdminInfo> findAll() {
-        TypedQuery<AdminInfo> query = getSession().createQuery("from admin");
+        TypedQuery<AdminInfo> query = getSession().createQuery("from AdminInfo");
         return query.getResultList();
 
     }

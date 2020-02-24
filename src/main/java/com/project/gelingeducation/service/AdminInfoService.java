@@ -2,6 +2,8 @@ package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.domain.AdminInfo;
 
+import java.util.List;
+
 public interface AdminInfoService {
 
     Object register(AdminInfo adminInfo);
@@ -9,6 +11,8 @@ public interface AdminInfoService {
     Object login(AdminInfo adminInfo);
 
     AdminInfo findById(long id);
+
+    List<AdminInfo> findAll();
 
     void updateCoverImg(long id,String coverImg);
 
