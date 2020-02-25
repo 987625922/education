@@ -132,8 +132,8 @@ public class AdminController {
      * @return
      */
     @RequestMapping(value = "/lists", method = RequestMethod.POST)
-    public Object lists() {
-        return JsonData.buildSuccess(adminInfoService.findAll());
+    public Object lists(int page,int limits) {
+        return JsonData.buildSuccess(adminInfoService.getLists(page,limits));
     }
 
 }

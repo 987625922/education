@@ -1,11 +1,12 @@
 package com.project.gelingeducation.dao;
 
 import com.project.gelingeducation.domain.AdminInfo;
+import com.project.gelingeducation.dto.PageResult;
 
 import java.util.List;
 
 public interface AdminInfoDao {
-    List<AdminInfo> findAll();
+    PageResult getLists(int page, int limits);
 
     AdminInfo findById(long id);
 

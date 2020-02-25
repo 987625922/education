@@ -1,8 +1,10 @@
 package com.project.gelingeducation;
 
 import com.project.gelingeducation.config.HibernateConfig;
+import com.project.gelingeducation.dao.AdminInfoDao;
 import com.project.gelingeducation.domain.Subject;
 import com.project.gelingeducation.domain.Video;
+import com.project.gelingeducation.service.AdminInfoService;
 import com.project.gelingeducation.service.SubjectService;
 import com.project.gelingeducation.service.VideoService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,9 @@ public class SpringTest {
 
     @Autowired
     private SubjectService subjectService;
+
+    @Autowired
+    private AdminInfoService service;
 
     @Test
     public void test() {
@@ -75,15 +80,7 @@ public class SpringTest {
 
     @Test
     public void test5() {
-//        log.debug(new Date().toString());
-//        Integer i = null;
-//        String s = null;
-//        System.out.println(i);
-//        System.out.println(s);
-
-//        System.out.println(getMonthLastDay(2020, 1));
-//        getCalendarData(2020, 1);
-
+        System.out.println("===>> "+service.getLists(0,3));
     }
 
 

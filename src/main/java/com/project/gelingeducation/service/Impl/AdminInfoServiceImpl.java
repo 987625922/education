@@ -2,6 +2,7 @@ package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.dao.AdminInfoDao;
 import com.project.gelingeducation.domain.AdminInfo;
+import com.project.gelingeducation.dto.PageResult;
 import com.project.gelingeducation.exception.AllException;
 import com.project.gelingeducation.service.AdminInfoService;
 import com.project.gelingeducation.utils.MD5Util;
@@ -48,8 +49,12 @@ public class AdminInfoServiceImpl implements AdminInfoService {
 
     @Override
     @Transactional
-    public List<AdminInfo> findAll() {
-        return adminInfoDao.findAll();
+    public PageResult getLists(int page, int limits) {
+        page--;
+        if (page < 0){
+            throw new AllException(-100,"页码少于1");
+        }
+        return adminInfoDao.getLists(page, limits);
     }
 
     @Override

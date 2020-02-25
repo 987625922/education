@@ -1,6 +1,7 @@
 package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.domain.AdminInfo;
+import com.project.gelingeducation.dto.PageResult;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface AdminInfoService {
 
     AdminInfo findById(long id);
 
-    List<AdminInfo> findAll();
+    PageResult getLists(int page, int limits);
 
     void updateCoverImg(long id,String coverImg);
 
