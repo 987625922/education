@@ -21,20 +21,36 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     @Override
     @Transactional
     public Object register(AdminInfo adminInfo) {
-        if (adminInfoDao.findByPhone(adminInfo.getPhone()) == null) {
+        if (adminInfoDao.findByPhone(adminInfo.getAccount()) == null) {
             adminInfo.setUserName("管理员");
             adminInfo.setIsAdaim(1);
+            adminInfo.setStatus(1);
             return adminInfoDao.insert(adminInfo);
         } else {
-            throw new AllException(-100, "手机号码已存在");
+            throw new AllException(-100, "账号已存在");
+        }
+    }
+
+    @Override
+    @Transactional
+    public Object addUser(AdminInfo adminInfo) {
+        if (adminInfoDao.findByPhone(adminInfo.getAccount()) == null) {
+            adminInfo.setUserName("用户名");
+            adminInfo.setStatus(1);
+            adminInfo.setCoverImg("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582740929074&di=88ebb0f61e464281d947673187acaa59&imgtype=0&src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2Fthreadcover%2Fbb%2Fa1%2F1988382.jpg");
+            adminInfo.setCreateTime(String.valueOf(System.currentTimeMillis()));
+            adminInfo.setModifyTime(String.valueOf(System.currentTimeMillis()));
+            return adminInfoDao.insert(adminInfo);
+        } else {
+            throw new AllException(-100, "账号已存在");
         }
     }
 
     @Override
     @Transactional
     public Object login(AdminInfo adminInfo) {
-        AdminInfo info = adminInfoDao.findByPhone(adminInfo.getPhone());
-        if (info != null && info.getPassword().equals(MD5Util.encrypt(adminInfo.getPhone(), adminInfo.getPassword()))) {
+        AdminInfo info = adminInfoDao.findByPhone(adminInfo.getAccount());
+        if (info != null && info.getPassword().equals(MD5Util.encrypt(adminInfo.getAccount(), adminInfo.getPassword()))) {
             return info;
         } else {
             throw new AllException(-100, "账号密码错误");
@@ -80,7 +96,7 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     public void updatePassword(long id, String oldPassword, String newPassword) {
         AdminInfo adminInfo = adminInfoDao.findById(id);
         if (adminInfo.getPassword().equals(oldPassword)) {
-            adminInfoDao.updatePassword(id, MD5Util.encrypt(adminInfo.getPhone(), newPassword));
+            adminInfoDao.updatePassword(id, MD5Util.encrypt(adminInfo.getAccount(), newPassword));
         } else {
             throw new AllException(-100, "密码错误");
         }

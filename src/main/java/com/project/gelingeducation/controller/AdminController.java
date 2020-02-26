@@ -136,4 +136,14 @@ public class AdminController {
         return JsonData.buildSuccess(adminInfoService.getLists(page,limits));
     }
 
+    /**
+     * 注册接口
+     *
+     * @param adminInfo
+     * @return
+     */
+    @RequestMapping(value = "/adduser", method = RequestMethod.POST)
+    public Object addUser(@RequestBody AdminInfo adminInfo) {
+        return JsonData.buildSuccess(adminInfoService.addUser(adminInfo));
+    }
 }

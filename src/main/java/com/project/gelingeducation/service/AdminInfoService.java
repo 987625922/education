@@ -9,6 +9,8 @@ public interface AdminInfoService {
 
     Object register(AdminInfo adminInfo);
 
+    Object addUser(AdminInfo adminInfo);
+
     Object login(AdminInfo adminInfo);
 
     AdminInfo findById(long id);

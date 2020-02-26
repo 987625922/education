@@ -5,14 +5,12 @@ import com.project.gelingeducation.domain.AdminInfo;
 import com.project.gelingeducation.dto.PageResult;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 @Repository
@@ -51,7 +49,7 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
 
     @Override
     public AdminInfo findByPhone(String phone) {
-        Query query = getSession().createQuery("from AdminInfo where phone=?");
+        Query query = getSession().createQuery("from AdminInfo where account=?");
         query.setParameter(0, phone);
         List<AdminInfo> list = query.list();
         if (list.size() > 0) {
