@@ -146,4 +146,17 @@ public class AdminController {
     public Object addUser(@RequestBody AdminInfo adminInfo) {
         return JsonData.buildSuccess(adminInfoService.addUser(adminInfo));
     }
+
+    /**
+     * 注册接口
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/deluser", method = RequestMethod.POST)
+    public Object deluser(long id) {
+        adminInfoService.delUser(id);
+        return JsonData.buildSuccess();
+    }
+
 }

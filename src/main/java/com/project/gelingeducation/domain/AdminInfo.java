@@ -20,12 +20,12 @@ public class AdminInfo {
     private String userName;
     @Column(name = "cover_img")
     private String coverImg;
-    //,columnDefinition = "是否是超级管理员"
+    //0为超级管理员，1为管理员，2为访客
     @Column(name = "isAdaim",length = 1)
     private int isAdaim;
     @Column(name = "email",length = 32)
     private String eMail;
-    //DESCRIPTION
+    //0为保密，1为男，2为女
     @Column(name = "ssex",length = 1)
     private int sex;
     //,columnDefinition = "备注"

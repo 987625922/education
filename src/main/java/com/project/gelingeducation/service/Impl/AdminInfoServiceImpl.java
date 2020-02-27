@@ -101,4 +101,10 @@ public class AdminInfoServiceImpl implements AdminInfoService {
             throw new AllException(-100, "密码错误");
         }
     }
+
+    @Override
+    @Transactional
+    public void delUser(long id) {
+        adminInfoDao.delect(id);
+    }
 }

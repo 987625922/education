@@ -24,4 +24,6 @@ public interface AdminInfoService {
     void updateInfo(long id, String userName, String eMail, int sex, String note);
 
     void updatePassword(long id,String oldPassword,String newPassword);
+
+    void delUser(long id);
 }
