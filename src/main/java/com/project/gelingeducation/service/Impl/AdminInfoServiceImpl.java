@@ -37,6 +37,7 @@ public class AdminInfoServiceImpl implements AdminInfoService {
         if (adminInfoDao.findByPhone(adminInfo.getAccount()) == null) {
             adminInfo.setUserName("用户名");
             adminInfo.setStatus(1);
+            adminInfo.setPassword(MD5Util.encrypt(adminInfo.getAccount(), adminInfo.getPassword()));
             adminInfo.setCoverImg("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582740929074&di=88ebb0f61e464281d947673187acaa59&imgtype=0&src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2Fthreadcover%2Fbb%2Fa1%2F1988382.jpg");
             adminInfo.setCreateTime(String.valueOf(System.currentTimeMillis()));
             adminInfo.setModifyTime(String.valueOf(System.currentTimeMillis()));
@@ -107,4 +108,5 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     public void delUser(long id) {
         adminInfoDao.delect(id);
     }
+
 }

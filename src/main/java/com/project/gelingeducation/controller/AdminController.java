@@ -108,7 +108,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/editinfo", method = RequestMethod.POST)
     public Object update(@RequestBody AdminInfo adminInfo) {
-        adminInfoService.updateInfo(adminInfo.getId(), adminInfo.getUserName(), adminInfo.getEMail(), adminInfo.getSex(), adminInfo.getNote());
+        adminInfoService.update(adminInfo);
         return JsonData.buildSuccess();
     }
 
@@ -137,7 +137,7 @@ public class AdminController {
     }
 
     /**
-     * 注册接口
+     * 添加用户
      *
      * @param adminInfo
      * @return
@@ -148,7 +148,7 @@ public class AdminController {
     }
 
     /**
-     * 注册接口
+     * 删除用户
      *
      * @param id
      * @return
