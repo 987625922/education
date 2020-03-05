@@ -10,7 +10,7 @@ public interface AdminInfoDao {
 
     AdminInfo findById(long id);
 
-    AdminInfo findByPhone(String phone);
+    AdminInfo findByPhone(String account);
 
     AdminInfo insert(AdminInfo adminInfo);
 

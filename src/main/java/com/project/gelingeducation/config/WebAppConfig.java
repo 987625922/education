@@ -7,9 +7,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
-@EnableWebMvc
-@ComponentScan("com.project.gelingeducation.controller")
+@Configuration//@Configuration 表示一个类声明了一个或多个@Bean方法，
+              // 并且可以由Spring容器处理以在运行时为这些bean生成bean定义和服务请求。
+@EnableWebMvc//@EnableWebMvc启用默认的Spring MVC配置并注册DispatcherServlet
+@ComponentScan("com.project.gelingeducation.controller")//@ComponentScan批注用于指定要扫描的基本软件包。
+                                                        // 任何用@Component和@Configuration注释的类都将被扫描。
 public class WebAppConfig implements WebMvcConfigurer {
 
     /**
