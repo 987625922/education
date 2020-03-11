@@ -3,7 +3,7 @@ package com.project.gelingeducation.dao.Impl;
 import com.project.gelingeducation.dao.AdminInfoDao;
 import com.project.gelingeducation.domain.AdminInfo;
 import com.project.gelingeducation.dto.PageResult;
-import org.hibernate.Criteria;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -12,10 +12,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
+@Slf4j
 @Repository
 public class AdminInfoDaoImpl implements AdminInfoDao {
 
@@ -47,14 +46,8 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
     }
 
     @Override
-    public AdminInfo findById(long id) {
-        AdminInfo adminInfo = getSession().get(AdminInfo.class, id);
-        return adminInfo;
-    }
-
-    @Override
     public AdminInfo findByPhone(String account) {
-        Query query = getSession().createQuery("from AdminInfo where account=?");
+        Query query = getSession().createQuery("from AdminInfo where account=?0");
         query.setParameter(0, account);
         List<AdminInfo> list = query.list();
         if (list.size() > 0) {
@@ -63,6 +56,12 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
             return null;
         }
 
+    }
+
+    @Override
+    public AdminInfo findById(long id) {
+        AdminInfo adminInfo = getSession().get(AdminInfo.class, id);
+        return adminInfo;
     }
 
     @Override

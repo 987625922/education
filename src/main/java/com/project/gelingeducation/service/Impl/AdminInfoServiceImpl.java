@@ -6,20 +6,20 @@ import com.project.gelingeducation.dto.PageResult;
 import com.project.gelingeducation.exception.AllException;
 import com.project.gelingeducation.service.AdminInfoService;
 import com.project.gelingeducation.utils.MD5Util;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
+@Slf4j
 @Service
+@Transactional
 public class AdminInfoServiceImpl implements AdminInfoService {
 
     @Autowired
     private AdminInfoDao adminInfoDao;
 
     @Override
-    @Transactional
     public Object register(AdminInfo adminInfo) {
         if (adminInfoDao.findByPhone(adminInfo.getAccount()) == null) {
             adminInfo.setUserName("管理员");
@@ -32,7 +32,6 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
-    @Transactional
     public Object addUser(AdminInfo adminInfo) {
         if (adminInfoDao.findByPhone(adminInfo.getAccount()) == null) {
             adminInfo.setUserName("用户名");
@@ -48,7 +47,6 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
-    @Transactional
     public Object login(AdminInfo adminInfo) {
         AdminInfo info = adminInfoDao.findByPhone(adminInfo.getAccount());
         if (info != null && info.getPassword().equals(MD5Util.encrypt(adminInfo.getAccount(), adminInfo.getPassword()))) {
@@ -59,41 +57,38 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
-    @Transactional
     public AdminInfo findById(long id) {
+//        for (int i = 0; i < 30; i++) {
+//            adminInfoDao.findById(id);
+//        }
         return adminInfoDao.findById(id);
     }
 
     @Override
-    @Transactional
     public PageResult getLists(int page, int limits) {
         page--;
-        if (page < 0){
-            throw new AllException(-100,"页码少于1");
+        if (page < 0) {
+            throw new AllException(-100, "页码少于1");
         }
         return adminInfoDao.getLists(page, limits);
     }
 
     @Override
-    @Transactional
     public void updateCoverImg(long id, String coverImg) {
         adminInfoDao.updateCoverImg(id, coverImg);
     }
 
     @Override
-    @Transactional
     public void update(AdminInfo adminInfo) {
         adminInfoDao.update(adminInfo);
     }
 
     @Override
-    @Transactional
     public void updateInfo(long id, String userName, String eMail, int sex, String note) {
         adminInfoDao.updateInfo(id, userName, eMail, sex, note);
     }
 
     @Override
-    @Transactional
     public void updatePassword(long id, String oldPassword, String newPassword) {
         AdminInfo adminInfo = adminInfoDao.findById(id);
         if (adminInfo.getPassword().equals(oldPassword)) {
@@ -104,7 +99,6 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
-    @Transactional
     public void delUser(long id) {
         adminInfoDao.delect(id);
     }
