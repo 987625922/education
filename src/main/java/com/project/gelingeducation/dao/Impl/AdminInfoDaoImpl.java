@@ -29,9 +29,11 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
     @Override
     public PageResult getLists(int page, int limits) {
         Session session = getSession();
+
         TypedQuery<AdminInfo> query = session.createQuery("from AdminInfo");
         query.setFirstResult(page);//得到当前页
         query.setMaxResults(limits);//得到每页的记录数
+
         String hql = "select count(*) from AdminInfo";//此处的Product是对象
         Query queryCount = session.createQuery(hql);
 
@@ -87,7 +89,6 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
         Session session = getSession();
         AdminInfo adminInfo = session.get(AdminInfo.class, id);
         adminInfo.setCoverImg(coverImg);
-        session.update(adminInfo);
     }
 
     @Override

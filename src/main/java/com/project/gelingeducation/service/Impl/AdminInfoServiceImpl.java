@@ -92,7 +92,8 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     public void updatePassword(long id, String oldPassword, String newPassword) {
         AdminInfo adminInfo = adminInfoDao.findById(id);
         if (adminInfo.getPassword().equals(oldPassword)) {
-            adminInfoDao.updatePassword(id, MD5Util.encrypt(adminInfo.getAccount(), newPassword));
+//            adminInfoDao.updatePassword(id, MD5Util.encrypt(adminInfo.getAccount(), newPassword));
+            adminInfo.setPassword(newPassword);
         } else {
             throw new AllException(-100, "密码错误");
         }
