@@ -33,4 +33,27 @@ public class AdminServiceTest {
         adminInfo.setPassword("123456");
         log.debug("findById获取的结果：" + adminInfoService.addUser(adminInfo));
     }
+
+    //hibernate选择更新
+    @Test
+    public void update(){
+        AdminInfo adminInfo = new AdminInfo();
+        adminInfo.setId(1);
+        adminInfo.setAccount("123456");
+        adminInfo.setPassword("123456");
+        adminInfo.setCoverImg("图片1");
+        adminInfoService.update(adminInfo);
+    }
+
+    //hibernate选择更新
+    @Test
+    public void update1(){
+        AdminInfo adminInfo = new AdminInfo();
+        adminInfo.setId(1);
+        adminInfo.setAccount("123456");
+        adminInfo.setPassword("123456");
+        adminInfo.setCoverImg("图片");
+        adminInfoService.update(adminInfo);
+    }
+
 }
