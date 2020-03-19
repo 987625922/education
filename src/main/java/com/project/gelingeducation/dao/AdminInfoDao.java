@@ -6,7 +6,7 @@ import com.project.gelingeducation.dto.PageResult;
 import java.util.List;
 
 public interface AdminInfoDao {
-    PageResult getLists(int page, int limits);
+    PageResult getLists(int currentPage, int pageSize);
 
     AdminInfo findById(long id);
 

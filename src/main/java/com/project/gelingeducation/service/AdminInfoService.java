@@ -15,7 +15,7 @@ public interface AdminInfoService {
 
     AdminInfo findById(long id);
 
-    PageResult getLists(int page, int limits);
+    PageResult getLists(int currentPage, int pageSize);
 
     void updateCoverImg(long id,String coverImg);
 

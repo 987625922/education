@@ -58,19 +58,12 @@ public class AdminInfoServiceImpl implements AdminInfoService {
 
     @Override
     public AdminInfo findById(long id) {
-//        for (int i = 0; i < 30; i++) {
-//            adminInfoDao.findById(id);
-//        }
         return adminInfoDao.findById(id);
     }
 
     @Override
-    public PageResult getLists(int page, int limits) {
-        page--;
-        if (page < 0) {
-            throw new AllException(-100, "页码少于1");
-        }
-        return adminInfoDao.getLists(page, limits);
+    public PageResult getLists(int currentPage, int pageSize) {
+        return adminInfoDao.getLists(currentPage, pageSize);
     }
 
     @Override
@@ -88,8 +81,7 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     public void updatePassword(long id, String oldPassword, String newPassword) {
         AdminInfo adminInfo = adminInfoDao.findById(id);
         if (adminInfo.getPassword().equals(oldPassword)) {
-//            adminInfoDao.updatePassword(id, MD5Util.encrypt(adminInfo.getAccount(), newPassword));
-            adminInfo.setPassword(newPassword);
+            adminInfo.setPassword(MD5Util.encrypt(adminInfo.getAccount(), newPassword));
         } else {
             throw new AllException(-100, "密码错误");
         }

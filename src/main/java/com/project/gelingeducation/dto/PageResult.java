@@ -18,7 +18,13 @@ public class PageResult {
     /**
      * 页码总数
      */
-    private int totalPages;
+    private long totalPages;
+
+    /**
+     * 总数量
+     */
+    private long totalRows;
+
     /**
      * 数据模型
      */

@@ -2,6 +2,7 @@ package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.config.HibernateConfig;
 import com.project.gelingeducation.domain.AdminInfo;
+import com.project.gelingeducation.dto.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import java.util.List;
 
 @Slf4j
 @WebAppConfiguration
@@ -36,7 +39,7 @@ public class AdminServiceTest {
 
     //hibernate选择更新
     @Test
-    public void update(){
+    public void update() {
         AdminInfo adminInfo = new AdminInfo();
         adminInfo.setId(1);
         adminInfo.setAccount("1234561");
@@ -47,7 +50,7 @@ public class AdminServiceTest {
 
     //hibernate选择更新
     @Test
-    public void update1(){
+    public void update1() {
         AdminInfo adminInfo = new AdminInfo();
         adminInfo.setId(1);
         adminInfo.setAccount("123456");
@@ -56,4 +59,13 @@ public class AdminServiceTest {
         adminInfoService.update(adminInfo);
     }
 
+
+    @Test
+    public void lists() {
+        PageResult bean = adminInfoService.getLists(3, 3);
+        List<AdminInfo> adminInfos = (List<AdminInfo>) bean.getLists();
+        for (AdminInfo adminInfo : adminInfos) {
+            log.debug("==>  " + adminInfo);
+        }
+    }
 }
