@@ -83,10 +83,6 @@ public class AdminInfoServiceImpl implements AdminInfoService {
         adminInfoDao.update(adminInfo);
     }
 
-    @Override
-    public void updateInfo(long id, String userName, String eMail, int sex, String note) {
-        adminInfoDao.updateInfo(id, userName, eMail, sex, note);
-    }
 
     @Override
     public void updatePassword(long id, String oldPassword, String newPassword) {

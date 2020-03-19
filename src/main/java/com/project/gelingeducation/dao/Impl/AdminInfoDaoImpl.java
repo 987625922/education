@@ -79,7 +79,82 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
 
     @Override
     public void update(AdminInfo adminInfo) {
-        getSession().update(adminInfo);
+//        getSession().update(adminInfo);
+        StringBuffer hql = new StringBuffer("update AdminInfo set ");
+        int index = 0;
+        if (!StringUtils.isEmpty(adminInfo.getUserName())) {
+            hql.append("user_name = '" + adminInfo.getUserName() + "'");
+            index++;
+        }
+        if (!StringUtils.isEmpty(adminInfo.getAccount())) {
+            if (index > 0) {
+                hql.append(" ,");
+            }
+            hql.append("account = '" + adminInfo.getAccount() + "'");
+            index++;
+        }
+
+        if (!StringUtils.isEmpty(adminInfo.getPassword())) {
+            if (index > 0) {
+                hql.append(" ,");
+            }
+            hql.append("password = '" + adminInfo.getPassword() + "'");
+            index++;
+        }
+        if (!StringUtils.isEmpty(adminInfo.getCoverImg())) {
+            if (index > 0) {
+                hql.append(" ,");
+            }
+            hql.append("cover_img = '" + adminInfo.getCoverImg() + "'");
+            index++;
+        }
+        if (!StringUtils.isEmpty(adminInfo.getIsAdaim())) {
+            if (index > 0) {
+                hql.append(" ,");
+            }
+            hql.append("isAdaim = '" + adminInfo.getIsAdaim() + "'");
+            index++;
+        }
+        if (!StringUtils.isEmpty(adminInfo.getEMail())) {
+            if (index > 0) {
+                hql.append(" ,");
+            }
+            hql.append("email = '" + adminInfo.getEMail() + "'");
+            index++;
+        }
+        if (!StringUtils.isEmpty(adminInfo.getSex())) {
+            if (index > 0) {
+                hql.append(" ,");
+            }
+            hql.append("ssex = '" + adminInfo.getSex() + "'");
+            index++;
+        }
+        if (!StringUtils.isEmpty(adminInfo.getNote())) {
+            if (index > 0) {
+                hql.append(" ,");
+            }
+            hql.append("note = '" + adminInfo.getNote() + "'");
+        }
+        if (!StringUtils.isEmpty(adminInfo.getStatus())) {
+            if (index > 0) {
+                hql.append(" ,");
+            }
+            hql.append("status = '" + adminInfo.getStatus() + "'");
+        }
+        if (!StringUtils.isEmpty(adminInfo.getCreateTime())) {
+            if (index > 0) {
+                hql.append(" ,");
+            }
+            hql.append("create_time = '" + adminInfo.getCreateTime() + "'");
+        }
+        if (!StringUtils.isEmpty(adminInfo.getModifyTime())) {
+            if (index > 0) {
+                hql.append(" ,");
+            }
+            hql.append("modify_time = '" + adminInfo.getModifyTime() + "'");
+        }
+        Query query = getSession().createQuery(hql.toString() + " where id = " + adminInfo.getId());
+        query.executeUpdate();
     }
 
     @Override
@@ -91,37 +166,6 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
         adminInfo.setCoverImg(coverImg);
     }
 
-    @Override
-    public void updateInfo(long id, String userName, String eMail, int sex, String note) {
-        StringBuffer hql = new StringBuffer("update AdminInfo set ");
-        int index = 0;
-        if (!StringUtils.isEmpty(userName)) {
-            hql.append("user_name = '" + userName + "'");
-            index++;
-        }
-        if (!StringUtils.isEmpty(eMail)) {
-            if (index > 0) {
-                hql.append(" ,");
-            }
-            hql.append("email = '" + eMail + "'");
-            index++;
-        }
-        if (!StringUtils.isEmpty(sex)) {
-            if (index > 0) {
-                hql.append(" ,");
-            }
-            hql.append("ssex = '" + sex + "'");
-            index++;
-        }
-        if (!StringUtils.isEmpty(note)) {
-            if (index > 0) {
-                hql.append(" ,");
-            }
-            hql.append("note = '" + note + "'");
-        }
-        Query query = getSession().createQuery(hql.toString() + " where id = " + id);
-        query.executeUpdate();
-    }
 
     @Override
     public void updatePassword(long id, String newPassword) {

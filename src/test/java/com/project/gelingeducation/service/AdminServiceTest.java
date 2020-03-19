@@ -39,7 +39,7 @@ public class AdminServiceTest {
     public void update(){
         AdminInfo adminInfo = new AdminInfo();
         adminInfo.setId(1);
-        adminInfo.setAccount("123456");
+        adminInfo.setAccount("1234561");
         adminInfo.setPassword("123456");
         adminInfo.setCoverImg("图片1");
         adminInfoService.update(adminInfo);

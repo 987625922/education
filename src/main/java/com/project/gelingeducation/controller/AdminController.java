@@ -121,7 +121,6 @@ public class AdminController {
      */
     @RequestMapping(value = "/updatepassword", method = RequestMethod.POST)
     public Object updatePassword(long id, String oldPassword, String newPassword) {
-//        log.debug("旧密码："+oldPassword);
         adminInfoService.updatePassword(id, oldPassword, newPassword);
         return JsonData.buildSuccess();
     }
@@ -132,8 +131,8 @@ public class AdminController {
      * @return
      */
     @RequestMapping(value = "/lists", method = RequestMethod.POST)
-    public Object lists(int page,int limits) {
-        return JsonData.buildSuccess(adminInfoService.getLists(page,limits));
+    public Object lists(int page, int limits) {
+        return JsonData.buildSuccess(adminInfoService.getLists(page, limits));
     }
 
     /**
