@@ -16,9 +16,11 @@ public interface AdminInfoDao {
 
     void delect(long id);
 
+    void delSel(long[] ids);
+
     void update(AdminInfo adminInfo);
 
     void updateCoverImg(long id, String coverImg);
 
-    void updatePassword(long id,String newPassword);
+    PageResult selbyname(String name,int currentPage, int pageSize);
 }

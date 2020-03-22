@@ -82,6 +82,21 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
     }
 
     @Override
+    public void delSel(long[] ids) {
+        String sql = "";
+        for (int i = 0; i < ids.length; i++) {
+            if (i == 0) {
+                sql = sql + ids[i];
+            } else {
+                sql = sql + ","+ids[i];
+            }
+        }
+        Query query = getSession().createQuery("DELETE FROM AdminInfo WHERE id in(" + sql + ")");
+        query.executeUpdate();
+    }
+
+
+    @Override
     public void update(AdminInfo adminInfo) {
 //        getSession().update(adminInfo);
         StringBuffer hql = new StringBuffer("update AdminInfo set ");
@@ -167,10 +182,31 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
         query.executeUpdate();
     }
 
-
     @Override
-    public void updatePassword(long id, String newPassword) {
-        Query query = getSession().createQuery("update AdminInfo set password = '" + newPassword + "' where id = " + id);
-        query.executeUpdate();
+    public PageResult selbyname(String name,int currentPage, int pageSize) {
+//        Query queryCount = session.createQuery("from AdminInfo where userName LIKE '%"+name+"%'");
+
+        Session session = getSession();
+
+        String hql = "select count(*) from AdminInfo where userName LIKE '%"+name+"%'";//此处的Product是对象
+        Query queryCount = session.createQuery(hql);
+        long allrows = (long) queryCount.uniqueResult();
+
+        TypedQuery<AdminInfo> query = session.createQuery("from AdminInfo where userName LIKE '%"+name+"%'");
+        query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
+        query.setMaxResults(currentPage * pageSize);//得到每页的记录数
+
+        long totalPage = (allrows - 1) / pageSize + 1;
+        List<AdminInfo> list = query.getResultList();
+
+        PageResult pageResult = new PageResult();
+        pageResult.setTotalPages(totalPage);
+        pageResult.setTotalRows(allrows);
+        pageResult.setLists(list);
+        pageResult.setPageNum(currentPage + 1);
+        pageResult.setPageSize(pageSize);
+
+        return pageResult;
     }
+
 }

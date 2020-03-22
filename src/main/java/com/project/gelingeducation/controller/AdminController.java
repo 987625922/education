@@ -158,4 +158,21 @@ public class AdminController {
         return JsonData.buildSuccess();
     }
 
+    /**
+     * 批量删除客户
+     */
+    @RequestMapping(value = "/delseluser", method = RequestMethod.POST)
+    public Object delSelUser(long[] ids) {
+        adminInfoService.delSelUser(ids);
+        return JsonData.buildSuccess();
+    }
+
+    /**
+     * 批量删除客户
+     */
+    @RequestMapping(value = "/selbyname", method = RequestMethod.POST)
+    public Object selByName(String name, int currentPage, int pageSize) {
+        return JsonData.buildSuccess(adminInfoService.selbyname(name, currentPage, pageSize));
+    }
+
 }

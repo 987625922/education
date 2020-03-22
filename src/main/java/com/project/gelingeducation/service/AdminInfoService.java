@@ -21,8 +21,11 @@ public interface AdminInfoService {
 
     void update(AdminInfo adminInfo);
 
-
     void updatePassword(long id,String oldPassword,String newPassword);
 
     void delUser(long id);
+
+    void delSelUser(long[] ids);
+
+    PageResult selbyname(String name,int currentPage, int pageSize);
 }

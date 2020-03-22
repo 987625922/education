@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @Transactional
@@ -90,6 +92,16 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     @Override
     public void delUser(long id) {
         adminInfoDao.delect(id);
+    }
+
+    @Override
+    public void delSelUser(long[] ids) {
+        adminInfoDao.delSel(ids);
+    }
+
+    @Override
+    public PageResult selbyname(String name,int currentPage, int pageSize) {
+        return adminInfoDao.selbyname(name,currentPage,pageSize);
     }
 
 }
