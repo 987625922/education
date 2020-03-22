@@ -33,27 +33,6 @@ public class AdminController {
     @Autowired
     private AdminInfoService adminInfoService;
 
-    /**
-     * 注册接口
-     *
-     * @param adminInfo
-     * @return
-     */
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Object register(@RequestBody AdminInfo adminInfo) {
-        return JsonData.buildSuccess(adminInfoService.register(adminInfo));
-    }
-
-    /**
-     * 登录接口
-     *
-     * @param adminInfo 用户账号密码
-     * @return
-     */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Object login(@RequestBody AdminInfo adminInfo) {
-        return JsonData.buildSuccess(adminInfoService.login(adminInfo));
-    }
 
     /**
      * 获取用户信息接口

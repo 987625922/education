@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Date;
 
 @Slf4j
 @Service
@@ -100,8 +100,21 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
-    public PageResult selbyname(String name,int currentPage, int pageSize) {
-        return adminInfoDao.selbyname(name,currentPage,pageSize);
+    public PageResult selbyname(String name, int currentPage, int pageSize) {
+        return adminInfoDao.selbyname(name, currentPage, pageSize);
+    }
+
+    /**
+     * 更新最后登录时间
+     *
+     * @param id
+     */
+    @Override
+    public void updateLastLoginTime(long id) {
+        AdminInfo adminInfo = new AdminInfo();
+        adminInfo.setId(id);
+        adminInfo.setLastLoginTime(new Date());
+        adminInfoDao.update(adminInfo);
     }
 
 }

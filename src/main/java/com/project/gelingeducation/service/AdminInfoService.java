@@ -28,4 +28,6 @@ public interface AdminInfoService {
     void delSelUser(long[] ids);
 
     PageResult selbyname(String name,int currentPage, int pageSize);
+
+    public void updateLastLoginTime(long id);
 }

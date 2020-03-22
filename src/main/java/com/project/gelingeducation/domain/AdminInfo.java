@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Entity
@@ -42,8 +43,12 @@ public class AdminInfo implements Serializable {
     //,columnDefinition = "状态 0锁定 1有效"
     @Column(name = "status", length = 1)
     private int status;
+    //创建时间
     @Column(name = "create_time", length = 13)
     private String createTime;
+    //修改时间
     @Column(name = "modify_time", length = 13)
     private String modifyTime;
+    @Column(name = "last_login_time")
+    private Date lastLoginTime;
 }
