@@ -59,11 +59,13 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public AdminInfo findById(long id) {
         return adminInfoDao.findById(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PageResult getLists(int currentPage, int pageSize) {
         return adminInfoDao.getLists(currentPage, pageSize);
     }
@@ -100,6 +102,7 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PageResult selbyname(String name, int currentPage, int pageSize) {
         return adminInfoDao.selbyname(name, currentPage, pageSize);
     }
