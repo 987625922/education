@@ -1,19 +1,13 @@
 package com.project.gelingeducation.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.project.gelingeducation.domain.AdminInfo;
-import com.project.gelingeducation.domain.Course;
-import com.project.gelingeducation.domain.Subject;
-import com.project.gelingeducation.domain.Video;
+import com.project.gelingeducation.domain.*;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.orm.hibernate5.SpringSessionContext;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -37,9 +31,10 @@ public class HibernateConfig {
         props.setProperty("hibernate.show_sql", "true");
         props.setProperty("hibernate.format_sql", "true");
         props.setProperty("hibernate.current_session_context_class", "org.springframework.orm.hibernate5.SpringSessionContext");
-        props.setProperty("hibernate.hbm2ddl.auto","update");
+        props.setProperty("hibernate.hbm2ddl.auto", "update");
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(Subject.class, Course.class, Video.class, AdminInfo.class);
+        factoryBean.setAnnotatedClasses(Subject.class, Course.class,
+                Video.class, AdminInfo.class, LoginLog.class);
         return factoryBean;
     }
 
