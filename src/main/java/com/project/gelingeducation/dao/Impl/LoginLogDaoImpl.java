@@ -7,6 +7,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.TypedQuery;
+import java.util.List;
+
 @Repository
 public class LoginLogDaoImpl implements LoginLogDao {
 
@@ -22,5 +25,13 @@ public class LoginLogDaoImpl implements LoginLogDao {
     @Override
     public void insert(LoginLog loginLog) {
         getSession().save(loginLog);
+    }
+
+    @Override
+    public List<LoginLog> list() {
+        String hql = "from LoginLog";
+        TypedQuery<LoginLog> query = getSession().createQuery(hql);
+        List<LoginLog> list = query.getResultList();
+        return list;
     }
 }

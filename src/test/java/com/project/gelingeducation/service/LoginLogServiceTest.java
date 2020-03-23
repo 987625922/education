@@ -12,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import javax.persistence.TypedQuery;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +33,7 @@ public class LoginLogServiceTest {
     @Test
     public void test() {
         LoginLog loginLog = new LoginLog();
+        loginLog.setUid(1);
         loginLog.setLoginTime(new Date());
         loginLog.setBrowser("11");
         loginLog.setLocation("1");
@@ -43,12 +43,9 @@ public class LoginLogServiceTest {
 
     @Test
     public void test1() {
-        Session session = getSession();
-        String hql = "from LoginLog";
-        TypedQuery<LoginLog> query = session.createQuery(hql);
-        List<LoginLog> list = query.getResultList();
+        List<LoginLog> list = loginLogService.list();
         for (int i = 0; i < list.size(); i++) {
-            log.debug("==>" + list.get(i).getLoginTime());
+            log.debug("==>"+list.get(i).getLoginTime());
         }
     }
 }

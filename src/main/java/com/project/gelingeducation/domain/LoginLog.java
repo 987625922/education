@@ -4,6 +4,7 @@ package com.project.gelingeducation.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,16 +23,25 @@ public class LoginLog implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "uid")
+    /**
+     * 用户表的id
+     */
+    @Column(name = "uid",nullable = false)
     private long uid;
+
+    /**
+     * 第一次登录时间
+     */
+    //默认创建时间
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "first_login_time")
+    @CreationTimestamp
+    private Date firstLoginTime;
 
     /**
      * 登录时间
      */
-    //默认创建时间
-//    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "login_time")
-//    @CreationTimestamp
     private Date loginTime;
     /**
      * 登录地点
