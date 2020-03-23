@@ -1,8 +1,8 @@
 package com.project.gelingeducation.controller;
 
-import com.project.gelingeducation.domain.AdminInfo;
+import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.domain.JsonData;
-import com.project.gelingeducation.service.AdminInfoService;
+import com.project.gelingeducation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,28 +13,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     @Autowired
-    private AdminInfoService adminInfoService;
+    private UserService userService;
 
     /**
      * 登录接口
      *
-     * @param adminInfo 用户账号密码
+     * @param user 用户账号密码
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Object login(@RequestBody AdminInfo adminInfo) {
-        return JsonData.buildSuccess(adminInfoService.login(adminInfo));
+    public Object login(@RequestBody User user) {
+        return JsonData.buildSuccess(userService.login(user));
     }
 
     /**
      * 注册接口
      *
-     * @param adminInfo
+     * @param user
      * @return
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Object register(@RequestBody AdminInfo adminInfo) {
-        return JsonData.buildSuccess(adminInfoService.register(adminInfo));
+    public Object register(@RequestBody User user) {
+        return JsonData.buildSuccess(userService.register(user));
     }
 
     /**
@@ -42,7 +42,6 @@ public class LoginController {
      */
     @RequestMapping(value = "/home", method = RequestMethod.POST)
     public Object register(long id) {
-        adminInfoService.updateLastLoginTime(id);
 
         return JsonData.buildSuccess();
     }

@@ -1,8 +1,8 @@
 package com.project.gelingeducation.controller;
 
-import com.project.gelingeducation.domain.AdminInfo;
+import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.domain.JsonData;
-import com.project.gelingeducation.service.AdminInfoService;
+import com.project.gelingeducation.service.UserService;
 import com.project.gelingeducation.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ import java.util.Iterator;
 public class AdminController {
 
     @Autowired
-    private AdminInfoService adminInfoService;
+    private UserService userService;
 
 
     /**
@@ -42,7 +42,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/getInfo", method = RequestMethod.GET)
     public Object getInfo(int id) {
-        return JsonData.buildSuccess(adminInfoService.findById(id));
+        return JsonData.buildSuccess(userService.findById(id));
     }
 
     /**
@@ -72,7 +72,7 @@ public class AdminController {
                 }
             }
 
-            adminInfoService.updateCoverImg(Long.valueOf(userId), time);
+            userService.updateCoverImg(Long.valueOf(userId), time);
         } else {
             return JsonData.buildError("图片上传失败");
         }
@@ -82,12 +82,12 @@ public class AdminController {
     /**
      * 编辑个人信息
      *
-     * @param adminInfo 个人信息
+     * @param user 个人信息
      * @return
      */
     @RequestMapping(value = "/editinfo", method = RequestMethod.POST)
-    public Object update(@RequestBody AdminInfo adminInfo) {
-        adminInfoService.update(adminInfo);
+    public Object update(@RequestBody User user) {
+        userService.update(user);
         return JsonData.buildSuccess();
     }
 
@@ -100,7 +100,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/updatepassword", method = RequestMethod.POST)
     public Object updatePassword(long id, String oldPassword, String newPassword) {
-        adminInfoService.updatePassword(id, oldPassword, newPassword);
+        userService.updatePassword(id, oldPassword, newPassword);
         return JsonData.buildSuccess();
     }
 
@@ -111,18 +111,18 @@ public class AdminController {
      */
     @RequestMapping(value = "/lists", method = RequestMethod.POST)
     public Object lists(int currentPage, int pageSize) {
-        return JsonData.buildSuccess(adminInfoService.getLists(currentPage, pageSize));
+        return JsonData.buildSuccess(userService.getLists(currentPage, pageSize));
     }
 
     /**
      * 添加用户
      *
-     * @param adminInfo
+     * @param user
      * @return
      */
     @RequestMapping(value = "/adduser", method = RequestMethod.POST)
-    public Object addUser(@RequestBody AdminInfo adminInfo) {
-        return JsonData.buildSuccess(adminInfoService.addUser(adminInfo));
+    public Object addUser(@RequestBody User user) {
+        return JsonData.buildSuccess(userService.addUser(user));
     }
 
     /**
@@ -133,7 +133,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/deluser", method = RequestMethod.POST)
     public Object deluser(long id) {
-        adminInfoService.delUser(id);
+        userService.delUser(id);
         return JsonData.buildSuccess();
     }
 
@@ -142,7 +142,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/delseluser", method = RequestMethod.POST)
     public Object delSelUser(long[] ids) {
-        adminInfoService.delSelUser(ids);
+        userService.delSelUser(ids);
         return JsonData.buildSuccess();
     }
 
@@ -151,7 +151,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/selbyname", method = RequestMethod.POST)
     public Object selByName(String name, int currentPage, int pageSize) {
-        return JsonData.buildSuccess(adminInfoService.selbyname(name, currentPage, pageSize));
+        return JsonData.buildSuccess(userService.selbyname(name, currentPage, pageSize));
     }
 
 }

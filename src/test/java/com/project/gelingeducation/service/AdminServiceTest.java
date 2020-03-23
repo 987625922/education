@@ -1,7 +1,7 @@
 package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.config.HibernateConfig;
-import com.project.gelingeducation.domain.AdminInfo;
+import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.dto.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -20,52 +20,60 @@ import java.util.List;
 public class AdminServiceTest {
 
     @Autowired
-    private AdminInfoService adminInfoService;
+    private UserService userService;
 
     @Test
     public void findById() {
 //        for (int i = 0; i < 10; i++) {
-        log.debug("findById获取的结果：" + adminInfoService.findById(1));
+        log.debug("findById获取的结果：" + userService.findById(1));
 //        }
     }
 
     @Test
     public void insert() {
-        AdminInfo adminInfo = new AdminInfo();
-        adminInfo.setAccount("123456");
-        adminInfo.setPassword("123456");
-        log.debug("findById获取的结果：" + adminInfoService.addUser(adminInfo));
+        User user = new User();
+        user.setAccount("123456");
+        user.setPassword("123456");
+        log.debug("findById获取的结果：" + userService.addUser(user));
     }
 
     //hibernate选择更新
     @Test
     public void update() {
-        AdminInfo adminInfo = new AdminInfo();
-        adminInfo.setId(1);
-        adminInfo.setAccount("1234561");
-        adminInfo.setPassword("123456");
-        adminInfo.setCoverImg("图片1");
-        adminInfoService.update(adminInfo);
+        User user = new User();
+        user.setId(1);
+        user.setAccount("1234561");
+        user.setPassword("123456");
+        user.setCoverImg("图片1");
+        userService.update(user);
     }
 
     //hibernate选择更新
     @Test
     public void update1() {
-        AdminInfo adminInfo = new AdminInfo();
-        adminInfo.setId(1);
-        adminInfo.setAccount("123456");
-        adminInfo.setPassword("123456");
-        adminInfo.setCoverImg("图片");
-        adminInfoService.update(adminInfo);
+        User user = new User();
+        user.setId(1);
+        user.setAccount("123456");
+        user.setPassword("123456");
+        user.setCoverImg("图片");
+        userService.update(user);
     }
 
 
     @Test
     public void lists() {
-        PageResult bean = adminInfoService.getLists(3, 3);
-        List<AdminInfo> adminInfos = (List<AdminInfo>) bean.getLists();
-        for (AdminInfo adminInfo : adminInfos) {
-            log.debug("==>  " + adminInfo);
+        PageResult bean = userService.getLists(3, 3);
+        List<User> users = (List<User>) bean.getLists();
+        for (User user : users) {
+            log.debug("==>  " + user);
         }
+    }
+
+    @Test
+    public void login(){
+        User user = new User();
+        user.setAccount("123456");
+        user.setPassword("123456");
+        userService.login(user);
     }
 }

@@ -1,7 +1,7 @@
 package com.project.gelingeducation.dao.Impl;
 
-import com.project.gelingeducation.dao.AdminInfoDao;
-import com.project.gelingeducation.domain.AdminInfo;
+import com.project.gelingeducation.dao.UserDao;
+import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.dto.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 @Repository
-public class AdminInfoDaoImpl implements AdminInfoDao {
+public class UserDaoImpl implements UserDao {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -30,16 +30,16 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
     public PageResult getLists(int currentPage, int pageSize) {
         Session session = getSession();
 
-        String hql = "select count(*) from AdminInfo";//此处的Product是对象
+        String hql = "select count(*) from User";//此处的Product是对象
         Query queryCount = session.createQuery(hql);
         long allrows = (long) queryCount.uniqueResult();
 
-        TypedQuery<AdminInfo> query = session.createQuery("from AdminInfo");
+        TypedQuery<User> query = session.createQuery("from User");
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
         query.setMaxResults(currentPage * pageSize);//得到每页的记录数
 
         long totalPage = (allrows - 1) / pageSize + 1;
-        List<AdminInfo> list = query.getResultList();
+        List<User> list = query.getResultList();
 
         PageResult pageResult = new PageResult();
         pageResult.setTotalPages(totalPage);
@@ -52,10 +52,10 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
     }
 
     @Override
-    public AdminInfo findByPhone(String account) {
-        Query query = getSession().createQuery("from AdminInfo where account=?0");
+    public User findByPhone(String account) {
+        Query query = getSession().createQuery("from User where account=?0");
         query.setParameter(0, account);
-        List<AdminInfo> list = query.list();
+        List<User> list = query.list();
         if (list.size() > 0) {
             return list.get(0);
         } else {
@@ -65,20 +65,20 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
     }
 
     @Override
-    public AdminInfo findById(long id) {
-        AdminInfo adminInfo = getSession().get(AdminInfo.class, id);
-        return adminInfo;
+    public User findById(long id) {
+        User user = getSession().get(User.class, id);
+        return user;
     }
 
     @Override
-    public AdminInfo insert(AdminInfo adminInfo) {
-        getSession().save(adminInfo);
-        return adminInfo;
+    public User insert(User user) {
+        getSession().save(user);
+        return user;
     }
 
     @Override
     public void delect(long id) {
-        getSession().delete(getSession().get(AdminInfo.class, id));
+        getSession().delete(getSession().get(User.class, id));
     }
 
     @Override
@@ -91,113 +91,107 @@ public class AdminInfoDaoImpl implements AdminInfoDao {
                 sql = sql + ","+ids[i];
             }
         }
-        Query query = getSession().createQuery("DELETE FROM AdminInfo WHERE id in(" + sql + ")");
+        Query query = getSession().createQuery("DELETE FROM User WHERE id in(" + sql + ")");
         query.executeUpdate();
     }
 
 
     @Override
-    public void update(AdminInfo adminInfo) {
-//        getSession().update(adminInfo);
-        StringBuffer hql = new StringBuffer("update AdminInfo set ");
+    public void update(User user) {
+//        getSession().update(user);
+        StringBuffer hql = new StringBuffer("update User set ");
         int index = 0;
-        if (!StringUtils.isEmpty(adminInfo.getUserName())) {
-            hql.append("user_name = '" + adminInfo.getUserName() + "'");
+        if (!StringUtils.isEmpty(user.getUserName())) {
+            hql.append("user_name = '" + user.getUserName() + "'");
             index++;
         }
-        if (!StringUtils.isEmpty(adminInfo.getAccount())) {
+        if (!StringUtils.isEmpty(user.getAccount())) {
             if (index > 0) {
                 hql.append(" ,");
             }
-            hql.append("account = '" + adminInfo.getAccount() + "'");
+            hql.append("account = '" + user.getAccount() + "'");
             index++;
         }
 
-        if (!StringUtils.isEmpty(adminInfo.getPassword())) {
+        if (!StringUtils.isEmpty(user.getPassword())) {
             if (index > 0) {
                 hql.append(" ,");
             }
-            hql.append("password = '" + adminInfo.getPassword() + "'");
+            hql.append("password = '" + user.getPassword() + "'");
             index++;
         }
-        if (!StringUtils.isEmpty(adminInfo.getCoverImg())) {
+        if (!StringUtils.isEmpty(user.getCoverImg())) {
             if (index > 0) {
                 hql.append(" ,");
             }
-            hql.append("cover_img = '" + adminInfo.getCoverImg() + "'");
+            hql.append("cover_img = '" + user.getCoverImg() + "'");
             index++;
         }
-        if (!StringUtils.isEmpty(adminInfo.getIsAdaim())) {
+        if (!StringUtils.isEmpty(user.getIsAdaim())) {
             if (index > 0) {
                 hql.append(" ,");
             }
-            hql.append("isAdaim = '" + adminInfo.getIsAdaim() + "'");
+            hql.append("isAdaim = '" + user.getIsAdaim() + "'");
             index++;
         }
-        if (!StringUtils.isEmpty(adminInfo.getEMail())) {
+        if (!StringUtils.isEmpty(user.getEMail())) {
             if (index > 0) {
                 hql.append(" ,");
             }
-            hql.append("email = '" + adminInfo.getEMail() + "'");
+            hql.append("email = '" + user.getEMail() + "'");
             index++;
         }
-        if (!StringUtils.isEmpty(adminInfo.getSex())) {
+        if (!StringUtils.isEmpty(user.getSex())) {
             if (index > 0) {
                 hql.append(" ,");
             }
-            hql.append("ssex = '" + adminInfo.getSex() + "'");
+            hql.append("ssex = '" + user.getSex() + "'");
             index++;
         }
-        if (!StringUtils.isEmpty(adminInfo.getNote())) {
+        if (!StringUtils.isEmpty(user.getNote())) {
             if (index > 0) {
                 hql.append(" ,");
             }
-            hql.append("note = '" + adminInfo.getNote() + "'");
+            hql.append("note = '" + user.getNote() + "'");
         }
-        if (!StringUtils.isEmpty(adminInfo.getStatus())) {
+        if (!StringUtils.isEmpty(user.getStatus())) {
             if (index > 0) {
                 hql.append(" ,");
             }
-            hql.append("status = '" + adminInfo.getStatus() + "'");
+            hql.append("status = '" + user.getStatus() + "'");
         }
-        if (!StringUtils.isEmpty(adminInfo.getCreateTime())) {
+        if (!StringUtils.isEmpty(user.getModifyTime())) {
             if (index > 0) {
                 hql.append(" ,");
             }
-            hql.append("create_time = '" + adminInfo.getCreateTime() + "'");
+            hql.append("modify_time = '" + user.getModifyTime() + "'");
         }
-        if (!StringUtils.isEmpty(adminInfo.getModifyTime())) {
-            if (index > 0) {
-                hql.append(" ,");
-            }
-            hql.append("modify_time = '" + adminInfo.getModifyTime() + "'");
-        }
-        Query query = getSession().createQuery(hql.toString() + " where id = " + adminInfo.getId());
+        Query query = getSession().createQuery(hql.toString() + " where id = " + user.getId());
         query.executeUpdate();
     }
 
     @Override
     public void updateCoverImg(long id, String coverImg) {
-        Query query = getSession().createQuery("update AdminInfo set coverImg = " + coverImg + " where id = " + id);
+        Query query = getSession().createQuery("update User set coverImg = " + coverImg + " where id = " + id);
         query.executeUpdate();
     }
 
     @Override
     public PageResult selbyname(String name,int currentPage, int pageSize) {
-//        Query queryCount = session.createQuery("from AdminInfo where userName LIKE '%"+name+"%'");
+//        Query queryCount = session.createQuery("from User where userName LIKE '%"+name+"%'");
 
         Session session = getSession();
 
-        String hql = "select count(*) from AdminInfo where userName LIKE '%"+name+"%'";//此处的Product是对象
+        String hql = "select count(*) from User where userName LIKE '%"+name+"%'";//此处的Product是对象
         Query queryCount = session.createQuery(hql);
         long allrows = (long) queryCount.uniqueResult();
 
-        TypedQuery<AdminInfo> query = session.createQuery("from AdminInfo where userName LIKE '%"+name+"%'");
+        TypedQuery<User> query = session.createQuery("from User where userName LIKE '%"+name+"%'");
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
         query.setMaxResults(currentPage * pageSize);//得到每页的记录数
 
         long totalPage = (allrows - 1) / pageSize + 1;
-        List<AdminInfo> list = query.getResultList();
+        List<User> list = query.getResultList();
 
         PageResult pageResult = new PageResult();
         pageResult.setTotalPages(totalPage);

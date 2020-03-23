@@ -34,7 +34,7 @@ public class HibernateConfig {
         props.setProperty("hibernate.hbm2ddl.auto", "update");
         factoryBean.setHibernateProperties(props);
         factoryBean.setAnnotatedClasses(Subject.class, Course.class,
-                Video.class, AdminInfo.class, LoginLog.class);
+                Video.class, User.class, LoginLog.class);
         return factoryBean;
     }
 

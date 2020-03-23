@@ -3,6 +3,7 @@ package com.project.gelingeducation.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,8 +13,8 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "admin")
-public class AdminInfo implements Serializable {
+@Table(name = "user")
+public class User implements Serializable {
 
     private static final long serialVersionUID = -218595055003268321L;
 
@@ -44,11 +45,13 @@ public class AdminInfo implements Serializable {
     @Column(name = "status", length = 1)
     private int status;
     //创建时间
-    @Column(name = "create_time", length = 13)
-    private String createTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_time")
+    @CreationTimestamp
+    private Date createTime;
+
     //修改时间
-    @Column(name = "modify_time", length = 13)
-    private String modifyTime;
-    @Column(name = "last_login_time")
-    private Date lastLoginTime;
+    @Column(name = "modify_time")
+    private Date modifyTime;
+
 }

@@ -1,24 +1,22 @@
 package com.project.gelingeducation.dao;
 
-import com.project.gelingeducation.domain.AdminInfo;
+import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.dto.PageResult;
 
-import java.util.List;
-
-public interface AdminInfoDao {
+public interface UserDao {
     PageResult getLists(int currentPage, int pageSize);
 
-    AdminInfo findById(long id);
+    User findById(long id);
 
-    AdminInfo findByPhone(String account);
+    User findByPhone(String account);
 
-    AdminInfo insert(AdminInfo adminInfo);
+    User insert(User user);
 
     void delect(long id);
 
     void delSel(long[] ids);
 
-    void update(AdminInfo adminInfo);
+    void update(User user);
 
     void updateCoverImg(long id, String coverImg);
 

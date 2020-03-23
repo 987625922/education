@@ -1,25 +1,23 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.domain.AdminInfo;
+import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.dto.PageResult;
 
-import java.util.List;
+public interface UserService {
 
-public interface AdminInfoService {
+    Object register(User user);
 
-    Object register(AdminInfo adminInfo);
+    Object addUser(User user);
 
-    Object addUser(AdminInfo adminInfo);
+    Object login(User user);
 
-    Object login(AdminInfo adminInfo);
-
-    AdminInfo findById(long id);
+    User findById(long id);
 
     PageResult getLists(int currentPage, int pageSize);
 
     void updateCoverImg(long id,String coverImg);
 
-    void update(AdminInfo adminInfo);
+    void update(User user);
 
     void updatePassword(long id,String oldPassword,String newPassword);
 
@@ -29,5 +27,4 @@ public interface AdminInfoService {
 
     PageResult selbyname(String name,int currentPage, int pageSize);
 
-    public void updateLastLoginTime(long id);
 }
