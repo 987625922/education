@@ -9,4 +9,9 @@ public interface LoginLogService {
     void insert(LoginLog loginLog);
 
     List<LoginLog> list();
+
+    LoginLog getByUserId(long uid);
+
+    void getByUserIdLoginUpdate(long uid);
+
 }

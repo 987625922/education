@@ -9,4 +9,6 @@ public interface LoginLogDao {
     void insert(LoginLog loginLog);
 
     List<LoginLog> list();
+
+    LoginLog getByUid(long uid);
 }

@@ -36,4 +36,23 @@ public class LoginLogServiceImpl implements LoginLogService {
     public List<LoginLog> list() {
         return loginLogDao.list();
     }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = AllException.class)
+    public LoginLog getByUserId(long uid) {
+        return loginLogDao.getByUid(uid);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = AllException.class)
+    public void getByUserIdLoginUpdate(long uid) {
+        LoginLog loginLog = loginLogDao.getByUid(uid);
+//        if (loginLog == null)
+        loginLog.setLoginTime(new Date());
+        String ip = IPUtil.getIpAddr(HttpContextUtil.getHttpServletRequest());
+        loginLog.setIp(ip);
+        loginLog.setLocation(AddressUtil.getCityInfo(ip));
+    }
+
+
 }

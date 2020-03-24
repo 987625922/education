@@ -53,9 +53,7 @@ public class UserServiceImpl implements UserService {
     public Object login(User user) {
         User info = userDao.findByPhone(user.getAccount());
         if (info != null && info.getPassword().equals(MD5Util.encrypt(user.getAccount(), user.getPassword()))) {
-            LoginLog loginLog = new LoginLog();
-            loginLog.setUid(info.getId());
-            loginLogService.insert(loginLog);
+           loginLogService.getByUserIdLoginUpdate(info.getId());
             return info;
         } else {
             throw new AllException(-100, "账号密码错误");
