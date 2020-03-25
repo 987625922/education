@@ -1,6 +1,6 @@
 package com.project.gelingeducation;
 
-import com.project.gelingeducation.config.HibernateConfig;
+import com.project.gelingeducation.common.config.HibernateConfig;
 import com.project.gelingeducation.domain.Video;
 import com.project.gelingeducation.service.UserService;
 import com.project.gelingeducation.service.SubjectService;

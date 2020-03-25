@@ -1,6 +1,6 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.config.HibernateConfig;
+import com.project.gelingeducation.common.config.HibernateConfig;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.dto.PageResult;
 import lombok.extern.slf4j.Slf4j;
@@ -70,7 +70,7 @@ public class AdminServiceTest {
     }
 
     @Test
-    public void login(){
+    public void login() {
         User user = new User();
         user.setAccount("123456");
         user.setPassword("123456");

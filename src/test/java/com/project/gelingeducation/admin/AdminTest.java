@@ -1,6 +1,5 @@
 package com.project.gelingeducation.admin;
 
-import com.project.gelingeducation.config.HibernateConfig;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +12,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 @Slf4j
 @WebAppConfiguration
-@ContextConfiguration(classes = HibernateConfig.class)
+@ContextConfiguration(classes = com.project.gelingeducation.common.config.HibernateConfig.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AdminTest {
 

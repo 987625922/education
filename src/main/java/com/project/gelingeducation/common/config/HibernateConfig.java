@@ -1,4 +1,4 @@
-package com.project.gelingeducation.config;
+package com.project.gelingeducation.common.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.project.gelingeducation.domain.*;

@@ -1,6 +1,6 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.config.HibernateConfig;
+import com.project.gelingeducation.common.config.HibernateConfig;
 import com.project.gelingeducation.domain.LoginLog;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
@@ -12,8 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 

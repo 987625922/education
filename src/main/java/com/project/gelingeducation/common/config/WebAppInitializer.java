@@ -1,4 +1,4 @@
-package com.project.gelingeducation.config;
+package com.project.gelingeducation.common.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
