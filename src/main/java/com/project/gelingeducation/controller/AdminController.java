@@ -3,7 +3,7 @@ package com.project.gelingeducation.controller;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.domain.JsonData;
 import com.project.gelingeducation.service.UserService;
-import com.project.gelingeducation.utils.FileUtils;
+import com.project.gelingeducation.common.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;

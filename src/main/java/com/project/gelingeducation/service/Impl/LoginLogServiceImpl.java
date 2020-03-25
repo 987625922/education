@@ -2,11 +2,11 @@ package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.dao.LoginLogDao;
 import com.project.gelingeducation.domain.LoginLog;
-import com.project.gelingeducation.exception.AllException;
+import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.service.LoginLogService;
-import com.project.gelingeducation.utils.AddressUtil;
-import com.project.gelingeducation.utils.HttpContextUtil;
-import com.project.gelingeducation.utils.IPUtil;
+import com.project.gelingeducation.common.utils.AddressUtil;
+import com.project.gelingeducation.common.utils.HttpContextUtil;
+import com.project.gelingeducation.common.utils.IPUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

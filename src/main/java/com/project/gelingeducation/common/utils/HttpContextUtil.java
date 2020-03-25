@@ -1,4 +1,4 @@
-package com.project.gelingeducation.utils;
+package com.project.gelingeducation.common.utils;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

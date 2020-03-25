@@ -1,7 +1,7 @@
 package com.project.gelingeducation.domain;
 
 
-import com.project.gelingeducation.utils.HttpContextUtil;
+import com.project.gelingeducation.common.utils.HttpContextUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

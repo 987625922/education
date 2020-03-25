@@ -1,4 +1,4 @@
-package com.project.gelingeducation.utils;
+package com.project.gelingeducation.common.utils;
 
 import javax.servlet.http.HttpServletRequest;
 

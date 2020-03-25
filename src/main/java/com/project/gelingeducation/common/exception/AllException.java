@@ -1,4 +1,4 @@
-package com.project.gelingeducation.exception;
+package com.project.gelingeducation.common.exception;
 
 /**
  * 自定义全局异常类

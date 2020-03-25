@@ -1,4 +1,4 @@
-package com.project.gelingeducation.utils;
+package com.project.gelingeducation.common.utils;
 
 public class FileUtils {
 

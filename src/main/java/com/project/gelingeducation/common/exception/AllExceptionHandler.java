@@ -1,4 +1,4 @@
-package com.project.gelingeducation.exception;
+package com.project.gelingeducation.common.exception;
 
 import com.project.gelingeducation.domain.JsonData;
 import org.springframework.web.bind.annotation.ControllerAdvice;

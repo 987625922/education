@@ -1,4 +1,4 @@
-package com.project.gelingeducation.utils;
+package com.project.gelingeducation.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;

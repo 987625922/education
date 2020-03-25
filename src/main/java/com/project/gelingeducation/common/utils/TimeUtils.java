@@ -1,4 +1,4 @@
-package com.project.gelingeducation.utils;
+package com.project.gelingeducation.common.utils;
 
 /**
  * 时间处理类
