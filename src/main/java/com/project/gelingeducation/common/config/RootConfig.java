@@ -11,18 +11,16 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import java.text.SimpleDateFormat;
 
 @Configuration
-@ComponentScan(basePackages = {"com.project.gelingeducation"},
-        excludeFilters = {
-                @Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class)
-        })
 public class RootConfig {
 
+    //解析Date
     @Bean
     public SimpleDateFormat dateFormat() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
         return simpleDateFormat;
     }
 
+    //上传设置
     @Bean
     public CommonsMultipartResolver multipartResolver(){
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();

@@ -25,26 +25,31 @@
     </properties>
 
     <dependencies>
+        <!--  spring 相关 -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <!--  spring 相关 -->
 
         <!-- Hibernate 数据库相关 -->
         <!-- Hibernate Core -->
@@ -53,12 +58,14 @@
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
+
         <!-- Hibernate-C3P0 Integration -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-c3p0</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
+
         <!-- mysql -->
         <!-- mysql连接池 -->
         <dependency>
@@ -66,6 +73,7 @@
             <artifactId>c3p0</artifactId>
             <version>0.9.5.4</version>
         </dependency>
+
         <!-- mysql连接驱动 -->
         <dependency>
             <groupId>mysql</groupId>
@@ -73,13 +81,43 @@
             <version>8.0.16</version>
         </dependency>
 
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <!-- Hibernate 数据库相关 -->
+
+        <!-- shiro 相关 -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.crazycake</groupId>
+            <artifactId>shiro-redis</artifactId>
+            <version>3.2.3</version>
+            <!-- 排除最新3.1.0版本，引用2.9.0版本,https://github.com/alexxiyang/shiro-redis/issues/113 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>redis.clients</groupId>
+                    <artifactId>jedis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- shiro 相关 -->
+
         <!-- 工具 -->
+
         <!-- gson工具，封装http的时候使用 -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.8.0</version>
         </dependency>
+
         <!-- 日志 -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -96,52 +134,62 @@
             <artifactId>jcl-over-slf4j</artifactId>
             <version>1.7.25</version>
         </dependency>
+
+        <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.10</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+
+        <!-- jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.9.8</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+
+        <!-- jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>2.9.8</version>
         </dependency>
+
+        <!-- servlet -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>${servlets.version}</version>
         </dependency>
+
         <!-- commons工具 -->
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.8.1</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
-            <version>1.4.2</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
-        <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
             <version>1.3.3</version>
         </dependency>
+
         <!-- IP定位插件 -->
         <dependency>
             <groupId>org.lionsoul</groupId>
             <artifactId>ip2region</artifactId>
             <version>1.7.2</version>
         </dependency>
+
+        <!-- 控制台 SQL日志打印插件 -->
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+            <version>3.8.1</version>
+        </dependency>
+
+        <!-- junit -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

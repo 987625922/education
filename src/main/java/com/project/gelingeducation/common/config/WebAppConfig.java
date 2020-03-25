@@ -30,6 +30,7 @@ public class WebAppConfig implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH")
                 .allowCredentials(true).maxAge(3600);
     }
+    //图片上传
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //        super.addResourceHandlers(registry);
