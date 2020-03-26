@@ -11,6 +11,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import java.text.SimpleDateFormat;
 
 @Configuration
+@ComponentScan(basePackages = {"com.project.gelingeducation"},
+        excludeFilters = {
+                @Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class)
+        })
 public class RootConfig {
 
     //解析Date

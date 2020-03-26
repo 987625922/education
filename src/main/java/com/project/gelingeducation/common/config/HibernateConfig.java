@@ -52,9 +52,6 @@ public class HibernateConfig {
     @Value("${hibernate.hbm2ddl.auto}")
     private String hbm2ddlAuto;
 
-    @Value("${redis.port}")
-    private int port;
-
     @Bean
     public LocalSessionFactoryBean getSessionFactory() throws PropertyVetoException {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();

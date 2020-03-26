@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service;
 
+import com.project.gelingeducation.common.authentication.ShiroConfig;
 import com.project.gelingeducation.common.config.HibernateConfig;
 import com.project.gelingeducation.domain.LoginLog;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Slf4j
 @WebAppConfiguration
-@ContextConfiguration(classes = HibernateConfig.class)
+@ContextConfiguration(classes = {HibernateConfig.class, ShiroConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class LoginLogServiceTest {
     @Autowired
@@ -45,7 +46,7 @@ public class LoginLogServiceTest {
     public void test1() {
         List<LoginLog> list = loginLogService.list();
         for (int i = 0; i < list.size(); i++) {
-            log.debug("==>"+list.get(i).getLoginTime());
+            log.debug("==>" + list.get(i).getLoginTime());
         }
     }
 }

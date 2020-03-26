@@ -1,7 +1,7 @@
 package com.project.gelingeducation.admin;
 
 import com.project.gelingeducation.domain.User;
-import com.project.gelingeducation.service.IUserService;
+import com.project.gelingeducation.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +17,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 public class AdminTest {
 
     @Autowired
-    private IUserService service;
+    private UserService service;
 
     @Test
     public void findDyPhone() {

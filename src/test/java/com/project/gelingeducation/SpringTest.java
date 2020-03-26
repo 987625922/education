@@ -2,7 +2,7 @@ package com.project.gelingeducation;
 
 import com.project.gelingeducation.common.config.HibernateConfig;
 import com.project.gelingeducation.domain.Video;
-import com.project.gelingeducation.service.IUserService;
+import com.project.gelingeducation.service.UserService;
 import com.project.gelingeducation.service.SubjectService;
 import com.project.gelingeducation.service.VideoService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class SpringTest {
     private SubjectService subjectService;
 
     @Autowired
-    private IUserService service;
+    private UserService service;
 
     @Test
     public void test() {

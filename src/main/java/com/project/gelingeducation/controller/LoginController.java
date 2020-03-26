@@ -2,7 +2,7 @@ package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.domain.JsonData;
-import com.project.gelingeducation.service.IUserService;
+import com.project.gelingeducation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     /**
      * 登录接口

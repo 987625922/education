@@ -22,6 +22,7 @@
         <jsp.version>2.3.1</jsp.version>
         <jstl.version>1.2.1</jstl.version>
         <tld.version>1.1.2</tld.version>
+        <shiro.version>1.4.2</shiro.version>
     </properties>
 
     <dependencies>
@@ -91,10 +92,24 @@
         <!-- shiro 相关 -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
-            <version>1.4.2</version>
+            <artifactId>shiro-core</artifactId>
+            <version>${shiro.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-quartz</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.crazycake</groupId>
             <artifactId>shiro-redis</artifactId>
@@ -183,11 +198,11 @@
         </dependency>
 
         <!-- 控制台 SQL日志打印插件 -->
-        <dependency>
-            <groupId>p6spy</groupId>
-            <artifactId>p6spy</artifactId>
-            <version>3.8.1</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>p6spy</groupId>-->
+            <!--<artifactId>p6spy</artifactId>-->
+            <!--<version>3.8.1</version>-->
+        <!--</dependency>-->
 
         <!-- junit -->
         <dependency>

@@ -15,6 +15,7 @@ import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.util.Base64Utils;
@@ -27,20 +28,17 @@ import java.util.LinkedHashMap;
 
 /**
  * Shiro 配置类
- *
- * @author MrBird
  */
 @Configuration
 @PropertySource({"classpath:config.properties"})
+@ComponentScan(basePackages = {"com.project.gelingeducation.common.authentication"})
 public class ShiroConfig {
 
     //redis
-    @Value("${redis.host}")
+    @Value("127.0.0.1")
     private String host;
-    @Value("${redisa.portnumber:6379}")
+    @Value("6379")
     private int port;
-    @Value("${redis.password}")
-    private String password;
     @Value("${redis.timeout}")
     private int timeout;
     @Value("${redis.database}")
@@ -70,8 +68,6 @@ public class ShiroConfig {
     private RedisManager redisManager() {
         RedisManager redisManager = new RedisManager();
         redisManager.setHost(host + ":" + port);
-        if (StringUtils.isNotBlank(password))
-            redisManager.setPassword(password);
         redisManager.setTimeout(timeout);
         redisManager.setDatabase(database);
         return redisManager;
@@ -109,6 +105,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/**", "user");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+
         return shiroFilterFactoryBean;
     }
 
@@ -148,7 +145,7 @@ public class ShiroConfig {
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         cookieRememberMeManager.setCookie(rememberMeCookie());
         // rememberMe cookie 加密的密钥
-        String encryptKey = "febs_shiro_key";
+        String encryptKey = "shiro_key";
         byte[] encryptKeyBytes = encryptKey.getBytes(StandardCharsets.UTF_8);
         String rememberKey = Base64Utils.encodeToString(Arrays.copyOf(encryptKeyBytes, 16));
         cookieRememberMeManager.setCipherKey(Base64.decode(rememberKey));
@@ -180,6 +177,7 @@ public class ShiroConfig {
         Collection<SessionListener> listeners = new ArrayList<>();
         listeners.add(new ShiroSessionListener());
         // 设置 session超时时间
+        System.out.println("================> " + shiroCookieTimeout + "  " + database);
         sessionManager.setGlobalSessionTimeout(shiroSessionTimeout * 1000L);
         sessionManager.setSessionListeners(listeners);
         sessionManager.setSessionDAO(redisSessionDAO());

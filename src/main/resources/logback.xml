@@ -47,17 +47,17 @@
             <onMismatch>DENY</onMismatch>
         </filter>
         <!-- 最常用的滚动策略，它根据时间来制定滚动策略.既负责滚动也负责触发滚动 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!--日志输出位置 可相对、和绝对路径 -->
-            <fileNamePattern>
-                ${log_dir}/error/%d{yyyy-MM-dd}/error-log.log
-            </fileNamePattern>
-            <!-- 可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件。
-            假设设置每个月滚动(把fileNamePattern改为${log_dir}/error/%d{yyyy-MM}/error-log.log)，
-            且<maxHistory>是6，则只保存最近6个月的文件，删除之前的旧文件。
-            注意，删除旧文件是，那些为了归档而创建的目录也会被删除 -->
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+            <!--&lt;!&ndash;日志输出位置 可相对、和绝对路径 &ndash;&gt;-->
+            <!--<fileNamePattern>-->
+                <!--${log_dir}/error/%d{yyyy-MM-dd}/error-log.log-->
+            <!--</fileNamePattern>-->
+            <!--&lt;!&ndash; 可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件。-->
+            <!--假设设置每个月滚动(把fileNamePattern改为${log_dir}/error/%d{yyyy-MM}/error-log.log)，-->
+            <!--且<maxHistory>是6，则只保存最近6个月的文件，删除之前的旧文件。-->
+            <!--注意，删除旧文件是，那些为了归档而创建的目录也会被删除 &ndash;&gt;-->
+            <!--<maxHistory>30</maxHistory>-->
+        <!--</rollingPolicy>-->
         <encoder>
             <pattern>
                 <!-- 设置日志输出格式 -->
@@ -79,13 +79,13 @@
             <!-- 用于配置不符合过滤条件的操作 -->
             <onMismatch>DENY</onMismatch>
         </filter>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!--日志输出位置 可相对、和绝对路径 -->
-            <fileNamePattern>
-                ${log_dir}/warn/%d{yyyy-MM-dd}/warn-log.log
-            </fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+            <!--&lt;!&ndash;日志输出位置 可相对、和绝对路径 &ndash;&gt;-->
+            <!--<fileNamePattern>-->
+                <!--${log_dir}/warn/%d{yyyy-MM-dd}/warn-log.log-->
+            <!--</fileNamePattern>-->
+            <!--<maxHistory>30</maxHistory>-->
+        <!--</rollingPolicy>-->
         <encoder>
             <pattern>
                 %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger -%msg%n
@@ -101,12 +101,12 @@
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>
-                ${log_dir}/info/%d{yyyy-MM-dd}/info-log.log
-            </fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+            <!--<fileNamePattern>-->
+                <!--${log_dir}/info/%d{yyyy-MM-dd}/info-log.log-->
+            <!--</fileNamePattern>-->
+            <!--<maxHistory>30</maxHistory>-->
+        <!--</rollingPolicy>-->
         <encoder>
             <pattern>
                 %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger -%msg%n
@@ -122,12 +122,12 @@
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>
-                ${log_dir}/debug/%d{yyyy-MM-dd}/debug-log.log
-            </fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+            <!--<fileNamePattern>-->
+                <!--${log_dir}/debug/%d{yyyy-MM-dd}/debug-log.log-->
+            <!--</fileNamePattern>-->
+            <!--<maxHistory>30</maxHistory>-->
+        <!--</rollingPolicy>-->
         <encoder>
             <pattern>
                 %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger -%msg%n
@@ -143,12 +143,12 @@
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>
-                ${log_dir}/trace/%d{yyyy-MM-dd}/trace-log.log
-            </fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+            <!--<fileNamePattern>-->
+                <!--${log_dir}/trace/%d{yyyy-MM-dd}/trace-log.log-->
+            <!--</fileNamePattern>-->
+            <!--<maxHistory>30</maxHistory>-->
+        <!--</rollingPolicy>-->
         <encoder>
             <pattern>
                 %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger -%msg%n

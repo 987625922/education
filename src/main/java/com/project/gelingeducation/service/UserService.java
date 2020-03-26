@@ -3,7 +3,7 @@ package com.project.gelingeducation.service;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.dto.PageResult;
 
-public interface IUserService {
+public interface UserService {
 
     Object register(User user);
 

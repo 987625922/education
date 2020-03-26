@@ -4,7 +4,7 @@ import com.project.gelingeducation.dao.UserDao;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.dto.PageResult;
 import com.project.gelingeducation.common.exception.AllException;
-import com.project.gelingeducation.service.IUserService;
+import com.project.gelingeducation.service.UserService;
 import com.project.gelingeducation.service.LoginLogService;
 import com.project.gelingeducation.common.utils.MD5Util;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @Transactional
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
