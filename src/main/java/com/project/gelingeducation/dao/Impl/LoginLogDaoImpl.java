@@ -40,7 +40,8 @@ public class LoginLogDaoImpl implements LoginLogDao {
     public LoginLog getByUid(long uid) {
         Query query = getSession().createQuery("from LoginLog where uid=?0");
         query.setParameter(0, uid);
-        List<LoginLog> list = query.list();
-        return list.get(0);
+//        List<LoginLog> list = query.list();
+        LoginLog loginLog = (LoginLog) query.uniqueResult();
+        return loginLog;
     }
 }

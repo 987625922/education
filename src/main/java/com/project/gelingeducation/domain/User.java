@@ -8,6 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -49,9 +51,11 @@ public class User implements Serializable {
     @Column(name = "create_time")
     @CreationTimestamp
     private Date createTime;
-
     //修改时间
     @Column(name = "modify_time")
     private Date modifyTime;
+
+    @ManyToMany(targetEntity = Role.class, mappedBy = "users")
+    private Set<Role> roles = new HashSet<>();
 
 }

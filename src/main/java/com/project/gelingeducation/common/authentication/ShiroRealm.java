@@ -1,18 +1,14 @@
 package com.project.gelingeducation.common.authentication;
 
-import org.apache.commons.lang3.StringUtils;
+import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.service.IUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * 自定义实现 ShiroRealm，包含认证和授权两大模块
@@ -22,7 +18,7 @@ import java.util.stream.Collectors;
 public class ShiroRealm extends AuthorizingRealm {
 
 //    @Autowired
-//    private UserService userService;
+//    private IUserService IUserService;
 //    @Autowired
 //    private IRoleService roleService;
 //    @Autowired
@@ -68,7 +64,7 @@ public class ShiroRealm extends AuthorizingRealm {
 //        String password = new String((char[]) token.getCredentials());
 //
 //        // 通过用户名到数据库查询用户信息
-//        User user = this.userService.findByName(userName);
+//        User user = this.IUserService.selbyname(userName);
 //
 //        if (user == null)
 //            throw new UnknownAccountException("账号未注册！");

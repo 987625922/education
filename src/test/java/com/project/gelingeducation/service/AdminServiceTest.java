@@ -20,14 +20,14 @@ import java.util.List;
 public class AdminServiceTest {
 
     @Autowired
-    private UserService userService;
+    private IUserService IUserService;
 
     @Test
     public void login() {
         User user = new User();
         user.setAccount("123456");
         user.setPassword("123456");
-        userService.login(user);
+        IUserService.login(user);
     }
 
     @Test
@@ -35,13 +35,13 @@ public class AdminServiceTest {
         User user = new User();
         user.setAccount("123456");
         user.setPassword("123456");
-        log.debug("findById获取的结果：" + userService.addUser(user));
+        log.debug("findById获取的结果：" + IUserService.addUser(user));
     }
 
     @Test
     public void findById() {
 //        for (int i = 0; i < 10; i++) {
-        log.debug("findById获取的结果：" + userService.findById(1));
+        log.debug("findById获取的结果：" + IUserService.findById(1));
 //        }
     }
 
@@ -53,7 +53,7 @@ public class AdminServiceTest {
         user.setAccount("1234561");
         user.setPassword("123456");
         user.setCoverImg("图片1");
-        userService.update(user);
+        IUserService.update(user);
     }
 
     //hibernate选择更新
@@ -64,13 +64,13 @@ public class AdminServiceTest {
         user.setAccount("123456");
         user.setPassword("123456");
         user.setCoverImg("图片");
-        userService.update(user);
+        IUserService.update(user);
     }
 
 
     @Test
     public void lists() {
-        PageResult bean = userService.getLists(3, 3);
+        PageResult bean = IUserService.getLists(3, 3);
         List<User> users = (List<User>) bean.getLists();
         for (User user : users) {
             log.debug("==>  " + user);

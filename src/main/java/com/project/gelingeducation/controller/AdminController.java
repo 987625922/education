@@ -2,7 +2,7 @@ package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.domain.JsonData;
-import com.project.gelingeducation.service.UserService;
+import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.common.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ import java.util.Iterator;
 public class AdminController {
 
     @Autowired
-    private UserService userService;
+    private IUserService IUserService;
 
 
     /**
@@ -42,7 +42,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/getInfo", method = RequestMethod.GET)
     public Object getInfo(int id) {
-        return JsonData.buildSuccess(userService.findById(id));
+        return JsonData.buildSuccess(IUserService.findById(id));
     }
 
     /**
@@ -72,7 +72,7 @@ public class AdminController {
                 }
             }
 
-            userService.updateCoverImg(Long.valueOf(userId), time);
+            IUserService.updateCoverImg(Long.valueOf(userId), time);
         } else {
             return JsonData.buildError("图片上传失败");
         }
@@ -87,7 +87,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/editinfo", method = RequestMethod.POST)
     public Object update(@RequestBody User user) {
-        userService.update(user);
+        IUserService.update(user);
         return JsonData.buildSuccess();
     }
 
@@ -100,7 +100,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/updatepassword", method = RequestMethod.POST)
     public Object updatePassword(long id, String oldPassword, String newPassword) {
-        userService.updatePassword(id, oldPassword, newPassword);
+        IUserService.updatePassword(id, oldPassword, newPassword);
         return JsonData.buildSuccess();
     }
 
@@ -111,7 +111,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/lists", method = RequestMethod.POST)
     public Object lists(int currentPage, int pageSize) {
-        return JsonData.buildSuccess(userService.getLists(currentPage, pageSize));
+        return JsonData.buildSuccess(IUserService.getLists(currentPage, pageSize));
     }
 
     /**
@@ -122,7 +122,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/adduser", method = RequestMethod.POST)
     public Object addUser(@RequestBody User user) {
-        return JsonData.buildSuccess(userService.addUser(user));
+        return JsonData.buildSuccess(IUserService.addUser(user));
     }
 
     /**
@@ -133,7 +133,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/deluser", method = RequestMethod.POST)
     public Object deluser(long id) {
-        userService.delUser(id);
+        IUserService.delUser(id);
         return JsonData.buildSuccess();
     }
 
@@ -142,7 +142,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/delseluser", method = RequestMethod.POST)
     public Object delSelUser(long[] ids) {
-        userService.delSelUser(ids);
+        IUserService.delSelUser(ids);
         return JsonData.buildSuccess();
     }
 
@@ -151,7 +151,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/selbyname", method = RequestMethod.POST)
     public Object selByName(String name, int currentPage, int pageSize) {
-        return JsonData.buildSuccess(userService.selbyname(name, currentPage, pageSize));
+        return JsonData.buildSuccess(IUserService.selbyname(name, currentPage, pageSize));
     }
 
 }

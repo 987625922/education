@@ -39,25 +39,25 @@ public class ShiroConfig {
     private String host;
     @Value("6379")
     private int port;
-    @Value("${redis.timeout}")
+    @Value("1000")
     private int timeout;
-    @Value("${redis.database}")
+    @Value("0")
     private int database;
 
     //shiro
-    @Value("${shiro.session_timeout}")
+    @Value("3600")
     private int shiroSessionTimeout;
-    @Value("${shiro.cookie_timeout}")
+    @Value("86400")
     private int shiroCookieTimeout;
-    @Value("${shiro.login_url}")
+    @Value("/login")
     private String loginUrl;
-    @Value("${shiro.success_url}")
+    @Value("/inex")
     private String successUrl;
-    @Value("${shiro.unauthorized_url}")
+    @Value("${/unauthorized}")
     private String unauthorizedUrl;
-    @Value("${shiro.anon_url}")
+    @Value("${/test/**,/febs/**,/img/**,/layui/**,/json/**,/images/captcha,/regist,/actuator/**}")
     private String anonUrl;
-    @Value("${shiro.logout_url}")
+    @Value("/logout")
     private String logoutUrl;
 
     /**

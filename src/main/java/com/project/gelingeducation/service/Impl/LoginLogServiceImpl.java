@@ -47,11 +47,20 @@ public class LoginLogServiceImpl implements LoginLogService {
     @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = AllException.class)
     public void getByUserIdLoginUpdate(long uid) {
         LoginLog loginLog = loginLogDao.getByUid(uid);
-//        if (loginLog == null)
-        loginLog.setLoginTime(new Date());
-        String ip = IPUtil.getIpAddr(HttpContextUtil.getHttpServletRequest());
-        loginLog.setIp(ip);
-        loginLog.setLocation(AddressUtil.getCityInfo(ip));
+        if (loginLog == null) {
+            loginLog = new LoginLog();
+            loginLog.setUid(uid);
+            loginLog.setLoginTime(new Date());
+            String ip = IPUtil.getIpAddr(HttpContextUtil.getHttpServletRequest());
+            loginLog.setIp(ip);
+            loginLog.setLocation(AddressUtil.getCityInfo(ip));
+            loginLogDao.insert(loginLog);
+        } else {
+            loginLog.setLoginTime(new Date());
+            String ip = IPUtil.getIpAddr(HttpContextUtil.getHttpServletRequest());
+            loginLog.setIp(ip);
+            loginLog.setLocation(AddressUtil.getCityInfo(ip));
+        }
     }
 
 
