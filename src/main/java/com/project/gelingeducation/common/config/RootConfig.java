@@ -1,20 +1,19 @@
 package com.project.gelingeducation.common.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
+import com.project.gelingeducation.common.authentication.ShiroConfig;
+import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.ComponentScan.Filter;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.text.SimpleDateFormat;
 
 @Configuration
-@ComponentScan(basePackages = {"com.project.gelingeducation"},
-        excludeFilters = {
-                @Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class)
-        })
+//@ComponentScan(basePackages = {"com.project.gelingeducation"},
+//        excludeFilters = {
+//                @Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class)
+//        })
+@Import({HibernateConfig.class, ShiroConfig.class})
 public class RootConfig {
 
     //解析Date

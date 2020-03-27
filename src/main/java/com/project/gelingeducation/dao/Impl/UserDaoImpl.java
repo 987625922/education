@@ -1,6 +1,6 @@
 package com.project.gelingeducation.dao.Impl;
 
-import com.project.gelingeducation.dao.UserDao;
+import com.project.gelingeducation.dao.IUserDao;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.dto.PageResult;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 @Repository
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl implements IUserDao {
 
     @Autowired
     private SessionFactory sessionFactory;

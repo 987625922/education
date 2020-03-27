@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service;
 
+import com.project.gelingeducation.common.authentication.ShiroConfig;
 import com.project.gelingeducation.common.config.HibernateConfig;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.dto.PageResult;
@@ -15,19 +16,19 @@ import java.util.List;
 
 @Slf4j
 @WebAppConfiguration
-@ContextConfiguration(classes = HibernateConfig.class)
+@ContextConfiguration(classes = {HibernateConfig.class, ShiroConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AdminServiceTest {
 
     @Autowired
-    private IUserService IUserService;
+    private IUserService UserService;
 
     @Test
     public void login() {
         User user = new User();
         user.setAccount("123456");
         user.setPassword("123456");
-        IUserService.login(user);
+        UserService.login(user);
     }
 
     @Test
@@ -35,13 +36,13 @@ public class AdminServiceTest {
         User user = new User();
         user.setAccount("123456");
         user.setPassword("123456");
-        log.debug("findById获取的结果：" + IUserService.addUser(user));
+        log.debug("findById获取的结果：" + UserService.addUser(user));
     }
 
     @Test
     public void findById() {
 //        for (int i = 0; i < 10; i++) {
-        log.debug("findById获取的结果：" + IUserService.findById(1));
+        log.debug("findById获取的结果：" + UserService.findById(1));
 //        }
     }
 
@@ -53,7 +54,7 @@ public class AdminServiceTest {
         user.setAccount("1234561");
         user.setPassword("123456");
         user.setCoverImg("图片1");
-        IUserService.update(user);
+        UserService.update(user);
     }
 
     //hibernate选择更新
@@ -64,13 +65,13 @@ public class AdminServiceTest {
         user.setAccount("123456");
         user.setPassword("123456");
         user.setCoverImg("图片");
-        IUserService.update(user);
+        UserService.update(user);
     }
 
 
     @Test
     public void lists() {
-        PageResult bean = IUserService.getLists(3, 3);
+        PageResult bean = UserService.getLists(3, 3);
         List<User> users = (List<User>) bean.getLists();
         for (User user : users) {
             log.debug("==>  " + user);

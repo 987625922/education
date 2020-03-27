@@ -17,7 +17,7 @@ import java.beans.PropertyVetoException;
 import java.util.Properties;
 
 @Configuration
-@PropertySource({"classpath:config.properties"})
+@PropertySource({"classpath:pconfig.properties"})
 @ComponentScan(basePackages = {"com.project.gelingeducation"})
 @EnableTransactionManagement
 public class HibernateConfig {

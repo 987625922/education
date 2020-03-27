@@ -1,6 +1,5 @@
 package com.project.gelingeducation.common.authentication;
 
-import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class ShiroRealm extends AuthorizingRealm {
 
 //    @Autowired
-//    private IUserService IUserService;
+//    private IUserService userService;
 //    @Autowired
 //    private IRoleService roleService;
 //    @Autowired

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     @Autowired
-    private IUserService IUserService;
+    private IUserService UserService;
 
     /**
      * 登录接口
@@ -23,7 +23,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Object login(@RequestBody User user) {
-        return JsonData.buildSuccess(IUserService.login(user));
+        return JsonData.buildSuccess(UserService.login(user));
     }
 
     /**
@@ -34,7 +34,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Object register(@RequestBody User user) {
-        return JsonData.buildSuccess(IUserService.register(user));
+        return JsonData.buildSuccess(UserService.register(user));
     }
 
     /**

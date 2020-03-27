@@ -1,6 +1,6 @@
 package com.project.gelingeducation.service.Impl;
 
-import com.project.gelingeducation.dao.UserDao;
+import com.project.gelingeducation.dao.IUserDao;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.dto.PageResult;
 import com.project.gelingeducation.common.exception.AllException;
@@ -15,10 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @Transactional
-public class IUserServiceImpl implements IUserService {
+public class UserServiceImpl implements IUserService {
 
     @Autowired
-    private UserDao userDao;
+    private IUserDao userDao;
 
     @Autowired
     private LoginLogService loginLogService;

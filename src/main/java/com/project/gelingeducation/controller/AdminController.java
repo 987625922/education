@@ -31,7 +31,7 @@ import java.util.Iterator;
 public class AdminController {
 
     @Autowired
-    private IUserService IUserService;
+    private IUserService UserService;
 
 
     /**
@@ -42,7 +42,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/getInfo", method = RequestMethod.GET)
     public Object getInfo(int id) {
-        return JsonData.buildSuccess(IUserService.findById(id));
+        return JsonData.buildSuccess(UserService.findById(id));
     }
 
     /**
@@ -72,7 +72,7 @@ public class AdminController {
                 }
             }
 
-            IUserService.updateCoverImg(Long.valueOf(userId), time);
+            UserService.updateCoverImg(Long.valueOf(userId), time);
         } else {
             return JsonData.buildError("图片上传失败");
         }
@@ -87,7 +87,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/editinfo", method = RequestMethod.POST)
     public Object update(@RequestBody User user) {
-        IUserService.update(user);
+        UserService.update(user);
         return JsonData.buildSuccess();
     }
 
@@ -100,7 +100,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/updatepassword", method = RequestMethod.POST)
     public Object updatePassword(long id, String oldPassword, String newPassword) {
-        IUserService.updatePassword(id, oldPassword, newPassword);
+        UserService.updatePassword(id, oldPassword, newPassword);
         return JsonData.buildSuccess();
     }
 
@@ -111,7 +111,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/lists", method = RequestMethod.POST)
     public Object lists(int currentPage, int pageSize) {
-        return JsonData.buildSuccess(IUserService.getLists(currentPage, pageSize));
+        return JsonData.buildSuccess(UserService.getLists(currentPage, pageSize));
     }
 
     /**
@@ -122,7 +122,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/adduser", method = RequestMethod.POST)
     public Object addUser(@RequestBody User user) {
-        return JsonData.buildSuccess(IUserService.addUser(user));
+        return JsonData.buildSuccess(UserService.addUser(user));
     }
 
     /**
@@ -133,7 +133,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/deluser", method = RequestMethod.POST)
     public Object deluser(long id) {
-        IUserService.delUser(id);
+        UserService.delUser(id);
         return JsonData.buildSuccess();
     }
 
@@ -142,7 +142,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/delseluser", method = RequestMethod.POST)
     public Object delSelUser(long[] ids) {
-        IUserService.delSelUser(ids);
+        UserService.delSelUser(ids);
         return JsonData.buildSuccess();
     }
 
@@ -151,7 +151,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/selbyname", method = RequestMethod.POST)
     public Object selByName(String name, int currentPage, int pageSize) {
-        return JsonData.buildSuccess(IUserService.selbyname(name, currentPage, pageSize));
+        return JsonData.buildSuccess(UserService.selbyname(name, currentPage, pageSize));
     }
 
 }

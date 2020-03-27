@@ -3,7 +3,7 @@ package com.project.gelingeducation.dao;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.dto.PageResult;
 
-public interface UserDao {
+public interface IUserDao {
     PageResult getLists(int currentPage, int pageSize);
 
     User findById(long id);

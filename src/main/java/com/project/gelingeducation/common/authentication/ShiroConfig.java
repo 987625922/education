@@ -14,10 +14,7 @@ import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.util.Base64Utils;
 
 import java.nio.charset.StandardCharsets;
@@ -30,7 +27,6 @@ import java.util.LinkedHashMap;
  * Shiro 配置类
  */
 @Configuration
-@PropertySource({"classpath:config.properties"})
 @ComponentScan(basePackages = {"com.project.gelingeducation.common.authentication"})
 public class ShiroConfig {
 
@@ -177,7 +173,6 @@ public class ShiroConfig {
         Collection<SessionListener> listeners = new ArrayList<>();
         listeners.add(new ShiroSessionListener());
         // 设置 session超时时间
-        System.out.println("================> " + shiroCookieTimeout + "  " + database);
         sessionManager.setGlobalSessionTimeout(shiroSessionTimeout * 1000L);
         sessionManager.setSessionListeners(listeners);
         sessionManager.setSessionDAO(redisSessionDAO());
