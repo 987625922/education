@@ -1,7 +1,5 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.common.authentication.ShiroConfig;
-import com.project.gelingeducation.common.config.HibernateConfig;
 import com.project.gelingeducation.domain.LoginLog;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
@@ -18,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 @WebAppConfiguration
-@ContextConfiguration(classes = {HibernateConfig.class, ShiroConfig.class})
+@ContextConfiguration(locations = {"/spring/application-data.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class LoginLogServiceTest {
     @Autowired

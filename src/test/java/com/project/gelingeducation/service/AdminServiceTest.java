@@ -1,7 +1,5 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.common.authentication.ShiroConfig;
-import com.project.gelingeducation.common.config.HibernateConfig;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.dto.PageResult;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @WebAppConfiguration
-@ContextConfiguration(classes = {HibernateConfig.class, ShiroConfig.class})
+@ContextConfiguration(locations = {"/spring/application-data.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AdminServiceTest {
 
@@ -78,5 +76,10 @@ public class AdminServiceTest {
         }
     }
 
+    @Test
+    public void findbyName() {
+        User user = UserService.findUserByAccount("123456");
+        log.debug("=====>" + user);
+    }
 
 }

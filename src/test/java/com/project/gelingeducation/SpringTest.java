@@ -1,6 +1,5 @@
 package com.project.gelingeducation;
 
-import com.project.gelingeducation.common.config.HibernateConfig;
 import com.project.gelingeducation.domain.Video;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.SubjectService;
@@ -19,7 +18,7 @@ import java.util.List;
 
 @Slf4j
 @WebAppConfiguration
-@ContextConfiguration(classes = HibernateConfig.class)
+@ContextConfiguration(locations = {"/spring/application-data.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SpringTest {
 
@@ -52,7 +51,7 @@ public class SpringTest {
 
 
         String s = null;
-        assert s!=null?true:false;
+        assert s != null ? true : false;
         assert false;
         System.out.println("end");
     }
@@ -78,7 +77,7 @@ public class SpringTest {
 
     @Test
     public void test5() {
-        System.out.println("===>> "+service.getLists(0,3));
+        System.out.println("===>> " + service.getLists(0, 3));
     }
 
 

@@ -58,4 +58,21 @@ public class User implements Serializable {
     @ManyToMany(targetEntity = Role.class, mappedBy = "users")
     private Set<Role> roles = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", userName='" + userName + '\'' +
+                ", coverImg='" + coverImg + '\'' +
+                ", isAdaim=" + isAdaim +
+                ", eMail='" + eMail + '\'' +
+                ", sex=" + sex +
+                ", note='" + note + '\'' +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                '}';
+    }
 }

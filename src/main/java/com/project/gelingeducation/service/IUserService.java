@@ -27,4 +27,5 @@ public interface IUserService {
 
     PageResult selbyname(String name,int currentPage, int pageSize);
 
+    User findUserByAccount(String account);
 }

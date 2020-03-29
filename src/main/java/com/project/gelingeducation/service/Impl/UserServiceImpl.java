@@ -108,6 +108,11 @@ public class UserServiceImpl implements IUserService {
         return userDao.selbyname(name, currentPage, pageSize);
     }
 
+    @Override
+    public User findUserByAccount(String account) {
+        User user = userDao.findByPhone(account);
+        return user;
+    }
 
 
 }

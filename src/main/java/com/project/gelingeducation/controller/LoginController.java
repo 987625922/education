@@ -7,11 +7,10 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+//@CrossOrigin(origins = "*", maxAge = 3600)
+@RequestMapping("/pub")
 @RestController
 public class LoginController {
 
@@ -38,8 +37,6 @@ public class LoginController {
             return JsonData.buildError("账号或者密码错误");
 
         }
-
-//        return JsonData.buildSuccess(UserService.login(user));
     }
 
     /**
@@ -57,7 +54,7 @@ public class LoginController {
      * 首页
      */
     @RequestMapping(value = "/home", method = RequestMethod.POST)
-    public Object register(long id) {
+    public Object register() {
 
         return JsonData.buildSuccess();
     }

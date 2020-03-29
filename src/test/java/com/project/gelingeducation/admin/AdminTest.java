@@ -12,7 +12,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 @Slf4j
 @WebAppConfiguration
-@ContextConfiguration(classes = com.project.gelingeducation.common.config.HibernateConfig.class)
+@ContextConfiguration(locations = {"/spring/application-data.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AdminTest {
 
@@ -28,7 +28,7 @@ public class AdminTest {
     }
 
     @Test
-    public void insert(){
+    public void insert() {
         User user = new User();
         user.setAccount("1");
         user.setPassword("1");

@@ -1,14 +1,21 @@
 package com.project.gelingeducation.common.authentication;
 
+import com.project.gelingeducation.domain.Role;
+import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 自定义实现 ShiroRealm，包含认证和授权两大模块
@@ -20,63 +27,79 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private IUserService userService;
-//    @Autowired
-//    private IRoleService roleService;
-//    @Autowired
-//    private IMenuService menuService;
 
     /**
-     * 授权模块，获取用户角色和权限
+     * 进行权限校验的时候回调用
      *
-     * @param principal principal
-     * @return AuthorizationInfo 权限信息
+     * @param principals
+     * @return
      */
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
-//        User user = (User) SecurityUtils.getSubject().getPrincipal();
-//        String userName = user.getUsername();
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+//        System.out.println("授权 doGetAuthorizationInfo");
+//        String username = (String) principals.getPrimaryPrincipal();
+//        User user = userService.findAllUserInfoByUsername(username);
 //
-//        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+//        List<String> stringRoleList = new ArrayList<>();
+//        List<String> stringPermissionList = new ArrayList<>();
 //
-//        // 获取用户角色集
-//        List<Role> roleList = this.roleService.findUserRole(userName);
-//        Set<String> roleSet = roleList.stream().map(Role::getRoleName).collect(Collectors.toSet());
-//        simpleAuthorizationInfo.setRoles(roleSet);
 //
-//        // 获取用户权限集
-//        List<Menu> permissionList = this.menuService.findUserPermissions(userName);
-//        Set<String> permissionSet = permissionList.stream().map(Menu::getPerms).collect(Collectors.toSet());
-//        simpleAuthorizationInfo.setStringPermissions(permissionSet);
-//        return simpleAuthorizationInfo;
-        return null;
+//        List<Role> roleList = user.getRoleList();
+//
+//        for (Role role : roleList) {
+//            stringRoleList.add(role.getName());
+//
+//            List<Permission> permissionList = role.getPermissionList();
+//
+//            for (Permission p : permissionList) {
+//                if (p != null) {
+//                    stringPermissionList.add(p.getName());
+//                }
+//            }
+//
+//        }
+
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+//        simpleAuthorizationInfo.addRoles(stringRoleList);
+//        simpleAuthorizationInfo.addStringPermissions(stringPermissionList);
+
+        return simpleAuthorizationInfo;
     }
 
+
     /**
-     * 用户认证
+     * 用户登录的时候会调用
      *
-     * @param token AuthenticationToken 身份认证 token
-     * @return AuthenticationInfo 身份认证信息
-     * @throws AuthenticationException 认证相关异常
+     * @param token
+     * @return
+     * @throws AuthenticationException
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        // 获取用户输入的用户名和密码
-//        String userName = (String) token.getPrincipal();
-//        String password = new String((char[]) token.getCredentials());
-//
-//        // 通过用户名到数据库查询用户信息
-//        User user = this.IUserService.selbyname(userName);
-//
-//        if (user == null)
-//            throw new UnknownAccountException("账号未注册！");
-//        if (!StringUtils.equals(password, user.getPassword()))
-//            throw new IncorrectCredentialsException("用户名或密码错误！");
-//        if (User.STATUS_LOCK.equals(user.getStatus()))
-//            throw new LockedAccountException("账号已被锁定,请联系管理员！");
-//        return new SimpleAuthenticationInfo(user, password, getName());
-        log.debug("=====> 用户认证 doGetAuthenticationInfo");
 
-        return null;
+//
+//        //从token获取用户信息，token代表用户输入
+//        String account = (String) token.getPrincipal();
+//
+//        User user = userService.findUserByAccount(account);
+////        User user = null;
+//
+//        //取密码
+//        String pwd = user.getPassword();
+//        if (pwd == null || "".equals(pwd)) {
+//            return null;
+//        }
+        String account = (String) token.getPrincipal();
+        String password = new String((char[]) token.getCredentials());
+
+        User user = userService.findUserByAccount(account);
+
+        if (user == null)
+            throw new UnknownAccountException("账号未注册！");
+        if (!StringUtils.equals(password, user.getPassword()))
+            throw new IncorrectCredentialsException("用户名或密码错误！");
+
+        return new SimpleAuthenticationInfo(account, user.getPassword(), this.getClass().getName());
     }
 
     /**

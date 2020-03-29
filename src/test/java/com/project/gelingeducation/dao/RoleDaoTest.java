@@ -1,6 +1,5 @@
 package com.project.gelingeducation.dao;
 
-import com.project.gelingeducation.common.config.HibernateConfig;
 import com.project.gelingeducation.domain.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -12,7 +11,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 @Slf4j
 @WebAppConfiguration
-@ContextConfiguration(classes = HibernateConfig.class)
+@ContextConfiguration(locations = {"/spring/application-data.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class RoleDaoTest {
 
@@ -20,7 +19,7 @@ public class RoleDaoTest {
     IRoleDao roleDao;
 
     @Test
-    public void testInsert(){
+    public void testInsert() {
         Role role = new Role();
         role.setName("11");
         role.setRemark("111");

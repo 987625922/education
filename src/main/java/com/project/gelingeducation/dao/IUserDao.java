@@ -21,4 +21,5 @@ public interface IUserDao {
     void updateCoverImg(long id, String coverImg);
 
     PageResult selbyname(String name,int currentPage, int pageSize);
+
 }
