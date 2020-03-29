@@ -1,6 +1,6 @@
 package com.project.gelingeducation.common.exception;
 
-import com.project.gelingeducation.domain.JsonData;
+import com.project.gelingeducation.common.dto.JsonData;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

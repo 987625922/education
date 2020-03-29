@@ -1,6 +1,7 @@
 package com.project.gelingeducation.common.authentication;
 
 import com.project.gelingeducation.service.IUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -14,10 +15,11 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@Slf4j
 public class ShiroRealm extends AuthorizingRealm {
 
-//    @Autowired
-//    private IUserService userService;
+    @Autowired
+    private IUserService userService;
 //    @Autowired
 //    private IRoleService roleService;
 //    @Autowired
@@ -72,6 +74,8 @@ public class ShiroRealm extends AuthorizingRealm {
 //        if (User.STATUS_LOCK.equals(user.getStatus()))
 //            throw new LockedAccountException("账号已被锁定,请联系管理员！");
 //        return new SimpleAuthenticationInfo(user, password, getName());
+        log.debug("=====> 用户认证 doGetAuthenticationInfo");
+
         return null;
     }
 

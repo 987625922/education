@@ -2,7 +2,7 @@ package com.project.gelingeducation.controller;
 
 
 import com.project.gelingeducation.domain.Course;
-import com.project.gelingeducation.domain.JsonData;
+import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.service.CourseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,23 +2,23 @@ package com.project.gelingeducation.common.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.project.gelingeducation.domain.*;
+import com.project.gelingeducation.domain.Role;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
-import java.util.Properties;
+import java.util.*;
 
-@Configuration
-@PropertySource({"classpath:pconfig.properties"})
-@ComponentScan(basePackages = {"com.project.gelingeducation"})
+//@Configuration
+//@PropertySource({"classpath:config.properties"})
+//@ComponentScan(basePackages = {"com.project.gelingeducation"},
+//        excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class)})
 @EnableTransactionManagement
 public class HibernateConfig {
 
@@ -51,6 +51,8 @@ public class HibernateConfig {
     private String hibernateCurrentSessionContextClass;
     @Value("${hibernate.hbm2ddl.auto}")
     private String hbm2ddlAuto;
+
+
 
     @Bean
     public LocalSessionFactoryBean getSessionFactory() throws PropertyVetoException {

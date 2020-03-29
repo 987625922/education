@@ -8,10 +8,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration//@Configuration 表示一个类声明了一个或多个@Bean方法，
-// 并且可以由Spring容器处理以在运行时为这些bean生成bean定义和服务请求。
-@EnableWebMvc//@EnableWebMvc启用默认的Spring MVC配置并注册DispatcherServlet
-// 任何用@Component和@Configuration注释的类都将被扫描。
+//@Configuration//@Configuration 表示一个类声明了一个或多个@Bean方法，
+//// 并且可以由Spring容器处理以在运行时为这些bean生成bean定义和服务请求。
+//@EnableWebMvc//@EnableWebMvc启用默认的Spring MVC配置并注册DispatcherServlet
+//// 任何用@Component和@Configuration注释的类都将被扫描。
+//@ComponentScan(basePackages = {"com.project.gelingeducation"})
 public class WebAppConfig implements WebMvcConfigurer {
 
     /**

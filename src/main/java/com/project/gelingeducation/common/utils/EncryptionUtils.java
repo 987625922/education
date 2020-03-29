@@ -2,7 +2,7 @@ package com.project.gelingeducation.common.utils;
 
 
 import com.google.gson.JsonObject;
-import com.project.gelingeducation.domain.JsonData;
+import com.project.gelingeducation.common.dto.JsonData;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

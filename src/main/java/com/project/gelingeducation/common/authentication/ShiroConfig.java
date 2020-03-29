@@ -26,34 +26,35 @@ import java.util.LinkedHashMap;
 /**
  * Shiro 配置类
  */
-@Configuration
-@ComponentScan(basePackages = {"com.project.gelingeducation.common.authentication"})
+//@Configuration
+//@ComponentScan(basePackages = {"com.project.gelingeducation.common.authentication"})
+//@PropertySource({"classpath:config.properties"})
 public class ShiroConfig {
 
     //redis
-    @Value("127.0.0.1")
+    @Value("${redis.host}")
     private String host;
-    @Value("6379")
+    @Value("${redis.port}")
     private int port;
-    @Value("1000")
+    @Value("${redis.timeout}")
     private int timeout;
-    @Value("0")
+    @Value("${redis.database}")
     private int database;
 
     //shiro
-    @Value("3600")
+    @Value("${shiro.session_timeout}")
     private int shiroSessionTimeout;
-    @Value("86400")
+    @Value("${shiro.cookie_timeout}")
     private int shiroCookieTimeout;
-    @Value("/login")
+    @Value("${shiro.login_url}")
     private String loginUrl;
-    @Value("/inex")
+    @Value("${shiro.success_url}")
     private String successUrl;
-    @Value("${/unauthorized}")
+    @Value("${shiro.unauthorized_url}")
     private String unauthorizedUrl;
-    @Value("${/test/**,/febs/**,/img/**,/layui/**,/json/**,/images/captcha,/regist,/actuator/**}")
+    @Value("${shiro.anon_url}")
     private String anonUrl;
-    @Value("/logout")
+    @Value("${shiro.logout_url}")
     private String logoutUrl;
 
     /**

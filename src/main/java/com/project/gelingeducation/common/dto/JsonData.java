@@ -1,4 +1,4 @@
-package com.project.gelingeducation.domain;
+package com.project.gelingeducation.common.dto;
 
 import java.io.Serializable;
 

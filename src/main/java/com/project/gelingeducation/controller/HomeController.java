@@ -1,6 +1,5 @@
 package com.project.gelingeducation.controller;
 
-import com.project.gelingeducation.domain.JsonData;
 import com.project.gelingeducation.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

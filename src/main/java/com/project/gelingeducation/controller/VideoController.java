@@ -1,6 +1,6 @@
 package com.project.gelingeducation.controller;
 
-import com.project.gelingeducation.domain.JsonData;
+import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.domain.Video;
 import com.project.gelingeducation.service.VideoService;
 import lombok.extern.slf4j.Slf4j;
