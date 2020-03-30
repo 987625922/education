@@ -40,7 +40,7 @@ public class UserServiceImpl implements IUserService {
         if (userDao.findByPhone(user.getAccount()) == null) {
             user.setUserName("用户名");
             user.setStatus(1);
-            user.setPassword(MD5Util.encrypt(user.getAccount(), user.getPassword()));
+            user.setPassword(MD5Util.encrypt(user.getAccount().toLowerCase(), user.getPassword()));
             user.setCoverImg("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582740929074&di=88ebb0f61e464281d947673187acaa59&imgtype=0&src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2Fthreadcover%2Fbb%2Fa1%2F1988382.jpg");
             return userDao.insert(user);
         } else {

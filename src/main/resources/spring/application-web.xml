@@ -20,13 +20,13 @@
     </bean>
     <!-- 自定义域 -->
     <bean id="userShiroRealm" class="com.project.gelingeducation.common.authentication.ShiroRealm">
-        <property name="credentialsMatcher" ref="hashedCredentialsMatcher"/>
+        <!--<property name="credentialsMatcher" ref="hashedCredentialsMatcher"/>-->
     </bean>
     <!-- 自定义凭证(密码)匹配器 -->
-    <bean id="hashedCredentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-        <property name="hashAlgorithmName" value="md5"/>
-        <property name="hashIterations" value="2"/>
-    </bean>
+    <!--<bean id="hashedCredentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">-->
+        <!--<property name="hashAlgorithmName" value="md5"/>-->
+        <!--<property name="hashIterations" value="2"/>-->
+    <!--</bean>-->
     <!-- session管理器 -->
     <!--在shiro的DefaultWebSessionManager类中，默认Cookie名称是JSESSIONID，这样的话与servlet容器名冲突,
     如jetty, tomcat等默认JSESSIONID, 当跳出shiro servlet时如error-page容器会为JSESSIONID重新分配值导致登录会话丢失!-->
@@ -42,20 +42,21 @@
         <!--//必须设置securityManager-->
         <property name="securityManager" ref="securityManager"/>
         <!--//需要登录的接口，如果访问某个接口，需要登录却没登录，则调用此接口(如果不是前后端分离，则跳转页面)-->
-        <property name="loginUrl" value="/login"/>
+        <property name="loginUrl" value="/pub/need_login"/>
         <!--//登录成功，跳转url，如果前后端分离，则没这个调用-->
-<!--        <property name="successUrl" value="/"/>-->
+        <!--        <property name="successUrl" value="/"/>-->
         <!--//没有权限，未授权就会调用此方法， 先验证登录-》再验证是否有权限-->
         <property name="unauthorizedUrl" value="/pub/not_permit"/>
-<!--        <property name="filters">-->
-<!--            <map>-->
-<!--                <entry key="custom" value-ref="crosAuthenticationFilter"/>-->
-<!--            </map>-->
-<!--        </property>-->
+        <property name="filters">
+            <map>
+                <entry key="custom" value-ref="crosAuthenticationFilter"/>
+            </map>
+        </property>
         <property name="filterChainDefinitions">
             <value>
                 /logout = logout
                 /pub/** = anon
+                /admin/** = authc
                 /authc/** = authc
                 /admin/** = roles[admin]
                 /video/update = perms[video_update]
@@ -64,5 +65,6 @@
         </property>
     </bean>
 
-<!--    <bean name="crosAuthenticationFilter" class="com.project.gelingeducation.common.authentication.CrosAuthenticationFilter"/>-->
+    <bean name="crosAuthenticationFilter"
+          class="com.project.gelingeducation.common.authentication.CrosAuthenticationFilter"/>
 </beans>

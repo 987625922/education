@@ -32,8 +32,8 @@ public class AdminServiceTest {
     @Test
     public void insert() {
         User user = new User();
-        user.setAccount("123456");
-        user.setPassword("123456");
+        user.setAccount("12345");
+        user.setPassword("12345");
         log.debug("findById获取的结果：" + UserService.addUser(user));
     }
 

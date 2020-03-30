@@ -23,8 +23,6 @@ import java.util.Iterator;
 /**
  * 管理员controller
  */
-//跨域
-//@CrossOrigin(origins = {"/"}, maxAge = 72000L)
 @Slf4j
 @RestController
 @RequestMapping("/admin")

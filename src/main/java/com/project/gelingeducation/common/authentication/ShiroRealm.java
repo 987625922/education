@@ -1,6 +1,5 @@
 package com.project.gelingeducation.common.authentication;
 
-import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,12 +13,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 自定义实现 ShiroRealm，包含认证和授权两大模块
- *
  */
 @Component
 @Slf4j
@@ -77,18 +72,6 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
-//
-//        //从token获取用户信息，token代表用户输入
-//        String account = (String) token.getPrincipal();
-//
-//        User user = userService.findUserByAccount(account);
-////        User user = null;
-//
-//        //取密码
-//        String pwd = user.getPassword();
-//        if (pwd == null || "".equals(pwd)) {
-//            return null;
-//        }
         String account = (String) token.getPrincipal();
         String password = new String((char[]) token.getCredentials());
 
