@@ -42,29 +42,28 @@
         <!--//必须设置securityManager-->
         <property name="securityManager" ref="securityManager"/>
         <!--//需要登录的接口，如果访问某个接口，需要登录却没登录，则调用此接口(如果不是前后端分离，则跳转页面)-->
-        <property name="loginUrl" value="/pub/need_login"/>
+        <property name="loginUrl" value="/need_login"/>
         <!--//登录成功，跳转url，如果前后端分离，则没这个调用-->
         <!--        <property name="successUrl" value="/"/>-->
         <!--//没有权限，未授权就会调用此方法， 先验证登录-》再验证是否有权限-->
-        <property name="unauthorizedUrl" value="/pub/not_permit"/>
-        <property name="filters">
-            <map>
-                <entry key="custom" value-ref="crosAuthenticationFilter"/>
-            </map>
-        </property>
+        <property name="unauthorizedUrl" value="/not_permisson"/>
+        <!--<property name="filters">-->
+            <!--<map>-->
+                <!--<entry key="custom" value-ref="crosAuthenticationFilter"/>-->
+            <!--</map>-->
+        <!--</property>-->
         <property name="filterChainDefinitions">
             <value>
                 /logout = logout
-                /pub/** = anon
-                /admin/** = authc
+                /login = anon
+                /admin/** = anon
                 /authc/** = authc
                 /admin/** = roles[admin]
                 /video/update = perms[video_update]
-                /** = authc
             </value>
         </property>
     </bean>
 
-    <bean name="crosAuthenticationFilter"
-          class="com.project.gelingeducation.common.authentication.CrosAuthenticationFilter"/>
+    <!--<bean name="crosAuthenticationFilter"-->
+          <!--class="com.project.gelingeducation.common.authentication.CrosAuthenticationFilter"/>-->
 </beans>

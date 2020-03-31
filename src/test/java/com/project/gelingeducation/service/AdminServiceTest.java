@@ -1,7 +1,8 @@
 package com.project.gelingeducation.service;
 
+import com.project.gelingeducation.common.dto.PageResult;
+import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.domain.User;
-import com.project.gelingeducation.dto.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,14 +20,11 @@ import java.util.List;
 public class AdminServiceTest {
 
     @Autowired
-    private IUserService UserService;
+    private IUserService userservice;
 
     @Test
     public void login() {
-        User user = new User();
-        user.setAccount("123456");
-        user.setPassword("123456");
-        UserService.login(user);
+        userservice.login("123456", "123456");
     }
 
     @Test
@@ -34,13 +32,13 @@ public class AdminServiceTest {
         User user = new User();
         user.setAccount("12345");
         user.setPassword("12345");
-        log.debug("findById获取的结果：" + UserService.addUser(user));
+        log.debug("findById获取的结果：" + userservice.addUser(user));
     }
 
     @Test
     public void findById() {
 //        for (int i = 0; i < 10; i++) {
-        log.debug("findById获取的结果：" + UserService.findById(1));
+        log.debug("findById获取的结果：" + userservice.findById(1));
 //        }
     }
 
@@ -52,7 +50,7 @@ public class AdminServiceTest {
         user.setAccount("1234561");
         user.setPassword("123456");
         user.setCoverImg("图片1");
-        UserService.update(user);
+        userservice.update(user);
     }
 
     //hibernate选择更新
@@ -63,13 +61,13 @@ public class AdminServiceTest {
         user.setAccount("123456");
         user.setPassword("123456");
         user.setCoverImg("图片");
-        UserService.update(user);
+        userservice.update(user);
     }
 
 
     @Test
     public void lists() {
-        PageResult bean = UserService.getLists(3, 3);
+        PageResult bean = userservice.getLists(3, 3);
         List<User> users = (List<User>) bean.getLists();
         for (User user : users) {
             log.debug("==>  " + user);
@@ -78,8 +76,15 @@ public class AdminServiceTest {
 
     @Test
     public void findbyName() {
-        User user = UserService.findUserByAccount("123456");
+        User user = userservice.findUserByAccount("123456");
         log.debug("=====>" + user);
+    }
+    
+    @Test
+    public void addPermisson(){
+//        User user = userservice.findById(7);
+        long rolds[] = {10};
+        userservice.addPermisson(7,rolds);
     }
 
 }

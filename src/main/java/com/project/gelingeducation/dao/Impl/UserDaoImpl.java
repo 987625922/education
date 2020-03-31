@@ -2,7 +2,7 @@ package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.dao.IUserDao;
 import com.project.gelingeducation.domain.User;
-import com.project.gelingeducation.dto.PageResult;
+import com.project.gelingeducation.common.dto.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -55,13 +55,8 @@ public class UserDaoImpl implements IUserDao {
     public User findByPhone(String account) {
         Query query = getSession().createQuery("from User where account=?0");
         query.setParameter(0, account);
-        List<User> list = query.list();
-        if (list.size() > 0) {
-            return list.get(0);
-        } else {
-            return null;
-        }
-
+        User user = (User) query.uniqueResult();
+        return user;
     }
 
     @Override

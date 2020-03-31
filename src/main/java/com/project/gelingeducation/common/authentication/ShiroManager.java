@@ -8,6 +8,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.Serializable;
 
+/**
+ * shiro session管理
+ */
 public class ShiroManager extends DefaultWebSessionManager {
 
     private static final String AUTHORIZATION = "token";

@@ -1,12 +1,14 @@
 package com.project.gelingeducation.service.Impl;
 
-import com.project.gelingeducation.dao.IUserDao;
-import com.project.gelingeducation.domain.User;
-import com.project.gelingeducation.dto.PageResult;
+import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.common.exception.AllException;
+import com.project.gelingeducation.common.utils.MD5Util;
+import com.project.gelingeducation.dao.IUserDao;
+import com.project.gelingeducation.domain.Role;
+import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.service.IRoleService;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.LoginLogService;
-import com.project.gelingeducation.common.utils.MD5Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private LoginLogService loginLogService;
+
+    @Autowired
+    private IRoleService roleService;
 
     @Override
     public Object register(User user) {
@@ -49,14 +54,10 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Object login(User user) {
-        User info = userDao.findByPhone(user.getAccount());
-        if (info != null && info.getPassword().equals(MD5Util.encrypt(user.getAccount(), user.getPassword()))) {
-           loginLogService.getByUserIdLoginUpdate(info.getId());
-            return info;
-        } else {
-            throw new AllException(-100, "账号密码错误");
-        }
+    public User login(String account, String password) {
+        User info = userDao.findByPhone(account);
+        loginLogService.getByUserIdLoginUpdate(info.getId());
+        return info;
     }
 
     @Override
@@ -109,9 +110,24 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findUserByAccount(String account) {
         User user = userDao.findByPhone(account);
+        user.setRoles(user.getRoles());
+        for (Role role : user.getRoles()) {
+            role.setPermissions(role.getPermissions());
+        }
         return user;
+    }
+
+    @Override
+    public void addPermisson(long id,long[] roleIds) {
+        User user = userDao.findById(id);
+        for (long roldId:roleIds){
+            Role role = roleService.findByRole(roldId);
+            user.getRoles().add(role);
+            role.getUsers().add(user);
+        }
     }
 
 

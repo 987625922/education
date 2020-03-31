@@ -9,6 +9,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * shiro跨域处理拦截器
+ */
 public class CrosAuthenticationFilter extends BasicHttpAuthenticationFilter {
 
     /**

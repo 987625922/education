@@ -1,6 +1,7 @@
 package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.common.utils.MD5Util;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IUserService;
@@ -8,16 +9,16 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+
 //@CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/pub")
 @RestController
-public class LoginController {
+public class PubliceController {
 
     @Autowired
     private IUserService UserService;
@@ -36,14 +37,14 @@ public class LoginController {
                     new UsernamePasswordToken(user.getAccount(),
                             MD5Util.encrypt(user.getAccount().toLowerCase(), user.getPassword()));
             subject.login(usernamePasswordToken);
-            return JsonData.buildSuccess("登录成功" + subject.getSession().getId());
-
         } catch (Exception e) {
             e.printStackTrace();
-
-            return JsonData.buildError("账号或者密码错误");
-
+            throw new AllException(-100, "账号或密码错误!");
         }
+        HashMap userMap = new HashMap();
+        userMap.put("id", UserService.login(user.getAccount(), user.getPassword()).getId());
+        userMap.put("token", subject.getSession().getId());
+        return JsonData.buildSuccess(userMap);
     }
 
     /**
@@ -57,19 +58,15 @@ public class LoginController {
         return JsonData.buildSuccess(UserService.register(user));
     }
 
-    /**
-     * 首页
-     */
-    @RequestMapping(value = "/home", method = RequestMethod.POST)
-    public Object register() {
 
-        return JsonData.buildSuccess();
-    }
-
-    @RequestMapping(value = "/need_login",method = RequestMethod.GET)
-    public Object needLogin(){
+    @RequestMapping(value = "/need_login", method = RequestMethod.GET)
+    public Object needLogin() {
         return JsonData.buildError("需要登录账户");
     }
 
+    @RequestMapping(value = "/not_permisson", method = RequestMethod.GET)
+    public Object needPermisson() {
+        return JsonData.buildError("账户没有权限");
+    }
 
 }

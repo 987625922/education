@@ -1,7 +1,7 @@
 package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.domain.User;
-import com.project.gelingeducation.dto.PageResult;
+import com.project.gelingeducation.common.dto.PageResult;
 
 public interface IUserService {
 
@@ -9,7 +9,7 @@ public interface IUserService {
 
     Object addUser(User user);
 
-    Object login(User user);
+    User login(String account,String password);
 
     User findById(long id);
 
@@ -28,4 +28,6 @@ public interface IUserService {
     PageResult selbyname(String name,int currentPage, int pageSize);
 
     User findUserByAccount(String account);
+
+    void addPermisson(long id,long[] roleIds);
 }

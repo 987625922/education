@@ -55,6 +55,7 @@ public class User implements Serializable {
     @Column(name = "modify_time")
     private Date modifyTime;
 
+
     @ManyToMany(targetEntity = Role.class, mappedBy = "users")
     private Set<Role> roles = new HashSet<>();
 

@@ -1,5 +1,7 @@
 package com.project.gelingeducation.common.authentication;
 
+import com.project.gelingeducation.domain.Permission;
+import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +14,11 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 自定义实现 ShiroRealm，包含认证和授权两大模块
@@ -32,31 +39,31 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 //        System.out.println("授权 doGetAuthorizationInfo");
-//        String username = (String) principals.getPrimaryPrincipal();
-//        User user = userService.findAllUserInfoByUsername(username);
-//
-//        List<String> stringRoleList = new ArrayList<>();
-//        List<String> stringPermissionList = new ArrayList<>();
-//
-//
-//        List<Role> roleList = user.getRoleList();
-//
-//        for (Role role : roleList) {
-//            stringRoleList.add(role.getName());
-//
-//            List<Permission> permissionList = role.getPermissionList();
-//
-//            for (Permission p : permissionList) {
-//                if (p != null) {
-//                    stringPermissionList.add(p.getName());
-//                }
-//            }
-//
-//        }
+        String account = (String) principals.getPrimaryPrincipal();
+        User user = userService.findUserByAccount(account);
+
+        List<String> stringRoleList = new ArrayList<>();
+        List<String> stringPermissionList = new ArrayList<>();
+
+
+        Set<Role> roles = user.getRoles();
+
+        for (Role role : roles) {
+            stringRoleList.add(role.getName());
+
+            Set<Permission> permissionList = role.getPermissions();
+
+            for (Permission p : permissionList) {
+                if (p != null) {
+                    stringPermissionList.add(p.getName());
+                }
+            }
+
+        }
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-//        simpleAuthorizationInfo.addRoles(stringRoleList);
-//        simpleAuthorizationInfo.addStringPermissions(stringPermissionList);
+        simpleAuthorizationInfo.addRoles(stringRoleList);
+        simpleAuthorizationInfo.addStringPermissions(stringPermissionList);
 
         return simpleAuthorizationInfo;
     }

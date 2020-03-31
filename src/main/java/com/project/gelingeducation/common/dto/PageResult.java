@@ -1,4 +1,4 @@
-package com.project.gelingeducation.dto;
+package com.project.gelingeducation.common.dto;
 
 import lombok.Data;
 

@@ -20,9 +20,14 @@ public class RoleDaoImpl implements IRoleDao {
 
 
     @Override
-    @Transactional
     public void insert(Role role) {
         getSession().save(role);
     }
+
+    @Override
+    public Role findById(long id) {
+        return getSession().get(Role.class,id);
+    }
+
 
 }
