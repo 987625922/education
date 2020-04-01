@@ -29,5 +29,5 @@ public interface IUserService {
 
     User findUserByAccount(String account);
 
-    void addPermisson(long id,long[] roleIds);
+    void addRole(long id,long[] roleIds);
 }

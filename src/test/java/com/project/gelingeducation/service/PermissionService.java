@@ -1,6 +1,6 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.domain.Role;
+import com.project.gelingeducation.domain.Permission;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,25 +13,16 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"/spring/application-data.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class RoleTest {
-
-    @Autowired
-    private IRoleService roleService;
+public class PermissionService {
 
     @Autowired
     private IPermissionService permissionService;
 
     @Test
-    public void addRole() {
-        Role role = new Role();
-        role.setRemark("测试管理员");
-        role.setName("admin_test");
-        roleService.add(role);
-    }
-
-    @Test
-    public void setPermission() {
-        long permissionIds[] = {14};
-        roleService.addPermissionByIds(10, permissionIds);
+    public void addPermission(){
+        Permission permission = new Permission();
+        permission.setName("测试的权限");
+        permission.setUrl("/");
+        permissionService.add(permission);
     }
 }

@@ -3,6 +3,7 @@ package com.project.gelingeducation.service;
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.service.Impl.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +22,9 @@ public class AdminServiceTest {
 
     @Autowired
     private IUserService userservice;
+
+    @Autowired
+    private IRoleService roleService;
 
     @Test
     public void login() {
@@ -84,7 +88,9 @@ public class AdminServiceTest {
     public void addPermisson(){
 //        User user = userservice.findById(7);
         long rolds[] = {10};
-        userservice.addPermisson(7,rolds);
+        userservice.addRole(7,rolds);
+
+
     }
 
 }

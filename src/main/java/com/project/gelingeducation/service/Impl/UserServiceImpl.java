@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Set;
+
 @Slf4j
 @Service
 @Transactional
@@ -113,22 +115,27 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public User findUserByAccount(String account) {
         User user = userDao.findByPhone(account);
-        user.setRoles(user.getRoles());
-        for (Role role : user.getRoles()) {
-            role.setPermissions(role.getPermissions());
+        Set<Role> roles = user.getRoles();
+        for (Role role : roles) {
+            role.getPermissions();
         }
         return user;
     }
 
+    /**
+     * 添加身份
+     *
+     * @param id
+     * @param roleIds
+     */
     @Override
-    public void addPermisson(long id,long[] roleIds) {
+    public void addRole(long id, long[] roleIds) {
         User user = userDao.findById(id);
-        for (long roldId:roleIds){
+        for (long roldId : roleIds) {
             Role role = roleService.findByRole(roldId);
             user.getRoles().add(role);
             role.getUsers().add(user);
         }
     }
-
 
 }

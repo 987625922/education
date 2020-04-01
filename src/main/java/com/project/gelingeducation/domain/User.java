@@ -1,8 +1,6 @@
 package com.project.gelingeducation.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -11,11 +9,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
+@Setter
+@Getter
 public class User implements Serializable {
 
     private static final long serialVersionUID = -218595055003268321L;

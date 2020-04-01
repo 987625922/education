@@ -6,5 +6,7 @@ public interface IRoleService {
 
     Role findByRole(long id);
 
-    void insert(Role role);
+    void add(Role role);
+
+    void addPermissionByIds(long roleId,long[] permissionIds);
 }
