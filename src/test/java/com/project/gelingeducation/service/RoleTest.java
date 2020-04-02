@@ -30,7 +30,7 @@ public class RoleTest {
     }
 
     @Test
-    public void setPermission() {
+    public void addPermission() {
         long permissionIds[] = {14};
         roleService.addPermissionByIds(10, permissionIds);
     }

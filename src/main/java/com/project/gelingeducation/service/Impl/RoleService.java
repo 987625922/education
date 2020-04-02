@@ -34,11 +34,13 @@ public class RoleService implements IRoleService {
     public void addPermissionByIds(long roleId, long[] permissionIds) {
         Role role = roleDao.findById(10);
         Permission permission = permissionService.getById(14);
+        role.getUsers().clear();
         role.getPermissions().add(permission);
         permission.getRoles().add(role);
 
 //        roleDao.insert(role);
 //        permissionService.add(permission);
+
     }
 
 
