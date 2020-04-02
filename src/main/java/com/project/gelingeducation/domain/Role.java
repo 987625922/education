@@ -1,5 +1,7 @@
 package com.project.gelingeducation.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -36,6 +38,7 @@ public class Role implements Serializable {
     private String remark;
 
     @ManyToMany(targetEntity = User.class)
+    @JsonIgnoreProperties(value = "roles")
     @JoinTable(
             name = "t_user_role",
             joinColumns = @JoinColumn(name = "role_id"),
@@ -45,6 +48,7 @@ public class Role implements Serializable {
 
 
     @ManyToMany(targetEntity = Permission.class, mappedBy = "roles")
+    @JsonIgnoreProperties(value = "roles")
     private Set<Permission> permissions = new HashSet<>();
 
 }

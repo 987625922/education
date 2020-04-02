@@ -1,5 +1,6 @@
 package com.project.gelingeducation.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -35,8 +36,8 @@ public class Permission {
     @Column(name = "url")
     private String url;
 
-    @ManyToMany(targetEntity = Role
-            .class)
+    @ManyToMany(targetEntity = Role.class)
+    @JsonIgnoreProperties(value = "permissions")
     @JoinTable(
             name = "t_role_permission",
             joinColumns = @JoinColumn(name = "permission_id"),

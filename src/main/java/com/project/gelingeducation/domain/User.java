@@ -1,5 +1,6 @@
 package com.project.gelingeducation.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -56,6 +57,7 @@ public class User implements Serializable {
 
 
     @ManyToMany(targetEntity = Role.class, mappedBy = "users")
+    @JsonIgnoreProperties(value = "users")
     private Set<Role> roles = new HashSet<>();
 
     @Override
