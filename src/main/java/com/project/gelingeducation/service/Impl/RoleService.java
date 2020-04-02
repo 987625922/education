@@ -34,8 +34,7 @@ public class RoleService implements IRoleService {
     public void addPermissionByIds(long roleId, long[] permissionIds) {
         Role role = roleDao.findById(15);
         Permission permission = permissionService.getById(16);
-//        role.getUsers().clear();
-//        role.getPermissions().add(permission);
+        role.getPermissions().add(permission);
         permission.getRoles().add(role);
 
 //        roleDao.insert(role);

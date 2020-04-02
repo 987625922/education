@@ -35,7 +35,8 @@ public class Permission {
     @Column(name = "url")
     private String url;
 
-    @ManyToMany(targetEntity = Role.class)
+    @ManyToMany(targetEntity = Role
+            .class)
     @JoinTable(
             name = "t_role_permission",
             joinColumns = @JoinColumn(name = "permission_id"),
