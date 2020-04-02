@@ -34,8 +34,8 @@ public class AdminServiceTest {
     @Test
     public void insert() {
         User user = new User();
-        user.setAccount("12345");
-        user.setPassword("12345");
+        user.setAccount("123456");
+        user.setPassword("123456");
         log.debug("findById获取的结果：" + userservice.addUser(user));
     }
 
@@ -87,8 +87,8 @@ public class AdminServiceTest {
     @Test
     public void addPermisson(){
 //        User user = userservice.findById(7);
-        long rolds[] = {10};
-        userservice.addRole(7,rolds);
+        long rolds[] = {15};
+        userservice.addRole(11,rolds);
 
 
     }

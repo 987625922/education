@@ -31,7 +31,7 @@ public class RoleTest {
 
     @Test
     public void addPermission() {
-        long permissionIds[] = {14};
-        roleService.addPermissionByIds(10, permissionIds);
+        long permissionIds[] = {16};
+        roleService.addPermissionByIds(15, permissionIds);
     }
 }
