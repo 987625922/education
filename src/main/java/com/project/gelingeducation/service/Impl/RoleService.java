@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class RoleService implements IRoleService {
@@ -32,14 +34,22 @@ public class RoleService implements IRoleService {
 
     @Override
     public void addPermissionByIds(long roleId, long[] permissionIds) {
-        Role role = roleDao.findById(15);
-        Permission permission = permissionService.getById(16);
-        role.getPermissions().add(permission);
-        permission.getRoles().add(role);
+        Role role = roleDao.findById(roleId);
+        for (int i = 0; i < permissionIds.length; i++) {
+            Permission permission = permissionService.getById(permissionIds[i]);
+            role.getPermissions().add(permission);
+            permission.getRoles().add(role);
+        }
 
 //        roleDao.insert(role);
 //        permissionService.add(permission);
 
+    }
+
+    @Override
+    public List<Role> list() {
+
+        return roleDao.list();
     }
 
 

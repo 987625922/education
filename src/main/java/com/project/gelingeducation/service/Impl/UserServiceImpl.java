@@ -117,8 +117,10 @@ public class UserServiceImpl implements IUserService {
         User user = userDao.findByPhone(account);
         Set<Role> roles = user.getRoles();
         for (Role role : roles) {
-            role.getPermissions();
+            role.setPermissions(role.getPermissions());
+            roles.add(role);
         }
+        user.setRoles(roles);
         return user;
     }
 

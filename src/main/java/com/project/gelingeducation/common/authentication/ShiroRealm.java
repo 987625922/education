@@ -38,27 +38,23 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-//        System.out.println("授权 doGetAuthorizationInfo");
         String account = (String) principals.getPrimaryPrincipal();
         User user = userService.findUserByAccount(account);
 
         List<String> stringRoleList = new ArrayList<>();
         List<String> stringPermissionList = new ArrayList<>();
 
-
         Set<Role> roles = user.getRoles();
-
+        log.debug("roles=====>"+roles.size());
         for (Role role : roles) {
             stringRoleList.add(role.getName());
-
             Set<Permission> permissionList = role.getPermissions();
-
+            log.debug("permission=====>"+permissionList.size());
             for (Permission p : permissionList) {
                 if (p != null) {
                     stringPermissionList.add(p.getName());
                 }
             }
-
         }
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();

@@ -3,6 +3,8 @@ package com.project.gelingeducation.service;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.common.dto.PageResult;
 
+import java.util.List;
+
 public interface IUserService {
 
     Object register(User user);
@@ -30,4 +32,5 @@ public interface IUserService {
     User findUserByAccount(String account);
 
     void addRole(long id,long[] roleIds);
+
 }

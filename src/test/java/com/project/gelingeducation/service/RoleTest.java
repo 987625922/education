@@ -31,7 +31,22 @@ public class RoleTest {
 
     @Test
     public void addPermission() {
-        long permissionIds[] = {16};
-        roleService.addPermissionByIds(15, permissionIds);
+        long permissionIds[] = {14};
+        roleService.addPermissionByIds(10, permissionIds);
     }
+
+    @Test
+    public void list() {
+        for (Role role : roleService.list()) {
+            log.debug("==>" + role);
+        }
+    }
+
+    @Test
+    public void findyId() {
+        Role role = roleService.findByRole(10);
+        log.debug("==>" + role);
+    }
+
+
 }
