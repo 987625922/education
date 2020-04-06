@@ -20,9 +20,14 @@ public class PermissionService {
 
     @Test
     public void addPermission(){
+//        Permission permission = new Permission();
+//        permission.setName("测试的权限");
+//        permission.setUrl("/");
+//        permissionService.add(permission);
+
         Permission permission = new Permission();
-        permission.setName("测试的权限");
-        permission.setUrl("/");
+        permission.setName("用户查看");
+        permission.setPerms("user:view");
         permissionService.add(permission);
     }
 }

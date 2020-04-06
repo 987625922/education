@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 
+/**
+ * 不用登录就可以请求
+ */
 //@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class PubliceController {

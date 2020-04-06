@@ -6,7 +6,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd"
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/mvc
+	https://www.springframework.org/schema/mvc/spring-mvc.xsd"
 >
     <context:component-scan base-package="com.project.gelingeducation"/>
     <context:property-placeholder location="classpath:config.properties"/>
@@ -56,13 +58,17 @@
             <value>
                 /logout = logout
                 /login = anon
-                /admin/** = anon
-                /authc/** = authc
-                /admin/** = roles[admin]
-                /video/update = perms[video_update]
             </value>
         </property>
     </bean>
+
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor" />
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager" />
+    </bean>
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
+
 
     <!--<bean name="crosAuthenticationFilter"-->
           <!--class="com.project.gelingeducation.common.authentication.CrosAuthenticationFilter"/>-->

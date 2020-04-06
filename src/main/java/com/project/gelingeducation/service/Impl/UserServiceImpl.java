@@ -4,6 +4,7 @@ import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.common.utils.MD5Util;
 import com.project.gelingeducation.dao.IUserDao;
+import com.project.gelingeducation.domain.Permission;
 import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IRoleService;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
@@ -30,11 +32,15 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private IRoleService roleService;
 
+    /**
+     * 注册
+     * @param user
+     * @return
+     */
     @Override
     public Object register(User user) {
         if (userDao.findByPhone(user.getAccount()) == null) {
             user.setUserName("管理员");
-            user.setIsAdaim(1);
             user.setStatus(1);
             return userDao.insert(user);
         } else {
@@ -42,6 +48,11 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+    /**
+     * 添加用户
+     * @param user
+     * @return
+     */
     @Override
     public Object addUser(User user) {
         if (userDao.findByPhone(user.getAccount()) == null) {
@@ -55,6 +66,12 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+    /**
+     * 登录
+     * @param account
+     * @param password
+     * @return
+     */
     @Override
     public User login(String account, String password) {
         User info = userDao.findByPhone(account);
@@ -62,29 +79,54 @@ public class UserServiceImpl implements IUserService {
         return info;
     }
 
+    /**
+     * 通过id查找用户
+     * @param id
+     * @return
+     */
     @Override
     @Transactional(readOnly = true)
     public User findById(long id) {
         return userDao.findById(id);
     }
 
+    /**
+     * 页面格式的用户的列表
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
     @Override
     @Transactional(readOnly = true)
     public PageResult getLists(int currentPage, int pageSize) {
         return userDao.getLists(currentPage, pageSize);
     }
 
+    /**
+     * 更新用户头像
+     * @param id
+     * @param coverImg
+     */
     @Override
     public void updateCoverImg(long id, String coverImg) {
         userDao.updateCoverImg(id, coverImg);
     }
 
+    /**
+     * 更新用户
+     * @param user
+     */
     @Override
     public void update(User user) {
         userDao.update(user);
     }
 
-
+    /**
+     *
+     * @param id
+     * @param oldPassword
+     * @param newPassword
+     */
     @Override
     public void updatePassword(long id, String oldPassword, String newPassword) {
         User user = userDao.findById(id);
@@ -95,33 +137,81 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+    /**
+     * 删除用户
+     * @param id
+     */
     @Override
     public void delUser(long id) {
         userDao.delect(id);
     }
 
+    /**
+     * 批量删除用户
+     * @param ids
+     */
     @Override
     public void delSelUser(long[] ids) {
         userDao.delSel(ids);
     }
 
+    /**
+     * 通过名字用户格式的用户的list
+     * @param name
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
     @Override
     @Transactional(readOnly = true)
     public PageResult selbyname(String name, int currentPage, int pageSize) {
         return userDao.selbyname(name, currentPage, pageSize);
     }
 
+    /**
+     * 查找用户
+     * @param account
+     * @return
+     */
     @Override
     @Transactional(readOnly = true)
     public User findUserByAccount(String account) {
         User user = userDao.findByPhone(account);
-        Set<Role> roles = user.getRoles();
-        for (Role role : roles) {
-            role.setPermissions(role.getPermissions());
+        return user;
+    }
+
+    /**
+     * 查找身份
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Set<Role> findRoleByUserId(long id) {
+        User user = userDao.findById(id);
+        Set<Role> roles = new HashSet<>();
+        for (Role role:user.getRoles()){
             roles.add(role);
         }
-        user.setRoles(roles);
-        return user;
+        return roles;
+    }
+
+    /**
+     * 查找权限
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Set<Permission> findPermissionByUserId(long id) {
+        User user = userDao.findById(id);
+        Set<Permission> permissions = new HashSet<>();
+        for (Role role : user.getRoles()) {
+            for (Permission permission : role.getPermissions()) {
+                permissions.add(permission);
+            }
+        }
+        return permissions;
     }
 
     /**

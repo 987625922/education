@@ -1,5 +1,7 @@
 package com.project.gelingeducation.common.filter;
 
+import org.springframework.stereotype.Component;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

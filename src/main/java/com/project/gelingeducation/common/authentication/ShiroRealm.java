@@ -15,7 +15,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -44,15 +43,13 @@ public class ShiroRealm extends AuthorizingRealm {
         List<String> stringRoleList = new ArrayList<>();
         List<String> stringPermissionList = new ArrayList<>();
 
-        Set<Role> roles = user.getRoles();
-        log.debug("roles=====>"+roles.size());
+        Set<Role> roles = userService.findRoleByUserId(user.getId());
         for (Role role : roles) {
             stringRoleList.add(role.getName());
-            Set<Permission> permissionList = role.getPermissions();
-            log.debug("permission=====>"+permissionList.size());
+            Set<Permission> permissionList = userService.findPermissionByUserId(user.getId());
             for (Permission p : permissionList) {
                 if (p != null) {
-                    stringPermissionList.add(p.getName());
+                    stringPermissionList.add(p.getPerms());
                 }
             }
         }

@@ -1,7 +1,10 @@
 package com.project.gelingeducation.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -10,6 +13,19 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ *     //0为超级管理员，1为管理员，2为访客
+ *     @Column(name = "isAdaim", length = 1)
+ *     private int isAdaim;
+ *
+ *     超级管理员
+ *     管理用户的权限
+ *     管理员
+ *     更新和删除资源的权限
+ *     访客
+ *     浏览资源的权限
+ *
+ */
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,9 +48,6 @@ public class User implements Serializable {
     private String userName;
     @Column(name = "cover_img")
     private String coverImg;
-    //0为超级管理员，1为管理员，2为访客
-    @Column(name = "isAdaim", length = 1)
-    private int isAdaim;
     @Column(name = "email", length = 32)
     private String eMail;
     //0为保密，1为男，2为女
@@ -57,7 +70,7 @@ public class User implements Serializable {
 
 
     @ManyToMany(targetEntity = Role.class, mappedBy = "users")
-    @JsonIgnoreProperties(value = "users")
+    @JsonIgnore
     private Set<Role> roles = new HashSet<>();
 
     @Override
@@ -68,7 +81,6 @@ public class User implements Serializable {
                 ", password='" + password + '\'' +
                 ", userName='" + userName + '\'' +
                 ", coverImg='" + coverImg + '\'' +
-                ", isAdaim=" + isAdaim +
                 ", eMail='" + eMail + '\'' +
                 ", sex=" + sex +
                 ", note='" + note + '\'' +

@@ -122,13 +122,6 @@ public class UserDaoImpl implements IUserDao {
             hql.append("cover_img = '" + user.getCoverImg() + "'");
             index++;
         }
-        if (!StringUtils.isEmpty(user.getIsAdaim())) {
-            if (index > 0) {
-                hql.append(" ,");
-            }
-            hql.append("isAdaim = '" + user.getIsAdaim() + "'");
-            index++;
-        }
         if (!StringUtils.isEmpty(user.getEMail())) {
             if (index > 0) {
                 hql.append(" ,");

@@ -36,6 +36,12 @@ public class Permission {
     @Column(name = "url")
     private String url;
 
+    /**
+     * 权限标识
+     */
+    @Column(name = "perms",length = 12)
+    private String perms;
+
     @ManyToMany(targetEntity = Role.class)
     @JsonIgnoreProperties(value = "permissions")
     @JoinTable(

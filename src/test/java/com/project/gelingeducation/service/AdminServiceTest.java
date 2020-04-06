@@ -3,7 +3,6 @@ package com.project.gelingeducation.service;
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.domain.User;
-import com.project.gelingeducation.service.Impl.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @WebAppConfiguration
@@ -33,9 +33,14 @@ public class AdminServiceTest {
 
     @Test
     public void insert() {
+//        User user = new User();
+//        user.setAccount("123456");
+//        user.setPassword("123456");
+//        log.debug("findById获取的结果：" + userservice.addUser(user));
+
         User user = new User();
-        user.setAccount("123456");
-        user.setPassword("123456");
+        user.setAccount("editor");
+        user.setPassword("editor");
         log.debug("findById获取的结果：" + userservice.addUser(user));
     }
 
@@ -83,14 +88,19 @@ public class AdminServiceTest {
         User user = userservice.findUserByAccount("123456");
         log.debug("=====>" + user);
     }
-    
+
     @Test
-    public void addPermisson(){
+    public void addRoles() {
 //        User user = userservice.findById(7);
-        long rolds[] = {15};
-        userservice.addRole(11,rolds);
-
-
+        long rolds[] = {17};
+        userservice.addRole(11, rolds);
     }
 
+    @Test
+    public void findRolesByUser() {
+        Set<Role> roles = userservice.findRoleByUserId(11);
+        for (Role role : roles) {
+            log.debug("==>" + role.getName());
+        }
+    }
 }

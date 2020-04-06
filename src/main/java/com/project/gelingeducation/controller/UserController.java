@@ -5,6 +5,7 @@ import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.common.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +26,8 @@ import java.util.Iterator;
  */
 @Slf4j
 @RestController
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping("/user")
+public class UserController {
 
     @Autowired
     private IUserService UserService;
@@ -38,6 +39,7 @@ public class AdminController {
      * @param id 用户id
      * @return
      */
+    @RequiresPermissions("user:view")
     @RequestMapping(value = "/getInfo", method = RequestMethod.GET)
     public Object getInfo(int id) {
         return JsonData.buildSuccess(UserService.findById(id));
@@ -107,6 +109,7 @@ public class AdminController {
      *
      * @return
      */
+    @RequiresPermissions("user:view")
     @RequestMapping(value = "/lists", method = RequestMethod.POST)
     public Object lists(int currentPage, int pageSize) {
         return JsonData.buildSuccess(UserService.getLists(currentPage, pageSize));
@@ -145,7 +148,7 @@ public class AdminController {
     }
 
     /**
-     * 批量删除客户
+     * 按名字搜索
      */
     @RequestMapping(value = "/selbyname", method = RequestMethod.POST)
     public Object selByName(String name, int currentPage, int pageSize) {

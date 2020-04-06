@@ -23,16 +23,26 @@ public class RoleTest {
 
     @Test
     public void addRole() {
+//        Role role = new Role();
+//        role.setRemark("运营维护");
+//        role.setName("editor");
+//        roleService.add(role);
+
+//        Role role = new Role();
+//        role.setRemark("普通管理员");
+//        role.setName("admin");
+//        roleService.add(role);
+
         Role role = new Role();
-        role.setRemark("测试管理员");
-        role.setName("admin_test");
+        role.setRemark("超级管理员");
+        role.setName("root");
         roleService.add(role);
     }
 
     @Test
     public void addPermission() {
-        long permissionIds[] = {14};
-        roleService.addPermissionByIds(10, permissionIds);
+        long permissionIds[] = {24};
+        roleService.addPermissionByIds(17, permissionIds);
     }
 
     @Test
