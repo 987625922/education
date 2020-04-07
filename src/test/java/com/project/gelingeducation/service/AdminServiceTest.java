@@ -92,8 +92,8 @@ public class AdminServiceTest {
     @Test
     public void addRoles() {
 //        User user = userservice.findById(7);
-        long rolds[] = {17};
-        userservice.addRole(11, rolds);
+        long rolds[] = {15};
+        userservice.addRole(7, rolds);
     }
 
     @Test

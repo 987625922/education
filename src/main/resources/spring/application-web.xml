@@ -26,8 +26,8 @@
     </bean>
     <!-- 自定义凭证(密码)匹配器 -->
     <!--<bean id="hashedCredentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">-->
-        <!--<property name="hashAlgorithmName" value="md5"/>-->
-        <!--<property name="hashIterations" value="2"/>-->
+    <!--<property name="hashAlgorithmName" value="md5"/>-->
+    <!--<property name="hashIterations" value="2"/>-->
     <!--</bean>-->
     <!-- session管理器 -->
     <!--在shiro的DefaultWebSessionManager类中，默认Cookie名称是JSESSIONID，这样的话与servlet容器名冲突,
@@ -50,9 +50,9 @@
         <!--//没有权限，未授权就会调用此方法， 先验证登录-》再验证是否有权限-->
         <property name="unauthorizedUrl" value="/not_permisson"/>
         <!--<property name="filters">-->
-            <!--<map>-->
-                <!--<entry key="custom" value-ref="crosAuthenticationFilter"/>-->
-            <!--</map>-->
+        <!--<map>-->
+        <!--<entry key="custom" value-ref="crosAuthenticationFilter"/>-->
+        <!--</map>-->
         <!--</property>-->
         <property name="filterChainDefinitions">
             <value>
@@ -71,5 +71,5 @@
 
 
     <!--<bean name="crosAuthenticationFilter"-->
-          <!--class="com.project.gelingeducation.common.authentication.CrosAuthenticationFilter"/>-->
+    <!--class="com.project.gelingeducation.common.authentication.CrosAuthenticationFilter"/>-->
 </beans>
