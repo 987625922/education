@@ -11,4 +11,8 @@ public interface IRoleDao {
     Role findById(long id);
 
     List<Role> list();
+
+    void delRoleById(long id);
+
+    long getCount();
 }

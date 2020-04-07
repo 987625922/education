@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service.Impl;
 
+import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.IRoleDao;
 import com.project.gelingeducation.domain.Permission;
 import com.project.gelingeducation.domain.Role;
@@ -50,6 +51,19 @@ public class RoleService implements IRoleService {
     public List<Role> list() {
 
         return roleDao.list();
+    }
+
+    @Override
+    public void delRoleById(long id) {
+        roleDao.delRoleById(id);
+    }
+
+    @Override
+    public PageResult getRolePageList() {
+
+
+
+        return null;
     }
 
 

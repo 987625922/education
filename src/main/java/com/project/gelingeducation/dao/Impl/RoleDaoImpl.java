@@ -2,7 +2,6 @@ package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.dao.IRoleDao;
 import com.project.gelingeducation.domain.Role;
-import com.project.gelingeducation.domain.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -36,6 +35,19 @@ public class RoleDaoImpl implements IRoleDao {
     public List<Role> list() {
         Query<Role> query = getSession().createQuery("from Role");
         return query.list();
+    }
+
+    @Override
+    public void delRoleById(long id) {
+        getSession().delete(getSession().get(Role.class, id));
+    }
+
+    @Override
+    public long getCount() {
+        String hql = "select count(*) from Role";//此处的Product是对象
+        Query queryCount = getSession().createQuery(hql);
+        long allrows = (long) queryCount.uniqueResult();
+        return allrows;
     }
 
 
