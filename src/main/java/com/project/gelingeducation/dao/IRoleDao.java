@@ -1,5 +1,6 @@
 package com.project.gelingeducation.dao;
 
+import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.domain.Role;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface IRoleDao {
     void delRoleById(long id);
 
     long getCount();
+
+    PageResult getRolePageList(int currentPage, int pageSize);
 }
