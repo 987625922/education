@@ -132,6 +132,7 @@ public class UserController {
      * @param id
      * @return
      */
+    @RequiresPermissions("user:edit")
     @RequestMapping(value = "/deluser", method = RequestMethod.POST)
     public Object deluser(long id) {
         UserService.delUser(id);

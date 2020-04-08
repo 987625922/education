@@ -1,5 +1,8 @@
 package com.project.gelingeducation.common.authentication;
 
+import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.common.exception.AllException;
+import com.project.gelingeducation.common.utils.GsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -99,14 +102,12 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean sendChallenge(ServletRequest request, ServletResponse response) {
-        log.debug("Authentication required: sending 401 Authentication challenge response.");
         HttpServletResponse httpResponse = WebUtils.toHttp(response);
         httpResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
         httpResponse.setCharacterEncoding("utf-8");
         httpResponse.setContentType("application/json; charset=utf-8");
-        final String message = "未认证，请在前端系统进行认证";
         try (PrintWriter out = httpResponse.getWriter()) {
-            String responseJson = "{\"message\":\"" + message + "\"}";
+            String responseJson = GsonUtils.GsonString(JsonData.buildError("未登录",-101));
             out.print(responseJson);
         } catch (IOException e) {
             log.error("sendChallenge error：", e);

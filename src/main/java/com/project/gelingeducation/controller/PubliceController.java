@@ -34,19 +34,10 @@ public class PubliceController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Object login(@RequestBody User user) {
-        Subject subject = SecurityUtils.getSubject();
-        try {
-//            UsernamePasswordToken usernamePasswordToken =
-//                    new UsernamePasswordToken(user.getAccount(),
-//                            MD5Util.encrypt(user.getAccount().toLowerCase(), user.getPassword()));
-//            subject.login(usernamePasswordToken);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new AllException(-100, "账号或密码错误!");
-        }
+        User reUser = UserService.login(user.getAccount(), user.getPassword());
         HashMap userMap = new HashMap();
-        userMap.put("id", UserService.login(user.getAccount(), user.getPassword()).getId());
-        userMap.put("token", subject.getSession().getId());
+        userMap.put("id", reUser.getId());
+        userMap.put("token", reUser.getAccount());
         return JsonData.buildSuccess(userMap);
     }
 
@@ -61,15 +52,5 @@ public class PubliceController {
         return JsonData.buildSuccess(UserService.register(user));
     }
 
-
-    @RequestMapping(value = "/need_login", method = RequestMethod.GET)
-    public Object needLogin() {
-        return JsonData.buildError("需要登录账户");
-    }
-
-    @RequestMapping(value = "/not_permisson", method = RequestMethod.GET)
-    public Object needPermisson() {
-        return JsonData.buildError("账户没有权限");
-    }
 
 }

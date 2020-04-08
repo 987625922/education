@@ -5,7 +5,6 @@ import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -15,7 +14,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -78,12 +76,11 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
         String account = (String) token.getPrincipal();
-//        String password = new String((char[]) token.getCredentials());
 
         User user = userService.findUserByAccount(account);
 
-//        if (user == null)
-//            throw new UnknownAccountException("账号未注册！");
+        if (user == null)
+            throw new AuthenticationException("账号未注册！");
 //        if (!StringUtils.equals(password, user.getPassword()))
 //            throw new IncorrectCredentialsException("用户名或密码错误！");
 
