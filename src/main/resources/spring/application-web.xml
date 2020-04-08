@@ -18,7 +18,6 @@
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
           depends-on="lifecycleBeanPostProcessor"/>
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
-
     <!-- 安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="userShiroRealm"/>
@@ -44,7 +43,6 @@
           class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
-
     <!-- 对shiro登录和权限进行自定义 -->
     <bean name="crosAuthenticationFilter"
           class="com.project.gelingeducation.common.authentication.JWTAuthenticationFilter"/>
