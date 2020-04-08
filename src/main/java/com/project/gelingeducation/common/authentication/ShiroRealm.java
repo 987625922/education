@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -29,6 +29,11 @@ public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     private IUserService userService;
 
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return token instanceof JWTToken;
+    }
+
     /**
      * 进行权限校验的时候回调用
      *
@@ -40,8 +45,8 @@ public class ShiroRealm extends AuthorizingRealm {
         String account = (String) principals.getPrimaryPrincipal();
         User user = userService.findUserByAccount(account);
 
-        List<String> stringRoleList = new ArrayList<>();
-        List<String> stringPermissionList = new ArrayList<>();
+        Set<String> stringRoleList = new HashSet<>();
+        Set<String> stringPermissionList = new HashSet<>();
 
         Set<Role> roles = userService.findRoleByUserId(user.getId());
         for (Role role : roles) {
@@ -55,8 +60,8 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        simpleAuthorizationInfo.addRoles(stringRoleList);
-        simpleAuthorizationInfo.addStringPermissions(stringPermissionList);
+        simpleAuthorizationInfo.setRoles(stringRoleList);
+        simpleAuthorizationInfo.setStringPermissions(stringPermissionList);
 
         return simpleAuthorizationInfo;
     }
@@ -73,16 +78,17 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
         String account = (String) token.getPrincipal();
-        String password = new String((char[]) token.getCredentials());
+//        String password = new String((char[]) token.getCredentials());
 
         User user = userService.findUserByAccount(account);
 
-        if (user == null)
-            throw new UnknownAccountException("账号未注册！");
-        if (!StringUtils.equals(password, user.getPassword()))
-            throw new IncorrectCredentialsException("用户名或密码错误！");
+//        if (user == null)
+//            throw new UnknownAccountException("账号未注册！");
+//        if (!StringUtils.equals(password, user.getPassword()))
+//            throw new IncorrectCredentialsException("用户名或密码错误！");
 
-        return new SimpleAuthenticationInfo(account, user.getPassword(), this.getClass().getName());
+        return new SimpleAuthenticationInfo(account, account,
+                this.getClass().getName());
     }
 
     /**

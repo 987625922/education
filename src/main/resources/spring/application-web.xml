@@ -14,62 +14,39 @@
     <context:property-placeholder location="classpath:config.properties"/>
 
     <mvc:annotation-driven/>
+    <!-- @RequiresPermissions注解注册 -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
 
     <!-- 安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="userShiroRealm"/>
-        <property name="sessionManager" ref="sessionManager"/>
     </bean>
     <!-- 自定义域 -->
-    <bean id="userShiroRealm" class="com.project.gelingeducation.common.authentication.ShiroRealm">
-        <!--<property name="credentialsMatcher" ref="hashedCredentialsMatcher"/>-->
-    </bean>
-    <!-- 自定义凭证(密码)匹配器 -->
-    <!--<bean id="hashedCredentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">-->
-    <!--<property name="hashAlgorithmName" value="md5"/>-->
-    <!--<property name="hashIterations" value="2"/>-->
-    <!--</bean>-->
-    <!-- session管理器 -->
-    <!--在shiro的DefaultWebSessionManager类中，默认Cookie名称是JSESSIONID，这样的话与servlet容器名冲突,
-    如jetty, tomcat等默认JSESSIONID, 当跳出shiro servlet时如error-page容器会为JSESSIONID重新分配值导致登录会话丢失!-->
-    <bean id="sessionManager" class="com.project.gelingeducation.common.authentication.ShiroManager">
-        <property name="sessionIdCookie" ref="simpleCookie"/>
-    </bean>
-    <bean id="simpleCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-        <constructor-arg name="name" value="shiro.sesssion"/>
-        <property name="path" value="/"/>
-    </bean>
-    <!-- Shiro的web过滤器 -->
+    <bean id="userShiroRealm" class="com.project.gelingeducation.common.authentication.ShiroRealm"></bean>
+    <!-- 过滤器工厂 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-        <!--//必须设置securityManager-->
         <property name="securityManager" ref="securityManager"/>
-        <!--//需要登录的接口，如果访问某个接口，需要登录却没登录，则调用此接口(如果不是前后端分离，则跳转页面)-->
-        <property name="loginUrl" value="/need_login"/>
-        <!--//登录成功，跳转url，如果前后端分离，则没这个调用-->
-        <!--        <property name="successUrl" value="/"/>-->
-        <!--//没有权限，未授权就会调用此方法， 先验证登录-》再验证是否有权限-->
-        <property name="unauthorizedUrl" value="/not_permisson"/>
-        <!--<property name="filters">-->
-        <!--<map>-->
-        <!--<entry key="custom" value-ref="crosAuthenticationFilter"/>-->
-        <!--</map>-->
-        <!--</property>-->
-        <property name="filterChainDefinitions">
-            <value>
-                /logout = logout
-                /login = anon
-            </value>
+        <property name="filters">
+            <map>
+                <entry key="cros" value-ref="crosAuthenticationFilter"/>
+            </map>
+        </property>
+        <property name="filterChainDefinitionMap">
+            <map>
+                <entry key="/**" value="cros"/>
+            </map>
         </property>
     </bean>
-
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-          depends-on="lifecycleBeanPostProcessor" />
-    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-        <property name="securityManager" ref="securityManager" />
+    <!-- 过滤器加入spring web -->
+    <bean name="authorizationAttributeSourceAdvisor"
+          class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
     </bean>
-    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
 
+    <!-- 对shiro登录和权限进行自定义 -->
+    <bean name="crosAuthenticationFilter"
+          class="com.project.gelingeducation.common.authentication.JWTAuthenticationFilter"/>
 
-    <!--<bean name="crosAuthenticationFilter"-->
-    <!--class="com.project.gelingeducation.common.authentication.CrosAuthenticationFilter"/>-->
 </beans>

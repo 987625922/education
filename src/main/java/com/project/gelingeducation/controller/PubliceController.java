@@ -36,10 +36,10 @@ public class PubliceController {
     public Object login(@RequestBody User user) {
         Subject subject = SecurityUtils.getSubject();
         try {
-            UsernamePasswordToken usernamePasswordToken =
-                    new UsernamePasswordToken(user.getAccount(),
-                            MD5Util.encrypt(user.getAccount().toLowerCase(), user.getPassword()));
-            subject.login(usernamePasswordToken);
+//            UsernamePasswordToken usernamePasswordToken =
+//                    new UsernamePasswordToken(user.getAccount(),
+//                            MD5Util.encrypt(user.getAccount().toLowerCase(), user.getPassword()));
+//            subject.login(usernamePasswordToken);
         } catch (Exception e) {
             e.printStackTrace();
             throw new AllException(-100, "账号或密码错误!");
