@@ -31,8 +31,7 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private IRoleService roleService;
 
-    @Autowired
-    JedisCacheClient jedisCacheClient;
+
 
     /**
      * 注册
@@ -92,7 +91,8 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional(readOnly = true)
     public User findById(long id) {
-        return userDao.findById(id);
+        User user = userDao.findById(id);
+        return user;
     }
 
     /**

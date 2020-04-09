@@ -1,7 +1,6 @@
 package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.dto.JsonData;
-import com.project.gelingeducation.common.utils.CommonUtil;
 import com.project.gelingeducation.common.utils.FileUtils;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.CacheService;
@@ -32,7 +31,7 @@ import java.util.Iterator;
 public class UserController {
 
     @Autowired
-    private IUserService UserService;
+    private IUserService userService;
 
     @Autowired
     private CacheService cacheService;
@@ -44,9 +43,14 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/getInfo", method = RequestMethod.GET)
-    public Object getInfo(int id) {
-        User user = CommonUtil.selectCacheByTemplate(() -> cacheService.getUserById(id)
-                , () -> UserService.findById(id));
+    public Object getInfo(int id) throws Exception {
+//        User user = CommonUtil.selectCacheByTemplate(() -> cacheService.getUserById(id)
+//                , () -> userService.findById(id));
+        User user = cacheService.getUserById(id);
+        if (user == null) {
+            user = userService.findById(id);
+            cacheService.saveUser(user);
+        }
         return JsonData.buildSuccess(user);
     }
 
@@ -77,7 +81,7 @@ public class UserController {
                 }
             }
 
-            UserService.updateCoverImg(Long.valueOf(userId), time);
+            userService.updateCoverImg(Long.valueOf(userId), time);
         } else {
             return JsonData.buildError("图片上传失败");
         }
@@ -92,7 +96,7 @@ public class UserController {
      */
     @RequestMapping(value = "/editinfo", method = RequestMethod.POST)
     public Object update(@RequestBody User user) {
-        UserService.update(user);
+        userService.update(user);
         return JsonData.buildSuccess();
     }
 
@@ -105,7 +109,7 @@ public class UserController {
      */
     @RequestMapping(value = "/updatepassword", method = RequestMethod.POST)
     public Object updatePassword(long id, String oldPassword, String newPassword) {
-        UserService.updatePassword(id, oldPassword, newPassword);
+        userService.updatePassword(id, oldPassword, newPassword);
         return JsonData.buildSuccess();
     }
 
@@ -116,7 +120,7 @@ public class UserController {
      */
     @RequestMapping(value = "/lists", method = RequestMethod.POST)
     public Object lists(int currentPage, int pageSize) {
-        return JsonData.buildSuccess(UserService.getLists(currentPage, pageSize));
+        return JsonData.buildSuccess(userService.getLists(currentPage, pageSize));
     }
 
     /**
@@ -127,7 +131,7 @@ public class UserController {
      */
     @RequestMapping(value = "/adduser", method = RequestMethod.POST)
     public Object addUser(@RequestBody User user) {
-        return JsonData.buildSuccess(UserService.addUser(user));
+        return JsonData.buildSuccess(userService.addUser(user));
     }
 
     /**
@@ -139,7 +143,7 @@ public class UserController {
     @RequiresPermissions("user:root")
     @RequestMapping(value = "/deluser", method = RequestMethod.POST)
     public Object deluser(long id) {
-        UserService.delUser(id);
+        userService.delUser(id);
         return JsonData.buildSuccess();
     }
 
@@ -149,7 +153,7 @@ public class UserController {
     @RequiresPermissions("user:root")
     @RequestMapping(value = "/delseluser", method = RequestMethod.POST)
     public Object delSelUser(long[] ids) {
-        UserService.delSelUser(ids);
+        userService.delSelUser(ids);
         return JsonData.buildSuccess();
     }
 
@@ -158,7 +162,7 @@ public class UserController {
      */
     @RequestMapping(value = "/selbyname", method = RequestMethod.POST)
     public Object selByName(String name, int currentPage, int pageSize) {
-        return JsonData.buildSuccess(UserService.selbyname(name, currentPage, pageSize));
+        return JsonData.buildSuccess(userService.selbyname(name, currentPage, pageSize));
     }
 
 

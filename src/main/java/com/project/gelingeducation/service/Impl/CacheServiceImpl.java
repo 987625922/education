@@ -22,7 +22,7 @@ public class CacheServiceImpl implements CacheService {
     public User getUserById(long id) throws Exception {
         String userString = jedisCacheClient.get(GLConstant.USER_CACHE_PREFIX + id);
         if (StringUtils.isBlank(userString)) {
-            throw new Exception();
+            return null;
         } else {
             return mapper.readValue(userString, User.class);
         }
