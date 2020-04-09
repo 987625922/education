@@ -16,13 +16,13 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class LoginLogServiceImpl implements LoginLogService {
 
     @Autowired
     private LoginLogDao loginLogDao;
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = AllException.class)
     public void insert(LoginLog loginLog) {
         loginLog.setLoginTime(new Date());
         String ip = IPUtil.getIpAddr(HttpContextUtil.getHttpServletRequest());
@@ -32,19 +32,18 @@ public class LoginLogServiceImpl implements LoginLogService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = AllException.class)
+    @Transactional(readOnly = true)
     public List<LoginLog> list() {
         return loginLogDao.list();
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = AllException.class)
+    @Transactional(readOnly = true)
     public LoginLog getByUserId(long uid) {
         return loginLogDao.getByUid(uid);
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = AllException.class)
     public void getByUserIdLoginUpdate(long uid) {
         LoginLog loginLog = loginLogDao.getByUid(uid);
         if (loginLog == null) {

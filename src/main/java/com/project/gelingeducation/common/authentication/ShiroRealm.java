@@ -73,7 +73,8 @@ public class ShiroRealm extends AuthorizingRealm {
      * @throws AuthenticationException
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
+            throws AuthenticationException {
 
         String account = (String) token.getPrincipal();
 

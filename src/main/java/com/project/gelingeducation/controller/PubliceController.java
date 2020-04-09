@@ -2,12 +2,9 @@ package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.common.exception.AllException;
-import com.project.gelingeducation.common.utils.MD5Util;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IUserService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
+import com.project.gelingeducation.service.LoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +22,8 @@ public class PubliceController {
 
     @Autowired
     private IUserService UserService;
+    @Autowired
+    private LoginLogService loginLogService;
 
     /**
      * 登录接口
@@ -35,6 +34,11 @@ public class PubliceController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Object login(@RequestBody User user) {
         User reUser = UserService.login(user.getAccount(), user.getPassword());
+        if (reUser == null)
+            throw new AllException(-101, "账号密码错误");
+
+        loginLogService.getByUserIdLoginUpdate(user.getId());
+
         HashMap userMap = new HashMap();
         userMap.put("id", reUser.getId());
         userMap.put("token", reUser.getAccount());
@@ -51,6 +55,5 @@ public class PubliceController {
     public Object register(@RequestBody User user) {
         return JsonData.buildSuccess(UserService.register(user));
     }
-
 
 }

@@ -36,7 +36,7 @@ public class VideoController {
         return videoService.findById(id);
     }
 //    public Object findById(@RequestBody RequestBaseBean baseBean) throws Exception {
-//        Video video = GsonUtils.GsonToBean(EncryptionUtils.encodeBASE64(baseBean.getData()), Video.class);
+//        Video video = JsonUtils.GsonToBean(EncryptionUtils.encodeBASE64(baseBean.getData()), Video.class);
 //        return CommonDEUtils.getEncodedPostString(JsonData.buildSuccess(videoService.findById(video.getId())));
 //    }
 

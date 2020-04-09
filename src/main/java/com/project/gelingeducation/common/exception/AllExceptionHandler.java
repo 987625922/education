@@ -1,6 +1,7 @@
 package com.project.gelingeducation.common.exception;
 
 import com.project.gelingeducation.common.dto.JsonData;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +18,8 @@ public class AllExceptionHandler {
         if (e instanceof AllException) {
             AllException allException = (AllException) e;
             return JsonData.buildError(allException.getMsg(), allException.getCode());
+        } else if (e instanceof UnauthorizedException) {
+            return JsonData.buildError("用户无权限", -102);
         } else {
             return JsonData.buildError("全局异常，未知错误");
         }

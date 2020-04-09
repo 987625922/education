@@ -1,11 +1,9 @@
 package com.project.gelingeducation.common.authentication;
 
 import com.project.gelingeducation.common.dto.JsonData;
-import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.common.utils.GsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
@@ -43,8 +41,7 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws UnauthorizedException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String[] anonUrl = StringUtils.splitByWholeSeparatorPreserveAllTokens("/,/login",
-                ",");
+        String[] anonUrl = StringUtils.splitByWholeSeparatorPreserveAllTokens("/login", ",");
         boolean match = false;
         for (String u : anonUrl) {
             if (pathMatcher.match(u, httpServletRequest.getRequestURI()))
@@ -103,7 +100,7 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean sendChallenge(ServletRequest request, ServletResponse response) {
         HttpServletResponse httpResponse = WebUtils.toHttp(response);
-        httpResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        httpResponse.setStatus(HttpStatus.OK.value());
         httpResponse.setCharacterEncoding("utf-8");
         httpResponse.setContentType("application/json; charset=utf-8");
         try (PrintWriter out = httpResponse.getWriter()) {

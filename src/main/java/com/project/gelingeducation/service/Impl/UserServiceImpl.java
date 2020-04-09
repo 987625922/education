@@ -2,6 +2,8 @@ package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.common.exception.AllException;
+import com.project.gelingeducation.common.redis.JedisCacheClient;
+import com.project.gelingeducation.common.utils.CommonUtil;
 import com.project.gelingeducation.common.utils.MD5Util;
 import com.project.gelingeducation.dao.IUserDao;
 import com.project.gelingeducation.domain.Permission;
@@ -9,7 +11,6 @@ import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IRoleService;
 import com.project.gelingeducation.service.IUserService;
-import com.project.gelingeducation.service.LoginLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,13 +28,14 @@ public class UserServiceImpl implements IUserService {
     private IUserDao userDao;
 
     @Autowired
-    private LoginLogService loginLogService;
+    private IRoleService roleService;
 
     @Autowired
-    private IRoleService roleService;
+    JedisCacheClient jedisCacheClient;
 
     /**
      * 注册
+     *
      * @param user
      * @return
      */
@@ -50,6 +52,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 添加用户
+     *
      * @param user
      * @return
      */
@@ -68,19 +71,20 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 登录
+     *
      * @param account
      * @param password
      * @return
      */
     @Override
     public User login(String account, String password) {
-        User info = userDao.findByPhone(account);
-        loginLogService.getByUserIdLoginUpdate(info.getId());
-        return info;
+        User user = CommonUtil.selectCacheByTemplate(() -> userDao.findByPhone(account), () -> userDao.findByPhone(account));
+        return user;
     }
 
     /**
      * 通过id查找用户
+     *
      * @param id
      * @return
      */
@@ -92,6 +96,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 页面格式的用户的列表
+     *
      * @param currentPage
      * @param pageSize
      * @return
@@ -104,6 +109,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 更新用户头像
+     *
      * @param id
      * @param coverImg
      */
@@ -114,6 +120,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 更新用户
+     *
      * @param user
      */
     @Override
@@ -122,7 +129,6 @@ public class UserServiceImpl implements IUserService {
     }
 
     /**
-     *
      * @param id
      * @param oldPassword
      * @param newPassword
@@ -139,6 +145,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 删除用户
+     *
      * @param id
      */
     @Override
@@ -148,6 +155,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 批量删除用户
+     *
      * @param ids
      */
     @Override
@@ -157,6 +165,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 通过名字用户格式的用户的list
+     *
      * @param name
      * @param currentPage
      * @param pageSize
@@ -170,6 +179,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 查找用户
+     *
      * @param account
      * @return
      */
@@ -182,6 +192,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 查找身份
+     *
      * @param id
      * @return
      */
@@ -190,7 +201,7 @@ public class UserServiceImpl implements IUserService {
     public Set<Role> findRoleByUserId(long id) {
         User user = userDao.findById(id);
         Set<Role> roles = new HashSet<>();
-        for (Role role:user.getRoles()){
+        for (Role role : user.getRoles()) {
             roles.add(role);
         }
         return roles;
@@ -198,6 +209,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 查找权限
+     *
      * @param id
      * @return
      */

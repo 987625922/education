@@ -10,15 +10,17 @@
     http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
 >
+
     <context:component-scan base-package="com.project.gelingeducation"/>
     <context:property-placeholder location="classpath:config.properties"/>
 
-    <!--  hibernate   -->
+    <!--                         hibernate                                -->
     <bean id="transactionManager"
           class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/>
+
     <!-- 配置c3p0数据库连接池 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driver}"/>
@@ -40,11 +42,11 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
                 <!--        开启hibernate的threadlocal-->
-                <prop key="current_session_context_class">thread</prop>
+                <prop key="current_session_context_class">${hibernate.current_session_context_class}</prop>
             </props>
         </property>
         <property name="annotatedClasses">
@@ -60,12 +62,28 @@
         </property>
     </bean>
 
-    <!--  common  -->
-<!--    //解析Date-->
+    <!--                        redis                                -->
+    <!-- JedisPool资源池 -->
+    <bean class="redis.clients.jedis.JedisPool" id="jedisPool">
+        <constructor-arg name="host" value="${redis.host}"></constructor-arg>
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>
+        <constructor-arg name="port" value="${redis.port}"></constructor-arg>
+    </bean>
+    <!-- JedisPool资源池设置 -->
+    <bean class="redis.clients.jedis.JedisPoolConfig" id="jedisPoolConfig">
+        <property name="maxIdle" value="${redis.maxIdle}"/>
+        <property name="maxTotal" value="${redis.maxActive}"/>
+        <property name="maxWaitMillis" value="${redis.maxWait}"/>
+        <property name="testOnBorrow" value="${redis.testOnBorrowconfig}"/>
+        <property name="blockWhenExhausted" value="${redis.blockWhenExhausted}"/>
+    </bean>
+
+    <!--                        common                             -->
+    <!--    解析Date-->
     <bean name="dateFormat" class="java.text.SimpleDateFormat">
         <constructor-arg name="pattern" value="yyyy-MM-dd-HH:mm"/>
     </bean>
-
+    <!-- 头像上传 -->
     <bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="512000"/>
     </bean>

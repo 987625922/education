@@ -85,7 +85,7 @@ public final class EncryptionUtils {
 //        String objectJson;
 //        String signStr;
 //
-//        objectJson = GsonUtils.GsonString(jsonData);
+//        objectJson = JsonUtils.GsonString(jsonData);
 //
 //        signStr = objectJson + ",bLsBMeMaN10pN8z64TQ0fC3fztDlRsPn";
 //
