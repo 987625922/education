@@ -27,10 +27,11 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
     private static final String TOKEN = "token";
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();
-
+    //不用登陆就可以访问的接口，多个用,号隔开
+    private String annonUrl = "/login,/register";
 
     /**
-     *  判断是否是需要身份判断的url
+     * 判断是否是需要身份判断的url
      *
      * @param request
      * @param response
@@ -41,7 +42,7 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws UnauthorizedException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String[] anonUrl = StringUtils.splitByWholeSeparatorPreserveAllTokens("/login", ",");
+        String[] anonUrl = StringUtils.splitByWholeSeparatorPreserveAllTokens(annonUrl, ",");
         boolean match = false;
         for (String u : anonUrl) {
             if (pathMatcher.match(u, httpServletRequest.getRequestURI()))
@@ -104,7 +105,7 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
         httpResponse.setCharacterEncoding("utf-8");
         httpResponse.setContentType("application/json; charset=utf-8");
         try (PrintWriter out = httpResponse.getWriter()) {
-            String responseJson = GsonUtils.GsonString(JsonData.buildError("未登录",-101));
+            String responseJson = GsonUtils.GsonString(JsonData.buildError("未登录", -101));
             out.print(responseJson);
         } catch (IOException e) {
             log.error("sendChallenge error：", e);
