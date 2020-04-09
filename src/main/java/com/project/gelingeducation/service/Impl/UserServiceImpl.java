@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service.Impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.common.redis.JedisCacheClient;
@@ -78,7 +79,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public User login(String account, String password) {
-        User user = CommonUtil.selectCacheByTemplate(() -> userDao.findByPhone(account), () -> userDao.findByPhone(account));
+        User user = userDao.findByPhone(account);
         return user;
     }
 
@@ -185,7 +186,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(readOnly = true)
-    public User findUserByAccount(String account) {
+    public User findUserByAccount(String account){
         User user = userDao.findByPhone(account);
         return user;
     }

@@ -1,7 +1,7 @@
 package com.project.gelingeducation.common.authentication;
 
 import com.project.gelingeducation.common.dto.JsonData;
-import com.project.gelingeducation.common.utils.GsonUtils;
+import com.project.gelingeducation.common.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -105,7 +105,7 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
         httpResponse.setCharacterEncoding("utf-8");
         httpResponse.setContentType("application/json; charset=utf-8");
         try (PrintWriter out = httpResponse.getWriter()) {
-            String responseJson = GsonUtils.GsonString(JsonData.buildError("未登录", -101));
+            String responseJson = JsonUtils.jsonString(JsonData.buildError("未登录", -101));
             out.print(responseJson);
         } catch (IOException e) {
             log.error("sendChallenge error：", e);

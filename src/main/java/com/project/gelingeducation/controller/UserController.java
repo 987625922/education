@@ -1,9 +1,11 @@
 package com.project.gelingeducation.controller;
 
-import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.common.dto.JsonData;
-import com.project.gelingeducation.service.IUserService;
+import com.project.gelingeducation.common.utils.CommonUtil;
 import com.project.gelingeducation.common.utils.FileUtils;
+import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.service.CacheService;
+import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ public class UserController {
     @Autowired
     private IUserService UserService;
 
+    @Autowired
+    private CacheService cacheService;
 
     /**
      * 获取用户信息接口
@@ -39,10 +43,11 @@ public class UserController {
      * @param id 用户id
      * @return
      */
-    @RequiresPermissions("user:view")
     @RequestMapping(value = "/getInfo", method = RequestMethod.GET)
     public Object getInfo(int id) {
-        return JsonData.buildSuccess(UserService.findById(id));
+        User user = CommonUtil.selectCacheByTemplate(() -> cacheService.getUserById(id)
+                , () -> UserService.findById(id));
+        return JsonData.buildSuccess(user);
     }
 
     /**
@@ -109,7 +114,6 @@ public class UserController {
      *
      * @return
      */
-    @RequiresPermissions("user:view")
     @RequestMapping(value = "/lists", method = RequestMethod.POST)
     public Object lists(int currentPage, int pageSize) {
         return JsonData.buildSuccess(UserService.getLists(currentPage, pageSize));
@@ -132,7 +136,7 @@ public class UserController {
      * @param id
      * @return
      */
-    @RequiresPermissions("user:edit")
+    @RequiresPermissions("user:root")
     @RequestMapping(value = "/deluser", method = RequestMethod.POST)
     public Object deluser(long id) {
         UserService.delUser(id);
@@ -142,6 +146,7 @@ public class UserController {
     /**
      * 批量删除客户
      */
+    @RequiresPermissions("user:root")
     @RequestMapping(value = "/delseluser", method = RequestMethod.POST)
     public Object delSelUser(long[] ids) {
         UserService.delSelUser(ids);
@@ -155,5 +160,6 @@ public class UserController {
     public Object selByName(String name, int currentPage, int pageSize) {
         return JsonData.buildSuccess(UserService.selbyname(name, currentPage, pageSize));
     }
+
 
 }

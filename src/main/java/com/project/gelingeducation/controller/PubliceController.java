@@ -1,7 +1,12 @@
 package com.project.gelingeducation.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.common.dto.RequestBodyData;
 import com.project.gelingeducation.common.exception.AllException;
+import com.project.gelingeducation.common.utils.CommonUtil;
+import com.project.gelingeducation.common.utils.EncryptionUtils;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.LoginLogService;
@@ -27,16 +32,16 @@ public class PubliceController {
     /**
      * 登录接口
      *
-     * @param user 用户账号密码
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Object login(@RequestBody User user) {
+
         User reUser = UserService.login(user.getAccount(), user.getPassword());
         if (reUser == null)
             throw new AllException(-101, "账号密码错误");
 
-        loginLogService.getByUserIdLoginUpdate(user.getId());
+        loginLogService.getByUserIdLoginUpdate(reUser.getId());
 
         HashMap userMap = new HashMap();
         userMap.put("id", reUser.getId());

@@ -1,11 +1,7 @@
 package com.project.gelingeducation.common.utils;
 
-
-//import com.google.gson.JsonObject;
-import com.project.gelingeducation.common.dto.JsonData;
-
+import com.project.gelingeducation.common.exception.AllException;
 import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
 import java.util.Base64;
 
 /**
@@ -13,46 +9,22 @@ import java.util.Base64;
  */
 public final class EncryptionUtils {
 
-    /**
-     * 进行MD5加密
-     *
-     * @param text 要加密的字符串
-     * @return 加密后的字符串，处理失败返回原本文字
-     */
-    public static String MD5(String text) {
-        char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                'a', 'b', 'c', 'd', 'e', 'f'};
-        try {
-            byte[] btInput = text.getBytes();
-            // 获得MD5摘要算法的 MessageDigest 对象
-            MessageDigest mdInst = MessageDigest.getInstance("MD5");
-            // 使用指定的字节更新摘要
-            mdInst.update(btInput);
-            // 获得密文
-            byte[] md = mdInst.digest();
-            // 把密文转换成十六进制的字符串形式
-            int j = md.length;
-            char str[] = new char[j * 2];
-            int k = 0;
-            for (byte byte0 : md) {
-                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
-                str[k++] = hexDigits[byte0 & 0xf];
-            }
-            return new String(str).toLowerCase();
-        } catch (Exception e) {
-            return text;
-        }
-    }
 
     /**
      * base64解密
+     *
      * @param encodedText
      * @return
      * @throws UnsupportedEncodingException
      */
-    public static String encodeBASE64(String encodedText) throws UnsupportedEncodingException {
+    public static String encodeBASE64(String encodedText) {
         final Base64.Decoder decoder = Base64.getDecoder();
-        return new String(decoder.decode(encodedText), "UTF-8");
+        try {
+            return new String(decoder.decode(encodedText), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            throw new AllException(-103, "数据出错");
+        }
     }
 
     /**
@@ -69,36 +41,5 @@ public final class EncryptionUtils {
         final String encodedText = encoder.encodeToString(textByte);
         return encodedText;
     }
-
-
-    /**
-     * 加密字符串输出
-     *
-     * @param jsonData bean
-     * @return 加密后的字符串
-     */
-//    public static String getEncodedPostString(JsonData jsonData) throws Exception {
-//
-//        JsonObject resultObject;
-//        String data;
-//        String sign;
-//        String objectJson;
-//        String signStr;
-//
-//        objectJson = JsonUtils.GsonString(jsonData);
-//
-//        signStr = objectJson + ",bLsBMeMaN10pN8z64TQ0fC3fztDlRsPn";
-//
-//
-//        //加密处理
-//        data = EncryptionUtils.decodeBASE64(objectJson);
-//        sign = EncryptionUtils.MD5(signStr);
-//
-//        resultObject = new JsonObject();
-//        resultObject.addProperty("data", data);
-//        resultObject.addProperty("sign", sign);
-//
-//        return resultObject.toString();
-//    }
 
 }

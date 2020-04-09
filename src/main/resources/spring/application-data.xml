@@ -87,5 +87,6 @@
     <bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="512000"/>
     </bean>
+    <bean name="mapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
 
 </beans>
