@@ -67,8 +67,10 @@ public class User implements Serializable {
     //修改时间
     @Column(name = "modify_time")
     private Date modifyTime;
-
-
+    //身份名
+    @Column(name = "role_name",length = 24)
+    private String roleName;
+    //身份列表
     @ManyToMany(targetEntity = Role.class, mappedBy = "users")
     @JsonIgnore
     private Set<Role> roles = new HashSet<>();

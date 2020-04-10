@@ -5,8 +5,12 @@ import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -68,24 +72,23 @@ public class ShiroRealm extends AuthorizingRealm {
     /**
      * 用户登录的时候会调用
      *
-     * @param token
+     * @param authenticationToken
      * @return
      * @throws AuthenticationException
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
             throws AuthenticationException {
 
-        String account = (String) token.getPrincipal();
+        String token = (String) authenticationToken.getPrincipal();
 
-        User user = userService.findUserByAccount(account);
+        String username = JWTUtil.getUsername(token);
 
-        if (user == null)
-            throw new AuthenticationException("账号未注册！");
-//        if (!StringUtils.equals(password, user.getPassword()))
-//            throw new IncorrectCredentialsException("用户名或密码错误！");
+        if (StringUtils.isBlank(username)){
+            throw new AuthenticationException("token校验不通过");
+        }
 
-        return new SimpleAuthenticationInfo(account, account,
+        return new SimpleAuthenticationInfo(token, token,
                 this.getClass().getName());
     }
 

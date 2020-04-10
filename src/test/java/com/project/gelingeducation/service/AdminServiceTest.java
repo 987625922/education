@@ -28,7 +28,7 @@ public class AdminServiceTest {
 
     @Test
     public void login() {
-        userservice.login("123456", "123456");
+        userservice.findUserByAccount("123456");
     }
 
     @Test

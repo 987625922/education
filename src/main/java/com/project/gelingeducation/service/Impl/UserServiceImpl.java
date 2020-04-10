@@ -44,6 +44,7 @@ public class UserServiceImpl implements IUserService {
         if (userDao.findByPhone(user.getAccount()) == null) {
             user.setUserName("管理员");
             user.setStatus(1);
+            user.setPassword(MD5Util.encrypt(user.getAccount().toLowerCase(), user.getPassword()));
             return userDao.insert(user);
         } else {
             throw new AllException(-100, "账号已存在");
@@ -69,18 +70,6 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
-    /**
-     * 登录
-     *
-     * @param account
-     * @param password
-     * @return
-     */
-    @Override
-    public User login(String account, String password) {
-        User user = userDao.findByPhone(account);
-        return user;
-    }
 
     /**
      * 通过id查找用户
@@ -137,8 +126,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void updatePassword(long id, String oldPassword, String newPassword) {
         User user = userDao.findById(id);
-        if (user.getPassword().equals(oldPassword)) {
-            user.setPassword(MD5Util.encrypt(user.getAccount(), newPassword));
+        if (user.getPassword().equals(MD5Util.encrypt(user.getAccount().toLowerCase(),
+                oldPassword))) {
+            user.setPassword(MD5Util.encrypt(user.getAccount().toLowerCase(),
+                    newPassword));
         } else {
             throw new AllException(-100, "密码错误");
         }
@@ -230,12 +221,12 @@ public class UserServiceImpl implements IUserService {
     /**
      * 添加身份
      *
-     * @param id
+     * @param userId
      * @param roleIds
      */
     @Override
-    public void addRole(long id, long[] roleIds) {
-        User user = userDao.findById(id);
+    public void addRole(long userId, long[] roleIds) {
+        User user = userDao.findById(userId);
         for (long roldId : roleIds) {
             Role role = roleService.findByRole(roldId);
             user.getRoles().add(role);

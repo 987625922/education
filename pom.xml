@@ -214,6 +214,13 @@
             <version>1.7.2</version>
         </dependency>
 
+        <!-- jwt -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.8.2</version>
+        </dependency>
+
         <!-- 控制台 SQL日志打印插件 -->
         <!--<dependency>-->
             <!--<groupId>p6spy</groupId>-->

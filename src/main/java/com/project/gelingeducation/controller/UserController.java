@@ -44,8 +44,6 @@ public class UserController {
      */
     @RequestMapping(value = "/getInfo", method = RequestMethod.GET)
     public Object getInfo(int id) throws Exception {
-//        User user = CommonUtil.selectCacheByTemplate(() -> cacheService.getUserById(id)
-//                , () -> userService.findById(id));
         User user = cacheService.getUserById(id);
         if (user == null) {
             user = userService.findById(id);
@@ -95,8 +93,9 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/editinfo", method = RequestMethod.POST)
-    public Object update(@RequestBody User user) {
+    public Object update(@RequestBody User user) throws Exception {
         userService.update(user);
+        cacheService.saveUser(user);
         return JsonData.buildSuccess();
     }
 
@@ -163,6 +162,15 @@ public class UserController {
     @RequestMapping(value = "/selbyname", method = RequestMethod.POST)
     public Object selByName(String name, int currentPage, int pageSize) {
         return JsonData.buildSuccess(userService.selbyname(name, currentPage, pageSize));
+    }
+
+    /**
+     * 添加身份
+     */
+    @RequestMapping(value = "/addRoles",method = RequestMethod.POST)
+    public Object addRole(long userId,long[] roleIds){
+        userService.addRole(userId,roleIds);
+        return JsonData.buildSuccess();
     }
 
 

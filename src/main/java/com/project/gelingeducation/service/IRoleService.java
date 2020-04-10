@@ -17,6 +17,6 @@ public interface IRoleService {
 
     void delRoleById(long id);
 
-    PageResult getRolePageList();
+    PageResult getRolePageList(int currentPage, int pageSize);
 
 }

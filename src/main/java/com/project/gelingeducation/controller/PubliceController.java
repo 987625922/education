@@ -1,12 +1,9 @@
 package com.project.gelingeducation.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.project.gelingeducation.common.authentication.JWTUtil;
 import com.project.gelingeducation.common.dto.JsonData;
-import com.project.gelingeducation.common.dto.RequestBodyData;
 import com.project.gelingeducation.common.exception.AllException;
-import com.project.gelingeducation.common.utils.CommonUtil;
-import com.project.gelingeducation.common.utils.EncryptionUtils;
+import com.project.gelingeducation.common.utils.MD5Util;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.LoginLogService;
@@ -37,15 +34,20 @@ public class PubliceController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Object login(@RequestBody User user) {
 
-        User reUser = UserService.login(user.getAccount(), user.getPassword());
-        if (reUser == null)
+        User reUser = UserService.findUserByAccount(user.getAccount());
+
+        if (reUser == null) {
+            throw new AllException(-101, "用户未注册");
+        } else if (!reUser.getPassword().equals(MD5Util.encrypt(user.getAccount().toLowerCase(),
+                user.getPassword()))) {
             throw new AllException(-101, "账号密码错误");
+        }
 
         loginLogService.getByUserIdLoginUpdate(reUser.getId());
 
         HashMap userMap = new HashMap();
         userMap.put("id", reUser.getId());
-        userMap.put("token", reUser.getAccount());
+        userMap.put("token", JWTUtil.sign(reUser.getAccount(), reUser.getPassword()));
         return JsonData.buildSuccess(userMap);
     }
 

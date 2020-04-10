@@ -1,5 +1,7 @@
 package com.project.gelingeducation.domain;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import lombok.*;
@@ -38,17 +40,17 @@ public class Role implements Serializable {
     private String remark;
 
     @ManyToMany(targetEntity = User.class)
-    @JsonIgnoreProperties(value = "roles")
     @JoinTable(
             name = "t_user_role",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
+    @JsonIgnore
     private Set<User> users = new HashSet<>();
 
 
     @ManyToMany(targetEntity = Permission.class, mappedBy = "roles")
-    @JsonIgnoreProperties(value = "roles")
+    @JsonIgnore
     private Set<Permission> permissions = new HashSet<>();
 
 }

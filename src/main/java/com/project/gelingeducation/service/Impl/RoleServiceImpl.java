@@ -14,10 +14,11 @@ import java.util.List;
 
 @Service
 @Transactional
-public class RoleService implements IRoleService {
+public class RoleServiceImpl implements IRoleService {
 
     @Autowired
     private IRoleDao roleDao;
+
     @Autowired
     private IPermissionService permissionService;
 
@@ -59,11 +60,8 @@ public class RoleService implements IRoleService {
     }
 
     @Override
-    public PageResult getRolePageList() {
-
-
-
-        return null;
+    public PageResult getRolePageList(int currentPage, int pageSize) {
+        return roleDao.getRolePageList(currentPage, pageSize);
     }
 
 

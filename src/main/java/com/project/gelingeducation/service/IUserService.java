@@ -14,7 +14,6 @@ public interface IUserService {
 
     Object addUser(User user);
 
-    User login(String account,String password);
 
     User findById(long id);
 
@@ -38,6 +37,6 @@ public interface IUserService {
 
     Set<Permission> findPermissionByUserId(long id);
 
-    void addRole(long id,long[] roleIds);
+    void addRole(long userId,long[] roleIds);
 
 }
