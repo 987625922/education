@@ -68,8 +68,11 @@ public class User implements Serializable {
     @Column(name = "modify_time")
     private Date modifyTime;
     //身份名
-    @Column(name = "role_name",length = 24)
+    @Transient
     private String roleName;
+    //身份id
+    @Transient
+    private long roleId;
     //身份列表
     @ManyToMany(targetEntity = Role.class, mappedBy = "users")
     @JsonIgnore

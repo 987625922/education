@@ -150,8 +150,8 @@ public class UserController {
      * 批量删除客户
      */
     @RequiresPermissions("user:root")
-    @RequestMapping(value = "/delseluser", method = RequestMethod.POST)
-    public Object delSelUser(long[] ids) {
+    @RequestMapping(value = "/delmoreuser", method = RequestMethod.POST)
+    public Object delMoreUser(long[] ids) {
         userService.delSelUser(ids);
         return JsonData.buildSuccess();
     }

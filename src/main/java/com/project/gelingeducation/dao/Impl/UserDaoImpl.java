@@ -45,6 +45,7 @@ public class UserDaoImpl implements IUserDao {
         for (int i = 0; i < list.size(); i++) {
             for (Role role : list.get(i).getRoles()) {
                 list.get(i).setRoleName(role.getName());
+                list.get(i).setRoleId(role.getId());
             }
         }
 
