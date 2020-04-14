@@ -15,7 +15,7 @@ gelingeducation
 └── service -- 后台管理系统的service层
 ```
 
-#### 后端技术
+### 后端技术
 
 | 技术          | 版本   |
 | ------------- | ------ |
@@ -24,3 +24,6 @@ gelingeducation
 | redis.clients | 3.1.0  |
 | shiro         | 1.4.2  |
 
+### 前端项目地址
+
+- [vue-gelingeducation](https://github.com/987625922/Vue-Gelingeducation/tree/master)
