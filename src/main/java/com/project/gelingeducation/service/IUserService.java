@@ -33,10 +33,10 @@ public interface IUserService {
 
     User findUserByAccount(String account);
 
-    Set<Role> findRoleByUserId(long id);
+    Role findRoleByUserId(long id);
 
     Set<Permission> findPermissionByUserId(long id);
 
-    void addRole(long userId,long[] roleIds);
+    void addRole(long userId, long roleId);
 
 }

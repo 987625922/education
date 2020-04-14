@@ -78,4 +78,12 @@ public class RoleDaoImpl implements IRoleDao {
     }
 
 
+    @Override
+    public Role findDefault() {
+        Query query = getSession().createQuery("from Role where is_default=?0");
+        query.setParameter(0, 1);
+        Role role = (Role) query.uniqueResult();
+        return role;
+    }
+
 }

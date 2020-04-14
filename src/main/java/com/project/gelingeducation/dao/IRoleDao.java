@@ -18,4 +18,6 @@ public interface IRoleDao {
     long getCount();
 
     PageResult getRolePageList(int currentPage, int pageSize);
+
+    Role findDefault();
 }

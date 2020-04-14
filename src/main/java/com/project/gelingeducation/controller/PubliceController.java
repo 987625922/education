@@ -3,6 +3,7 @@ package com.project.gelingeducation.controller;
 import com.project.gelingeducation.common.authentication.JWTUtil;
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.common.exception.AllException;
+import com.project.gelingeducation.common.exception.AllExceptionEnum;
 import com.project.gelingeducation.common.utils.MD5Util;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IUserService;
@@ -37,10 +38,12 @@ public class PubliceController {
         User reUser = UserService.findUserByAccount(user.getAccount());
 
         if (reUser == null) {
-            throw new AllException(-101, "用户未注册");
+            throw AllExceptionEnum.NO_USER.getAllException();
         } else if (!reUser.getPassword().equals(MD5Util.encrypt(user.getAccount().toLowerCase(),
                 user.getPassword()))) {
-            throw new AllException(-101, "账号密码错误");
+            throw AllExceptionEnum.ACCOUNT_PASSWORD_ERROR.getAllException();
+        } else if (reUser.getStatus() == 0){
+            throw AllExceptionEnum.BAN_USER.getAllException();
         }
 
         loginLogService.getByUserIdLoginUpdate(reUser.getId());

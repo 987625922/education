@@ -50,8 +50,7 @@ public class ShiroRealm extends AuthorizingRealm {
         Set<String> stringRoleList = new HashSet<>();
         Set<String> stringPermissionList = new HashSet<>();
 
-        Set<Role> roles = userService.findRoleByUserId(user.getId());
-        for (Role role : roles) {
+        Role role = user.getRole();
             stringRoleList.add(role.getName());
             Set<Permission> permissionList = userService.findPermissionByUserId(user.getId());
             for (Permission p : permissionList) {
@@ -59,7 +58,6 @@ public class ShiroRealm extends AuthorizingRealm {
                     stringPermissionList.add(p.getPerms());
                 }
             }
-        }
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         simpleAuthorizationInfo.setRoles(stringRoleList);

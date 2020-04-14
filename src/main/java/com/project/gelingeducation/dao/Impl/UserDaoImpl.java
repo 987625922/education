@@ -43,10 +43,10 @@ public class UserDaoImpl implements IUserDao {
         List<User> list = query.getResultList();
 
         for (int i = 0; i < list.size(); i++) {
-            for (Role role : list.get(i).getRoles()) {
-                list.get(i).setRoleName(role.getName());
-                list.get(i).setRoleId(role.getId());
-            }
+//            for (Role role : list.get(i).getRoles()) {
+//                list.get(i).setRoleName(role.getName());
+//                list.get(i).setRoleId(role.getId());
+//            }
         }
 
         PageResult pageResult = new PageResult();

@@ -1,10 +1,10 @@
 package com.project.gelingeducation.domain;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -39,12 +39,16 @@ public class Role implements Serializable {
     @Column(name = "remark")
     private String remark;
 
-    @ManyToMany(targetEntity = User.class)
-    @JoinTable(
-            name = "t_user_role",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
+    @Column(name = "is_default")
+    private int isDefault;
+
+    //    @ManyToMany(targetEntity = User.class)
+//    @JoinTable(
+//            name = "t_user_role",
+//            joinColumns = @JoinColumn(name = "role_id"),
+//            inverseJoinColumns = @JoinColumn(name = "user_id")
+//    )
+    @OneToMany(targetEntity = User.class, mappedBy = "role")
     @JsonIgnore
     private Set<User> users = new HashSet<>();
 

@@ -42,15 +42,10 @@ public class RoleServiceImpl implements IRoleService {
             role.getPermissions().add(permission);
             permission.getRoles().add(role);
         }
-
-//        roleDao.insert(role);
-//        permissionService.add(permission);
-
     }
 
     @Override
     public List<Role> list() {
-
         return roleDao.list();
     }
 
@@ -62,6 +57,11 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     public PageResult getRolePageList(int currentPage, int pageSize) {
         return roleDao.getRolePageList(currentPage, pageSize);
+    }
+
+    @Override
+    public Role findDefault() {
+        return roleDao.findDefault();
     }
 
 

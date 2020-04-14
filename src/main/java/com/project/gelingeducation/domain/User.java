@@ -67,16 +67,20 @@ public class User implements Serializable {
     //修改时间
     @Column(name = "modify_time")
     private Date modifyTime;
-    //身份名
-    @Transient
-    private String roleName;
-    //身份id
-    @Transient
-    private long roleId;
+//    //身份名
+//    @Transient
+//    private String roleName;
+//    //身份id
+//    @Transient
+//    private long roleId;
+
     //身份列表
-    @ManyToMany(targetEntity = Role.class, mappedBy = "users")
-    @JsonIgnore
-    private Set<Role> roles = new HashSet<>();
+//    @ManyToMany(targetEntity = Role.class, mappedBy = "users")
+//    @JsonIgnore
+//    private Set<Role> roles = new HashSet<>();
+    @ManyToOne(targetEntity = Role.class)
+    @JoinColumn(name = "role_id")//表示这个表在维护外键
+    private Role role;
 
     @Override
     public String toString() {

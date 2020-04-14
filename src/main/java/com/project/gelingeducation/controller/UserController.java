@@ -168,8 +168,8 @@ public class UserController {
      * 添加身份
      */
     @RequestMapping(value = "/addRoles",method = RequestMethod.POST)
-    public Object addRole(long userId,long[] roleIds){
-        userService.addRole(userId,roleIds);
+    public Object addRole(long userId,long roleId){
+        userService.addRole(userId,roleId);
         return JsonData.buildSuccess();
     }
 

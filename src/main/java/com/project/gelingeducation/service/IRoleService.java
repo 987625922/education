@@ -19,4 +19,5 @@ public interface IRoleService {
 
     PageResult getRolePageList(int currentPage, int pageSize);
 
+    Role findDefault();
 }

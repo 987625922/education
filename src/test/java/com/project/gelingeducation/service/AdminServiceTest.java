@@ -12,7 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @WebAppConfiguration
@@ -23,25 +22,17 @@ public class AdminServiceTest {
     @Autowired
     private IUserService userservice;
 
-    @Autowired
-    private IRoleService roleService;
-
-    @Test
-    public void login() {
-        userservice.findUserByAccount("123456");
-    }
-
     @Test
     public void insert() {
-//        User user = new User();
-//        user.setAccount("123456");
-//        user.setPassword("123456");
-//        log.debug("findById获取的结果：" + userservice.addUser(user));
-
         User user = new User();
-        user.setAccount("editor");
-        user.setPassword("editor");
+        user.setAccount("123456");
+        user.setPassword("123456");
         log.debug("findById获取的结果：" + userservice.addUser(user));
+
+//        User user = new User();
+//        user.setAccount("editor");
+//        user.setPassword("editor");
+//        log.debug("findById获取的结果：" + userservice.addUser(user));
     }
 
     @Test
@@ -91,16 +82,12 @@ public class AdminServiceTest {
 
     @Test
     public void addRoles() {
-//        User user = userservice.findById(7);
-        long rolds[] = {15};
-        userservice.addRole(7, rolds);
+        userservice.addRole(7, 15);
     }
 
     @Test
     public void findRolesByUser() {
-        Set<Role> roles = userservice.findRoleByUserId(11);
-        for (Role role : roles) {
-            log.debug("==>" + role.getName());
-        }
+        Role role = userservice.findRoleByUserId(11);
+        log.debug("==>" + role.getName());
     }
 }

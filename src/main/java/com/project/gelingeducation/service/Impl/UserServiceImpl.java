@@ -1,10 +1,7 @@
 package com.project.gelingeducation.service.Impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.common.exception.AllException;
-import com.project.gelingeducation.common.redis.JedisCacheClient;
-import com.project.gelingeducation.common.utils.CommonUtil;
+import com.project.gelingeducation.common.exception.AllExceptionEnum;
 import com.project.gelingeducation.common.utils.MD5Util;
 import com.project.gelingeducation.dao.IUserDao;
 import com.project.gelingeducation.domain.Permission;
@@ -31,8 +28,6 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private IRoleService roleService;
 
-
-
     /**
      * 注册
      *
@@ -47,7 +42,7 @@ public class UserServiceImpl implements IUserService {
             user.setPassword(MD5Util.encrypt(user.getAccount().toLowerCase(), user.getPassword()));
             return userDao.insert(user);
         } else {
-            throw new AllException(-100, "账号已存在");
+            throw AllExceptionEnum.ACCOUNT_ALREADY_EXISTS.getAllException();
         }
     }
 
@@ -62,11 +57,15 @@ public class UserServiceImpl implements IUserService {
         if (userDao.findByPhone(user.getAccount()) == null) {
             user.setUserName("用户名");
             user.setStatus(1);
+            user.setRole(roleService.findDefault());
             user.setPassword(MD5Util.encrypt(user.getAccount().toLowerCase(), user.getPassword()));
-            user.setCoverImg("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582740929074&di=88ebb0f61e464281d947673187acaa59&imgtype=0&src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2Fthreadcover%2Fbb%2Fa1%2F1988382.jpg");
+            user.setCoverImg("https://timgsa.baidu.com/timg?image&quality=80&size=b9999" +
+                    "_10000&sec=1582740929074&di=88ebb0f61e464281d947673187acaa59&imgtype=0" +
+                    "&src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2Fthreadcover%2Fbb%2Fa1%2F1" +
+                    "988382.jpg");
             return userDao.insert(user);
         } else {
-            throw new AllException(-100, "账号已存在");
+            throw AllExceptionEnum.ACCOUNT_ALREADY_EXISTS.getAllException();
         }
     }
 
@@ -131,7 +130,7 @@ public class UserServiceImpl implements IUserService {
             user.setPassword(MD5Util.encrypt(user.getAccount().toLowerCase(),
                     newPassword));
         } else {
-            throw new AllException(-100, "密码错误");
+            throw AllExceptionEnum.ACCOUNT_PASSWORD_ERROR.getAllException();
         }
     }
 
@@ -177,7 +176,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(readOnly = true)
-    public User findUserByAccount(String account){
+    public User findUserByAccount(String account) {
         User user = userDao.findByPhone(account);
         return user;
     }
@@ -190,13 +189,9 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Set<Role> findRoleByUserId(long id) {
+    public Role findRoleByUserId(long id) {
         User user = userDao.findById(id);
-        Set<Role> roles = new HashSet<>();
-        for (Role role : user.getRoles()) {
-            roles.add(role);
-        }
-        return roles;
+        return user.getRole();
     }
 
     /**
@@ -209,11 +204,10 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public Set<Permission> findPermissionByUserId(long id) {
         User user = userDao.findById(id);
+        Role role = user.getRole();
         Set<Permission> permissions = new HashSet<>();
-        for (Role role : user.getRoles()) {
-            for (Permission permission : role.getPermissions()) {
-                permissions.add(permission);
-            }
+        for (Permission permission : role.getPermissions()) {
+            permissions.add(permission);
         }
         return permissions;
     }
@@ -222,16 +216,13 @@ public class UserServiceImpl implements IUserService {
      * 添加身份
      *
      * @param userId
-     * @param roleIds
+     * @param roleId
      */
     @Override
-    public void addRole(long userId, long[] roleIds) {
+    public void addRole(long userId, long roleId) {
         User user = userDao.findById(userId);
-        for (long roldId : roleIds) {
-            Role role = roleService.findByRole(roldId);
-            user.getRoles().add(role);
-            role.getUsers().add(user);
-        }
+        Role role = roleService.findByRole(roleId);
+        user.setRole(role);
     }
 
 }
