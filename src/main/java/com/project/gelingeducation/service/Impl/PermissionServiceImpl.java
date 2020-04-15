@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class PermissionServiceImpl implements IPermissionService {
@@ -22,5 +24,10 @@ public class PermissionServiceImpl implements IPermissionService {
     @Override
     public Permission getById(long id) {
         return permissionDao.getById(id);
+    }
+
+    @Override
+    public List<Permission> list() {
+        return permissionDao.list();
     }
 }
