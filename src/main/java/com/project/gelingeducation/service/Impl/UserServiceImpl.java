@@ -1,6 +1,7 @@
 package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
+import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.common.exception.AllExceptionEnum;
 import com.project.gelingeducation.common.utils.MD5Util;
 import com.project.gelingeducation.dao.IUserDao;
@@ -54,10 +55,12 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public Object addUser(User user) {
+        if (user.getRole() == null){
+            throw AllExceptionEnum.ADD_USER_NO_ROLE.getAllException();
+        }
         if (userDao.findByPhone(user.getAccount()) == null) {
             user.setUserName("用户名");
             user.setStatus(1);
-            user.setRole(roleService.findDefault());
             user.setPassword(MD5Util.encrypt(user.getAccount().toLowerCase(), user.getPassword()));
             user.setCoverImg("https://timgsa.baidu.com/timg?image&quality=80&size=b9999" +
                     "_10000&sec=1582740929074&di=88ebb0f61e464281d947673187acaa59&imgtype=0" +

@@ -47,17 +47,17 @@
             <onMismatch>DENY</onMismatch>
         </filter>
         <!-- 最常用的滚动策略，它根据时间来制定滚动策略.既负责滚动也负责触发滚动 -->
-        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
-            <!--&lt;!&ndash;日志输出位置 可相对、和绝对路径 &ndash;&gt;-->
-            <!--<fileNamePattern>-->
-                <!--${log_dir}/error/%d{yyyy-MM-dd}/error-log.log-->
-            <!--</fileNamePattern>-->
-            <!--&lt;!&ndash; 可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件。-->
-            <!--假设设置每个月滚动(把fileNamePattern改为${log_dir}/error/%d{yyyy-MM}/error-log.log)，-->
-            <!--且<maxHistory>是6，则只保存最近6个月的文件，删除之前的旧文件。-->
-            <!--注意，删除旧文件是，那些为了归档而创建的目录也会被删除 &ndash;&gt;-->
-            <!--<maxHistory>30</maxHistory>-->
-        <!--</rollingPolicy>-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志输出位置 可相对、和绝对路径 -->
+            <fileNamePattern>
+                ${log_dir}/error/%d{yyyy-MM-dd}/error-log.log
+            </fileNamePattern>
+            <!-- 可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件。
+            假设设置每个月滚动(把fileNamePattern改为${log_dir}/error/%d{yyyy-MM}/error-log.log)，
+            且<maxHistory>是6，则只保存最近6个月的文件，删除之前的旧文件。
+            注意，删除旧文件是，那些为了归档而创建的目录也会被删除 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
         <encoder>
             <pattern>
                 <!-- 设置日志输出格式 -->

@@ -44,20 +44,21 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String account = (String) principals.getPrimaryPrincipal();
-        User user = userService.findUserByAccount(account);
+        String token = (String) principals.getPrimaryPrincipal();
+        String username = JWTUtil.getUsername(token);
+        User user = userService.findUserByAccount(username);
 
         Set<String> stringRoleList = new HashSet<>();
         Set<String> stringPermissionList = new HashSet<>();
-
         Role role = user.getRole();
-            stringRoleList.add(role.getName());
-            Set<Permission> permissionList = userService.findPermissionByUserId(user.getId());
-            for (Permission p : permissionList) {
-                if (p != null) {
-                    stringPermissionList.add(p.getPerms());
-                }
+
+        stringRoleList.add(role.getName());
+        Set<Permission> permissionList = userService.findPermissionByUserId(user.getId());
+        for (Permission p : permissionList) {
+            if (p != null) {
+                stringPermissionList.add(p.getPerms());
             }
+        }
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         simpleAuthorizationInfo.setRoles(stringRoleList);
@@ -82,7 +83,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
         String username = JWTUtil.getUsername(token);
 
-        if (StringUtils.isBlank(username)){
+        if (StringUtils.isBlank(username)) {
             throw new AuthenticationException("token校验不通过");
         }
 

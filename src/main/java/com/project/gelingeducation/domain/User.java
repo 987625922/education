@@ -57,7 +57,7 @@ public class User implements Serializable {
     @Column(name = "note", length = 100)
     private String note;
     //,columnDefinition = "状态 0锁定 1有效"
-    @Column(name = "status", length = 1)
+    @Column(name = "status", length = 1, nullable = false)
     private int status;
     //创建时间
     @Temporal(TemporalType.TIMESTAMP)

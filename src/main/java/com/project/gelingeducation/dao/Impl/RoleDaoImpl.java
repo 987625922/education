@@ -63,7 +63,7 @@ public class RoleDaoImpl implements IRoleDao {
 
         TypedQuery<User> query = session.createQuery("from Role");
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
-        query.setMaxResults(currentPage * pageSize);//得到每页的记录数
+        query.setMaxResults(pageSize);//得到每页的记录数
 
         long totalPage = (allrows - 1) / pageSize + 1;
         List<User> list = query.getResultList();
@@ -72,7 +72,7 @@ public class RoleDaoImpl implements IRoleDao {
         pageResult.setTotalPages(totalPage);
         pageResult.setTotalRows(allrows);
         pageResult.setLists(list);
-        pageResult.setPageNum(currentPage + 1);
+        pageResult.setPageNum(currentPage);
         pageResult.setPageSize(pageSize);
         return pageResult;
     }

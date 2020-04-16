@@ -42,7 +42,7 @@ public class UserController {
      * @param id 用户id
      * @return
      */
-    @RequestMapping(value = "/getInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/getinfo", method = RequestMethod.GET)
     public Object getInfo(int id) throws Exception {
         User user = cacheService.getUserById(id);
         if (user == null) {
@@ -55,7 +55,7 @@ public class UserController {
     /**
      * 用户头像上传
      */
-    @RequestMapping("/uploadIcon")
+    @RequestMapping("/upload_icon")
     public Object springUpload(HttpServletRequest request) throws IllegalStateException, IOException {
         String path = null;
         //将当前上下文初始化给  CommonsMutipartResolver （多部分解析器）
@@ -92,7 +92,7 @@ public class UserController {
      * @param user 个人信息
      * @return
      */
-    @RequestMapping(value = "/editinfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit_info", method = RequestMethod.POST)
     public Object update(@RequestBody User user) throws Exception {
         userService.update(user);
         cacheService.saveUser(user);
@@ -106,7 +106,7 @@ public class UserController {
      * @param newPassword 新密码
      * @return
      */
-    @RequestMapping(value = "/updatepassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/update_password", method = RequestMethod.POST)
     public Object updatePassword(long id, String oldPassword, String newPassword) {
         userService.updatePassword(id, oldPassword, newPassword);
         return JsonData.buildSuccess();
@@ -128,7 +128,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @RequestMapping(value = "/adduser", method = RequestMethod.POST)
+    @RequestMapping(value = "/add_user", method = RequestMethod.POST)
     public Object addUser(@RequestBody User user) {
         return JsonData.buildSuccess(userService.addUser(user));
     }
@@ -140,7 +140,7 @@ public class UserController {
      * @return
      */
     @RequiresPermissions("user:root")
-    @RequestMapping(value = "/deluser", method = RequestMethod.POST)
+    @RequestMapping(value = "/del_user", method = RequestMethod.POST)
     public Object deluser(long id) {
         userService.delUser(id);
         return JsonData.buildSuccess();
@@ -150,7 +150,7 @@ public class UserController {
      * 批量删除客户
      */
     @RequiresPermissions("user:root")
-    @RequestMapping(value = "/delmoreuser", method = RequestMethod.POST)
+    @RequestMapping(value = "/batches_deletes", method = RequestMethod.POST)
     public Object delMoreUser(long[] ids) {
         userService.delSelUser(ids);
         return JsonData.buildSuccess();
@@ -159,7 +159,7 @@ public class UserController {
     /**
      * 按名字搜索
      */
-    @RequestMapping(value = "/selbyname", method = RequestMethod.POST)
+    @RequestMapping(value = "/sel_by_name", method = RequestMethod.POST)
     public Object selByName(String name, int currentPage, int pageSize) {
         return JsonData.buildSuccess(userService.selbyname(name, currentPage, pageSize));
     }
@@ -167,7 +167,7 @@ public class UserController {
     /**
      * 添加身份
      */
-    @RequestMapping(value = "/addRoles",method = RequestMethod.POST)
+    @RequestMapping(value = "/add_roles",method = RequestMethod.POST)
     public Object addRole(long userId,long roleId){
         userService.addRole(userId,roleId);
         return JsonData.buildSuccess();

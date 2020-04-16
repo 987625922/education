@@ -44,8 +44,8 @@ public class RoleTest {
 
     @Test
     public void addPermission() {
-        long permissionIds[] = {16};
-        roleService.addPermissionByIds(22, permissionIds);
+        long permissionIds[] = {78};
+        roleService.addPermissionByIds(24, permissionIds);
     }
 
     @Test
