@@ -38,4 +38,20 @@ public class PermissionDaoImpl implements IPermissionDao {
         Query<Permission> query = getSession().createQuery("from Permission");
         return query.list();
     }
+
+    @Override
+    public List<Permission> getPermissionListByIds(long[] ids) {
+        String sql = "";
+        for (int i = 0; i < ids.length; i++) {
+            if (i == 0) {
+                sql = sql + ids[i];
+            } else {
+                sql = sql + "," + ids[i];
+            }
+        }
+        Query query = getSession().createQuery("from Permission WHERE id in (" + sql + ")");
+        return query.list();
+    }
+
+
 }

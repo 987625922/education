@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service;
 
+import com.project.gelingeducation.domain.Permission;
 import com.project.gelingeducation.domain.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @WebAppConfiguration
@@ -45,11 +47,11 @@ public class RoleTest {
     }
 
     @Test
-    public void addRoleAndPermission(){
-        long[] permissions = {31,32};
+    public void addRoleAndPermission() {
+        long[] permissions = {31, 32};
         Role role = new Role();
         role.setName("测试");
-        roleService.addRole(role,permissions);
+        roleService.addRole(role, permissions);
     }
 
     @Test
@@ -72,11 +74,25 @@ public class RoleTest {
     }
 
     @Test
-    public void selByName(){
+    public void selByName() {
         List<Role> roles = roleService.selByName("管理员");
         for (int i = 0; i < roles.size(); i++) {
-            log.debug("==>"+roles.get(i).getName());
+            log.debug("==>" + roles.get(i).getName());
         }
+    }
+
+    @Test
+    public void getRoleByIdForPermission() {
+        List<Permission> permissions = roleService.getRoleByIdForPermission(24);
+        for (Permission permission : permissions) {
+            log.debug("==>" + permission.getName());
+        }
+    }
+
+    @Test
+    public void updateRoleAndPermission(){
+        long[] permissionIds = {30,31};
+        roleService.updateRoleAndPermission(104,"11","",permissionIds);
     }
 
 }

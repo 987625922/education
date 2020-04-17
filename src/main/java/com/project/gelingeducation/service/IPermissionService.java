@@ -11,4 +11,7 @@ public interface IPermissionService {
     Permission getById(long id);
 
     List<Permission> list();
+
+    List<Permission> getPermissionListByIds(long[] ids);
+
 }

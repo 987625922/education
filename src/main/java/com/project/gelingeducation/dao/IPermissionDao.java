@@ -11,4 +11,6 @@ public interface IPermissionDao {
     Permission getById(long id);
 
     List<Permission> list();
+
+    List<Permission> getPermissionListByIds(long[] ids);
 }

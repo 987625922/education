@@ -1,9 +1,11 @@
 package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.common.dto.PageResult;
+import com.project.gelingeducation.domain.Permission;
 import com.project.gelingeducation.domain.Role;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IRoleService {
 
@@ -24,4 +26,10 @@ public interface IRoleService {
     Role findDefault();
 
     List<Role> selByName(String name);
+
+    void delMoreRolesByIds(long[] roleIds);
+
+    List<Permission> getRoleByIdForPermission(long roleId);
+
+    void updateRoleAndPermission(long id,String name,String remark,long[] permissionIds);
 }

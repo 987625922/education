@@ -78,5 +78,27 @@ public class RoleServiceImpl implements IRoleService {
         return roleDao.selByName(name);
     }
 
+    @Override
+    public void delMoreRolesByIds(long[] roleIds) {
+        roleDao.delByIds(roleIds);
+    }
+
+    @Override
+    public List<Permission> getRoleByIdForPermission(long roleId) {
+        return roleDao.getRoleByIdForPermission(roleId);
+    }
+
+    @Override
+    public void updateRoleAndPermission(long id, String name, String remark, long[] permissionIds) {
+        Role role = roleDao.findById(id);
+        role.setName(name);
+        role.setRemark(remark);
+        List<Permission> permissions = permissionService.getPermissionListByIds(permissionIds);
+        for (Permission permission : permissions) {
+            role.getPermissions().add(permission);
+            permission.getRoles().add(role);
+        }
+    }
+
 
 }

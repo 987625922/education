@@ -2,6 +2,7 @@ package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.IRoleDao;
+import com.project.gelingeducation.domain.Permission;
 import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.domain.User;
 import org.hibernate.Session;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class RoleDaoImpl implements IRoleDao {
@@ -91,6 +94,33 @@ public class RoleDaoImpl implements IRoleDao {
         Session session = getSession();
         Query query = session.createQuery("from Role where name LIKE '%" + name + "%'");
         return query.list();
+    }
+
+    @Override
+    public void delByIds(long[] ids) {
+        String sql = "";
+        for (int i = 0; i < ids.length; i++) {
+            if (i == 0) {
+                sql = sql + ids[i];
+            } else {
+                sql = sql + "," + ids[i];
+            }
+        }
+        Query query = getSession().createQuery("DELETE FROM Role WHERE id in(" + sql + ")");
+        query.executeUpdate();
+
+    }
+
+    @Override
+    public List<Permission> getRoleByIdForPermission(long id) {
+        Session session = getSession();
+        Role role = session.get(Role.class, id);
+        Set<Permission> permissions = role.getPermissions();
+        List<Permission> permissionList = new ArrayList<>();
+        for (Permission permission : permissions) {
+            permissionList.add(permission);
+        }
+        return permissionList;
     }
 
 }

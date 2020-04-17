@@ -1,9 +1,11 @@
 package com.project.gelingeducation.dao;
 
 import com.project.gelingeducation.common.dto.PageResult;
+import com.project.gelingeducation.domain.Permission;
 import com.project.gelingeducation.domain.Role;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IRoleDao {
 
@@ -22,4 +24,8 @@ public interface IRoleDao {
     Role findDefault();
 
     List<Role> selByName(String name);
+
+    void delByIds(long[] ids);
+
+    List<Permission> getRoleByIdForPermission(long id);
 }
