@@ -29,10 +29,19 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public void add(Role role) {
+    public void addRole(Role role) {
         roleDao.insert(role);
     }
 
+    @Override
+    public void addRole(Role role, long[] permissionIds) {
+        roleDao.insert(role);
+        for (int i = 0; i < permissionIds.length; i++) {
+            Permission permission = permissionService.getById(permissionIds[i]);
+            role.getPermissions().add(permission);
+            permission.getRoles().add(role);
+        }
+    }
 
     @Override
     public void addPermissionByIds(long roleId, long[] permissionIds) {
@@ -62,6 +71,11 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     public Role findDefault() {
         return roleDao.findDefault();
+    }
+
+    @Override
+    public List<Role> selByName(String name) {
+        return roleDao.selByName(name);
     }
 
 

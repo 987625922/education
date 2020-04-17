@@ -9,6 +9,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.List;
+
 @Slf4j
 @WebAppConfiguration
 @ContextConfiguration(locations = {"/spring/application-data.xml"})
@@ -43,6 +45,14 @@ public class RoleTest {
     }
 
     @Test
+    public void addRoleAndPermission(){
+        long[] permissions = {31,32};
+        Role role = new Role();
+        role.setName("测试");
+        roleService.addRole(role,permissions);
+    }
+
+    @Test
     public void addPermission() {
         long permissionIds[] = {78};
         roleService.addPermissionByIds(24, permissionIds);
@@ -61,5 +71,12 @@ public class RoleTest {
         log.debug("==>" + role);
     }
 
+    @Test
+    public void selByName(){
+        List<Role> roles = roleService.selByName("管理员");
+        for (int i = 0; i < roles.size(); i++) {
+            log.debug("==>"+roles.get(i).getName());
+        }
+    }
 
 }

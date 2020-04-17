@@ -20,4 +20,6 @@ public interface IRoleDao {
     PageResult getRolePageList(int currentPage, int pageSize);
 
     Role findDefault();
+
+    List<Role> selByName(String name);
 }

@@ -9,7 +9,9 @@ public interface IRoleService {
 
     Role findByRole(long id);
 
-    void add(Role role);
+    void addRole(Role role);
+
+    void addRole(Role role,long[] permissionIds);
 
     void addPermissionByIds(long roleId,long[] permissionIds);
 
@@ -20,4 +22,6 @@ public interface IRoleService {
     PageResult getRolePageList(int currentPage, int pageSize);
 
     Role findDefault();
+
+    List<Role> selByName(String name);
 }

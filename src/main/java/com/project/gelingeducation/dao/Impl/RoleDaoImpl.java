@@ -86,4 +86,11 @@ public class RoleDaoImpl implements IRoleDao {
         return role;
     }
 
+    @Override
+    public List<Role> selByName(String name) {
+        Session session = getSession();
+        Query query = session.createQuery("from Role where name LIKE '%" + name + "%'");
+        return query.list();
+    }
+
 }

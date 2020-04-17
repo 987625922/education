@@ -27,7 +27,7 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "name", length = 24)
+    @Column(name = "name", length = 24, nullable = false)
     private String name;
 
     //创建时间
@@ -38,9 +38,9 @@ public class Role implements Serializable {
 
     @Column(name = "remark")
     private String remark;
-
+    //0为不是默认注册时的身份,1为默认
     @Column(name = "is_default")
-    private int isDefault;
+    private int isDefault = 0;
 
     //    @ManyToMany(targetEntity = User.class)
 //    @JoinTable(
