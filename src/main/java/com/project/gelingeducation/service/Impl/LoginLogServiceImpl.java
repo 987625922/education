@@ -55,6 +55,7 @@ public class LoginLogServiceImpl implements LoginLogService {
             loginLog.setLocation(AddressUtil.getCityInfo(ip));
             loginLogDao.insert(loginLog);
         } else {
+            loginLog.setLastLoginTime(loginLog.getLoginTime());
             loginLog.setLoginTime(new Date());
             String ip = IPUtil.getIpAddr(HttpContextUtil.getHttpServletRequest());
             loginLog.setIp(ip);

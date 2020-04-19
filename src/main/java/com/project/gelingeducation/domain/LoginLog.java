@@ -45,8 +45,17 @@ public class LoginLog implements Serializable {
     /**
      * 登录时间
      */
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "login_time")
     private Date loginTime;
+
+    /**
+     * 上次登录时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_login_time")
+    private Date lastLoginTime;
+
     /**
      * 登录地点
      */

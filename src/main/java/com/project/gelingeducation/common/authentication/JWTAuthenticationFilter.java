@@ -28,7 +28,7 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();
     //不用登陆就可以访问的接口，多个用,号隔开
-    private String annonUrl = "/login,/register";
+    private String annonUrl = "/web/login,/web/register";
 
     /**
      * 判断是否是需要身份判断的url

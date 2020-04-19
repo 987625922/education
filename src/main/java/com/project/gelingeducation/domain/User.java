@@ -1,6 +1,5 @@
 package com.project.gelingeducation.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,21 +9,19 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
- *     //0为超级管理员，1为管理员，2为访客
- *     @Column(name = "isAdaim", length = 1)
- *     private int isAdaim;
+ * //0为超级管理员，1为管理员，2为访客
  *
- *     超级管理员
- *     管理用户的权限
- *     管理员
- *     更新和删除资源的权限
- *     访客
- *     浏览资源的权限
- *
+ * @Column(name = "isAdaim", length = 1)
+ * private int isAdaim;
+ * <p>
+ * 超级管理员
+ * 管理用户的权限
+ * 管理员
+ * 更新和删除资源的权限
+ * 访客
+ * 浏览资源的权限
  */
 @Entity
 @NoArgsConstructor
@@ -58,7 +55,7 @@ public class User implements Serializable {
     private String note;
     //,columnDefinition = "状态 0锁定 1有效"
     @Column(name = "status", length = 1, nullable = false)
-    private int status;
+    private int status = 1;
     //创建时间
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time")

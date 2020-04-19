@@ -42,7 +42,7 @@ public class UserController {
      * @param id 用户id
      * @return
      */
-    @RequestMapping(value = "/getinfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/get_info", method = RequestMethod.GET)
     public Object getInfo(int id) throws Exception {
         User user = cacheService.getUserById(id);
         if (user == null) {

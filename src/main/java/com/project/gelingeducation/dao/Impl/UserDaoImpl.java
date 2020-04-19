@@ -94,7 +94,6 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public void update(User user) {
-//        getSession().update(user);
         StringBuffer hql = new StringBuffer("update User set ");
         int index = 0;
         if (!StringUtils.isEmpty(user.getUserName())) {

@@ -2,9 +2,10 @@ package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.authentication.JWTUtil;
 import com.project.gelingeducation.common.dto.JsonData;
-import com.project.gelingeducation.common.exception.AllException;
+import com.project.gelingeducation.common.dto.WebIndex;
 import com.project.gelingeducation.common.exception.AllExceptionEnum;
 import com.project.gelingeducation.common.utils.MD5Util;
+import com.project.gelingeducation.domain.LoginLog;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.LoginLogService;
@@ -32,7 +33,7 @@ public class PubliceController {
      *
      * @return
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/web/login", method = RequestMethod.POST)
     public Object login(@RequestBody User user) {
 
         User reUser = UserService.findUserByAccount(user.getAccount());
@@ -42,7 +43,7 @@ public class PubliceController {
         } else if (!reUser.getPassword().equals(MD5Util.encrypt(user.getAccount().toLowerCase(),
                 user.getPassword()))) {
             throw AllExceptionEnum.ACCOUNT_PASSWORD_ERROR.getAllException();
-        } else if (reUser.getStatus() == 0){
+        } else if (reUser.getStatus() == 0) {
             throw AllExceptionEnum.BAN_USER.getAllException();
         }
 
@@ -60,9 +61,10 @@ public class PubliceController {
      * @param user
      * @return
      */
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/web/register", method = RequestMethod.POST)
     public Object register(@RequestBody User user) {
         return JsonData.buildSuccess(UserService.register(user));
     }
+
 
 }
