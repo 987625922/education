@@ -1,6 +1,6 @@
 package com.project.gelingeducation.dao.Impl;
 
-import com.project.gelingeducation.dao.LoginLogDao;
+import com.project.gelingeducation.dao.ILoginLogDao;
 import com.project.gelingeducation.domain.LoginLog;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,16 +12,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class LoginLogDaoImpl implements LoginLogDao {
-
-
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    public Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
-
+public class LoginLogDaoImpl extends BaseDao implements ILoginLogDao {
 
     @Override
     public void insert(LoginLog loginLog) {
@@ -44,4 +35,13 @@ public class LoginLogDaoImpl implements LoginLogDao {
         LoginLog loginLog = (LoginLog) query.uniqueResult();
         return loginLog;
     }
+
+    @Override
+    public List<LoginLog> getLoginLogByIp(String ip) {
+        Query query = getSession().createQuery("from LoginLog where ip =?0");
+        query.setParameter(0,ip);
+        return query.list();
+    }
+
+
 }

@@ -2,12 +2,13 @@ package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.authentication.JWTUtil;
 import com.project.gelingeducation.common.dto.JsonData;
-import com.project.gelingeducation.common.dto.WebIndex;
 import com.project.gelingeducation.common.exception.AllExceptionEnum;
+import com.project.gelingeducation.common.utils.HttpContextUtil;
+import com.project.gelingeducation.common.utils.IPUtil;
 import com.project.gelingeducation.common.utils.MD5Util;
-import com.project.gelingeducation.domain.LoginLog;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IUserService;
+import com.project.gelingeducation.service.IWebDataBeanService;
 import com.project.gelingeducation.service.LoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,8 +26,12 @@ public class PubliceController {
 
     @Autowired
     private IUserService UserService;
+
     @Autowired
     private LoginLogService loginLogService;
+
+    @Autowired
+    private IWebDataBeanService webDataBeanService;
 
     /**
      * 登录接口
@@ -48,6 +53,8 @@ public class PubliceController {
         }
 
         loginLogService.getByUserIdLoginUpdate(reUser.getId());
+
+        webDataBeanService.userLogin();
 
         HashMap userMap = new HashMap();
         userMap.put("id", reUser.getId());

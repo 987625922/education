@@ -47,6 +47,7 @@
                 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
                 <!--        开启hibernate的threadlocal-->
                 <prop key="current_session_context_class">${hibernate.current_session_context_class}</prop>
+                <prop key="hibernate.connection.autocommit">false</prop>
             </props>
         </property>
         <property name="annotatedClasses">
@@ -58,6 +59,7 @@
                 <value>com.project.gelingeducation.domain.Subject</value>
                 <value>com.project.gelingeducation.domain.User</value>
                 <value>com.project.gelingeducation.domain.Video</value>
+                <value>com.project.gelingeducation.domain.WebDataBean</value>
             </list>
         </property>
     </bean>

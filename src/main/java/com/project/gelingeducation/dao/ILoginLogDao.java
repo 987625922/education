@@ -4,11 +4,13 @@ import com.project.gelingeducation.domain.LoginLog;
 
 import java.util.List;
 
-public interface LoginLogDao {
+public interface ILoginLogDao {
 
     void insert(LoginLog loginLog);
 
     List<LoginLog> list();
 
     LoginLog getByUid(long uid);
+
+    List<LoginLog> getLoginLogByIp(String ip);
 }
