@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service.Impl;
 
+import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.CourseDao;
 import com.project.gelingeducation.domain.Course;
 import com.project.gelingeducation.service.CourseService;
@@ -45,5 +46,18 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     public void updated(Course course) {
         courseDao.update(course);
+    }
+
+    /**
+     * 页面格式的用户的列表
+     *
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public PageResult getLists(int currentPage, int pageSize) {
+        return courseDao.getLists(currentPage, pageSize);
     }
 }

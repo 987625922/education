@@ -13,19 +13,19 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-@Table(name = "course")
-public class Course {
+@Table(name = "teacher")
+public class Teacher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     /**
-     * 课程名
+     * 教师名
      */
     @Column(name = "name", length = 50)
     private String name;
     /**
-     * 封面
+     * 头像
      */
     @Column(name = "big_img")
     private String bigImg;
@@ -34,23 +34,6 @@ public class Course {
      */
     @Column(name = "remark")
     private String remark;
-    /**
-     * 价格
-     */
-    @Column(name = "price")
-    private double price;
-    /**
-     * 状态
-     * 1为正常，0为禁用
-     */
-    @Column(name = "status",length = 1)
-    private int status = 1;
-    /**
-     * 是否免费
-     * 1为免费，0为付费
-     */
-    @Column(name = "is_free",length = 1)
-    private int isFree;
 
     //创建时间
     @Temporal(TemporalType.TIMESTAMP)
@@ -62,13 +45,7 @@ public class Course {
     @Column(name = "modify_time")
     private Date modifyTime;
 
-    //身份列表
-    @ManyToMany(targetEntity = Teacher.class)
-    @JoinTable(
-            name = "t_course_teacher",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "teacher_id")
-    )
-    @JsonIgnore
-    private Set<Teacher> teachers = new HashSet<>();
+    @ManyToMany(targetEntity = Course.class, mappedBy = "teachers")
+    private Set<Course> courses = new HashSet<>();
+
 }

@@ -1,12 +1,11 @@
 package com.project.gelingeducation.controller;
 
 
-import com.project.gelingeducation.domain.Course;
 import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.domain.Course;
 import com.project.gelingeducation.service.CourseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +18,17 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @CrossOrigin(origins = "*")
+    /**
+     * 获取所有课程
+     *
+     * @return
+     */
+    @RequestMapping(value = "/lists", method = RequestMethod.POST)
+    public Object lists(int currentPage, int pageSize) {
+        return JsonData.buildSuccess(courseService.getLists(currentPage, pageSize));
+    }
+
+
     @RequestMapping(value = "/findall")
     public Object findAll() throws Exception {
         return courseService.findAll();

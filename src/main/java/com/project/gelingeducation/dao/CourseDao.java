@@ -1,5 +1,6 @@
 package com.project.gelingeducation.dao;
 
+import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.domain.Course;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface CourseDao {
     void delect(long id);
 
     void update(Course video);
+
+    PageResult getLists(int currentPage, int pageSize);
 }

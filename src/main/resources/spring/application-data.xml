@@ -60,6 +60,7 @@
                 <value>com.project.gelingeducation.domain.User</value>
                 <value>com.project.gelingeducation.domain.Video</value>
                 <value>com.project.gelingeducation.domain.WebDataBean</value>
+                <value>com.project.gelingeducation.domain.Teacher</value>
             </list>
         </property>
     </bean>
@@ -81,7 +82,7 @@
     </bean>
 
     <!--                        common                             -->
-    <!--    解析Date-->
+    <!--                        解析Date                            -->
     <bean name="dateFormat" class="java.text.SimpleDateFormat">
         <constructor-arg name="pattern" value="yyyy-MM-dd-HH:mm"/>
     </bean>

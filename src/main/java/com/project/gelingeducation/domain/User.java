@@ -64,13 +64,6 @@ public class User implements Serializable {
     //修改时间
     @Column(name = "modify_time")
     private Date modifyTime;
-//    //身份名
-//    @Transient
-//    private String roleName;
-//    //身份id
-//    @Transient
-//    private long roleId;
-
     //身份列表
 //    @ManyToMany(targetEntity = Role.class, mappedBy = "users")
 //    @JsonIgnore

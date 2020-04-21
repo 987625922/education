@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service;
 
+import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.domain.Course;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface CourseService {
     void delectd(long id);
 
     void updated(Course course);
+
+    PageResult getLists(int currentPage, int pageSize);
 }
