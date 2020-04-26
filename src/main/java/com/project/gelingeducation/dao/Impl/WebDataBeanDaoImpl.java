@@ -21,4 +21,9 @@ public class WebDataBeanDaoImpl extends BaseDao implements IWebDataBeanDao {
     public void update(WebDataBean webDataBean) {
         getSession().update(webDataBean);
     }
+
+    @Override
+    public WebDataBean getOnlyData() {
+        return (WebDataBean) getSession().createQuery("from WebDataBean").uniqueResult();
+    }
 }

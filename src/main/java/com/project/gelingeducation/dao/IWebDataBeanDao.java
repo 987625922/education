@@ -9,4 +9,6 @@ public interface IWebDataBeanDao {
     void save(WebDataBean webDataBean);
 
     void update(WebDataBean webDataBean);
+
+    WebDataBean getOnlyData();
 }

@@ -41,13 +41,17 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
     @Override
     public void userLogin() {
         String ip = IPUtil.getIpAddr(HttpContextUtil.getHttpServletRequest());
-        WebDataBean webDataBean = webDataBeanDao.findById(1);
+        WebDataBean webDataBean = webDataBeanDao.getOnlyData();
+        if (webDataBean == null) {
+            webDataBean = new WebDataBean();
+            webDataBeanDao.save(webDataBean);
+        }
         List<LoginLog> loginLogs = loginLogDao.getLoginLogByIp(ip);
         Date loginDate = new Date();
         for (LoginLog loginLog : loginLogs) {
             boolean isSameDate = DateUtils.isSameDay(loginDate, loginLog.getLoginTime());
             if (isSameDate) {
-                if (loginLog.getLastLoginTime() == null &&
+                if (loginLog.getLastLoginTime() == null ||
                         DateUtils.isSameDay(loginLog.getLastLoginTime(), loginLog.getLoginTime())) {
                     webDataBean.setTodayLoginIpMun(webDataBean.getTodayLoginIpMun() + 1);
                     break;
