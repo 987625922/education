@@ -28,7 +28,7 @@ public class WebController {
     @RequestMapping(value = "/web/index", method = RequestMethod.GET)
     public Object index(long id) {
         LoginLog loginLog = loginLogService.getByUserId(id);
-        WebDataBean webDataBean = webDataBeanService.findById(1);
+        WebDataBean webDataBean = webDataBeanService.getWebDataBean();
         WebIndex webIndex = new WebIndex();
         webIndex.setLastLoginTime(loginLog.getLastLoginTime());
         webIndex.setAllLoginMun(webDataBean.getAllLoginMun());

@@ -71,5 +71,12 @@
         <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
     </listener>
 
+    <!-- 配置文件配置
+        development：开发环境，producation：生产环境
+     -->
+    <context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>development</param-value>
+    </context-param>
 
 </web-app>

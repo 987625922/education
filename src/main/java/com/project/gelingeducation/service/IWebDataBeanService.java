@@ -11,4 +11,6 @@ public interface IWebDataBeanService {
     void update(WebDataBean webDataBean);
 
     void userLogin();
+
+    WebDataBean getWebDataBean();
 }

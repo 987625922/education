@@ -11,7 +11,7 @@
 	https://www.springframework.org/schema/mvc/spring-mvc.xsd"
 >
 
-    <context:property-placeholder location="classpath:config.properties"/>
+    <!--<context:property-placeholder location="classpath:config.properties"/>-->
 
     <mvc:annotation-driven/>
 
@@ -47,5 +47,18 @@
     <!-- 对shiro登录和权限进行自定义 -->
     <bean name="crosAuthenticationFilter"
           class="com.project.gelingeducation.common.authentication.JWTAuthenticationFilter"/>
+
+
+    <!-- 开发环境配置文件 -->
+    <beans profile="development">
+        <context:property-placeholder
+                location="classpath*:common/*.properties, classpath*:development/*.properties"/>
+    </beans>
+
+    <!-- 生产环境配置文件 -->
+    <beans profile="production">
+        <context:property-placeholder
+                location="classpath*:common/*.properties, classpath*:production/*.properties"/>
+    </beans>
 
 </beans>

@@ -10,9 +10,9 @@
     http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
 >
-
     <context:component-scan base-package="com.project.gelingeducation"/>
-    <context:property-placeholder location="classpath:config.properties"/>
+
+    <!--<context:property-placeholder location="classpath:config.properties"/>-->
 
     <!--                         hibernate                                -->
     <bean id="transactionManager"
@@ -91,5 +91,19 @@
         <property name="maxUploadSize" value="512000"/>
     </bean>
     <bean name="mapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
+
+
+    <!-- 开发环境配置文件 -->
+    <beans profile="development">
+        <context:property-placeholder
+                location="classpath*:common/*.properties, classpath*:development/*.properties"/>
+    </beans>
+
+
+    <!-- 生产环境配置文件 -->
+    <beans profile="production">
+        <context:property-placeholder
+                location="classpath*:common/*.properties, classpath*:production/*.properties"/>
+    </beans>
 
 </beans>

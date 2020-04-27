@@ -63,5 +63,10 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         webDataBean.setTodayLoginTime(loginDate);
     }
 
+    @Override
+    public WebDataBean getWebDataBean() {
+        return webDataBeanDao.getOnlyData();
+    }
+
 
 }
