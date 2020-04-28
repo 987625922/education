@@ -76,7 +76,7 @@
      -->
     <context-param>
         <param-name>spring.profiles.active</param-name>
-        <param-value>development</param-value>
+        <param-value>producation</param-value>
     </context-param>
 
 </web-app>

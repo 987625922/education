@@ -56,9 +56,9 @@
     </beans>
 
     <!-- 生产环境配置文件 -->
-    <beans profile="production">
+    <beans profile="producation">
         <context:property-placeholder
-                location="classpath*:common/*.properties, classpath*:production/*.properties"/>
+                location="classpath*:common/*.properties, classpath*:producation/*.properties"/>
     </beans>
 
 </beans>
