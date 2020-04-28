@@ -36,12 +36,12 @@ public class AdminServiceTest {
 //        user.setPassword("editor");
 //        log.debug("findById获取的结果：" + userservice.addUser(user));
 
-        for (int i = 0; i < 20; i++) {
-            User user = new User();
-            user.setAccount(String.valueOf(System.currentTimeMillis()).substring(5));
-            user.setPassword("123456");
-            userservice.addUser(user);
-        }
+//        for (int i = 0; i < 20; i++) {
+//            User user = new User();
+//            user.setAccount(String.valueOf(System.currentTimeMillis()).substring(5));
+//            user.setPassword("123456");
+//            userservice.addUser(user);
+//        }
     }
 
     @Test

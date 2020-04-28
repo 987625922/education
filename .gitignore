@@ -34,3 +34,4 @@ build/
 mvnw
 mvnw.cmd
 /sherlon_log
+/resources/production
