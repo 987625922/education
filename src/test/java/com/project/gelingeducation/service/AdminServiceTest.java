@@ -26,10 +26,10 @@ public class AdminServiceTest {
 
     @Test
     public void insert() {
-//        User user = new User();
-//        user.setAccount("123456");
-//        user.setPassword("123456");
-//        log.debug("findById获取的结果：" + userservice.addUser(user));
+        User user = new User();
+        user.setAccount("123456");
+        user.setPassword("123456");
+        log.debug("findById获取的结果：" + userservice.addUser(user));
 
 //        User user = new User();
 //        user.setAccount("editor");
@@ -76,7 +76,7 @@ public class AdminServiceTest {
 
     @Test
     public void lists() {
-        PageResult bean = userservice.getLists(3, 3);
+        PageResult bean = userservice.getLists(1, 3);
         List<User> users = (List<User>) bean.getLists();
         for (User user : users) {
             log.debug("==>  " + user);
