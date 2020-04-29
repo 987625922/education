@@ -42,8 +42,6 @@ gelingeducation
 3. <details>
    <summary>docker安装tomcat</summary>
    <pre><code>
-   
-
    <p>1. docker pull tomcat</p>
 <p>拉取tomcat镜像</p>
 <p>2.docker run -it -d -p 6789:8080 tomcat </p>
@@ -69,7 +67,8 @@ gelingeducation
 
 4. <details>
    <summary>docker安装nginx部署web前端</summary>
-   <pre><code>
+   <pre><code>
+
 
 <p> </p>   
 <p> 1.docker pull nginx</p>
