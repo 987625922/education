@@ -17,12 +17,17 @@ gelingeducation
 
 ### 后端技术
 
-| 技术          | 版本   |
-| ------------- | ------ |
-| spring        | 5.2.4  |
-| hibernate     | 5.4.12 |
-| redis.clients | 3.1.0  |
-| shiro         | 1.4.2  |
+| 技术          | 版本         |
+| ------------- | ------------ |
+| spring        | 5.2.4        |
+| hibernate     | 5.4.12       |
+| redis.clients | 3.1.0        |
+| shiro         | 1.4.2        |
+| mysql         | 8.0.13/5.7.5 |
+| docker        | 1.13.1       |
+| openjdk       | 1.8.0_242    |
+| nginx         | 1.17.6       |
+| tomcat        | 9.0.34       |
 
 ### 前端项目地址
 
@@ -38,7 +43,8 @@ gelingeducation
    <summary>docker安装tomcat</summary>
    <pre><code>
    
-<p>1. docker pull tomcat</p>
+
+   <p>1. docker pull tomcat</p>
 <p>拉取tomcat镜像</p>
 <p>2.docker run -it -d -p 6789:8080 tomcat </p>
 <p>把容器的8080映射到服务器的6789端口</p>
@@ -58,6 +64,30 @@ gelingeducation
 <p>复制到容器</p>
 <p>7.docker restart 8e08b2d49b85</p>
 <p>重新启动tomcat</p>
-      
    </code></pre>
    </details>
+
+4. <details>
+   <summary>docker安装nginx部署web前端</summary>
+   <pre><code>
+
+<p> </p>   
+<p> 1.docker pull nginx</p>
+<p> 拉取nginx镜像</p>
+<p> 2.docker run -d --name gelingeducationnginx -p 7789:80 nginx</p>
+<p>运行run镜像，并把80端口映射到服务器的7789端口 </p>  
+<p>在浏览器输入ip:7789查看nginx服务器是否运行成功</p>
+<p>3.把打包好的vue前端代码（具体打包流程看前端github的remark）复制到容器的/usr/share/nginx/html下,注意是把打包出来的dist下所有文件复制到html下</p>   
+
+<p>4.docker restart 容器id</p>
+<p>重启容器</p>
+
+<p>5.重新在浏览器输入ip:7789查看是否部署成功</p>
+
+<p>6. 如果发现前端所有的请求都是403</p>
+
+<p>编辑容器的/usr/local/nginx/conf/nginx.conf,把里面的user nginx;改成nginx</p>
+
+   </code></pre>
+   </details>
+
