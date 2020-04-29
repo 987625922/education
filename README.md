@@ -54,9 +54,9 @@ gelingeducation
    <p>打开server.xml文件</p>
    <p>5.在server.xml 的 Host节点下新增Context 节点配置 保存并退出</p>
    <Context docBase="gelingeducation" path="/" reloadable="false" />
-      <p>      path:指定访问该Web应用的URL入口。
-      docBase:指定Web应用的文件路径，可以给定绝对路径，也可以给定相对于的appBase属性的相对路径，如果Web应用采用开放目录结构，则指定Web应用的根目录，如果Web应用是个war文件，则指定war文件的路径。
-      reloadable:如果这个属性设为true，tomcat服务器在运行状态下会监视在WEB-INF/classes和WEB-INF/lib目录下class文件的改动，如果监测到有class文件被更新的，服务器会自动重新加载Web应用。</p>
+   <p>path:指定访问该Web应用的URL入口。
+docBase:指定Web应用的文件路径，可以给定绝对路径，也可以给定相对于的appBase属性的相对路径，如果Web应用采用开放目录结构，则指定Web应用的根目录，如果Web应用是个war文件，则指定war文件的路径。
+reloadable:如果这个属性设为true，tomcat服务器在运行状态下会监视在WEB-INF/classes和WEB-INF/lib目录下class文件的改动，如果监测到有class文件被更新的，服务器会自动重新加载Web应用。</p>
    <p>6.把打包出来的war文件上传到服务器，再通过</p>
    <p>docker cp /opt/gelingeducation 8e08b2d49b85 :/usr/local/tomcat/webapps/ </p>
    <p>复制到容器</p>
@@ -68,25 +68,18 @@ gelingeducation
 4. <details>
    <summary>docker安装nginx部署web前端</summary>
    <pre><code>
-
-
-<p> </p>   
-<p> 1.docker pull nginx</p>
-<p> 拉取nginx镜像</p>
-<p> 2.docker run -d --name gelingeducationnginx -p 7789:80 nginx</p>
-<p>运行run镜像，并把80端口映射到服务器的7789端口 </p>  
-<p>在浏览器输入ip:7789查看nginx服务器是否运行成功</p>
-<p>3.把打包好的vue前端代码（具体打包流程看前端github的remark）复制到容器的/usr/share/nginx/html下,注意是把打包出来的dist下所有文件复制到html下</p>   
-
-<p>4.docker restart 容器id</p>
-<p>重启容器</p>
-
-<p>5.重新在浏览器输入ip:7789查看是否部署成功</p>
-
-<p>6. 如果发现前端所有的请求都是403</p>
-
-<p>编辑容器的/usr/local/nginx/conf/nginx.conf,把里面的user nginx;改成nginx</p>
-
+   <p> </p>   
+   <p> 1.docker pull nginx</p>
+   <p> 拉取nginx镜像</p>
+   <p> 2.docker run -d --name gelingeducationnginx -p 7789:80 nginx</p>
+   <p>运行run镜像，并把80端口映射到服务器的7789端口 </p>  
+   <p>在浏览器输入ip:7789查看nginx服务器是否运行成功</p>
+   <p>3.把打包好的vue前端代码（具体打包流程看前端github的remark）复制到容器的/usr/share/nginx/html下,注意是把打包出来的dist下所有文件复制到     html下</p>   
+   <p>4.docker restart 容器id</p>
+   <p>重启容器</p>
+   <p>5.重新在浏览器输入ip:7789查看是否部署成功</p>
+   <p>6. 如果发现前端所有的请求都是403</p> 
+   <p>编辑容器的/usr/local/nginx/conf/nginx.conf,把里面的user nginx;改成nginx</p>
    </code></pre>
    </details>
 
