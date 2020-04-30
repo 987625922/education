@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
-public class HomeController {
+@RequestMapping("/test")
+public class TestController {
 
     @Autowired
     private VideoService videoService;
@@ -29,7 +30,7 @@ public class HomeController {
      * @param userName
      * @return
      */
-    @RequestMapping(path = "get5/{userName}/info", method = RequestMethod.GET)
+    @RequestMapping(path = "/get5/{userName}/info", method = RequestMethod.GET)
     @ResponseBody
     public Object req6(@PathVariable(name = "userName") String userName) {
         return "输入的数据为："+userName;
