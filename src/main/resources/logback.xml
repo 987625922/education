@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <contextName>education</contextName>
-    <property name="log.path" value="log" />
-    <property name="log.maxHistory" value="15" />
-    <property name="log.colorPattern" value="%magenta(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %yellow(%thread) %green(%logger) %msg%n"/>
+    <property name="log.path" value="/usr/local/software/gelingeducation/log/"/>
+    <property name="log.maxHistory" value="15"/>
+    <property name="log.colorPattern"
+              value="%magenta(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %yellow(%thread) %green(%logger) %msg%n"/>
     <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5level %thread %logger %msg%n"/>
 
     <!--输出到控制台-->
@@ -43,13 +44,12 @@
         </filter>
     </appender>
 
-    <!-- 日志级别排序为： TRACE < DEBUG < INFO < WARN < ERROR -->
     <root level="debug">
-        <appender-ref ref="console" />
+        <appender-ref ref="console"/>
     </root>
 
     <root level="info">
-        <appender-ref ref="file_info" />
-        <appender-ref ref="file_error" />
+        <appender-ref ref="file_info"/>
+        <appender-ref ref="file_error"/>
     </root>
 </configuration>
