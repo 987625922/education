@@ -81,7 +81,7 @@ gelingeducation
    <p>重启容器</p>
    <p>5.重新在浏览器输入ip:7789查看是否部署成功</p>
    <p>6. 如果发现前端所有的请求都是403</p> 
-   <p>编辑容器的/usr/local/nginx/conf/nginx.conf,把里面的user nginx;改成nginx</p>
+   <p>编辑容器的/etc/nginx/nginx.conf,把里面的user nginx;改成user root;</p>
    </code></pre>
    </details>
 
