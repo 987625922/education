@@ -27,7 +27,7 @@ public class LoginLogServiceTest {
     }
 
     @Autowired
-    private LoginLogService loginLogService;
+    private ILoginLogService loginLogService;
 
     @Test
     public void test() {

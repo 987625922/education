@@ -3,7 +3,7 @@ package com.project.gelingeducation.controller;
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.common.utils.FileUtils;
 import com.project.gelingeducation.domain.User;
-import com.project.gelingeducation.service.CacheService;
+import com.project.gelingeducation.service.ICacheService;
 import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -34,7 +34,7 @@ public class UserController {
     private IUserService userService;
 
     @Autowired
-    private CacheService cacheService;
+    private ICacheService cacheService;
 
     /**
      * 获取用户信息接口

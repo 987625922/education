@@ -1,7 +1,7 @@
 package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.dao.CourseDao;
+import com.project.gelingeducation.dao.ICourseDao;
 import com.project.gelingeducation.domain.Course;
 import com.project.gelingeducation.domain.User;
 import org.hibernate.Session;
@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @Repository
-public class CourseDaoImpl implements CourseDao {
+public class CourseDaoImpl implements ICourseDao {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -76,4 +76,45 @@ public class CourseDaoImpl implements CourseDao {
 
         return pageResult;
     }
+
+    @Override
+    public void delSel(long[] ids) {
+        String sql = "";
+        for (int i = 0; i < ids.length; i++) {
+            if (i == 0) {
+                sql = sql + ids[i];
+            } else {
+                sql = sql + "," + ids[i];
+            }
+        }
+        Query query = getSession().createQuery("DELETE FROM Course WHERE id in(" + sql + ")");
+        query.executeUpdate();
+    }
+
+    @Override
+    public PageResult selbyname(String name, int currentPage, int pageSize) {
+        Session session = getSession();
+
+        String hql = "select count(*) from Course where name LIKE '%" + name + "%'";//此处的Product是对象
+        Query queryCount = session.createQuery(hql);
+        long allrows = (long) queryCount.uniqueResult();
+
+        TypedQuery<User> query = session.createQuery("from Course where name LIKE '%" + name + "%'");
+        query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
+        query.setMaxResults(currentPage * pageSize);//得到每页的记录数
+
+        long totalPage = (allrows - 1) / pageSize + 1;
+        List<User> list = query.getResultList();
+
+        PageResult pageResult = new PageResult();
+        pageResult.setTotalPages(totalPage);
+        pageResult.setTotalRows(allrows);
+        pageResult.setLists(list);
+        pageResult.setPageNum(currentPage + 1);
+        pageResult.setPageSize(pageSize);
+
+        return pageResult;
+    }
+
+
 }

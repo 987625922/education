@@ -1,9 +1,9 @@
 package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.dao.CourseDao;
+import com.project.gelingeducation.dao.ICourseDao;
 import com.project.gelingeducation.domain.Course;
-import com.project.gelingeducation.service.CourseService;
+import com.project.gelingeducation.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,10 +12,10 @@ import java.util.List;
 
 
 @Service
-public class CourseServiceImpl implements CourseService {
+public class CourseServiceImpl implements ICourseService {
 
     @Autowired
-    private CourseDao courseDao;
+    private ICourseDao courseDao;
 
     @Override
     @Transactional(readOnly = true)
@@ -38,13 +38,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public void delectd(long id) {
+    public void delect(long id) {
         courseDao.delect(id);
     }
 
     @Override
     @Transactional
-    public void updated(Course course) {
+    public void update(Course course) {
         courseDao.update(course);
     }
 
@@ -60,4 +60,19 @@ public class CourseServiceImpl implements CourseService {
     public PageResult getLists(int currentPage, int pageSize) {
         return courseDao.getLists(currentPage, pageSize);
     }
+
+    /**
+     * 批量删除
+     * @param ids
+     */
+    @Override
+    public void batchesDeletes(long[] ids) {
+        courseDao.delSel(ids);
+    }
+
+    @Override
+    public PageResult selbyname(String name, int currentPage, int pageSize) {
+        return courseDao.selbyname(name, currentPage, pageSize);
+    }
+
 }

@@ -5,7 +5,7 @@ import com.project.gelingeducation.domain.Course;
 
 import java.util.List;
 
-public interface CourseDao {
+public interface ICourseDao {
     List<Course> findAll();
 
     Course findById(long id);
@@ -17,4 +17,8 @@ public interface CourseDao {
     void update(Course video);
 
     PageResult getLists(int currentPage, int pageSize);
+
+    void delSel(long[] ids);
+
+    PageResult selbyname(String name,int currentPage, int pageSize);
 }

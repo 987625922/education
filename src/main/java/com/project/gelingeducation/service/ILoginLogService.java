@@ -4,7 +4,7 @@ import com.project.gelingeducation.domain.LoginLog;
 
 import java.util.List;
 
-public interface LoginLogService {
+public interface ILoginLogService {
 
     void insert(LoginLog loginLog);
 

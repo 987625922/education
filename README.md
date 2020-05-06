@@ -76,7 +76,7 @@ gelingeducation
    <p> 2.docker run -d --name gelingeducationnginx -p 7789:80 nginx</p>
    <p>运行run镜像，并把80端口映射到服务器的7789端口 </p>  
    <p>在浏览器输入ip:7789查看nginx服务器是否运行成功</p>
-   <p>3.把打包好的vue前端代码（具体打包流程看前端github的remark）复制到容器的/usr/share/nginx/html下,注意是把打包出来的dist下所有文件复制到     html下</p>   
+   <p>3.把打包好的vue前端代码（具体打包流程看前端github的remark）复制到容器的/usr/share/nginx/html下,注意是把打包出来的dist下所有文件复制到html下,(如果是映射路径的，记得去把容器里的html下文件删除掉，不然好像不会替换)</p>   
    <p>4.docker restart 容器id</p>
    <p>重启容器</p>
    <p>5.重新在浏览器输入ip:7789查看是否部署成功</p>

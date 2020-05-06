@@ -5,7 +5,7 @@ import com.project.gelingeducation.domain.Course;
 
 import java.util.List;
 
-public interface CourseService {
+public interface ICourseService {
 
     List<Course> findAll();
 
@@ -13,9 +13,14 @@ public interface CourseService {
 
     long insert(Course course);
 
-    void delectd(long id);
+    void delect(long id);
 
-    void updated(Course course);
+    void update(Course course);
 
     PageResult getLists(int currentPage, int pageSize);
+
+    void batchesDeletes(long[] ids);
+
+    PageResult selbyname(String name,int currentPage, int pageSize);
+
 }

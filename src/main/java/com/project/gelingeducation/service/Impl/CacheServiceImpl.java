@@ -4,13 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.gelingeducation.common.redis.JedisCacheClient;
 import com.project.gelingeducation.domain.GLConstant;
 import com.project.gelingeducation.domain.User;
-import com.project.gelingeducation.service.CacheService;
+import com.project.gelingeducation.service.ICacheService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CacheServiceImpl implements CacheService {
+public class CacheServiceImpl implements ICacheService {
 
     @Autowired
     private JedisCacheClient jedisCacheClient;

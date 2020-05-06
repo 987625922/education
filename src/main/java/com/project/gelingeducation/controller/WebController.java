@@ -10,7 +10,7 @@ import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.domain.WebDataBean;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.IWebDataBeanService;
-import com.project.gelingeducation.service.LoginLogService;
+import com.project.gelingeducation.service.ILoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +23,7 @@ import java.util.HashMap;
 public class WebController {
 
     @Autowired
-    private LoginLogService loginLogService;
+    private ILoginLogService loginLogService;
     @Autowired
     private IWebDataBeanService webDataBeanService;
     @Autowired

@@ -19,7 +19,7 @@ import java.util.Date;
 public class CourseServiceTest {
 
     @Autowired
-    private CourseService courseService;
+    private ICourseService courseService;
 
     @Test
     public void insert() {

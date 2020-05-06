@@ -2,7 +2,7 @@ package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.dao.ILoginLogDao;
 import com.project.gelingeducation.domain.LoginLog;
-import com.project.gelingeducation.service.LoginLogService;
+import com.project.gelingeducation.service.ILoginLogService;
 import com.project.gelingeducation.common.utils.AddressUtil;
 import com.project.gelingeducation.common.utils.HttpContextUtil;
 import com.project.gelingeducation.common.utils.IPUtil;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class LoginLogServiceImpl implements LoginLogService {
+public class LoginLogServiceImpl implements ILoginLogService {
 
     @Autowired
     private ILoginLogDao loginLogDao;
