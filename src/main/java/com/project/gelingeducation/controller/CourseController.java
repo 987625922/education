@@ -89,7 +89,6 @@ public class CourseController {
                                                     @RequestParam(defaultValue = "-1")double endPrice,
                                                     @RequestParam(defaultValue = "-1")long teacherId,
                                                     int currentPage, int pageSize) {
-        log.debug("name:" + name + ",status:" + status + ",startPrice:" + startPrice + ",endPrice:" + endPrice + ",teacherId" + teacherId);
         return JsonData.buildSuccess(courseService.selbyname(name, currentPage, pageSize));
     }
 

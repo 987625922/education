@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +15,9 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "course")
-public class Course {
+public class Course implements Serializable {
+
+    private static final long serialVersionUID = 2726599374475533725L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,6 +48,7 @@ public class Course {
      */
     @Column(name = "status",length = 1)
     private int status = 1;
+
     /**
      * 是否免费
      * 1为免费，0为付费

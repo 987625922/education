@@ -79,4 +79,9 @@ public class CourseServiceImpl implements ICourseService {
         return courseDao.selbyname(name, currentPage, pageSize);
     }
 
+    @Override
+    public PageResult selByNameOrStatusOrPriceOrTeacher(String name, int status, double startPrice, double endPrice, long teacherId, int currentPage, int pageSize) {
+        return null;
+    }
+
 }

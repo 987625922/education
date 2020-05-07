@@ -88,7 +88,6 @@ public class CourseDaoImpl implements ICourseDao {
     }
 
 
-
     @Override
     public void delSel(long[] ids) {
         String sql = "";
@@ -111,12 +110,52 @@ public class CourseDaoImpl implements ICourseDao {
         Query queryCount = session.createQuery(hql);
         long allrows = (long) queryCount.uniqueResult();
 
-        TypedQuery<User> query = session.createQuery("from Course where name LIKE '%" + name + "%'");
+        TypedQuery<Course> query = session.createQuery("from Course where" +
+                " name LIKE '%" + name + "%'");
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
         query.setMaxResults(currentPage * pageSize);//得到每页的记录数
 
         long totalPage = (allrows - 1) / pageSize + 1;
-        List<User> list = query.getResultList();
+        List<Course> list = query.getResultList();
+
+        PageResult pageResult = new PageResult();
+        pageResult.setTotalPages(totalPage);
+        pageResult.setTotalRows(allrows);
+        pageResult.setLists(list);
+        pageResult.setPageNum(currentPage + 1);
+        pageResult.setPageSize(pageSize);
+
+        return pageResult;
+    }
+
+    @Override
+    public PageResult selByNameOrStatusOrPriceOrTeacher(String name, int status,
+                                                        double startPrice, double endPrice,
+                                                        long teacherId, int currentPage,
+                                                        int pageSize) {
+        Session session = getSession();
+
+        String allRowsHql = "select count(*) from Course where name LIKE '%" + name + "%'";//此处的Product是对象
+        Query queryCount = session.createQuery(allRowsHql);
+        long allrows = (long) queryCount.uniqueResult();
+
+        String hql = "from Course where name LIKE '%" + name + "%'";
+        TypedQuery<Course> query = session.createQuery(hql);
+        if (status != -1) {
+            hql += " AND status = 1";
+        }
+        if (startPrice != -1 && endPrice != -1) {
+            hql += " AND startPrice = " + startPrice + " AND endPrice = " + endPrice;
+        }
+//        if (teacherId != -1) {
+//            hql += "left join  AND teacherId = " + teacherId;
+//        }
+
+        query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
+        query.setMaxResults(currentPage * pageSize);//得到每页的记录数
+
+        long totalPage = (allrows - 1) / pageSize + 1;
+        List<Course> list = query.getResultList();
 
         PageResult pageResult = new PageResult();
         pageResult.setTotalPages(totalPage);

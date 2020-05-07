@@ -2,6 +2,7 @@ package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.domain.Course;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -23,4 +24,7 @@ public interface ICourseService {
 
     PageResult selbyname(String name,int currentPage, int pageSize);
 
+    PageResult selByNameOrStatusOrPriceOrTeacher(String name, int status, double startPrice,
+                                                 double endPrice, long teacherId,
+                                                 int currentPage, int pageSize);
 }
