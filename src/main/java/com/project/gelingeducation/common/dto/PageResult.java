@@ -9,16 +9,16 @@ public class PageResult {
     /**
      * 当前页码
      */
-    private int pageNum;
+    private int pageNum = 0;
     /**
      * 每页数量
      */
-    private int pageSize;
+    private int pageSize = 0;
 
     /**
      * 页码总数
      */
-    private long totalPages;
+    private long totalPages = 0;
 
     /**
      * 总数量

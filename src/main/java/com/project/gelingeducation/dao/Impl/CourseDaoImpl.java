@@ -25,9 +25,19 @@ public class CourseDaoImpl implements ICourseDao {
     }
 
     @Override
-    public List<Course> findAll() {
-        TypedQuery<Course> query = getSession().createQuery("from Course");
-        return query.getResultList();
+    public PageResult findAll() {
+        Session session = getSession();
+
+        PageResult pageResult = new PageResult();
+        TypedQuery<Course> query = session.createQuery("from Course");
+        pageResult.setLists(query.getResultList());
+
+        String hql = "select count(*) from Course";
+        Query queryCount = session.createQuery(hql);
+        long allrows = (long) queryCount.uniqueResult();
+        pageResult.setTotalRows(allrows);
+
+        return pageResult;
     }
 
     @Override
@@ -56,7 +66,7 @@ public class CourseDaoImpl implements ICourseDao {
     public PageResult getLists(int currentPage, int pageSize) {
         Session session = getSession();
 
-        String hql = "select count(*) from Course";//此处的Product是对象
+        String hql = "select count(*) from Course";
         Query queryCount = session.createQuery(hql);
         long allrows = (long) queryCount.uniqueResult();
 
@@ -76,6 +86,8 @@ public class CourseDaoImpl implements ICourseDao {
 
         return pageResult;
     }
+
+
 
     @Override
     public void delSel(long[] ids) {

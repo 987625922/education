@@ -19,7 +19,7 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Course> findAll() {
+    public PageResult findAll() {
         return courseDao.findAll();
     }
 
@@ -58,7 +58,11 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     @Transactional(readOnly = true)
     public PageResult getLists(int currentPage, int pageSize) {
-        return courseDao.getLists(currentPage, pageSize);
+        if (currentPage != -1&&pageSize != -1) {
+            return courseDao.getLists(currentPage, pageSize);
+        }else {
+            return courseDao.findAll();
+        }
     }
 
     /**

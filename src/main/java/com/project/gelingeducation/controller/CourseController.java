@@ -9,6 +9,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -28,7 +29,7 @@ public class CourseController {
      * @return
      */
     @RequestMapping(value = "/lists", method = RequestMethod.POST)
-    public Object lists(int currentPage, int pageSize) {
+    public Object lists(@RequestParam(defaultValue = "-1")int currentPage,@RequestParam(defaultValue = "-1") int pageSize) {
         return JsonData.buildSuccess(courseService.getLists(currentPage, pageSize));
     }
 
@@ -83,7 +84,12 @@ public class CourseController {
      * 按名字搜索
      */
     @RequestMapping(value = "/sel_by_name_or_status_price_teacher", method = RequestMethod.POST)
-    public Object selByNameOrStatusOrPriceOrTeacher(String name, int status, double startPrice, double endPrice, long teacherId, int currentPage, int pageSize) {
+    public Object selByNameOrStatusOrPriceOrTeacher(String name, @RequestParam(defaultValue = "-1") int status,
+                                                    @RequestParam(defaultValue = "-1")double startPrice,
+                                                    @RequestParam(defaultValue = "-1")double endPrice,
+                                                    @RequestParam(defaultValue = "-1")long teacherId,
+                                                    int currentPage, int pageSize) {
+        log.debug("name:" + name + ",status:" + status + ",startPrice:" + startPrice + ",endPrice:" + endPrice + ",teacherId" + teacherId);
         return JsonData.buildSuccess(courseService.selbyname(name, currentPage, pageSize));
     }
 
