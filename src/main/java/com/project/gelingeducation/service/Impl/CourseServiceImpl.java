@@ -12,19 +12,18 @@ import java.util.List;
 
 
 @Service
+@Transactional(readOnly = true)
 public class CourseServiceImpl implements ICourseService {
 
     @Autowired
     private ICourseDao courseDao;
 
     @Override
-    @Transactional(readOnly = true)
     public PageResult findAll() {
         return courseDao.findAll();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Course findById(long id) {
         return courseDao.findById(id);
     }
@@ -56,7 +55,6 @@ public class CourseServiceImpl implements ICourseService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
     public PageResult getLists(int currentPage, int pageSize) {
         if (currentPage != -1&&pageSize != -1) {
             return courseDao.getLists(currentPage, pageSize);
@@ -70,6 +68,7 @@ public class CourseServiceImpl implements ICourseService {
      * @param ids
      */
     @Override
+    @Transactional
     public void batchesDeletes(long[] ids) {
         courseDao.delSel(ids);
     }
@@ -80,8 +79,9 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public PageResult selByNameOrStatusOrPriceOrTeacher(String name, int status, double startPrice, double endPrice, long teacherId, int currentPage, int pageSize) {
-        return null;
+    public PageResult selByNameOrStatusOrPriceOrTeacher(String name, int status, double startPrice, double endPrice,
+                                                        long teacherId, int currentPage, int pageSize) {
+        return courseDao.selByNameOrStatusOrPriceOrTeacher(name,status,startPrice,endPrice,teacherId,currentPage,pageSize);
     }
 
 }

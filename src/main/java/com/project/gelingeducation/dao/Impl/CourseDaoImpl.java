@@ -139,17 +139,19 @@ public class CourseDaoImpl implements ICourseDao {
         Query queryCount = session.createQuery(allRowsHql);
         long allrows = (long) queryCount.uniqueResult();
 
-        String hql = "from Course where name LIKE '%" + name + "%'";
-        TypedQuery<Course> query = session.createQuery(hql);
-        if (status != -1) {
-            hql += " AND status = 1";
-        }
-        if (startPrice != -1 && endPrice != -1) {
-            hql += " AND startPrice = " + startPrice + " AND endPrice = " + endPrice;
-        }
-//        if (teacherId != -1) {
-//            hql += "left join  AND teacherId = " + teacherId;
+        String hql = "from Course course";
+//        if (status != -1) {
+//            hql += " AND course.status = "+status;
 //        }
+//        if (startPrice != -1 && endPrice != -1) {
+//            hql += " AND course.startPrice = " + startPrice + " AND course.endPrice = " + endPrice;
+//        }
+        if (teacherId != -1) {
+            hql += "course.teachers.id = " + teacherId;
+        }
+        hql += " where course.name LIKE '%" + name + "%'";
+        TypedQuery<Course> query = session.createQuery(hql);
+
 
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
         query.setMaxResults(currentPage * pageSize);//得到每页的记录数

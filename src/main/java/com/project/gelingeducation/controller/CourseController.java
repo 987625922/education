@@ -29,7 +29,7 @@ public class CourseController {
      * @return
      */
     @RequestMapping(value = "/lists", method = RequestMethod.POST)
-    public Object lists(@RequestParam(defaultValue = "-1")int currentPage,@RequestParam(defaultValue = "-1") int pageSize) {
+    public Object lists(@RequestParam(defaultValue = "1") int currentPage, @RequestParam(defaultValue = "100") int pageSize) {
         return JsonData.buildSuccess(courseService.getLists(currentPage, pageSize));
     }
 
@@ -84,12 +84,12 @@ public class CourseController {
      * 按名字搜索
      */
     @RequestMapping(value = "/sel_by_name_or_status_price_teacher", method = RequestMethod.POST)
-    public Object selByNameOrStatusOrPriceOrTeacher(String name, @RequestParam(defaultValue = "-1") int status,
-                                                    @RequestParam(defaultValue = "-1")double startPrice,
-                                                    @RequestParam(defaultValue = "-1")double endPrice,
-                                                    @RequestParam(defaultValue = "-1")long teacherId,
+    public Object selByNameOrStatusOrPriceOrTeacher(@RequestParam(defaultValue = "") String name, @RequestParam(defaultValue = "-1") int status,
+                                                    @RequestParam(defaultValue = "-1") double startPrice,
+                                                    @RequestParam(defaultValue = "-1") double endPrice,
+                                                    @RequestParam(defaultValue = "-1") long teacherId,
                                                     int currentPage, int pageSize) {
-        return JsonData.buildSuccess(courseService.selbyname(name, currentPage, pageSize));
+        return JsonData.buildSuccess(courseService.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice, endPrice, teacherId, currentPage, pageSize));
     }
 
 }
