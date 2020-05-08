@@ -4,7 +4,7 @@ import com.project.gelingeducation.domain.Video;
 
 import java.util.List;
 
-public interface VideoService {
+public interface IVideoService {
 
     List<Video> findAll();
 

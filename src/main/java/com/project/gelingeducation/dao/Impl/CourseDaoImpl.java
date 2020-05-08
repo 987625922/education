@@ -135,33 +135,34 @@ public class CourseDaoImpl implements ICourseDao {
                                                         int pageSize) {
         Session session = getSession();
 
-        String allRowsHql = "select count(*) from Course where name LIKE '%" + name + "%'";//此处的Product是对象
-        Query queryCount = session.createQuery(allRowsHql);
-        long allrows = (long) queryCount.uniqueResult();
-
-        String hql = "from Course course";
-//        if (status != -1) {
-//            hql += " AND course.status = "+status;
-//        }
-//        if (startPrice != -1 && endPrice != -1) {
-//            hql += " AND course.startPrice = " + startPrice + " AND course.endPrice = " + endPrice;
-//        }
+        StringBuffer hql = new StringBuffer("from Course as course");
         if (teacherId != -1) {
-            hql += "course.teachers.id = " + teacherId;
+            hql.append(" inner join fetch course.teachers as teacher where teacher.id = " + teacherId);
         }
-        hql += " where course.name LIKE '%" + name + "%'";
-        TypedQuery<Course> query = session.createQuery(hql);
-
+        if (teacherId == -1 && status != -1 && startPrice != -1 && endPrice != -1) {
+            hql.append(" where 1=1");
+        }
+        if (status != -1) {
+            hql.append(" AND course.status = " + status);
+        }
+        if (startPrice != -1 && endPrice != -1) {
+            hql.append(" AND course.startPrice = " + startPrice + " AND course.endPrice = " + endPrice);
+        }
+        hql.append(" AND course.name LIKE '%" + name + "%'");
+        TypedQuery<Course> query = session.createQuery(hql.toString());
 
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
         query.setMaxResults(currentPage * pageSize);//得到每页的记录数
-
-        long totalPage = (allrows - 1) / pageSize + 1;
         List<Course> list = query.getResultList();
+//
+        hql.insert(0, "select count(*) ");//此处的Product是对象
+        Query queryCount = session.createQuery(hql.toString());
+//        long allrows = (long) queryCount.uniqueResult();
+//        long totalPage = (allrows - 1) / pageSize + 1;
 
         PageResult pageResult = new PageResult();
-        pageResult.setTotalPages(totalPage);
-        pageResult.setTotalRows(allrows);
+//        pageResult.setTotalPages(totalPage);
+//        pageResult.setTotalRows(allrows);
         pageResult.setLists(list);
         pageResult.setPageNum(currentPage + 1);
         pageResult.setPageSize(pageSize);

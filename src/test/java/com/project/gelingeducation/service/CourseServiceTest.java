@@ -41,4 +41,16 @@ public class CourseServiceTest {
         PageResult pageResult = courseService.getLists(1, 10);
         log.debug("==>" + pageResult.toString());
     }
+
+    @Test
+    public void courseAddTeacher(){
+        courseService.courseAddTeacher(2,2);
+    }
+
+    @Test
+    public void selByNameOrStatusOrPriceOrTeacher(){
+        PageResult pageResult = courseService.selByNameOrStatusOrPriceOrTeacher("",-1,-1,-1,1
+        ,1,10);
+        System.out.println();
+    }
 }

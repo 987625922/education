@@ -3,6 +3,7 @@ package com.project.gelingeducation.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -48,4 +49,15 @@ public class Teacher {
     @ManyToMany(targetEntity = Course.class, mappedBy = "teachers")
     private Set<Course> courses = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", bigImg='" + bigImg + '\'' +
+                ", remark='" + remark + '\'' +
+                ", createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                '}';
+    }
 }

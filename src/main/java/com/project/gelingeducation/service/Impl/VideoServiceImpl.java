@@ -1,8 +1,8 @@
 package com.project.gelingeducation.service.Impl;
 
-import com.project.gelingeducation.dao.VideoDao;
+import com.project.gelingeducation.dao.IVideoDao;
 import com.project.gelingeducation.domain.Video;
-import com.project.gelingeducation.service.VideoService;
+import com.project.gelingeducation.service.IVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,10 +11,10 @@ import java.util.List;
 
 
 @Service
-public class VideoServiceImpl implements VideoService {
+public class VideoServiceImpl implements IVideoService {
 
     @Autowired
-    private VideoDao videoDao;
+    private IVideoDao videoDao;
 
     @Override
     @Transactional(readOnly = true)

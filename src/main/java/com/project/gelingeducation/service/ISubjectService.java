@@ -1,17 +1,18 @@
-package com.project.gelingeducation.dao;
+package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.domain.Subject;
 
 import java.util.List;
 
-public interface SubjectDao {
+public interface ISubjectService {
+
     List<Subject> findAll();
 
     Subject findById(long id);
 
     long insert(Subject video);
 
-    void delect(long id);
+    void delectd(long id);
 
-    void update(Subject video);
+    void updated(Subject video);
 }

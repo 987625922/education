@@ -1,11 +1,8 @@
 package com.project.gelingeducation.service.Impl;
 
-import com.project.gelingeducation.dao.SubjectDao;
-import com.project.gelingeducation.dao.VideoDao;
+import com.project.gelingeducation.dao.ISubjectDao;
 import com.project.gelingeducation.domain.Subject;
-import com.project.gelingeducation.domain.Video;
-import com.project.gelingeducation.service.SubjectService;
-import com.project.gelingeducation.service.VideoService;
+import com.project.gelingeducation.service.ISubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +11,10 @@ import java.util.List;
 
 
 @Service
-public class SubjectServiceImpl implements SubjectService {
+public class SubjectServiceImpl implements ISubjectService {
 
     @Autowired
-    private SubjectDao subjectDao;
+    private ISubjectDao subjectDao;
 
     @Override
     @Transactional(readOnly = true)

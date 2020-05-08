@@ -1,6 +1,6 @@
 package com.project.gelingeducation.dao.Impl;
 
-import com.project.gelingeducation.dao.SubjectDao;
+import com.project.gelingeducation.dao.ISubjectDao;
 import com.project.gelingeducation.domain.Subject;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Repository
-public class SubjectDaoImpl implements SubjectDao {
+public class SubjectDaoImpl implements ISubjectDao {
 
     @Autowired
     private SessionFactory sessionFactory;

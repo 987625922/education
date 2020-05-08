@@ -1,6 +1,6 @@
 package com.project.gelingeducation.dao.Impl;
 
-import com.project.gelingeducation.dao.VideoDao;
+import com.project.gelingeducation.dao.IVideoDao;
 import com.project.gelingeducation.domain.Video;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Repository
-public class VideoDaoImpl implements VideoDao {
+public class VideoDaoImpl implements IVideoDao {
 
     @Autowired
     private SessionFactory sessionFactory;

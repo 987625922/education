@@ -27,4 +27,5 @@ public interface ICourseService {
     PageResult selByNameOrStatusOrPriceOrTeacher(String name, int status, double startPrice,
                                                  double endPrice, long teacherId,
                                                  int currentPage, int pageSize);
+    void courseAddTeacher(long courseId,long teacherId);
 }

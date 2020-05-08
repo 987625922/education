@@ -2,8 +2,8 @@ package com.project.gelingeducation;
 
 import com.project.gelingeducation.domain.Video;
 import com.project.gelingeducation.service.IUserService;
-import com.project.gelingeducation.service.SubjectService;
-import com.project.gelingeducation.service.VideoService;
+import com.project.gelingeducation.service.ISubjectService;
+import com.project.gelingeducation.service.IVideoService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,10 +23,10 @@ import java.util.List;
 public class SpringTest {
 
     @Autowired
-    private VideoService videoService;
+    private IVideoService videoService;
 
     @Autowired
-    private SubjectService subjectService;
+    private ISubjectService subjectService;
 
     @Autowired
     private IUserService service;

@@ -2,7 +2,9 @@ package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.ICourseDao;
+import com.project.gelingeducation.dao.ITeacherDao;
 import com.project.gelingeducation.domain.Course;
+import com.project.gelingeducation.domain.Teacher;
 import com.project.gelingeducation.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class CourseServiceImpl implements ICourseService {
 
     @Autowired
     private ICourseDao courseDao;
+
+    @Autowired
+    private ITeacherDao teacherDao;
 
     @Override
     public PageResult findAll() {
@@ -82,6 +87,15 @@ public class CourseServiceImpl implements ICourseService {
     public PageResult selByNameOrStatusOrPriceOrTeacher(String name, int status, double startPrice, double endPrice,
                                                         long teacherId, int currentPage, int pageSize) {
         return courseDao.selByNameOrStatusOrPriceOrTeacher(name,status,startPrice,endPrice,teacherId,currentPage,pageSize);
+    }
+
+    @Override
+    @Transactional
+    public void courseAddTeacher(long courseId, long teacherId) {
+        Course course = courseDao.findById(courseId);
+        Teacher teacher = teacherDao.findById(teacherId);
+
+        course.getTeachers().add(teacher);
     }
 
 }
