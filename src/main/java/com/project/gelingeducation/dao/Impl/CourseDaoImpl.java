@@ -5,9 +5,7 @@ import com.project.gelingeducation.dao.ICourseDao;
 import com.project.gelingeducation.domain.Course;
 import com.project.gelingeducation.domain.User;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
@@ -15,14 +13,7 @@ import java.util.List;
 
 
 @Repository
-public class CourseDaoImpl implements ICourseDao {
-
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    public Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
+public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
     @Override
     public PageResult findAll() {
@@ -122,7 +113,7 @@ public class CourseDaoImpl implements ICourseDao {
         pageResult.setTotalPages(totalPage);
         pageResult.setTotalRows(allrows);
         pageResult.setLists(list);
-        pageResult.setPageNum(currentPage + 1);
+        pageResult.setPageNum(currentPage);
         pageResult.setPageSize(pageSize);
 
         return pageResult;
@@ -146,9 +137,12 @@ public class CourseDaoImpl implements ICourseDao {
             hql.append(" AND course.status = " + status);
         }
         if (startPrice != -1 && endPrice != -1) {
-            hql.append(" AND course.startPrice = " + startPrice + " AND course.endPrice = " + endPrice);
+            hql.append(" AND course.price BETWEEN " + startPrice + " AND " + endPrice);
         }
-        hql.append(" AND course.name LIKE '%" + name + "%'");
+        if (name != null) {
+            hql.append(" AND course.name LIKE '%" + name + "%'");
+        }
+
         TypedQuery<Course> query = session.createQuery(hql.toString());
 
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
@@ -166,9 +160,11 @@ public class CourseDaoImpl implements ICourseDao {
             hql.append(" AND course.status = " + status);
         }
         if (startPrice != -1 && endPrice != -1) {
-            hql.append(" AND course.startPrice = " + startPrice + " AND course.endPrice = " + endPrice);
+            hql.append(" AND course.price BETWEEN " + startPrice + " AND " + endPrice);
         }
-        hql.append(" AND course.name LIKE '%" + name + "%'");
+        if (name != null) {
+            hql.append(" AND course.name LIKE '%" + name + "%'");
+        }
 
         Query queryCount = session.createQuery(hql.toString());
         long allrows = (long) queryCount.uniqueResult();
@@ -178,7 +174,7 @@ public class CourseDaoImpl implements ICourseDao {
         pageResult.setTotalPages(totalPage);
         pageResult.setTotalRows(allrows);
         pageResult.setLists(list);
-        pageResult.setPageNum(currentPage + 1);
+        pageResult.setPageNum(currentPage);
         pageResult.setPageSize(pageSize);
 
         return pageResult;

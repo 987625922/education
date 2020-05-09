@@ -7,6 +7,7 @@
 ### 展示地址（更新不会有项目这么频繁，不能保证和代码是同一个版本）
 
 [GLVideoManager](http://glvideomanager.hopto.org/)
+账号:123456 密码：123456
 
 ### 组织结构
 

@@ -47,6 +47,7 @@ public class Teacher {
     private Date modifyTime;
 
     @ManyToMany(targetEntity = Course.class, mappedBy = "teachers")
+    @JsonIgnore
     private Set<Course> courses = new HashSet<>();
 
     @Override

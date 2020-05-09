@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service.Impl;
 
+import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.ITeacherDao;
 import com.project.gelingeducation.domain.Teacher;
 import com.project.gelingeducation.service.ITeacherService;
@@ -22,6 +23,11 @@ public class TeacherServiceImpl implements ITeacherService {
     @Override
     public Teacher getById(long id) {
         return teacherDao.findById(id);
+    }
+
+    @Override
+    public PageResult getLists(int currentPage, int pageSize) {
+        return teacherDao.getLists(currentPage, pageSize);
     }
 
 }
