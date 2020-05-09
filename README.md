@@ -4,6 +4,10 @@
 
 > `gelingeducation`是一个在学习过程中诞生的项目，包含了后台代码和前台的`vue`代码，采用了前后端分离的方式构建了这一个项目，目的是整合阶段所学的知识和构建一个以后转型后端，找`java`工作的项目。
 
+### 展示地址（更新不会有项目这么频繁，不能保证和代码是同一个版本）
+
+[GLVideoManager](http://glvideomanager.hopto.org/)
+
 ### 组织结构
 
 ``` lua
@@ -37,7 +41,7 @@ gelingeducation
 
 1. 先用idea 标题栏build -> build artifacts -> 项目名:war ->build
 
-2. 先安装docker，docker装上mysql
+2. 先安装docker，docker装上mysql，进入容器的mysql创建一个education的数据库
 
 3. <details>
    <summary>docker安装tomcat</summary>
