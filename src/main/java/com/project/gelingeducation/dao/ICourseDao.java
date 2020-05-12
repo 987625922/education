@@ -4,6 +4,7 @@ import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.domain.Course;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ICourseDao {
     PageResult findAll();
@@ -15,6 +16,8 @@ public interface ICourseDao {
     void delect(long id);
 
     void update(Course video);
+
+    void update(Long id, Map<String,String> data);
 
     PageResult getLists(int currentPage, int pageSize);
 

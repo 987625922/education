@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -51,6 +52,21 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
     @Override
     public void update(Course course) {
         getSession().update(course);
+    }
+
+    @Override
+    public void update(Long id, Map<String, String> data) {
+        StringBuilder hql = new StringBuilder("UPDATE Course SET ");
+        int count = 1;
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            hql.append(entry.getKey() + " = " + entry.getValue());
+            if (count != data.size()){
+                hql.append(" , ");
+            }
+            count++;
+        }
+        Query query = getSession().createQuery(hql.toString() + " where id = " + id);
+        query.executeUpdate();
     }
 
     @Override
@@ -128,11 +144,14 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
         StringBuffer hql = new StringBuffer("from Course as course");
         if (teacherId != -1) {
-            hql.append(" inner join fetch course.teachers as teacher where teacher.id = " + teacherId);
+            hql.append(" inner join fetch course.teachers as teacher ");
         }
-        if (teacherId == -1 && status != -1 && startPrice != -1 && endPrice != -1) {
-            hql.append(" where 1=1");
+        hql.append(" where 1=1");
+
+        if (teacherId != -1) {
+            hql.append("teacher.id = " + teacherId);
         }
+
         if (status != -1) {
             hql.append(" AND course.status = " + status);
         }
@@ -148,23 +167,8 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
         query.setMaxResults(currentPage * pageSize);//得到每页的记录数
         List<Course> list = query.getResultList();
-//
-        hql = new StringBuffer("select count(*) from Course as course");//此处的Product是对象
-        if (teacherId != -1) {
-            hql.append(" inner join course.teachers as teacher where teacher.id = " + teacherId);
-        }
-        if (teacherId == -1 && status != -1 && startPrice != -1 && endPrice != -1) {
-            hql.append(" where 1=1");
-        }
-        if (status != -1) {
-            hql.append(" AND course.status = " + status);
-        }
-        if (startPrice != -1 && endPrice != -1) {
-            hql.append(" AND course.price BETWEEN " + startPrice + " AND " + endPrice);
-        }
-        if (name != null) {
-            hql.append(" AND course.name LIKE '%" + name + "%'");
-        }
+
+        hql.insert(0, "select count(*) ");
 
         Query queryCount = session.createQuery(hql.toString());
         long allrows = (long) queryCount.uniqueResult();
