@@ -25,7 +25,7 @@ public class Course implements Serializable {
     /**
      * 课程名
      */
-    @Column(name = "name", length = 50)
+    @Column(name = "name", nullable = false , length = 50)
     private String name;
     /**
      * 封面
@@ -40,7 +40,7 @@ public class Course implements Serializable {
     /**
      * 价格
      */
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private double price;
     /**
      * 状态
@@ -48,13 +48,6 @@ public class Course implements Serializable {
      */
     @Column(name = "status",length = 1)
     private int status = 1;
-
-    /**
-     * 是否免费
-     * 1为免费，0为付费
-     */
-    @Column(name = "is_free",length = 1)
-    private int isFree;
 
     //创建时间
     @Temporal(TemporalType.TIMESTAMP)

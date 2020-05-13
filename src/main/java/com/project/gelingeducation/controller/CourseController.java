@@ -7,10 +7,7 @@ import com.project.gelingeducation.service.ICourseService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 视频课程的controller
@@ -45,7 +42,7 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Object add(Course course) {
+    public Object add(@RequestBody Course course) {
         courseService.insert(course);
         return JsonData.buildSuccess();
     }
@@ -89,7 +86,8 @@ public class CourseController {
                                                     @RequestParam(defaultValue = "-1") double endPrice,
                                                     @RequestParam(defaultValue = "-1") long teacherId,
                                                     int currentPage, int pageSize) {
-        return JsonData.buildSuccess(courseService.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice, endPrice, teacherId, currentPage, pageSize));
+        return JsonData.buildSuccess(courseService.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice, endPrice,
+                teacherId, currentPage, pageSize));
     }
 
 }
