@@ -33,7 +33,6 @@ public class CourseServiceImpl implements ICourseService {
         return courseDao.findById(id);
     }
 
-
     @Override
     @Transactional
     public long insert(Course course) {
@@ -76,11 +75,6 @@ public class CourseServiceImpl implements ICourseService {
     @Transactional
     public void batchesDeletes(long[] ids) {
         courseDao.delSel(ids);
-    }
-
-    @Override
-    public PageResult selbyname(String name, int currentPage, int pageSize) {
-        return courseDao.selbyname(name, currentPage, pageSize);
     }
 
     @Override

@@ -3,7 +3,8 @@ package com.project.gelingeducation.controller;
 import com.project.gelingeducation.common.authentication.JWTUtil;
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.common.dto.WebIndex;
-import com.project.gelingeducation.common.exception.AllExceptionEnum;
+import com.project.gelingeducation.common.exception.AllException;
+import com.project.gelingeducation.common.exception.StatusEnum;
 import com.project.gelingeducation.common.utils.MD5Util;
 import com.project.gelingeducation.domain.LoginLog;
 import com.project.gelingeducation.domain.User;
@@ -59,12 +60,12 @@ public class WebController {
         User reUser = UserService.findUserByAccount(user.getAccount());
 
         if (reUser == null) {
-            throw AllExceptionEnum.NO_USER.getAllException();
+            throw new AllException(StatusEnum.NO_USER);
         } else if (!reUser.getPassword().equals(MD5Util.encrypt(user.getAccount().toLowerCase(),
                 user.getPassword()))) {
-            throw AllExceptionEnum.ACCOUNT_PASSWORD_ERROR.getAllException();
+            throw new AllException(StatusEnum.ACCOUNT_PASSWORD_ERROR);
         } else if (reUser.getStatus() == 0) {
-            throw AllExceptionEnum.BAN_USER.getAllException();
+            throw new AllException(StatusEnum.BAN_USER);
         }
 
         loginLogService.getByUserIdLoginUpdate(reUser.getId());

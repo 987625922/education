@@ -22,8 +22,6 @@ public interface ICourseService {
 
     void batchesDeletes(long[] ids);
 
-    PageResult selbyname(String name,int currentPage, int pageSize);
-
     PageResult selByNameOrStatusOrPriceOrTeacher(String name, int status, double startPrice,
                                                  double endPrice, long teacherId,
                                                  int currentPage, int pageSize);

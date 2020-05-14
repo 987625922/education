@@ -1,8 +1,9 @@
 package com.project.gelingeducation.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -11,8 +12,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Setter
-@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
 @Entity
 @Table(name = "course")
 public class Course implements Serializable {
@@ -25,7 +28,7 @@ public class Course implements Serializable {
     /**
      * 课程名
      */
-    @Column(name = "name", nullable = false , length = 50)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
     /**
      * 封面
@@ -40,13 +43,14 @@ public class Course implements Serializable {
     /**
      * 价格
      */
-    @Column(name = "price", nullable = false)
-    private double price;
+    @Column(name = "price")
+    private double price = 0;
+
     /**
      * 状态
      * 1为正常，0为禁用
      */
-    @Column(name = "status",length = 1)
+    @Column(name = "status", length = 1)
     private int status = 1;
 
     //创建时间
@@ -59,13 +63,16 @@ public class Course implements Serializable {
     @Column(name = "modify_time")
     private Date modifyTime;
 
-    //身份列表
-    @ManyToMany(targetEntity = Teacher.class)
+    //教师列表
+    @ManyToMany(targetEntity = Teacher.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "t_course_teacher",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id")
     )
-    @JsonIgnore
+//    @JsonBackReference //序列化的时候不会出现，反序列化的时候会设置
+//    @JsonManagedReference
     private Set<Teacher> teachers = new HashSet<>();
+
 }
+

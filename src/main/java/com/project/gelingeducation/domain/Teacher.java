@@ -1,5 +1,6 @@
 package com.project.gelingeducation.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,8 +47,8 @@ public class Teacher {
     @Column(name = "modify_time")
     private Date modifyTime;
 
-    @ManyToMany(targetEntity = Course.class, mappedBy = "teachers")
-    @JsonIgnore
+    @ManyToMany(mappedBy = "teachers",fetch = FetchType.EAGER)
+    @JsonBackReference
     private Set<Course> courses = new HashSet<>();
 
     @Override

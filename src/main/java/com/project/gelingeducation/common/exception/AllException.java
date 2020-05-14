@@ -16,13 +16,19 @@ public class AllException extends RuntimeException {
     /**
      * 异常消息
      */
-    private String msg;
+    private String message;
 
     public AllException(int code, String msg) {
         super(msg);
         this.code = code;
-        this.msg = msg;
+        this.message = msg;
         this.time = System.currentTimeMillis();
+    }
+
+    public AllException(StatusEnum statusEnum) {
+        super(statusEnum.getMessage());
+        this.code = statusEnum.getCode();
+        this.message = statusEnum.getMessage();
     }
 
 
@@ -34,11 +40,11 @@ public class AllException extends RuntimeException {
         this.code = code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

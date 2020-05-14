@@ -1,7 +1,8 @@
 package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.common.exception.AllExceptionEnum;
+import com.project.gelingeducation.common.exception.AllException;
+import com.project.gelingeducation.common.exception.StatusEnum;
 import com.project.gelingeducation.common.utils.MD5Util;
 import com.project.gelingeducation.dao.IUserDao;
 import com.project.gelingeducation.domain.Permission;
@@ -42,7 +43,7 @@ public class UserServiceImpl implements IUserService {
             user.setPassword(MD5Util.encrypt(user.getAccount().toLowerCase(), user.getPassword()));
             return userDao.insert(user);
         } else {
-            throw AllExceptionEnum.ACCOUNT_ALREADY_EXISTS.getAllException();
+            throw new AllException(StatusEnum.ACCOUNT_ALREADY_EXISTS);
         }
     }
 
@@ -67,7 +68,7 @@ public class UserServiceImpl implements IUserService {
                     "988382.jpg");
             return userDao.insert(user);
         } else {
-            throw AllExceptionEnum.ACCOUNT_ALREADY_EXISTS.getAllException();
+            throw new AllException(StatusEnum.ACCOUNT_ALREADY_EXISTS);
         }
     }
 
@@ -132,7 +133,7 @@ public class UserServiceImpl implements IUserService {
             user.setPassword(MD5Util.encrypt(user.getAccount().toLowerCase(),
                     newPassword));
         } else {
-            throw AllExceptionEnum.ACCOUNT_PASSWORD_ERROR.getAllException();
+            throw new AllException(StatusEnum.ACCOUNT_PASSWORD_ERROR);
         }
     }
 

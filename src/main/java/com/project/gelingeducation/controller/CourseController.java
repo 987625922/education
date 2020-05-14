@@ -41,6 +41,11 @@ public class CourseController {
         return courseService.findById(id);
     }
 
+    /**
+     * 添加
+     * @param course
+     * @return
+     */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object add(@RequestBody Course course) {
         courseService.insert(course);
@@ -67,14 +72,6 @@ public class CourseController {
     public Object delMoreUser(long[] ids) {
         courseService.batchesDeletes(ids);
         return JsonData.buildSuccess();
-    }
-
-    /**
-     * 按名字搜索
-     */
-    @RequestMapping(value = "/sel_by_name", method = RequestMethod.POST)
-    public Object selByName(String name, int currentPage, int pageSize) {
-        return JsonData.buildSuccess(courseService.selbyname(name, currentPage, pageSize));
     }
 
     /**
