@@ -9,7 +9,7 @@ import java.util.function.Supplier;
  * 工具类
  */
 @Slf4j
-public class CommonUtil {
+public class CacheUtils {
 
     /**
      * 缓存查询模板
