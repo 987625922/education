@@ -30,8 +30,7 @@ public class CourseServiceTest {
         for (int i = 0; i < names.length; i++) {
             Course course = new Course();
             course.setName(names[i]);
-            course.setModifyTime(new Date());
-            course.setPrice(1);
+            course.setPrice(1.0);
             courseService.insert(course);
         }
     }

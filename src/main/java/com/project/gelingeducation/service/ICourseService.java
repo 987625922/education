@@ -5,6 +5,7 @@ import com.project.gelingeducation.domain.Course;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ICourseService {
 
@@ -17,6 +18,8 @@ public interface ICourseService {
     void delect(long id);
 
     void update(Course course);
+
+    void update(Long id, Map<String, String> data);
 
     PageResult getLists(int currentPage, int pageSize);
 
