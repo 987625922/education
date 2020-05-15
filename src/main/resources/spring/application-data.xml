@@ -19,6 +19,7 @@
           class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
+
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <!-- 配置c3p0数据库连接池 -->
@@ -37,6 +38,7 @@
         <!-- 当获取连接失败重试次数 -->
         <property name="acquireRetryAttempts" value="${jdbc.acquireRetryAttempts}"/>
     </bean>
+
     <bean name="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"></property>
         <property name="hibernateProperties">
@@ -82,10 +84,6 @@
     </bean>
 
     <!--                        common                             -->
-    <!--                        解析Date                            -->
-    <bean name="dateFormat" class="java.text.SimpleDateFormat">
-        <constructor-arg name="pattern" value="yyyy-MM-dd-HH:mm"/>
-    </bean>
     <!-- 头像上传 -->
     <bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="512000"/>
@@ -96,14 +94,14 @@
     <!-- 开发环境配置文件 -->
     <beans profile="development">
         <context:property-placeholder
-                location="classpath*:common/*.properties, classpath*:development/*.properties"/>
+                location="classpath*:development/*.properties"/>
     </beans>
 
 
     <!-- 生产环境配置文件 -->
     <beans profile="producation">
         <context:property-placeholder
-                location="classpath*:common/*.properties, classpath*:producation/*.properties"/>
+                location="classpath*:producation/*.properties"/>
     </beans>
 
 </beans>

@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Date;
+import java.util.Map;
 
 
 @Service
@@ -36,6 +37,9 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     @Transactional
     public long insert(Course course) {
+        Date date = new Date();
+        course.setLastUpdateTime(date);
+        course.setCreateTime(date);
         return courseDao.insert(course);
     }
 
@@ -48,7 +52,13 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     @Transactional
     public void update(Course course) {
+        course.setLastUpdateTime(new Date());
         courseDao.update(course);
+    }
+
+    @Override
+    public void update(Long id, Map<String, String> data) {
+
     }
 
     /**
@@ -60,15 +70,16 @@ public class CourseServiceImpl implements ICourseService {
      */
     @Override
     public PageResult getLists(int currentPage, int pageSize) {
-        if (currentPage != -1&&pageSize != -1) {
+        if (currentPage != -1 && pageSize != -1) {
             return courseDao.getLists(currentPage, pageSize);
-        }else {
+        } else {
             return courseDao.findAll();
         }
     }
 
     /**
      * 批量删除
+     *
      * @param ids
      */
     @Override
@@ -80,7 +91,7 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public PageResult selByNameOrStatusOrPriceOrTeacher(String name, int status, double startPrice, double endPrice,
                                                         long teacherId, int currentPage, int pageSize) {
-        return courseDao.selByNameOrStatusOrPriceOrTeacher(name,status,startPrice,endPrice,teacherId,currentPage,pageSize);
+        return courseDao.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice, endPrice, teacherId, currentPage, pageSize);
     }
 
     @Override

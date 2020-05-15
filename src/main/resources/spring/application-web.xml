@@ -52,13 +52,13 @@
     <!-- 开发环境配置文件 -->
     <beans profile="development">
         <context:property-placeholder
-                location="classpath*:common/*.properties, classpath*:development/*.properties"/>
+                location="classpath*:development/*.properties"/>
     </beans>
 
     <!-- 生产环境配置文件 -->
     <beans profile="producation">
         <context:property-placeholder
-                location="classpath*:common/*.properties, classpath*:producation/*.properties"/>
+                location="classpath*:producation/*.properties"/>
     </beans>
 
 </beans>

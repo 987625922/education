@@ -178,7 +178,6 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
     public User findUserByAccount(String account) {
         User user = userDao.findByPhone(account);
         return user;
