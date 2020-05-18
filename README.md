@@ -38,12 +38,25 @@ gelingeducation
 
 - [vue-gelingeducation](https://github.com/987625922/Vue-Gelingeducation/tree/master)
 
-### 部署（暂时写个简单的先）
+### 部署
 
 1. 先用idea 标题栏build -> build artifacts -> 项目名:war ->build
 
-2. 先安装docker，docker装上mysql，进入容器的mysql创建一个education的数据库
-
+2.<details>
+   <summary>docker安装mysql并创建education数据库</summary>
+    <pre><code>
+    <p>1. 拉取镜像</p>
+    <p>docker pull mysql</p>
+    <p>2. 把容器的3306端口映射到主机上</p>
+    <p>docker run -p 3306:3306 --name ed_mysql mysql</p>
+    <p>3. 进入容器</p>
+    <p>docker exec -it 8e08b2d49b85 /bin/bash</p>
+    <p>4. 进入mysql</p>
+    <p>mysql -uroot -p</p>
+    <p>5. 创建education数据库</p>
+    <p>CREATE DATABASE education;<p>
+    </code></pre>
+   </details>
 3. <details>
    <summary>docker安装tomcat</summary>
    <pre><code>
