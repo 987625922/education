@@ -1,0 +1,3 @@
+/usr/local/software/gelingeducation/ war包的部署目录
+/usr/local/software/gelingeducation/dist/ vue打包文件的部署目录(上传之后要把docker里面的文件全部删掉
+(容器目录：/usr/share/nginx/html))
