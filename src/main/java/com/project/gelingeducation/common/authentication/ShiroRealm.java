@@ -81,13 +81,27 @@ public class ShiroRealm extends AuthorizingRealm {
 
         String token = (String) authenticationToken.getPrincipal();
 
-        String username = JWTUtil.getUsername(token);
+        // 从 redis里获取这个 token
+//        HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
+//        String ip = IPUtil.getIpAddr(request);
+//
+//        String encryptToken = FebsUtil.encryptToken(token);
+//        String encryptTokenInRedis = null;
+//        try {
+//            encryptTokenInRedis = redisService.get(FebsConstant.TOKEN_CACHE_PREFIX + encryptToken + "." + ip);
+//        } catch (Exception ignore) {
+//        }
+        // 如果找不到，说明已经失效
+//        if (StringUtils.isBlank(encryptTokenInRedis))
+//            throw new AuthenticationException("token已经过期");
 
-        if (StringUtils.isBlank(username)) {
+        String account = JWTUtil.getUsername(token);
+
+        if (StringUtils.isBlank(account)) {
             throw new AuthenticationException("token校验不通过");
         }
+        return new SimpleAuthenticationInfo(token, token, "febs_shiro_realm");
 
-        return new SimpleAuthenticationInfo(token, token, getName());
     }
 
     /**
