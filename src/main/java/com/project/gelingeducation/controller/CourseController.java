@@ -60,7 +60,7 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Object update(Course course) {
+    public Object update(@RequestBody Course course) {
         courseService.update(course);
         return JsonData.buildSuccess();
     }

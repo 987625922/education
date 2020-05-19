@@ -54,7 +54,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
         Session session = getSession();
         Course findCourse = session.get(Course.class, course.getId());
         BeanUtils.copyPropertiesIgnoreNull(course,findCourse);
-        getSession().update(findCourse);
+        session.merge(findCourse);
     }
 
     @Override

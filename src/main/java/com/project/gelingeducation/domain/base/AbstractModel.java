@@ -24,26 +24,6 @@ import java.util.Date;
 @MappedSuperclass
 @Data
 public abstract class AbstractModel implements Serializable {
-    /**
-     * 主键
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
 
-    /**
-     * 创建时间
-     */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_time", nullable = false, updatable = false)
-    @CreatedDate
-    private Date createTime;
 
-    /**
-     * 上次更新时间
-     */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_update_time", nullable = false)
-    @LastModifiedDate
-    private Date lastUpdateTime;
 }
