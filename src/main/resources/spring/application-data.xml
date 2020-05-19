@@ -74,6 +74,7 @@
         <constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>
         <constructor-arg name="port" value="${redis.port}"></constructor-arg>
     </bean>
+
     <!-- JedisPool资源池设置 -->
     <bean class="redis.clients.jedis.JedisPoolConfig" id="jedisPoolConfig">
         <property name="maxIdle" value="${redis.maxIdle}"/>
@@ -85,7 +86,8 @@
 
     <!--                        common                             -->
     <!-- 头像上传 -->
-    <bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <bean name="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="512000"/>
     </bean>
     <bean name="mapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>

@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +19,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "course")
-public class Course {
+public class Course implements Serializable {
 
     private static final long serialVersionUID = 2726599374475533725L;
 

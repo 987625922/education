@@ -78,7 +78,7 @@ public class UserController {
                 //一次遍历所有文件
                 MultipartFile file = multiRequest.getFile(iter.next().toString());
                 if (file != null) {
-                    path = "D:/gelingeducation/admin/icon/" + time + userId + FileUtils.getSuffixName(file.getOriginalFilename());
+                    path = System.getProperty("user.home") + "/.gelingeducation/file/tmp";
                     //上传
                     file.transferTo(new File(path));
                 }
