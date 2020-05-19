@@ -1,6 +1,7 @@
 package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.common.exception.StatusEnum;
 import com.project.gelingeducation.common.utils.FileUtils;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.ICacheService;
@@ -8,6 +9,7 @@ import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,7 +30,10 @@ import java.util.Iterator;
 @Slf4j
 @RestController
 @RequestMapping("/user")
+
 public class UserController {
+
+
 
     @Autowired
     private IUserService userService;
@@ -73,7 +78,7 @@ public class UserController {
                 //一次遍历所有文件
                 MultipartFile file = multiRequest.getFile(iter.next().toString());
                 if (file != null) {
-                    path = "D:/gelingeducation/admin/icon/" + time + userId + FileUtils.getSuffixName(file.getOriginalFilename());
+                    path = System.getProperty("user.home") + "/.gelingeducation/file/tmp";
                     //上传
                     file.transferTo(new File(path));
                 }
@@ -81,7 +86,7 @@ public class UserController {
 
             userService.updateCoverImg(Long.valueOf(userId), time);
         } else {
-            return JsonData.buildError("图片上传失败");
+            return JsonData.buildStatus(StatusEnum.UPFILE_IMGAGE_FAILE);
         }
         return JsonData.buildSuccess(path);
     }
@@ -167,9 +172,9 @@ public class UserController {
     /**
      * 添加身份
      */
-    @RequestMapping(value = "/add_roles",method = RequestMethod.POST)
-    public Object addRole(long userId,long roleId){
-        userService.addRole(userId,roleId);
+    @RequestMapping(value = "/add_roles", method = RequestMethod.POST)
+    public Object addRole(long userId, long roleId) {
+        userService.addRole(userId, roleId);
         return JsonData.buildSuccess();
     }
 

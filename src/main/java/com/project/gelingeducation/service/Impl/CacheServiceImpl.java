@@ -2,7 +2,7 @@ package com.project.gelingeducation.service.Impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.gelingeducation.common.redis.JedisCacheClient;
-import com.project.gelingeducation.domain.GLConstant;
+import com.project.gelingeducation.common.config.GLConstant;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.ICacheService;
 import org.apache.commons.lang3.StringUtils;

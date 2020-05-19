@@ -11,43 +11,32 @@
 	https://www.springframework.org/schema/mvc/spring-mvc.xsd"
 >
 
-    <!--<context:property-placeholder location="classpath:config.properties"/>-->
-
     <mvc:annotation-driven/>
 
-    <!-- @RequiresPermissions注解注册 -->
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-          depends-on="lifecycleBeanPostProcessor"/>
-    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
-    <!-- 安全管理器 -->
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="userShiroRealm"/>
-    </bean>
-    <!-- 自定义域 -->
-    <bean id="userShiroRealm" class="com.project.gelingeducation.common.authentication.ShiroRealm"></bean>
-    <!-- 过滤器工厂 -->
-    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    <bean id="shiroFilterFactoryBean" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
+        <!-- 在 Shiro过滤器链上加入 JWTFilter-->
         <property name="filters">
             <map>
-                <entry key="cros" value-ref="crosAuthenticationFilter"/>
+                <entry key="jwt" value-ref="JWTFilter"/>
             </map>
         </property>
+        <!--所有请求都要经过 jwt过滤器-->
         <property name="filterChainDefinitionMap">
             <map>
-                <entry key="/**" value="cros"/>
+                <entry key="/**" value="jwt"/>
             </map>
         </property>
     </bean>
-    <!-- 过滤器加入spring web -->
-    <bean name="authorizationAttributeSourceAdvisor"
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="shiroRealm"/>
+    </bean>
+
+    <bean id="authorizationAttributeSourceAdvisor"
           class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
-    <!-- 对shiro登录和权限进行自定义 -->
-    <bean name="crosAuthenticationFilter"
-          class="com.project.gelingeducation.common.authentication.JWTAuthenticationFilter"/>
-
 
     <!-- 开发环境配置文件 -->
     <beans profile="development">

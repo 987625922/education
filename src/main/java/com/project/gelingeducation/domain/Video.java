@@ -1,13 +1,17 @@
 package com.project.gelingeducation.domain;
 //
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.util.Date;
 
-@Setter
-@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
 @Entity
 @Table(name = "video")
 public class Video {
@@ -29,5 +33,20 @@ public class Video {
     private int isFree;
     @Column(name = "course_id")
     private long courseId;
+    /**
+     * 创建时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_time", nullable = false, updatable = false)
+    @CreatedDate
+    private Date createTime;
+
+    /**
+     * 上次更新时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_update_time", nullable = false)
+    @LastModifiedDate
+    private Date lastUpdateTime;
 
 }

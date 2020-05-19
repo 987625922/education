@@ -2,7 +2,7 @@
 
 ## 前言
 
-> `gelingeducation`是一个在学习过程中诞生的项目，包含了后台代码和前台的`vue`代码，采用了前后端分离的方式构建了这一个项目，目的是整合阶段所学的知识和构建一个以后转型后端，找`java`工作的项目。
+> `gelingeducation`是一个在学习过程中诞生的项目，采用spring+hibernate+jpa+shiro+jwt构建，包含了后台代码和前台的`vue`代码，采用了前后端分离的方式构建了这一个项目，目的是整合阶段所学的知识和构建一个以后转型后端，找`java`工作的项目。
 
 ### 展示地址（更新不会有项目这么频繁，不能保证和代码是同一个版本）
 
@@ -14,6 +14,13 @@
 ``` lua
 gelingeducation
 ├── common -- 工具类，通用代码，过滤器，身份认证
+         ├──── authentication 权限管理的类，包含jwt
+         ├──── dto 对外的数据bean
+         ├──── exception 全局exception处理
+         ├──── filter 过滤器
+         ├──── function function接口
+         ├──── redis redis的类
+         ├──── utils 工具类
 ├── controller -- 后台管理系统的接口
 ├── dao -- hibernate操作数据库的dao层
 ├── domain -- 存放数据映射的bean
@@ -38,12 +45,26 @@ gelingeducation
 
 - [vue-gelingeducation](https://github.com/987625922/Vue-Gelingeducation/tree/master)
 
-### 部署（暂时写个简单的先）
+### 部署
 
 1. 先用idea 标题栏build -> build artifacts -> 项目名:war ->build
 
-2. 先安装docker，docker装上mysql，进入容器的mysql创建一个education的数据库
-
+2. <details>
+   <summary>docker安装mysql并创建education数据库</summary>
+    <pre><code>
+    <p>1. 拉取镜像</p>
+    <p>docker pull mysql</p>
+    <p>2. 把容器的3306端口映射到主机上</p>
+    <p>docker run -p 3306:3306 --name ed_mysql mysql</p>
+    <p>3. 进入容器</p>
+    <p>docker exec -it 8e08b2d49b85 /bin/bash</p>
+    <p>4. 进入mysql</p>
+    <p>mysql -uroot -p</p>
+    <p>5. 创建education数据库</p>
+    <p>CREATE DATABASE education;<p>
+    </code></pre>
+   </details>
+   
 3. <details>
    <summary>docker安装tomcat</summary>
    <pre><code>

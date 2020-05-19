@@ -7,7 +7,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -22,11 +25,13 @@ import java.io.PrintWriter;
  * shiro跨域处理拦截器
  */
 @Slf4j
-public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
+@Component
+public class JWTFilter extends BasicHttpAuthenticationFilter {
 
     private static final String TOKEN = "token";
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();
+
     //不用登陆就可以访问的接口，多个用,号隔开
     private String annonUrl = "/web/login,/web/register";
 
@@ -40,7 +45,8 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
      * @throws UnauthorizedException
      */
     @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws UnauthorizedException {
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response,
+                                      Object mappedValue) throws UnauthorizedException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String[] anonUrl = StringUtils.splitByWholeSeparatorPreserveAllTokens(annonUrl, ",");
         boolean match = false;
@@ -53,6 +59,21 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
             return executeLogin(request, response);
         }
         return false;
+    }
+
+
+    /**
+     * 判断请求是否带有token
+     *
+     * @param request
+     * @param response
+     * @return true 就登录
+     */
+    @Override
+    protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
+        HttpServletRequest req = (HttpServletRequest) request;
+        String token = req.getHeader(TOKEN);
+        return token != null;
     }
 
 
@@ -78,42 +99,6 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
     }
 
     /**
-     * 判断请求是否带有token
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @Override
-    protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
-        HttpServletRequest req = (HttpServletRequest) request;
-        String token = req.getHeader(TOKEN);
-        return token != null;
-    }
-
-    /**
-     * 访问了受保护的页面 没有进行认证的 进入这个方法
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @Override
-    protected boolean sendChallenge(ServletRequest request, ServletResponse response) {
-        HttpServletResponse httpResponse = WebUtils.toHttp(response);
-        httpResponse.setStatus(HttpStatus.OK.value());
-        httpResponse.setCharacterEncoding("utf-8");
-        httpResponse.setContentType("application/json; charset=utf-8");
-        try (PrintWriter out = httpResponse.getWriter()) {
-            String responseJson = JsonUtils.jsonString(JsonData.buildError("用户未登录", -103));
-            out.print(responseJson);
-        } catch (IOException e) {
-            log.error("sendChallenge error：", e);
-        }
-        return false;
-    }
-
-    /**
      * 对跨域提供支持
      */
     @Override
@@ -130,4 +115,29 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
         }
         return super.preHandle(request, response);
     }
+
+    /**
+     * 访问了受保护的页面 没有进行认证的 进入这个方法
+     *
+     * @param request
+     * @param response
+     * @return
+     */
+    @Override
+    protected boolean sendChallenge(ServletRequest request, ServletResponse response) {
+        HttpServletResponse httpResponse = WebUtils.toHttp(response);
+        httpResponse.setStatus(HttpStatus.OK.value());
+        httpResponse.setCharacterEncoding("utf-8");
+        httpResponse.setContentType("application/json; charset=utf-8");
+        try (PrintWriter out = httpResponse.getWriter()) {
+            String responseJson = JsonUtils.jsonString(JsonData.buildError("用户未登录",
+                    -103));
+            out.print(responseJson);
+        } catch (IOException e) {
+            log.error("sendChallenge error：", e);
+        }
+        return false;
+    }
+
+
 }

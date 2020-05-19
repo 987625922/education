@@ -60,10 +60,7 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-//    public Object update(long id,String name,String bigImg
-//            , String remark,double price,int status) {
-//        courseService.update(course);
-    public Object update(Course course) {
+    public Object update(@RequestBody Course course) {
         courseService.update(course);
         return JsonData.buildSuccess();
     }
