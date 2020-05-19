@@ -1,5 +1,7 @@
 package com.project.gelingeducation.common.dto;
 
+import com.project.gelingeducation.common.exception.StatusEnum;
+
 import java.io.Serializable;
 
 /**
@@ -24,17 +26,22 @@ public class JsonData implements Serializable {
 
     // 成功，传入数据
     public static JsonData buildSuccess() {
-        return new JsonData(200, null, "成功", System.currentTimeMillis());
+        return new JsonData(StatusEnum.OK.getCode(), null, StatusEnum.OK.getMessage(), System.currentTimeMillis());
     }
 
     // 成功，传入数据
     public static JsonData buildSuccess(Object data) {
-        return new JsonData(200, data, "成功", System.currentTimeMillis());
+        return new JsonData(StatusEnum.OK.getCode(), data, StatusEnum.OK.getMessage(), System.currentTimeMillis());
     }
 
-    // 失败，传入描述信息
-    public static JsonData buildError(String msg) {
-        return new JsonData(-1, null, msg, System.currentTimeMillis());
+    // 成功，传入数据,及描述信息
+    public static JsonData buildSuccess(Object data, String msg) {
+        return new JsonData(StatusEnum.OK.getCode(), data, msg, System.currentTimeMillis());
+    }
+
+    // 成功，传入数据,及状态码
+    public static JsonData buildSuccess(Object data, int code) {
+        return new JsonData(code, data, null, System.currentTimeMillis());
     }
 
     // 失败，传入描述信息,状态码
@@ -42,15 +49,10 @@ public class JsonData implements Serializable {
         return new JsonData(code, null, msg, System.currentTimeMillis());
     }
 
-    // 成功，传入数据,及描述信息
-    public static JsonData buildSuccess(Object data, String msg) {
-        return new JsonData(200, data, msg, System.currentTimeMillis());
+    public static JsonData buildStatus(StatusEnum statusEnum) {
+        return new JsonData(statusEnum.getCode(), null, statusEnum.getMessage(), System.currentTimeMillis());
     }
 
-    // 成功，传入数据,及状态码
-    public static JsonData buildSuccess(Object data, int code) {
-        return new JsonData(code, data, null, System.currentTimeMillis());
-    }
 
     public Integer getCode() {
         return code;

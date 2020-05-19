@@ -87,8 +87,7 @@ public class ShiroRealm extends AuthorizingRealm {
             throw new AuthenticationException("token校验不通过");
         }
 
-        return new SimpleAuthenticationInfo(token, token,
-                this.getClass().getName());
+        return new SimpleAuthenticationInfo(token, token, getName());
     }
 
     /**

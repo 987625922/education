@@ -1,6 +1,7 @@
 package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.common.exception.StatusEnum;
 import com.project.gelingeducation.common.utils.FileUtils;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.ICacheService;
@@ -81,7 +82,7 @@ public class UserController {
 
             userService.updateCoverImg(Long.valueOf(userId), time);
         } else {
-            return JsonData.buildError("图片上传失败");
+            return JsonData.buildStatus(StatusEnum.UPFILE_IMGAGE_FAILE);
         }
         return JsonData.buildSuccess(path);
     }
@@ -167,9 +168,9 @@ public class UserController {
     /**
      * 添加身份
      */
-    @RequestMapping(value = "/add_roles",method = RequestMethod.POST)
-    public Object addRole(long userId,long roleId){
-        userService.addRole(userId,roleId);
+    @RequestMapping(value = "/add_roles", method = RequestMethod.POST)
+    public Object addRole(long userId, long roleId) {
+        userService.addRole(userId, roleId);
         return JsonData.buildSuccess();
     }
 

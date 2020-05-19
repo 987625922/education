@@ -13,6 +13,7 @@ public enum StatusEnum {
     ACCOUNT_ALREADY_EXISTS(-3105, "账号已存在"),
     USER_NO_PERMISSION(-3106, "账号无权限"),
     ADD_USER_NO_ROLE(-3107, "添加的用户没有身份"),
+    UPFILE_IMGAGE_FAILE(-3108,"图片上传失败"),
     REQUEST_METHOD_NOT_SUPPORT(-3401, "请求的方式不支持");
 
     /**
