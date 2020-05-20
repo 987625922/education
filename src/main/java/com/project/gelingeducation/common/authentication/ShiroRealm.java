@@ -79,10 +79,10 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
             throws AuthenticationException {
 
-        String token = (String) authenticationToken.getPrincipal();
+        String token = (String) authenticationToken.getCredentials();
 
         // 从 redis里获取这个 token
-//        HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
+//        HttpServletRequest request = HttpUtil.getHttpServletRequest();
 //        String ip = IPUtil.getIpAddr(request);
 //
 //        String encryptToken = FebsUtil.encryptToken(token);
@@ -97,10 +97,18 @@ public class ShiroRealm extends AuthorizingRealm {
 
         String account = JWTUtil.getUsername(token);
 
-        if (StringUtils.isBlank(account)) {
+        if (StringUtils.isBlank(account))
             throw new AuthenticationException("token校验不通过");
-        }
-        return new SimpleAuthenticationInfo(token, token, "febs_shiro_realm");
+//
+//        // 通过用户名查询用户信息
+        User user = userService.findUserByAccount(account);
+//
+        if (user == null)
+            throw new AuthenticationException("用户名或密码错误");
+        if (!JWTUtil.verify(token, account, user.getPassword()))
+            throw new AuthenticationException("token校验不通过");
+
+        return new SimpleAuthenticationInfo(user, token, "gl_realm");
 
     }
 

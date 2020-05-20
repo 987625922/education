@@ -13,6 +13,7 @@ import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
@@ -20,7 +21,7 @@ import java.util.Set;
 
 @Slf4j
 @Service
-@Transactional
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class UserServiceImpl implements IUserService {
 
     @Autowired
@@ -80,7 +81,6 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
     public User findById(long id) {
         User user = userDao.findById(id);
         return user;
@@ -94,7 +94,6 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
     public PageResult getLists(int currentPage, int pageSize) {
         return userDao.getLists(currentPage, pageSize);
     }
@@ -178,6 +177,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
+    @Transactional
     public User findUserByAccount(String account) {
         User user = userDao.findByPhone(account);
         return user;
@@ -190,7 +190,6 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
     public Role findRoleByUserId(long id) {
         User user = userDao.findById(id);
         return user.getRole();
@@ -203,7 +202,6 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
     public Set<Permission> findPermissionByUserId(long id) {
         User user = userDao.findById(id);
         Role role = user.getRole();

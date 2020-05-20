@@ -2,17 +2,22 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context.xsd
-    http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
->
-    <context:component-scan base-package="com.project.gelingeducation"/>
 
-    <!--<context:property-placeholder location="classpath:config.properties"/>-->
+     http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+>
+    <context:component-scan base-package="com.project.gelingeducation">
+    </context:component-scan>
+
+    <tx:annotation-driven/>
+
+    <!-- 启动AspectJ自动代理,即基于注解的aop使用-->
+    <aop:aspectj-autoproxy expose-proxy="true">
+    </aop:aspectj-autoproxy>
 
     <!--                         hibernate                                -->
     <bean id="transactionManager"
@@ -20,7 +25,6 @@
         <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
 
-    <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <!-- 配置c3p0数据库连接池 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -63,6 +67,7 @@
                 <value>com.project.gelingeducation.domain.Video</value>
                 <value>com.project.gelingeducation.domain.WebDataBean</value>
                 <value>com.project.gelingeducation.domain.Teacher</value>
+                <value>com.project.gelingeducation.domain.Log</value>
             </list>
         </property>
     </bean>
@@ -92,13 +97,11 @@
     </bean>
     <bean name="mapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
 
-
     <!-- 开发环境配置文件 -->
     <beans profile="development">
         <context:property-placeholder
                 location="classpath*:development/*.properties"/>
     </beans>
-
 
     <!-- 生产环境配置文件 -->
     <beans profile="producation">

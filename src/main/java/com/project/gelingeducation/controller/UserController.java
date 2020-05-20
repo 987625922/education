@@ -2,14 +2,12 @@ package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.common.exception.StatusEnum;
-import com.project.gelingeducation.common.utils.FileUtils;
 import com.project.gelingeducation.domain.User;
-import com.project.gelingeducation.service.ICacheService;
+import com.project.gelingeducation.service.IRedisCacheService;
 import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,7 +37,7 @@ public class UserController {
     private IUserService userService;
 
     @Autowired
-    private ICacheService cacheService;
+    private IRedisCacheService cacheService;
 
     /**
      * 获取用户信息接口

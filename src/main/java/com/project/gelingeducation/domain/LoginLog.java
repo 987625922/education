@@ -1,7 +1,7 @@
 package com.project.gelingeducation.domain;
 
 
-import com.project.gelingeducation.common.utils.HttpContextUtil;
+import com.project.gelingeducation.common.utils.HttpUtil;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -83,7 +83,7 @@ public class LoginLog implements Serializable {
 
     public void setSystemBrowserInfo() {
         try {
-            HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
+            HttpServletRequest request = HttpUtil.getHttpServletRequest();
 
             StringBuilder userAgent = new StringBuilder("[");
             userAgent.append(request.getHeader("User-Agent"));
