@@ -1,5 +1,9 @@
 package com.project.gelingeducation.common.exception;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDateTime;
+
 /**
  * 自定义全局异常类
  */
@@ -11,8 +15,8 @@ public class AllException extends RuntimeException {
     private Integer code;
 
     private Object data = null;
-
-    private long time;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime timestamp;
     /**
      * 异常消息
      */
@@ -22,13 +26,14 @@ public class AllException extends RuntimeException {
         super(msg);
         this.code = code;
         this.message = msg;
-        this.time = System.currentTimeMillis();
+        timestamp = LocalDateTime.now();
     }
 
     public AllException(StatusEnum statusEnum) {
         super(statusEnum.getMessage());
         this.code = statusEnum.getCode();
         this.message = statusEnum.getMessage();
+        timestamp = LocalDateTime.now();
     }
 
 

@@ -1,5 +1,6 @@
 package com.project.gelingeducation.controller;
 
+import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.service.IVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,11 @@ public class TestController {
     @Autowired
     private IVideoService videoService;
 
+    @Log("异常输出测试")
     @RequestMapping(value = "/test", method = GET)
     @ResponseBody
     public String home() {
-        int i = 1/0;
+//        int i = 1/0;
         throw new AllException(-101,"异常输出测试");
 //        return videoService.findAll().toString();
     }

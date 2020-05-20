@@ -1,16 +1,19 @@
 package com.project.gelingeducation.service.Impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.gelingeducation.common.redis.JedisCacheClient;
 import com.project.gelingeducation.common.config.GLConstant;
+import com.project.gelingeducation.common.redis.JedisCacheClient;
 import com.project.gelingeducation.domain.User;
-import com.project.gelingeducation.service.ICacheService;
+import com.project.gelingeducation.service.IRedisCacheService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * redis缓存服务类
+ */
 @Service
-public class CacheServiceImpl implements ICacheService {
+public class RedisCacheServiceImpl implements IRedisCacheService {
 
     @Autowired
     private JedisCacheClient jedisCacheClient;
@@ -18,6 +21,13 @@ public class CacheServiceImpl implements ICacheService {
     @Autowired
     private ObjectMapper mapper;
 
+    /**
+     * 通过id从redis中获取用户信息
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @Override
     public User getUserById(long id) throws Exception {
         String userString = jedisCacheClient.get(GLConstant.USER_CACHE_PREFIX + id);
@@ -28,6 +38,12 @@ public class CacheServiceImpl implements ICacheService {
         }
     }
 
+    /**
+     * 保存用户信息
+     *
+     * @param user
+     * @throws Exception
+     */
     @Override
     public void saveUser(User user) throws Exception {
         String userString = mapper.writeValueAsString(user);

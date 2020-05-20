@@ -13,6 +13,7 @@ import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.IWebDataBeanService;
 import com.project.gelingeducation.service.ILoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
