@@ -27,7 +27,7 @@ import java.util.Iterator;
  */
 @Slf4j
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 
 public class UserController {
 

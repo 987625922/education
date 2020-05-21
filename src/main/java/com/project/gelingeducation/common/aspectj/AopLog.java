@@ -4,8 +4,9 @@ import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
-import org.springframework.stereotype.Component;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -13,8 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Objects;
 
-@Aspect
-@Component
+/**
+ * 对请求进行日志保存
+ */
+//@Aspect
+//@Component
 @Slf4j
 public class AopLog {
     private static final String START_TIME = "request-start";
@@ -22,7 +26,7 @@ public class AopLog {
     /**
      * 切入点
      */
-    @Pointcut("execution(public * com.xkcoding.log.aop.controller.*Controller.*(..))")
+//    @Pointcut("execution(public * com.xkcoding.log.aop.controller.*Controller.*(..))")
     public void log() {
 
     }
@@ -43,7 +47,7 @@ public class AopLog {
         log.info("【请求类名】：{}，【请求方法名】：{}", point.getSignature().getDeclaringTypeName(), point.getSignature().getName());
 
         Map<String, String[]> parameterMap = request.getParameterMap();
-        log.info("【请求参数】：{}，", JSONUtil.toJsonStr(parameterMap));
+//        log.info("【请求参数】：{}，", JSONUtil.toJsonStr(parameterMap));
         Long start = System.currentTimeMillis();
         request.setAttribute(START_TIME, start);
     }
@@ -58,7 +62,7 @@ public class AopLog {
     @Around("log()")
     public Object aroundLog(ProceedingJoinPoint point) throws Throwable {
         Object result = point.proceed();
-        log.info("【返回值】：{}", JSONUtil.toJsonStr(result));
+//        log.info("【返回值】：{}", JSONUtil.toJsonStr(result));
         return result;
     }
 
@@ -79,4 +83,4 @@ public class AopLog {
         log.info("【浏览器类型】：{}，【操作系统】：{}，【原始User-Agent】：{}", userAgent.getBrowser().toString(), userAgent.getOperatingSystem().toString(), header);
     }
 }
-}
+

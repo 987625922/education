@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
-@RequestMapping("/test")
+@RequestMapping("/api/test")
 public class TestController {
 
     @Autowired

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/subject")
+@RequestMapping("/api/subject")
 @RestController
 @Slf4j
 public class SubjectController {

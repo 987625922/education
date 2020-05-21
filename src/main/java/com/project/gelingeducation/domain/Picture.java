@@ -22,28 +22,28 @@ public class Picture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //    @ApiModelProperty(value = "文件名")
+    //  文件名
     @Column(name = "filename", nullable = false, length = 50)
     private String filename;
 
-    //    @ApiModelProperty(value = "图片url")
+    //图片url
     @Column(name = "filename", nullable = false)
     private String url;
 
-    //    @ApiModelProperty(value = "图片大小")
+    //图片大小
     @Column(name = "filename", nullable = false)
     private String size;
 
-    //    @ApiModelProperty(value = "图片高")
+    //图片高
     @Column(name = "filename", nullable = false)
     private String height;
 
-    //    @ApiModelProperty(value = "图片宽")
+    //图片宽
     @Column(name = "filename", nullable = false)
     private String width;
 
     @CreationTimestamp
-//    @ApiModelProperty(value = "创建时间")
+    //创建时间
     @Column(name = "filename", nullable = false)
     private Timestamp createTime;
 

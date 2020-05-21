@@ -9,10 +9,12 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * 视频课程的controller
  */
-@RequestMapping("/course")
+@RequestMapping("/api/course")
 @RestController
 @Slf4j
 public class CourseController {
@@ -60,7 +62,7 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Object update(@RequestBody Course course) {
+    public Object update(@RequestBody Course course) throws InvocationTargetException, IllegalAccessException {
         courseService.update(course);
         return JsonData.buildSuccess();
     }

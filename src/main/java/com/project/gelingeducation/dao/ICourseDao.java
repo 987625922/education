@@ -3,6 +3,7 @@ package com.project.gelingeducation.dao;
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.domain.Course;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public interface ICourseDao {
 
     void delect(long id);
 
-    void update(Course video);
+    void update(Course video) throws IllegalAccessException, InvocationTargetException;
 
     void update(Long id, Map<String,String> data);
 
