@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 跨域处理拦截器
+ * 跨域处理过滤器
  */
 public class CORSFilter implements Filter {
 

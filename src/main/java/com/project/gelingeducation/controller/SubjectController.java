@@ -18,7 +18,6 @@ public class SubjectController {
     @Autowired
     private ISubjectService subjectService;
 
-    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/findall")
     public Object findAll() throws Exception {
         return subjectService.findAll();
