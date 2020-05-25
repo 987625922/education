@@ -2,6 +2,7 @@ package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.common.exception.StatusEnum;
+import com.project.gelingeducation.common.utils.FileUtils;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IRedisCacheService;
 import com.project.gelingeducation.service.IUserService;
@@ -57,9 +58,12 @@ public class UserController {
 
     /**
      * 用户头像上传
+     * userid 用户id
+     * files 图片
      */
     @RequestMapping("/upload_icon")
-    public Object springUpload(HttpServletRequest request) throws IllegalStateException, IOException {
+    public Object springUpload(HttpServletRequest request)
+            throws IllegalStateException, IOException {
         String path = null;
         //将当前上下文初始化给  CommonsMutipartResolver （多部分解析器）
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
@@ -77,6 +81,7 @@ public class UserController {
                 MultipartFile file = multiRequest.getFile(iter.next().toString());
                 if (file != null) {
                     path = System.getProperty("user.home") + "/.gelingeducation/file/tmp";
+//                    path = "D:/gelingeducation/admin/icon/" + time + userId + FileUtils.getSuffixName(file.getOriginalFilename());
                     //上传
                     file.transferTo(new File(path));
                 }

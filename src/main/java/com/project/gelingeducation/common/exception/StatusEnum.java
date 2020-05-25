@@ -16,7 +16,8 @@ public enum StatusEnum {
     UPFILE_IMGAGE_FAILE(-3108, "图片上传失败"),
     REQUEST_METHOD_NOT_SUPPORT(-3401, "请求的方式不支持"),
     GET_EXCEPTION_NULL(-3402, "获取错误信息为空"),
-    DEL_EXCEPTION_FAILE(-3403, "删除错误信息为空");
+    DEL_EXCEPTION_FAILE(-3403, "删除错误信息为空"),
+    HTTP_BODY_MISS(-3405, "http请求参数主体错误");
 
     /**
      * 状态码

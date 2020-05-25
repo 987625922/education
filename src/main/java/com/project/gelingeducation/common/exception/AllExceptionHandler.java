@@ -3,6 +3,7 @@ package com.project.gelingeducation.common.exception;
 import com.project.gelingeducation.common.dto.JsonData;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,11 +24,11 @@ public class AllExceptionHandler {
             AllException allException = (AllException) e;
             return JsonData.buildError(allException.getMessage(), allException.getCode());
         } else if (e instanceof UnauthorizedException) {
-            return JsonData.buildError(StatusEnum.USER_NO_PERMISSION.getMessage()
-                    , StatusEnum.USER_NO_PERMISSION.getCode());
+            return JsonData.buildStatus(StatusEnum.USER_NO_PERMISSION);
         } else if (e instanceof HttpRequestMethodNotSupportedException) {
-            return JsonData.buildError(StatusEnum.REQUEST_METHOD_NOT_SUPPORT.getMessage(),
-                    StatusEnum.REQUEST_METHOD_NOT_SUPPORT.getCode());
+            return JsonData.buildStatus(StatusEnum.REQUEST_METHOD_NOT_SUPPORT);
+        } else if (e instanceof HttpMessageNotReadableException) {
+            return JsonData.buildStatus(StatusEnum.HTTP_BODY_MISS);
         } else {
             return JsonData.buildError(StatusEnum.UNKNOWD_ERROR.getMessage(),
                     StatusEnum.UNKNOWD_ERROR.getCode());
