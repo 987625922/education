@@ -81,7 +81,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
         String token = (String) authenticationToken.getCredentials();
 
-        // 从 redis里获取这个 token
+        // 从 redis里获取这个 token 主要是判断token是否过期
 //        HttpServletRequest request = HttpUtil.getHttpServletRequest();
 //        String ip = IPUtil.getIpAddr(request);
 //

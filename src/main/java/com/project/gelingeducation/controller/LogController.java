@@ -1,5 +1,6 @@
 package com.project.gelingeducation.controller;
 
+import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.service.ILogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +16,8 @@ public class LogController {
     private ILogService logService;
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public Object queryAll(@PathVariable int currentPage,@PathVariable int pageSize) {
-        return logService.queryAll(currentPage, pageSize);
+    public Object queryAll(int currentPage,int pageSize) {
+        return JsonData.buildSuccess(logService.queryAll(currentPage, pageSize));
     }
-
-
 
 }
