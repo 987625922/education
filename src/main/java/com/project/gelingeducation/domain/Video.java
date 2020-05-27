@@ -33,6 +33,10 @@ public class Video {
     private int isFree;
     @Column(name = "course_id")
     private long courseId;
+    @ManyToOne(targetEntity = Teacher.class)
+    @JoinColumn(name = "teacher_id") //视频表维护老师的外键
+    private Teacher teacher;
+
     /**
      * 创建时间
      */
@@ -48,5 +52,6 @@ public class Video {
     @Column(name = "last_update_time", nullable = false)
     @LastModifiedDate
     private Date lastUpdateTime;
+
 
 }

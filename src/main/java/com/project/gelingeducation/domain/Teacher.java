@@ -51,6 +51,11 @@ public class Teacher {
     @JsonBackReference
     private Set<Course> courses = new HashSet<>();
 
+    //mappdBy 映射的是哪一个属性
+    @OneToMany(targetEntity = Video.class,mappedBy = "teacher",fetch = FetchType.EAGER)
+    private Set<Video> videos = new HashSet<>();
+
+
     @Override
     public String toString() {
         return "Teacher{" +

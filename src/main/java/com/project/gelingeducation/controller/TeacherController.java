@@ -13,7 +13,7 @@ public class TeacherController {
     @Autowired
     private ITeacherService teacherService;
 
-    @RequestMapping("/pagelists")
+    @RequestMapping("/lists")
     public Object getPagelist(int currentPage, int pageSize){
         return JsonData.buildSuccess(teacherService.getLists(currentPage,pageSize));
     }
