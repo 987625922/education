@@ -61,8 +61,9 @@ public class RedisAspect {
                     throwable.printStackTrace();
                 }
             }else{
-                JsonObject klass = JsonUtils.unserializeObject(obj);
-                return new ResponseEntity<>(klass.get("body"), HttpStatus.OK) ;
+//                JsonObject klass = JsonUtils.unserializeObject(obj);
+//                return new ResponseEntity<>(klass.get("body"), HttpStatus.OK) ;
+                return new ResponseEntity<>(obj, HttpStatus.OK) ;
             }
         }else{
             try {
@@ -78,4 +79,4 @@ public class RedisAspect {
     }
 }
 
-}
+

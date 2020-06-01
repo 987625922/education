@@ -1,5 +1,6 @@
 package com.project.gelingeducation.controller;
 
+import com.project.gelingeducation.common.annotation.Cache;
 import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.service.IVideoService;
@@ -35,6 +36,7 @@ public class TestController {
      * @param userName
      * @return
      */
+    @Cache
     @RequestMapping(path = "/get5/{userName}/info", method = RequestMethod.GET)
     @ResponseBody
     public Object req6(@PathVariable(name = "userName") String userName) {

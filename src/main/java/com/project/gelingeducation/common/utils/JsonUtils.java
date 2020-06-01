@@ -37,9 +37,6 @@ public class JsonUtils {
         return gsonString;
     }
 
-    public static JsonObject jsonToJsonObject(String json){
-        return gson.
-    }
 
     /**
      * 转成bean

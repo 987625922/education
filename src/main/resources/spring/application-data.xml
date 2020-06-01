@@ -25,7 +25,6 @@
         <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
 
-
     <!-- 配置c3p0数据库连接池 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driver}"/>
@@ -74,14 +73,14 @@
 
     <!--                        redis                                -->
     <!-- JedisPool资源池 -->
-    <bean class="redis.clients.jedis.JedisPool" id="jedisPool">
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
         <constructor-arg name="host" value="${redis.host}"></constructor-arg>
         <constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>
         <constructor-arg name="port" value="${redis.port}"></constructor-arg>
     </bean>
 
     <!-- JedisPool资源池设置 -->
-    <bean class="redis.clients.jedis.JedisPoolConfig" id="jedisPoolConfig">
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxIdle" value="${redis.maxIdle}"/>
         <property name="maxTotal" value="${redis.maxActive}"/>
         <property name="maxWaitMillis" value="${redis.maxWait}"/>

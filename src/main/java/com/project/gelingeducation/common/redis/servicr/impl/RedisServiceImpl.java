@@ -23,6 +23,7 @@ import java.util.Set;
 @Slf4j
 @Service
 public class RedisServiceImpl implements RedisService {
+
     @Autowired
     JedisPool jedisPool;
 
