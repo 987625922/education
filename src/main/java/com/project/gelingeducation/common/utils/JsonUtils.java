@@ -1,9 +1,6 @@
 package com.project.gelingeducation.common.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -32,12 +29,16 @@ public class JsonUtils {
      * @param object 对象
      * @return 字符串
      */
-    public static String jsonString(Object object) {
+    public static String jsonToString(Object object) {
         String gsonString = null;
         if (gson != null) {
             gsonString = gson.toJson(object);
         }
         return gsonString;
+    }
+
+    public static JsonObject jsonToJsonObject(String json){
+        return gson.
     }
 
     /**

@@ -133,7 +133,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         httpResponse.setCharacterEncoding("utf-8");
         httpResponse.setContentType("application/json; charset=utf-8");
         try (PrintWriter out = httpResponse.getWriter()) {
-            String responseJson = JsonUtils.jsonString(JsonData.buildError("用户未登录",
+            String responseJson = JsonUtils.jsonToString(JsonData.buildError("用户未登录",
                     -103));
             out.print(responseJson);
         } catch (IOException e) {
