@@ -5,10 +5,12 @@ import com.project.gelingeducation.domain.Teacher;
 
 public interface ITeacherService {
 
-    void addTeacher(Teacher teacher);
+    Teacher addTeacher(Teacher teacher);
 
-    Teacher getById(long id);
+    Teacher getById(Long id);
 
-    PageResult getLists(int currentPage, int pageSize);
+    PageResult getLists(Integer currentPage, Integer pageSize);
+
+    void delTeacher(Long id);
 
 }

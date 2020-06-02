@@ -15,17 +15,18 @@ import java.util.List;
 public class TeacherDaoImpl extends BaseDao implements ITeacherDao {
 
     @Override
-    public void insert(Teacher teacher) {
+    public Teacher insert(Teacher teacher) {
         getSession().save(teacher);
+        return teacher;
     }
 
     @Override
-    public Teacher findById(long id) {
+    public Teacher findById(Long id) {
         return getSession().get(Teacher.class, id);
     }
 
     @Override
-    public PageResult getLists(int currentPage, int pageSize) {
+    public PageResult getLists(Integer currentPage, Integer pageSize) {
         Session session = getSession();
 
         String hql = "select count(*) from Teacher";
@@ -47,6 +48,13 @@ public class TeacherDaoImpl extends BaseDao implements ITeacherDao {
         pageResult.setPageSize(pageSize);
 
         return pageResult;
+    }
+
+    @Override
+    public void delete(Long id) {
+        String hql = "DELETE FROM Teacher WHERE id = " + id;
+        Query query = getSession().createQuery(hql);
+        query.executeUpdate();
     }
 
 

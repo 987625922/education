@@ -31,7 +31,7 @@ public class TeacherServiceTest {
 
     @Test
     public void getById(){
-        System.out.println(teacherService.getById(1));
+        System.out.println(teacherService.getById(Long.valueOf(1)));
     }
 
 }

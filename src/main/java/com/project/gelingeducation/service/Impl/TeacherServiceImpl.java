@@ -16,18 +16,23 @@ public class TeacherServiceImpl implements ITeacherService {
     private ITeacherDao teacherDao;
 
     @Override
-    public void addTeacher(Teacher teacher) {
-        teacherDao.insert(teacher);
+    public Teacher addTeacher(Teacher teacher) {
+        return teacherDao.insert(teacher);
     }
 
     @Override
-    public Teacher getById(long id) {
+    public Teacher getById(Long id) {
         return teacherDao.findById(id);
     }
 
     @Override
-    public PageResult getLists(int currentPage, int pageSize) {
+    public PageResult getLists(Integer currentPage, Integer pageSize) {
         return teacherDao.getLists(currentPage, pageSize);
+    }
+
+    @Override
+    public void delTeacher(Long id) {
+        teacherDao.delete(id);
     }
 
 }
