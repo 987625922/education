@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,14 +23,17 @@ public class AllExceptionHandler {
         log.error("【异常信息】", e);
         if (e instanceof AllException) {
             AllException allException = (AllException) e;
-            return JsonData.buildError(allException.getMessage(), allException.getCode());
+            return JsonData.buildError(allException.getMessage(),
+                    allException.getCode());
         } else if (e instanceof UnauthorizedException) {
             return JsonData.buildStatus(StatusEnum.USER_NO_PERMISSION);
         } else if (e instanceof HttpRequestMethodNotSupportedException) {
             return JsonData.buildStatus(StatusEnum.REQUEST_METHOD_NOT_SUPPORT);
         } else if (e instanceof HttpMessageNotReadableException) {
             return JsonData.buildStatus(StatusEnum.HTTP_BODY_MISS);
-        } else {
+        } else if (e instanceof MissingServletRequestParameterException){
+            return JsonData.buildStatus(StatusEnum.MISS_PARAME_EXCEPTION);
+        }else {
             return JsonData.buildError(StatusEnum.UNKNOWD_ERROR.getMessage(),
                     StatusEnum.UNKNOWD_ERROR.getCode());
         }

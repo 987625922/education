@@ -4,10 +4,7 @@ import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.domain.Teacher;
 import com.project.gelingeducation.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/teacher")
@@ -17,7 +14,8 @@ public class TeacherController {
     private ITeacherService teacherService;
 
     @RequestMapping("/lists")
-    public Object getPagelist(Integer currentPage, Integer pageSize) {
+    public Object getPagelist(@RequestParam Integer currentPage,
+                              @RequestParam Integer pageSize) {
         return JsonData.buildSuccess(teacherService.getLists(currentPage, pageSize));
     }
 
