@@ -99,7 +99,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
 
     @Override
-    public void delSel(String[] ids) {
+    public void delSel(String ids) {
         Query query = getSession().createQuery("DELETE FROM Course WHERE id in(" + ids + ")");
         query.executeUpdate();
     }

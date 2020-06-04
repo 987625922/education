@@ -72,8 +72,7 @@ public class CourseController {
      */
     @RequiresPermissions("user:root")
     @RequestMapping(value = "/batches_deletes")
-    public Object delMore(String courseIds) {
-        String[] ids = courseIds.split(",");
+    public Object delMore(String ids) {
         courseService.batchesDeletes(ids);
         return JsonData.buildSuccess();
     }
