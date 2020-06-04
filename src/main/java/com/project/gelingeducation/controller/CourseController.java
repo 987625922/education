@@ -27,8 +27,8 @@ public class CourseController {
      *
      * @return
      */
-    @RequestMapping(value = "/lists", method = RequestMethod.POST)
-    public Object lists(@RequestParam(defaultValue = "1") int currentPage, @RequestParam(defaultValue = "100") int pageSize) {
+    @RequestMapping(value = "/lists")
+    public Object lists(int currentPage, int pageSize) {
         return JsonData.buildSuccess(courseService.getLists(currentPage, pageSize));
     }
 
@@ -55,8 +55,8 @@ public class CourseController {
         return JsonData.buildSuccess();
     }
 
-    @RequestMapping(value = "/delect", method = RequestMethod.POST)
-    public Object delect(long id) {
+    @RequestMapping(value = "/delect")
+    public Object delect(Long id) {
         courseService.delect(id);
         return JsonData.buildSuccess();
     }
@@ -71,8 +71,9 @@ public class CourseController {
      * 批量删除课程
      */
     @RequiresPermissions("user:root")
-    @RequestMapping(value = "/batches_deletes", method = RequestMethod.POST)
-    public Object delMoreUser(long[] ids) {
+    @RequestMapping(value = "/batches_deletes")
+    public Object delMore(String courseIds) {
+        String[] ids = courseIds.split(",");
         courseService.batchesDeletes(ids);
         return JsonData.buildSuccess();
     }
@@ -80,14 +81,11 @@ public class CourseController {
     /**
      * 按名字搜索
      */
-    @RequestMapping(value = "/sel_by_name_or_status_price_teacher", method = RequestMethod.POST)
-    public Object selByNameOrStatusOrPriceOrTeacher(@RequestParam(defaultValue = "", required = false) String name, @RequestParam(defaultValue = "-1") int status,
-                                                    @RequestParam(defaultValue = "-1") double startPrice,
-                                                    @RequestParam(defaultValue = "-1") double endPrice,
-                                                    @RequestParam(defaultValue = "-1") long teacherId,
-                                                    int currentPage, int pageSize) {
-        return JsonData.buildSuccess(courseService.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice, endPrice,
-                teacherId, currentPage, pageSize));
+    @RequestMapping(value = "/sel_by_name_or_status_price_teacher")
+    public Object selByNameOrStatusOrPriceOrTeacher(String name,int status, double startPrice, double endPrice,
+                                                    long teacherId, int currentPage, int pageSize) {
+        return JsonData.buildSuccess(courseService.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice,
+                endPrice, teacherId, currentPage, pageSize));
     }
 
 }

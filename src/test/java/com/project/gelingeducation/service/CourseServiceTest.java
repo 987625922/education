@@ -11,8 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.util.Date;
-
 @Slf4j
 @WebAppConfiguration
 @ActiveProfiles("development")
@@ -42,14 +40,14 @@ public class CourseServiceTest {
     }
 
     @Test
-    public void courseAddTeacher(){
-        courseService.courseAddTeacher(2,2);
+    public void courseAddTeacher() {
+        courseService.courseAddTeacher(2, 2);
     }
 
     @Test
-    public void selByNameOrStatusOrPriceOrTeacher(){
-        PageResult pageResult = courseService.selByNameOrStatusOrPriceOrTeacher("",-1,-1,-1,1
-        ,1,10);
+    public void selByNameOrStatusOrPriceOrTeacher() {
+        PageResult pageResult = courseService.selByNameOrStatusOrPriceOrTeacher("", -1, -1, -1, 1
+                , 1, 10);
         System.out.println();
     }
 }

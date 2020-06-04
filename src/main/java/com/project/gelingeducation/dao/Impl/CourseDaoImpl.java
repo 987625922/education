@@ -53,7 +53,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
     public void update(Course course) {
         Session session = getSession();
         Course findCourse = session.get(Course.class, course.getId());
-        BeanUtils.copyPropertiesIgnoreNull(course,findCourse);
+        BeanUtils.copyPropertiesIgnoreNull(course, findCourse);
         session.merge(findCourse);
     }
 
@@ -91,7 +91,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
         pageResult.setTotalPages(totalPage);
         pageResult.setTotalRows(allrows);
         pageResult.setLists(list);
-        pageResult.setPageNum(currentPage);
+        pageResult.setCurrentPage(currentPage);
         pageResult.setPageSize(pageSize);
 
         return pageResult;
@@ -99,16 +99,8 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
 
     @Override
-    public void delSel(long[] ids) {
-        String sql = "";
-        for (int i = 0; i < ids.length; i++) {
-            if (i == 0) {
-                sql = sql + ids[i];
-            } else {
-                sql = sql + "," + ids[i];
-            }
-        }
-        Query query = getSession().createQuery("DELETE FROM Course WHERE id in(" + sql + ")");
+    public void delSel(String[] ids) {
+        Query query = getSession().createQuery("DELETE FROM Course WHERE id in(" + ids + ")");
         query.executeUpdate();
     }
 
@@ -159,7 +151,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
         pageResult.setTotalPages(totalPage);
         pageResult.setTotalRows(allrows);
         pageResult.setLists(list);
-        pageResult.setPageNum(currentPage);
+        pageResult.setCurrentPage(currentPage);
         pageResult.setPageSize(pageSize);
 
         return pageResult;

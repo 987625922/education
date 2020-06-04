@@ -9,7 +9,7 @@ public class PageResult {
     /**
      * 当前页码
      */
-    private int pageNum = 0;
+    private int currentPage = 0;
     /**
      * 每页数量
      */

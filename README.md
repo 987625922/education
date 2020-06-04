@@ -47,7 +47,7 @@ gelingeducation
 
 ### 部署
 
-1. 先用idea 标题栏build -> build artifacts -> 项目名:war ->build
+1. 先用idea 改web.xml下的多环境配置 标题栏build -> build artifacts -> 项目名:war ->build
 
 2. <details>
    <summary>docker安装mysql并创建education数据库</summary>

@@ -46,7 +46,7 @@ public class UserDaoImpl implements IUserDao {
         pageResult.setTotalPages(totalPage);
         pageResult.setTotalRows(allrows);
         pageResult.setLists(list);
-        pageResult.setPageNum(currentPage);
+        pageResult.setCurrentPage(currentPage);
         pageResult.setPageSize(pageSize);
 
         return pageResult;
@@ -185,7 +185,7 @@ public class UserDaoImpl implements IUserDao {
         pageResult.setTotalPages(totalPage);
         pageResult.setTotalRows(allrows);
         pageResult.setLists(list);
-        pageResult.setPageNum(currentPage + 1);
+        pageResult.setCurrentPage(currentPage + 1);
         pageResult.setPageSize(pageSize);
 
         return pageResult;

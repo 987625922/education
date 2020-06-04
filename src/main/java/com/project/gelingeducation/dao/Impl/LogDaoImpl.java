@@ -36,7 +36,7 @@ public class LogDaoImpl extends BaseDao implements ILogDao {
         pageResult.setTotalPages(totalPage);
         pageResult.setTotalRows(allrows);
         pageResult.setLists(list);
-        pageResult.setPageNum(currentPage);
+        pageResult.setCurrentPage(currentPage);
         pageResult.setPageSize(pageSize);
 
         return pageResult;

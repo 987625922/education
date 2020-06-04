@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ *
+ */
 @Repository
 public class RoleDaoImpl implements IRoleDao {
 
@@ -75,7 +78,7 @@ public class RoleDaoImpl implements IRoleDao {
         pageResult.setTotalPages(totalPage);
         pageResult.setTotalRows(allrows);
         pageResult.setLists(list);
-        pageResult.setPageNum(currentPage);
+        pageResult.setCurrentPage(currentPage);
         pageResult.setPageSize(pageSize);
         return pageResult;
     }

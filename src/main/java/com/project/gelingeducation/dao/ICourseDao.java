@@ -22,7 +22,7 @@ public interface ICourseDao {
 
     PageResult getLists(int currentPage, int pageSize);
 
-    void delSel(long[] ids);
+    void delSel(String[] ids);
 
     PageResult selByNameOrStatusOrPriceOrTeacher(String name, int status, double startPrice,
                                                  double endPrice, long teacherId,

@@ -85,7 +85,7 @@ public class CourseServiceImpl implements ICourseService {
      */
     @Override
     @Transactional
-    public void batchesDeletes(long[] ids) {
+    public void batchesDeletes(String[] ids) {
         courseDao.delSel(ids);
     }
 

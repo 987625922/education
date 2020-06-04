@@ -44,7 +44,7 @@ public class TeacherDaoImpl extends BaseDao implements ITeacherDao {
         pageResult.setTotalPages(totalPage);
         pageResult.setTotalRows(allrows);
         pageResult.setLists(list);
-        pageResult.setPageNum(currentPage);
+        pageResult.setCurrentPage(currentPage);
         pageResult.setPageSize(pageSize);
 
         return pageResult;
