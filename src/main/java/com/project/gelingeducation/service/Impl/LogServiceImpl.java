@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service.Impl;
 
+import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.common.utils.HttpUtil;
 import com.project.gelingeducation.dao.ILogDao;
 import com.project.gelingeducation.domain.Log;
@@ -24,7 +25,7 @@ public class LogServiceImpl implements ILogService {
     private ILogDao logDao;
 
     @Override
-    public Object queryAll(Integer currentPage, Integer pageSize) {
+    public PageResult queryAll(Integer currentPage, Integer pageSize) {
         return logDao.queryAll(currentPage, pageSize);
     }
 
@@ -65,7 +66,7 @@ public class LogServiceImpl implements ILogService {
     }
 
     @Override
-    public Object findByErrDetail(Long id) {
+    public Log findByErrDetail(Long id) {
         return logDao.findByErrDetail(id);
     }
 

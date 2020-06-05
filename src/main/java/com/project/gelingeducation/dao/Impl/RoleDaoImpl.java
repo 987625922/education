@@ -42,8 +42,7 @@ public class RoleDaoImpl implements IRoleDao {
 
     @Override
     public List<Role> list() {
-        Query<Role> query = getSession().createQuery("from Role");
-        return query.list();
+        return getSession().createQuery("from Role").list();
     }
 
     @Override
@@ -54,9 +53,7 @@ public class RoleDaoImpl implements IRoleDao {
     @Override
     public long getCount() {
         String hql = "select count(*) from Role";//此处的Product是对象
-        Query queryCount = getSession().createQuery(hql);
-        long allrows = (long) queryCount.uniqueResult();
-        return allrows;
+        return (long) getSession().createQuery(hql).uniqueResult();
     }
 
     @Override
@@ -88,15 +85,12 @@ public class RoleDaoImpl implements IRoleDao {
     public Role findDefault() {
         Query query = getSession().createQuery("from Role where is_default=?0");
         query.setParameter(0, 1);
-        Role role = (Role) query.uniqueResult();
-        return role;
+        return (Role) query.uniqueResult();
     }
 
     @Override
-    public List<Role> selByName(String name) {
-        Session session = getSession();
-        Query query = session.createQuery("from Role where name LIKE '%" + name + "%'");
-        return query.list();
+    public List selByName(String name) {
+        return getSession().createQuery("from Role where name LIKE '%" + name + "%'").list();
     }
 
     @Override

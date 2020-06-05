@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 
@@ -23,15 +22,13 @@ public class SubjectDaoImpl implements ISubjectDao {
 
 
     @Override
-    public List<Subject> findAll() {
-        TypedQuery<Subject> query = getSession().createQuery("from Subject");
-        return query.getResultList();
+    public List findAll() {
+        return getSession().createQuery("from Subject").getResultList();
     }
 
     @Override
     public Subject findById(Long id) {
-        Subject subject = getSession().get(Subject.class, id);
-        return subject;
+        return getSession().get(Subject.class, id);
     }
 
     @Override
@@ -42,7 +39,7 @@ public class SubjectDaoImpl implements ISubjectDao {
 
     @Override
     public void delect(Long id) {
-        getSession().delete(getSession().get(Subject.class, id));
+        getSession().createQuery("DELETE From Subject WHERE id = " + id).executeUpdate();
     }
 
     @Override

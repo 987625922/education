@@ -10,7 +10,7 @@ public interface IPermissionDao {
 
     Permission getById(Long id);
 
-    List<Permission> list();
+    List list();
 
     List<Permission> getPermissionListByIds(Long[] ids);
 }

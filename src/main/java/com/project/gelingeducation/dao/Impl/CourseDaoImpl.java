@@ -10,17 +10,14 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Map;
 
 
 @Repository
 public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
     @Override
-    public Object findAll() {
-        Session session = getSession();
-        Query query = session.createQuery("from Course");
-        return query.getResultList();
+    public List findAll() {
+        return getSession().createQuery("from Course").getResultList();
     }
 
     @Override
@@ -36,7 +33,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
     @Override
     public void delect(Long id) {
-        getSession().delete(getSession().get(Course.class, id));
+        getSession().createQuery("DELETE From Course WHERE id = " + id).executeUpdate();
     }
 
     @Override

@@ -10,9 +10,9 @@ import java.util.Set;
 
 public interface IUserService {
 
-    Object register(User user);
+    User register(User user);
 
-    Object addUser(User user);
+    User addUser(User user);
 
     User findById(Long id);
 

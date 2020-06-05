@@ -52,9 +52,7 @@ public class TeacherDaoImpl extends BaseDao implements ITeacherDao {
 
     @Override
     public void delete(Long id) {
-        String hql = "DELETE FROM Teacher WHERE id = " + id;
-        Query query = getSession().createQuery(hql);
-        query.executeUpdate();
+        getSession().createQuery("DELETE FROM Teacher WHERE id = " + id).executeUpdate();
     }
 
 

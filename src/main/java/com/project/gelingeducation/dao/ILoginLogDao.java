@@ -12,5 +12,5 @@ public interface ILoginLogDao {
 
     LoginLog getByUid(Long uid);
 
-    List<LoginLog> getLoginLogByIp(String ip);
+    List getLoginLogByIp(String ip);
 }

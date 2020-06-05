@@ -1,5 +1,6 @@
 package com.project.gelingeducation.dao;
 
+import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.domain.Log;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.scheduling.annotation.Async;
@@ -14,7 +15,7 @@ public interface ILogDao {
      * 分页查询
      * @return /
      */
-    Object queryAll(Integer currentPage, Integer pageSize);
+    PageResult queryAll(Integer currentPage, Integer pageSize);
 
 
     /**
@@ -29,7 +30,7 @@ public interface ILogDao {
      * @param id 日志ID
      * @return Object
      */
-    Object findByErrDetail(Long id);
+    Log findByErrDetail(Long id);
 
     /**
      * 导出日志

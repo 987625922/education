@@ -2,7 +2,6 @@ package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.dao.IPermissionDao;
 import com.project.gelingeducation.domain.Permission;
-import com.project.gelingeducation.domain.Role;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -34,9 +33,8 @@ public class PermissionDaoImpl implements IPermissionDao {
     }
 
     @Override
-    public List<Permission> list() {
-        Query<Permission> query = getSession().createQuery("from Permission");
-        return query.list();
+    public List list() {
+        return getSession().createQuery("from Permission").list();
     }
 
     @Override

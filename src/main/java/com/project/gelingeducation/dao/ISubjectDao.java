@@ -5,7 +5,7 @@ import com.project.gelingeducation.domain.Subject;
 import java.util.List;
 
 public interface ISubjectDao {
-    List<Subject> findAll();
+    List findAll();
 
     Subject findById(Long id);
 

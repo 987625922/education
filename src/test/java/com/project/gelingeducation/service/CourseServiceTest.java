@@ -35,7 +35,7 @@ public class CourseServiceTest {
 
     @Test
     public void pageList() {
-        PageResult pageResult = courseService.getLists(1, 10);
+        PageResult pageResult = (PageResult) courseService.getLists(1, 10);
         log.debug("==>" + pageResult.toString());
     }
 
@@ -50,5 +50,10 @@ public class CourseServiceTest {
                 new Double(-1), new Double(-1), new Long(1),
                 new Integer(1), new Integer(10));
         System.out.println();
+    }
+
+    @Test
+    public void delect(){
+        courseService.delect(7L);
     }
 }

@@ -38,7 +38,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Object register(User user) {
+    public User register(User user) {
         if (userDao.findByPhone(user.getAccount()) == null) {
             user.setUserName("管理员");
             user.setStatus(1);
@@ -57,7 +57,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Object addUser(User user) {
+    public User addUser(User user) {
         if (user.getRole() == null) {
             user.setRole(roleService.findDefault());
         }

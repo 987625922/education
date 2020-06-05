@@ -1,8 +1,8 @@
 package com.project.gelingeducation.service;
 
+import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.domain.Log;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,18 +13,20 @@ public interface ILogService {
 
     /**
      * 分页查询
+     *
      * @return /
      */
-    Object queryAll(Integer currentPage, Integer pageSize);
+    PageResult queryAll(Integer currentPage, Integer pageSize);
 
 
     /**
      * 保存日志数据
-     * @param username 用户
-     * @param browser 浏览器
-     * @param ip 请求IP
+     *
+     * @param username  用户
+     * @param browser   浏览器
+     * @param ip        请求IP
      * @param joinPoint
-     * @param log 日志实体
+     * @param log       日志实体
      */
     @Async
     void save(String username, String browser, String ip,
@@ -32,14 +34,16 @@ public interface ILogService {
 
     /**
      * 根据id查询异常详情
+     *
      * @param id 日志ID
      * @return Object
      */
-    Object findByErrDetail(Long id);
+    Log findByErrDetail(Long id);
 
     /**
      * 导出日志
-     * @param logs 待导出的数据
+     *
+     * @param logs     待导出的数据
      * @param response /
      * @throws IOException /
      */

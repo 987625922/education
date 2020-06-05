@@ -18,7 +18,7 @@ public class LogDaoImpl extends BaseDao implements ILogDao {
 
 
     @Override
-    public Object queryAll(Integer currentPage, Integer pageSize) {
+    public PageResult queryAll(Integer currentPage, Integer pageSize) {
         Session session = getSession();
 
         String hql = "select count(*) from Log";
@@ -48,12 +48,13 @@ public class LogDaoImpl extends BaseDao implements ILogDao {
     }
 
     @Override
-    public Object findByErrDetail(Long id) {
+    public Log findByErrDetail(Long id) {
         return getSession().get(Log.class, id);
     }
 
     @Override
-    public void download(List<Log> logs, HttpServletResponse response) throws IOException {
+    public void download(List<Log> logs, HttpServletResponse response)
+            throws IOException {
 
     }
 

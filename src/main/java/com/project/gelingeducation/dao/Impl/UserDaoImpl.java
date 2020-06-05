@@ -1,7 +1,9 @@
 package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
+import com.project.gelingeducation.common.utils.BeanUtils;
 import com.project.gelingeducation.dao.IUserDao;
+import com.project.gelingeducation.domain.Course;
 import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.domain.User;
 import lombok.extern.slf4j.Slf4j;
@@ -56,14 +58,12 @@ public class UserDaoImpl implements IUserDao {
     public User findByPhone(String account) {
         Query query = getSession().createQuery("from User where account=?0");
         query.setParameter(0, account);
-        User user = (User) query.uniqueResult();
-        return user;
+        return (User) query.uniqueResult();
     }
 
     @Override
     public User findById(Long id) {
-        User user = getSession().get(User.class, id);
-        return user;
+        return getSession().get(User.class, id);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public void delect(Long id) {
-        getSession().delete(getSession().get(User.class, id));
+        getSession().createQuery("DELETE FROM User WHERE id = " + id).executeUpdate();
     }
 
     @Override
@@ -94,82 +94,21 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public void update(User user) {
-        StringBuffer hql = new StringBuffer("update User set ");
-        int index = 0;
-        if (!StringUtils.isEmpty(user.getUserName())) {
-            hql.append("user_name = '" + user.getUserName() + "'");
-            index++;
-        }
-        if (!StringUtils.isEmpty(user.getAccount())) {
-            if (index > 0) {
-                hql.append(" ,");
-            }
-            hql.append("account = '" + user.getAccount() + "'");
-            index++;
-        }
-
-        if (!StringUtils.isEmpty(user.getPassword())) {
-            if (index > 0) {
-                hql.append(" ,");
-            }
-            hql.append("password = '" + user.getPassword() + "'");
-            index++;
-        }
-        if (!StringUtils.isEmpty(user.getCoverImg())) {
-            if (index > 0) {
-                hql.append(" ,");
-            }
-            hql.append("cover_img = '" + user.getCoverImg() + "'");
-            index++;
-        }
-        if (!StringUtils.isEmpty(user.getEMail())) {
-            if (index > 0) {
-                hql.append(" ,");
-            }
-            hql.append("email = '" + user.getEMail() + "'");
-            index++;
-        }
-        if (!StringUtils.isEmpty(user.getSex())) {
-            if (index > 0) {
-                hql.append(" ,");
-            }
-            hql.append("ssex = '" + user.getSex() + "'");
-            index++;
-        }
-        if (!StringUtils.isEmpty(user.getNote())) {
-            if (index > 0) {
-                hql.append(" ,");
-            }
-            hql.append("note = '" + user.getNote() + "'");
-        }
-        if (!StringUtils.isEmpty(user.getStatus())) {
-            if (index > 0) {
-                hql.append(" ,");
-            }
-            hql.append("status = '" + user.getStatus() + "'");
-        }
-        if (!StringUtils.isEmpty(user.getModifyTime())) {
-            if (index > 0) {
-                hql.append(" ,");
-            }
-            hql.append("modify_time = '" + user.getModifyTime() + "'");
-        }
-        Query query = getSession().createQuery(hql.toString() + " where id = " + user.getId());
-        query.executeUpdate();
+        Session session = getSession();
+        User findUser = session.get(User.class, user.getId());
+        BeanUtils.copyPropertiesIgnoreNull(user, findUser);
+        session.update(findUser);
     }
 
     @Override
     public void updateCoverImg(Long id, String coverImg) {
-        Query query = getSession().createQuery("update User set coverImg = " + coverImg + " where id = " + id);
+        Query query = getSession().createQuery("UPDATE User set coverImg = " + coverImg + " where id = " + id);
         query.executeUpdate();
     }
 
     @Override
     public PageResult selbyname(String name, Integer currentPage, Integer pageSize) {
-//        Query queryCount = session.createQuery("from User where userName LIKE '%"+name+"%'");
-
         Session session = getSession();
-
         String hql = "select count(*) from User where userName LIKE '%" + name + "%'";//此处的Product是对象
         Query queryCount = session.createQuery(hql);
         Long allrows = (Long) queryCount.uniqueResult();
