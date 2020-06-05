@@ -51,12 +51,6 @@ public class RoleDaoImpl implements IRoleDao {
     }
 
     @Override
-    public long getCount() {
-        String hql = "select count(*) from Role";//此处的Product是对象
-        return (long) getSession().createQuery(hql).uniqueResult();
-    }
-
-    @Override
     public PageResult getRolePageList(Integer currentPage, Integer pageSize) {
         Session session = getSession();
 

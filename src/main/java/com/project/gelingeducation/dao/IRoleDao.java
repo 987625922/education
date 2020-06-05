@@ -16,8 +16,6 @@ public interface IRoleDao {
 
     void delRoleById(Long id);
 
-    long getCount();
-
     PageResult getRolePageList(Integer currentPage, Integer pageSize);
 
     Role findDefault();

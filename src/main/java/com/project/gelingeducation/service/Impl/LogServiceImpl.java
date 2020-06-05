@@ -26,7 +26,7 @@ public class LogServiceImpl implements ILogService {
 
     @Override
     public PageResult queryAll(Integer currentPage, Integer pageSize) {
-        return logDao.queryAll(currentPage, pageSize);
+        return logDao.getList(currentPage, pageSize);
     }
 
     @Override
