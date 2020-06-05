@@ -14,7 +14,7 @@ public class PermissionController {
     @Autowired
     private IPermissionService permissionService;
 
-    @RequestMapping(value = "/lists",method = RequestMethod.GET)
+    @RequestMapping(value = "/lists")
     public Object list() {
         return JsonData.buildSuccess(permissionService.list());
     }

@@ -15,7 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import java.util.List;
 
 @Slf4j
-@ActiveProfiles("producation")
+@ActiveProfiles("development")
 @WebAppConfiguration
 @ContextConfiguration(locations = {"/spring/application-data.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)

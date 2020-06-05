@@ -34,16 +34,6 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public void addRole(Role role, Long[] permissionIds) {
-        roleDao.insert(role);
-        for (int i = 0; i < permissionIds.length; i++) {
-            Permission permission = permissionService.getById(permissionIds[i]);
-            role.getPermissions().add(permission);
-            permission.getRoles().add(role);
-        }
-    }
-
-    @Override
     public void addPermissionByIds(Long roleId, Long[] permissionIds) {
         Role role = roleDao.findById(roleId);
         for (int i = 0; i < permissionIds.length; i++) {

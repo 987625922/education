@@ -5,6 +5,7 @@ import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.service.IRoleService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,7 @@ public class RoleController {
     @Autowired
     private IRoleService roleService;
 
-    @RequestMapping(value = "/lists", method = RequestMethod.GET)
+    @RequestMapping(value = "/lists")
     public Object lists() {
         return JsonData.buildSuccess(roleService.list());
     }
@@ -24,7 +25,7 @@ public class RoleController {
     /**
      * 按名字搜索
      */
-    @RequestMapping(value = "/sel_by_name", method = RequestMethod.POST)
+    @RequestMapping(value = "/sel_by_name")
     public Object selByName(String name) {
         return JsonData.buildSuccess(roleService.selByName(name));
     }
@@ -32,12 +33,9 @@ public class RoleController {
     /**
      * 添加身份
      */
-    @RequestMapping(value = "/add_role_and_permissionids", method = RequestMethod.POST)
-    public Object selByName(String name, String remark, Long[] permissionIds) {
-        Role role = new Role();
-        role.setName(name);
-        role.setRemark(remark);
-        roleService.addRole(role, permissionIds);
+    @RequestMapping(value = "/add")
+    public Object selByName(@RequestBody Role role) {
+        roleService.addRole(role);
         return JsonData.buildSuccess();
     }
 
@@ -45,7 +43,7 @@ public class RoleController {
      * 批量删除客户
      */
     @RequiresPermissions("user:root")
-    @RequestMapping(value = "/batches_deletes", method = RequestMethod.POST)
+    @RequestMapping(value = "/batches_deletes")
     public Object delMoreUser(Long[] roleIds) {
         roleService.delMoreRolesByIds(roleIds);
         return JsonData.buildSuccess();
@@ -58,7 +56,7 @@ public class RoleController {
      * @return
      */
     @RequiresPermissions("user:root")
-    @RequestMapping(value = "/del_role", method = RequestMethod.POST)
+    @RequestMapping(value = "/del_role")
     public Object deluser(Long id) {
         roleService.delRoleById(id);
         return JsonData.buildSuccess();
@@ -71,7 +69,7 @@ public class RoleController {
      * @return
      */
     @RequiresPermissions("user:root")
-    @RequestMapping(value = "/get_role_by_id_for_permission", method = RequestMethod.POST)
+    @RequestMapping(value = "/get_role_by_id_for_permission")
     public Object getRoleByIdForPermission(Long id) {
         return JsonData.buildSuccess(roleService.getRoleByIdForPermission(id));
     }
@@ -83,7 +81,7 @@ public class RoleController {
      * @return
      */
     @RequiresPermissions("user:root")
-    @RequestMapping(value = "/update_role_and_permission", method = RequestMethod.POST)
+    @RequestMapping(value = "/update_role_and_permission")
     public Object updateRoleAndPermission(Long id, String name, String remark,
                                           Long[] permissionIds) {
         roleService.updateRoleAndPermission(id, name, remark, permissionIds);

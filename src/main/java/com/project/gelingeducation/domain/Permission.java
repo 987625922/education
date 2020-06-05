@@ -1,5 +1,6 @@
 package com.project.gelingeducation.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
@@ -46,13 +47,19 @@ public class Permission implements Serializable {
     @Column(name = "perms",length = 12)
     private String perms;
 
-    @ManyToMany(targetEntity = Role.class)
-    @JsonIgnore
-    @JoinTable(
-            name = "t_role_permission",
-            joinColumns = @JoinColumn(name = "permission_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
+    @ManyToMany(mappedBy = "permissions",fetch = FetchType.EAGER)
+    @JsonBackReference
     private Set<Role> roles = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "Permission{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", createDate=" + createDate +
+                ", remark='" + remark + '\'' +
+                ", url='" + url + '\'' +
+                ", perms='" + perms + '\'' +
+                '}';
+    }
 }

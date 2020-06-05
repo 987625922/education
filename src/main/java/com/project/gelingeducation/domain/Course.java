@@ -75,14 +75,12 @@ public class Course implements Serializable {
     private Date lastUpdateTime;
 
     //教师列表
-    @ManyToMany(targetEntity = Teacher.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Teacher.class,
+            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "t_course_teacher",
             joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "teacher_id")
-    )
-//    @JsonBackReference //序列化的时候不会出现，反序列化的时候会设置
-//    @JsonManagedReference
+            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private Set<Teacher> teachers = new HashSet<>();
 
 }

@@ -13,8 +13,6 @@ public interface IRoleService {
 
     void addRole(Role role);
 
-    void addRole(Role role,Long[] permissionIds);
-
     void addPermissionByIds(Long roleId,Long[] permissionIds);
 
     List<Role> list();

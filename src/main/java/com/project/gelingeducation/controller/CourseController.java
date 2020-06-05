@@ -37,7 +37,7 @@ public class CourseController {
         return JsonData.buildSuccess(courseService.findAll());
     }
 
-    @RequestMapping(value = "/findbyid", method = RequestMethod.POST)
+    @RequestMapping(value = "/findbyid")
     public Object findById(Long id) throws Exception {
         return JsonData.buildSuccess(courseService.findById(id));
     }

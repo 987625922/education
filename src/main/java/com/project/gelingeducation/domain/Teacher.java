@@ -55,7 +55,8 @@ public class Teacher implements Serializable {
     private Set<Course> courses = new HashSet<>();
 
     //mappdBy 映射的是哪一个属性
-    @OneToMany(targetEntity = Video.class,mappedBy = "teacher",fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Video.class,mappedBy = "teacher"
+            ,fetch = FetchType.EAGER)
     private Set<Video> videos = new HashSet<>();
 
 
