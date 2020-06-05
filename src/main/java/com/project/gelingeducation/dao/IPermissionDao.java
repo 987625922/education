@@ -8,9 +8,9 @@ public interface IPermissionDao {
 
     void insertPermission(Permission permission);
 
-    Permission getById(long id);
+    Permission getById(Long id);
 
     List<Permission> list();
 
-    List<Permission> getPermissionListByIds(long[] ids);
+    List<Permission> getPermissionListByIds(Long[] ids);
 }

@@ -47,7 +47,7 @@ public class AdminServiceTest {
     @Test
     public void findById() {
 //        for (int i = 0; i < 10; i++) {
-        log.debug("findById获取的结果：" + userservice.findById(1));
+        log.debug("findById获取的结果：" + userservice.findById(new Long(1)));
 //        }
     }
 
@@ -91,12 +91,12 @@ public class AdminServiceTest {
 
     @Test
     public void addRoles() {
-        userservice.addRole(7, 15);
+        userservice.addRole(new Long(7), new Long(15));
     }
 
     @Test
     public void findRolesByUser() {
-        Role role = userservice.findRoleByUserId(11);
+        Role role = userservice.findRoleByUserId(new Long(11));
         log.debug("==>" + role.getName());
     }
 }

@@ -26,7 +26,7 @@ public class CourseServiceImpl implements ICourseService {
     private ITeacherDao teacherDao;
 
     @Override
-    public PageResult findAll() {
+    public Object findAll() {
         return courseDao.findAll();
     }
 
@@ -57,10 +57,6 @@ public class CourseServiceImpl implements ICourseService {
         courseDao.update(course);
     }
 
-    @Override
-    public void update(Long id, Map<String, String> data) {
-        courseDao.update(id, data);
-    }
 
     /**
      * 页面格式的用户的列表
@@ -70,7 +66,7 @@ public class CourseServiceImpl implements ICourseService {
      * @return
      */
     @Override
-    public PageResult getLists(Integer currentPage, Integer pageSize) {
+    public Object getLists(Integer currentPage, Integer pageSize) {
         if (currentPage != -1 && pageSize != -1) {
             return courseDao.getLists(currentPage, pageSize);
         } else {
@@ -86,7 +82,7 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     @Transactional
     public void batchesDeletes(String ids) {
-        courseDao.delSel(ids);
+        courseDao.delMore(ids);
     }
 
     @Override

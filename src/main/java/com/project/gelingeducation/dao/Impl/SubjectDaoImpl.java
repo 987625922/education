@@ -29,7 +29,7 @@ public class SubjectDaoImpl implements ISubjectDao {
     }
 
     @Override
-    public Subject findById(long id) {
+    public Subject findById(Long id) {
         Subject subject = getSession().get(Subject.class, id);
         return subject;
     }
@@ -41,7 +41,7 @@ public class SubjectDaoImpl implements ISubjectDao {
     }
 
     @Override
-    public void delect(long id) {
+    public void delect(Long id) {
         getSession().delete(getSession().get(Subject.class, id));
     }
 

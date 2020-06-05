@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ICourseDao {
-    PageResult findAll();
+    Object findAll();
 
     Course findById(Long id);
 
@@ -18,11 +18,9 @@ public interface ICourseDao {
 
     void update(Course video) throws IllegalAccessException, InvocationTargetException;
 
-    void update(Long id, Map<String,String> data);
-
     PageResult getLists(Integer currentPage, Integer pageSize);
 
-    void delSel(String ids);
+    void delMore(String ids);
 
     PageResult selByNameOrStatusOrPriceOrTeacher(String name, Integer status, Double startPrice,
                                                  Double endPrice, Long teacherId,

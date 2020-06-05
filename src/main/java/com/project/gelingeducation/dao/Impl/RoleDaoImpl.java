@@ -36,7 +36,7 @@ public class RoleDaoImpl implements IRoleDao {
     }
 
     @Override
-    public Role findById(long id) {
+    public Role findById(Long id) {
         return getSession().get(Role.class, id);
     }
 
@@ -47,7 +47,7 @@ public class RoleDaoImpl implements IRoleDao {
     }
 
     @Override
-    public void delRoleById(long id) {
+    public void delRoleById(Long id) {
         getSession().delete(getSession().get(Role.class, id));
     }
 
@@ -60,18 +60,18 @@ public class RoleDaoImpl implements IRoleDao {
     }
 
     @Override
-    public PageResult getRolePageList(int currentPage, int pageSize) {
+    public PageResult getRolePageList(Integer currentPage, Integer pageSize) {
         Session session = getSession();
 
         String hql = "select count(*) from Role";//此处的Product是对象
         Query queryCount = session.createQuery(hql);
-        long allrows = (long) queryCount.uniqueResult();
+        Long allrows = (Long) queryCount.uniqueResult();
 
         TypedQuery<User> query = session.createQuery("from Role");
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
         query.setMaxResults(pageSize);//得到每页的记录数
 
-        long totalPage = (allrows - 1) / pageSize + 1;
+        Long totalPage = (allrows - 1) / pageSize + 1;
         List<User> list = query.getResultList();
 
         PageResult pageResult = new PageResult();
@@ -100,7 +100,7 @@ public class RoleDaoImpl implements IRoleDao {
     }
 
     @Override
-    public void delByIds(long[] ids) {
+    public void delByIds(Long[] ids) {
         String sql = "";
         for (int i = 0; i < ids.length; i++) {
             if (i == 0) {
@@ -115,7 +115,7 @@ public class RoleDaoImpl implements IRoleDao {
     }
 
     @Override
-    public List<Permission> getRoleByIdForPermission(long id) {
+    public List<Permission> getRoleByIdForPermission(Long id) {
         Session session = getSession();
         Role role = session.get(Role.class, id);
         Set<Permission> permissions = role.getPermissions();

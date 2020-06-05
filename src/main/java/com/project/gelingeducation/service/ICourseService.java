@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface ICourseService {
 
-    PageResult findAll();
+    Object findAll();
 
     Course findById(Long id);
 
@@ -20,9 +20,7 @@ public interface ICourseService {
 
     void update(Course course)  throws IllegalAccessException, InvocationTargetException;
 
-    void update(Long id, Map<String, String> data);
-
-    PageResult getLists(Integer currentPage, Integer pageSize);
+    Object getLists(Integer currentPage, Integer pageSize);
 
     void batchesDeletes(String ids);
 

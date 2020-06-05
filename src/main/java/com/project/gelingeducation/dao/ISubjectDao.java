@@ -7,11 +7,11 @@ import java.util.List;
 public interface ISubjectDao {
     List<Subject> findAll();
 
-    Subject findById(long id);
+    Subject findById(Long id);
 
     long insert(Subject video);
 
-    void delect(long id);
+    void delect(Long id);
 
     void update(Subject video);
 }

@@ -50,7 +50,7 @@ public class RoleTest {
 
     @Test
     public void addRoleAndPermission() {
-        long[] permissions = {31, 32};
+        Long[] permissions = {31L, 32L};
         Role role = new Role();
         role.setName("测试");
         roleService.addRole(role, permissions);
@@ -58,8 +58,8 @@ public class RoleTest {
 
     @Test
     public void addPermission() {
-        long permissionIds[] = {78};
-        roleService.addPermissionByIds(24, permissionIds);
+        Long permissionIds[] = {78L};
+        roleService.addPermissionByIds(24L, permissionIds);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class RoleTest {
 
     @Test
     public void findyId() {
-        Role role = roleService.findByRole(10);
+        Role role = roleService.findByRole(10L);
         log.debug("==>" + role);
     }
 
@@ -85,7 +85,8 @@ public class RoleTest {
 
     @Test
     public void getRoleByIdForPermission() {
-        List<Permission> permissions = roleService.getRoleByIdForPermission(24);
+        List<Permission> permissions =
+                roleService.getRoleByIdForPermission(24L);
         for (Permission permission : permissions) {
             log.debug("==>" + permission.getName());
         }
@@ -93,8 +94,9 @@ public class RoleTest {
 
     @Test
     public void updateRoleAndPermission(){
-        long[] permissionIds = {30,31};
-        roleService.updateRoleAndPermission(104,"11","",permissionIds);
+        Long[] permissionIds = {30L, 31L};
+        roleService.updateRoleAndPermission(104L,"11",
+                "",permissionIds);
     }
 
 }

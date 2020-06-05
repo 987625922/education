@@ -10,7 +10,7 @@ public interface ILoginLogDao {
 
     List<LoginLog> list();
 
-    LoginLog getByUid(long uid);
+    LoginLog getByUid(Long uid);
 
     List<LoginLog> getLoginLogByIp(String ip);
 }

@@ -43,7 +43,7 @@ public class PermissionService {
 
     @Test
     public void getPermissionListByIds() {
-        long[] ids = {29, 30, 31};
+        Long[] ids = {29L, 30L, 31L};
         List<Permission> list = permissionService.getPermissionListByIds(ids);
         for (Permission permission : list) {
             log.debug("==>" + permission.getName());

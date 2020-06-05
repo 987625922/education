@@ -32,7 +32,6 @@ public class CourseController {
         return JsonData.buildSuccess(courseService.getLists(currentPage, pageSize));
     }
 
-
     @RequestMapping(value = "/findall")
     public Object findAll() throws Exception {
         return JsonData.buildSuccess(courseService.findAll());

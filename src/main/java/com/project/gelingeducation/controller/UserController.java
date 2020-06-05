@@ -45,7 +45,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/get_info", method = RequestMethod.GET)
-    public Object getInfo(Integer id) throws Exception {
+    public Object getInfo(Long id) throws Exception {
         User user = cacheService.getUserById(id);
         if (user == null) {
             user = userService.findById(id);

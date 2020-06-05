@@ -58,13 +58,13 @@ public class SpringTest {
 
     @Test
     public void test2() {
-        Video videoBean = videoService.findById(1);
+        Video videoBean = videoService.findById(new Long(1));
         log.debug(videoBean.toString());
     }
 
     @Test
     public void test3() {
-        videoService.delectd(1);
+        videoService.delectd(new Long(1));
     }
 
     @Test

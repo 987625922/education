@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public class WebDataBeanDaoImpl extends BaseDao implements IWebDataBeanDao {
 
     @Override
-    public WebDataBean findById(int id) {
+    public WebDataBean findById(Integer id) {
         return getSession().get(WebDataBean.class, id);
     }
 

@@ -29,7 +29,7 @@ public class RedisCacheServiceImpl implements IRedisCacheService {
      * @throws Exception
      */
     @Override
-    public User getUserById(long id) throws Exception {
+    public User getUserById(Long id) throws Exception {
         String userString = jedisCacheClient.get(GLConstant.USER_CACHE_PREFIX + id);
         if (StringUtils.isBlank(userString)) {
             return null;

@@ -28,7 +28,7 @@ public class UserDaoImpl implements IUserDao {
 
 
     @Override
-    public PageResult getLists(int currentPage, int pageSize) {
+    public PageResult getLists(Integer currentPage, Integer pageSize) {
         Session session = getSession();
 
         String hql = "select count(*) from User";//此处的Product是对象
@@ -61,7 +61,7 @@ public class UserDaoImpl implements IUserDao {
     }
 
     @Override
-    public User findById(long id) {
+    public User findById(Long id) {
         User user = getSession().get(User.class, id);
         return user;
     }
@@ -73,12 +73,12 @@ public class UserDaoImpl implements IUserDao {
     }
 
     @Override
-    public void delect(long id) {
+    public void delect(Long id) {
         getSession().delete(getSession().get(User.class, id));
     }
 
     @Override
-    public void delSel(long[] ids) {
+    public void delSel(Long[] ids) {
         String sql = "";
         for (int i = 0; i < ids.length; i++) {
             if (i == 0) {
@@ -159,26 +159,26 @@ public class UserDaoImpl implements IUserDao {
     }
 
     @Override
-    public void updateCoverImg(long id, String coverImg) {
+    public void updateCoverImg(Long id, String coverImg) {
         Query query = getSession().createQuery("update User set coverImg = " + coverImg + " where id = " + id);
         query.executeUpdate();
     }
 
     @Override
-    public PageResult selbyname(String name, int currentPage, int pageSize) {
+    public PageResult selbyname(String name, Integer currentPage, Integer pageSize) {
 //        Query queryCount = session.createQuery("from User where userName LIKE '%"+name+"%'");
 
         Session session = getSession();
 
         String hql = "select count(*) from User where userName LIKE '%" + name + "%'";//此处的Product是对象
         Query queryCount = session.createQuery(hql);
-        long allrows = (long) queryCount.uniqueResult();
+        Long allrows = (Long) queryCount.uniqueResult();
 
         TypedQuery<User> query = session.createQuery("from User where userName LIKE '%" + name + "%'");
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
         query.setMaxResults(currentPage * pageSize);//得到每页的记录数
 
-        long totalPage = (allrows - 1) / pageSize + 1;
+        Long totalPage = (allrows - 1) / pageSize + 1;
         List<User> list = query.getResultList();
 
         PageResult pageResult = new PageResult();

@@ -29,7 +29,7 @@ public class PermissionDaoImpl implements IPermissionDao {
     }
 
     @Override
-    public Permission getById(long id) {
+    public Permission getById(Long id) {
         return getSession().get(Permission.class,id);
     }
 
@@ -40,7 +40,7 @@ public class PermissionDaoImpl implements IPermissionDao {
     }
 
     @Override
-    public List<Permission> getPermissionListByIds(long[] ids) {
+    public List<Permission> getPermissionListByIds(Long[] ids) {
         String sql = "";
         for (int i = 0; i < ids.length; i++) {
             if (i == 0) {

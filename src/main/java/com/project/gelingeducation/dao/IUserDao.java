@@ -4,22 +4,22 @@ import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.common.dto.PageResult;
 
 public interface IUserDao {
-    PageResult getLists(int currentPage, int pageSize);
+    PageResult getLists(Integer currentPage, Integer pageSize);
 
-    User findById(long id);
+    User findById(Long id);
 
     User findByPhone(String account);
 
     User insert(User user);
 
-    void delect(long id);
+    void delect(Long id);
 
-    void delSel(long[] ids);
+    void delSel(Long[] ids);
 
     void update(User user);
 
-    void updateCoverImg(long id, String coverImg);
+    void updateCoverImg(Long id, String coverImg);
 
-    PageResult selbyname(String name,int currentPage, int pageSize);
+    PageResult selbyname(String name,Integer currentPage, Integer pageSize);
 
 }

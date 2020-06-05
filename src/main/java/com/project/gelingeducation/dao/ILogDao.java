@@ -14,7 +14,7 @@ public interface ILogDao {
      * 分页查询
      * @return /
      */
-    Object queryAll(int currentPage, int pageSize);
+    Object queryAll(Integer currentPage, Integer pageSize);
 
 
     /**

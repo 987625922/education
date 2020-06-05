@@ -28,7 +28,7 @@ public class LoginLogDaoImpl extends BaseDao implements ILoginLogDao {
     }
 
     @Override
-    public LoginLog getByUid(long uid) {
+    public LoginLog getByUid(Long uid) {
         Query query = getSession().createQuery("from LoginLog where uid=?0");
         query.setParameter(0, uid);
 //        List<LoginLog> list = query.list();

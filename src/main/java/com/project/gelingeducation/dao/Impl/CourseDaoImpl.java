@@ -17,25 +17,15 @@ import java.util.Map;
 public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
     @Override
-    public PageResult findAll() {
+    public Object findAll() {
         Session session = getSession();
-
-        PageResult pageResult = new PageResult();
-        TypedQuery<Course> query = session.createQuery("from Course");
-        pageResult.setLists(query.getResultList());
-
-        String hql = "select count(*) from Course";
-        Query queryCount = session.createQuery(hql);
-        long allrows = (long) queryCount.uniqueResult();
-        pageResult.setTotalRows(allrows);
-
-        return pageResult;
+        Query query = session.createQuery("from Course");
+        return query.getResultList();
     }
 
     @Override
     public Course findById(Long id) {
-        Course course = getSession().get(Course.class, id);
-        return course;
+        return getSession().get(Course.class, id);
     }
 
     @Override
@@ -57,20 +47,6 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
         session.update(findCourse);
     }
 
-    @Override
-    public void update(Long id, Map<String, String> data) {
-        StringBuilder hql = new StringBuilder("UPDATE Course SET ");
-        int count = 1;
-        for (Map.Entry<String, String> entry : data.entrySet()) {
-            hql.append(entry.getKey() + " = " + entry.getValue());
-            if (count != data.size()) {
-                hql.append(" , ");
-            }
-            count++;
-        }
-        Query query = getSession().createQuery(hql.toString() + " where id = " + id);
-        query.executeUpdate();
-    }
 
     @Override
     public PageResult getLists(Integer currentPage, Integer pageSize) {
@@ -99,8 +75,9 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
 
     @Override
-    public void delSel(String ids) {
-        Query query = getSession().createQuery("DELETE FROM Course WHERE id in(" + ids + ")");
+    public void delMore(String ids) {
+        Query query = getSession().createQuery(
+                "DELETE FROM Course WHERE id in(" + ids + ")");
         query.executeUpdate();
     }
 
@@ -134,7 +111,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
             hql.append(" AND course.name LIKE '%" + name + "%'");
         }
 
-        TypedQuery<Course> query = session.createQuery(hql.toString());
+        Query query = session.createQuery(hql.toString());
 
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
         query.setMaxResults(currentPage * pageSize);//得到每页的记录数

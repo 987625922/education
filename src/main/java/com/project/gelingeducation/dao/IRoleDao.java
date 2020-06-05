@@ -11,21 +11,21 @@ public interface IRoleDao {
 
     void insert(Role role);
 
-    Role findById(long id);
+    Role findById(Long id);
 
     List<Role> list();
 
-    void delRoleById(long id);
+    void delRoleById(Long id);
 
     long getCount();
 
-    PageResult getRolePageList(int currentPage, int pageSize);
+    PageResult getRolePageList(Integer currentPage, Integer pageSize);
 
     Role findDefault();
 
     List<Role> selByName(String name);
 
-    void delByIds(long[] ids);
+    void delByIds(Long[] ids);
 
-    List<Permission> getRoleByIdForPermission(long id);
+    List<Permission> getRoleByIdForPermission(Long id);
 }

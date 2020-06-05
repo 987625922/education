@@ -29,7 +29,7 @@ public class VideoDaoImpl implements IVideoDao {
     }
 
     @Override
-    public Video findById(long id) {
+    public Video findById(Long id) {
         Video video = getSession().get(Video.class, id);
         return video;
     }
@@ -41,7 +41,7 @@ public class VideoDaoImpl implements IVideoDao {
     }
 
     @Override
-    public void delect(long id) {
+    public void delect(Long id) {
         getSession().delete(getSession().get(Video.class, id));
     }
 

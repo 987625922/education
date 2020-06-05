@@ -7,11 +7,11 @@ import java.util.List;
 public interface IVideoDao {
     List<Video> findAll();
 
-    Video findById(long id);
+    Video findById(Long id);
 
     long insert(Video video);
 
-    void delect(long id);
+    void delect(Long id);
 
     void update(Video video);
 }

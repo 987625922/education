@@ -64,7 +64,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public PageResult getRolePageList(int currentPage, int pageSize) {
+    public PageResult getRolePageList(Integer currentPage, Integer pageSize) {
         return roleDao.getRolePageList(currentPage, pageSize);
     }
 
