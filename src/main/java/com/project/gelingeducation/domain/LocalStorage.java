@@ -14,6 +14,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class LocalStorage implements Serializable {
 
+    private static final long serialVersionUID = -1162095861365288581L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

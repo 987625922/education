@@ -15,9 +15,9 @@ public class JsonData implements Serializable {
     private Integer code; // 状态码 200 表示成功，1表示处理中，-1表示失败
     private Object data; // 数据
     private String msg;// 描述
-    private long time;
+    private Long time;
 
-    public JsonData(Integer code, Object data, String msg, long time) {
+    public JsonData(Integer code, Object data, String msg, Long time) {
         this.code = code;
         this.data = data;
         this.msg = msg;
@@ -78,11 +78,11 @@ public class JsonData implements Serializable {
         this.msg = msg;
     }
 
-    public long getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(long time) {
+    public void setTime(Long time) {
         this.time = time;
     }
 

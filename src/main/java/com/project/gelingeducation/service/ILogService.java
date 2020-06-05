@@ -15,7 +15,7 @@ public interface ILogService {
      * 分页查询
      * @return /
      */
-    Object queryAll(int currentPage, int pageSize);
+    Object queryAll(Integer currentPage, Integer pageSize);
 
 
     /**
@@ -27,7 +27,8 @@ public interface ILogService {
      * @param log 日志实体
      */
     @Async
-    void save(String username, String browser, String ip, ProceedingJoinPoint joinPoint, Log log);
+    void save(String username, String browser, String ip,
+              ProceedingJoinPoint joinPoint, Log log);
 
     /**
      * 根据id查询异常详情

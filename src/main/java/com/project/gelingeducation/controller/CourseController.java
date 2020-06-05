@@ -28,7 +28,7 @@ public class CourseController {
      * @return
      */
     @RequestMapping(value = "/lists")
-    public Object lists(int currentPage, int pageSize) {
+    public Object lists(Integer currentPage, Integer pageSize) {
         return JsonData.buildSuccess(courseService.getLists(currentPage, pageSize));
     }
 
@@ -39,7 +39,7 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/findbyid", method = RequestMethod.POST)
-    public Object findById(long id) throws Exception {
+    public Object findById(Long id) throws Exception {
         return JsonData.buildSuccess(courseService.findById(id));
     }
 

@@ -4,7 +4,7 @@ import com.project.gelingeducation.domain.WebDataBean;
 
 public interface IWebDataBeanService {
 
-    WebDataBean findById(int id);
+    WebDataBean findById(Integer id);
 
     void save(WebDataBean webDataBean);
 

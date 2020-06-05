@@ -32,8 +32,6 @@ import java.util.Iterator;
 
 public class UserController {
 
-
-
     @Autowired
     private IUserService userService;
 
@@ -47,7 +45,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/get_info", method = RequestMethod.GET)
-    public Object getInfo(int id) throws Exception {
+    public Object getInfo(Integer id) throws Exception {
         User user = cacheService.getUserById(id);
         if (user == null) {
             user = userService.findById(id);
@@ -115,7 +113,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/update_password", method = RequestMethod.POST)
-    public Object updatePassword(long id, String oldPassword, String newPassword) {
+    public Object updatePassword(Long id, String oldPassword, String newPassword) {
         userService.updatePassword(id, oldPassword, newPassword);
         return JsonData.buildSuccess();
     }
@@ -126,7 +124,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/lists", method = RequestMethod.POST)
-    public Object lists(int currentPage, int pageSize) {
+    public Object lists(Integer currentPage, Integer pageSize) {
         return JsonData.buildSuccess(userService.getLists(currentPage, pageSize));
     }
 
@@ -149,7 +147,7 @@ public class UserController {
      */
     @RequiresPermissions("user:root")
     @RequestMapping(value = "/del_user", method = RequestMethod.POST)
-    public Object deluser(long id) {
+    public Object deluser(Long id) {
         userService.delUser(id);
         return JsonData.buildSuccess();
     }
@@ -159,7 +157,7 @@ public class UserController {
      */
     @RequiresPermissions("user:root")
     @RequestMapping(value = "/batches_deletes", method = RequestMethod.POST)
-    public Object delMoreUser(long[] ids) {
+    public Object delMoreUser(Long[] ids) {
         userService.delSelUser(ids);
         return JsonData.buildSuccess();
     }
@@ -168,7 +166,7 @@ public class UserController {
      * 按名字搜索
      */
     @RequestMapping(value = "/sel_by_name", method = RequestMethod.POST)
-    public Object selByName(String name, int currentPage, int pageSize) {
+    public Object selByName(String name, Integer currentPage, Integer pageSize) {
         return JsonData.buildSuccess(userService.selbyname(name, currentPage, pageSize));
     }
 
@@ -176,7 +174,7 @@ public class UserController {
      * 添加身份
      */
     @RequestMapping(value = "/add_roles", method = RequestMethod.POST)
-    public Object addRole(long userId, long roleId) {
+    public Object addRole(Long userId, Long roleId) {
         userService.addRole(userId, roleId);
         return JsonData.buildSuccess();
     }

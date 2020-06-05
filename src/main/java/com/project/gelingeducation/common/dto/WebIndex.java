@@ -17,15 +17,15 @@ public class WebIndex {
     /**
      * 历史登录总数
      */
-    private long allLoginMun;
+    private Long allLoginMun;
 
     /**
      * 今天登录ip数量
      */
-    private long todayLoginIpMun;
+    private Long todayLoginIpMun;
 
     /**
      * 今天登录数量
      */
-    private long todayLoginMun;
+    private Long todayLoginMun;
 }

@@ -24,7 +24,7 @@ public class VideoServiceImpl implements IVideoService {
 
     @Override
     @Transactional(readOnly = true)
-    public Video findById(long id) {
+    public Video findById(Long id) {
         return videoDao.findById(id);
     }
 
@@ -37,7 +37,7 @@ public class VideoServiceImpl implements IVideoService {
 
     @Override
     @Transactional
-    public void delectd(long id) {
+    public void delectd(Long id) {
         videoDao.delect(id);
     }
 

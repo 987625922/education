@@ -39,7 +39,7 @@ public class WebController {
      * @return
      */
     @RequestMapping(value = "/web/index", method = RequestMethod.GET)
-    public Object index(long id) {
+    public Object index(Long id) {
         LoginLog loginLog = loginLogService.getByUserId(id);
         WebDataBean webDataBean = webDataBeanService.getWebDataBean();
         WebIndex webIndex = new WebIndex();

@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Getter
@@ -13,7 +14,9 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "picture")
 @NoArgsConstructor
-public class Picture {
+public class Picture implements Serializable {
+
+    private static final long serialVersionUID = -7091551288233462841L;
 
     /**
      * 主键

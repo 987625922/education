@@ -9,27 +9,28 @@ import java.util.Set;
 
 public interface IRoleService {
 
-    Role findByRole(long id);
+    Role findByRole(Long id);
 
     void addRole(Role role);
 
-    void addRole(Role role,long[] permissionIds);
+    void addRole(Role role,Long[] permissionIds);
 
-    void addPermissionByIds(long roleId,long[] permissionIds);
+    void addPermissionByIds(Long roleId,Long[] permissionIds);
 
     List<Role> list();
 
-    void delRoleById(long id);
+    void delRoleById(Long id);
 
-    PageResult getRolePageList(int currentPage, int pageSize);
+    PageResult getRolePageList(Integer currentPage, Integer pageSize);
 
     Role findDefault();
 
     List<Role> selByName(String name);
 
-    void delMoreRolesByIds(long[] roleIds);
+    void delMoreRolesByIds(Long[] roleIds);
 
-    List<Permission> getRoleByIdForPermission(long roleId);
+    List<Permission> getRoleByIdForPermission(Long roleId);
 
-    void updateRoleAndPermission(long id,String name,String remark,long[] permissionIds);
+    void updateRoleAndPermission(Long id,String name,String remark,
+                                 Long[] permissionIds);
 }

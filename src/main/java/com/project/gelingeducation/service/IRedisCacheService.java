@@ -4,7 +4,7 @@ import com.project.gelingeducation.domain.User;
 
 public interface IRedisCacheService {
 
-    User getUserById(long id) throws Exception;
+    User getUserById(Long id) throws Exception;
 
     void saveUser(User user) throws Exception;
 }

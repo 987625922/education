@@ -33,10 +33,9 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = -218595055003268321L;
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     @Column(name = "account", nullable = false, length = 11)
     private String account;
     @Column(name = "password", nullable = false, length = 32)
@@ -49,13 +48,13 @@ public class User implements Serializable {
     private String eMail;
     //0为保密，1为男，2为女
     @Column(name = "ssex", length = 1)
-    private int sex;
+    private Integer sex;
     //,columnDefinition = "备注"
     @Column(name = "note", length = 100)
     private String note;
     //,columnDefinition = "状态 0锁定 1有效"
     @Column(name = "status", length = 1, nullable = false)
-    private int status = 1;
+    private Integer status = 1;
     //创建时间
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time")

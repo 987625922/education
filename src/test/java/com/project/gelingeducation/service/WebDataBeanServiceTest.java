@@ -21,7 +21,7 @@ public class WebDataBeanServiceTest {
     @Test
     public void save() {
         WebDataBean webDataBean = new WebDataBean();
-        webDataBean.setAllLoginMun(11);
+        webDataBean.setAllLoginMun(new Long(11));
         webDataBeanService.save(webDataBean);
     }
 
@@ -29,7 +29,7 @@ public class WebDataBeanServiceTest {
     public void update() {
         WebDataBean webDataBean = new WebDataBean();
         webDataBean.setId(1);
-        webDataBean.setTodayLoginMun(2);
+        webDataBean.setTodayLoginMun(new Long(2));
 //        webDataBean.setAllLoginMun(11);
         webDataBeanService.update(webDataBean);
     }

@@ -8,11 +8,11 @@ public interface ISubjectService {
 
     List<Subject> findAll();
 
-    Subject findById(long id);
+    Subject findById(Long id);
 
     long insert(Subject video);
 
-    void delectd(long id);
+    void delectd(Long id);
 
     void updated(Subject video);
 }

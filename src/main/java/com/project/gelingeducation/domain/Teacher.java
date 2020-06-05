@@ -8,6 +8,7 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +17,9 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "teacher")
-public class Teacher {
+public class Teacher implements Serializable {
+
+    private static final long serialVersionUID = 1595117855604940548L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

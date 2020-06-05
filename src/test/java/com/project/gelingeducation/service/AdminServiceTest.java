@@ -55,7 +55,7 @@ public class AdminServiceTest {
     @Test
     public void update() {
         User user = new User();
-        user.setId(1);
+        user.setId(new Long(1));
         user.setAccount("1234561");
         user.setPassword("123456");
         user.setCoverImg("图片1");
@@ -66,7 +66,7 @@ public class AdminServiceTest {
     @Test
     public void update1() {
         User user = new User();
-        user.setId(1);
+        user.setId(new Long(1));
         user.setAccount("123456");
         user.setPassword("123456");
         user.setCoverImg("图片");

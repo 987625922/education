@@ -32,7 +32,7 @@ public class LoginLogServiceTest {
     @Test
     public void test() {
         LoginLog loginLog = new LoginLog();
-        loginLog.setUid(1);
+        loginLog.setUid(new Long(1));
         loginLog.setLoginTime(new Date());
         loginLog.setBrowser("11");
         loginLog.setLocation("1");

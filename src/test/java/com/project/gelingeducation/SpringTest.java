@@ -70,7 +70,7 @@ public class SpringTest {
     @Test
     public void test4() {
         Video video = new Video();
-        video.setId(2);
+        video.setId(new Long(2));
         video.setName("更新测试");
         videoService.updated(video);
     }

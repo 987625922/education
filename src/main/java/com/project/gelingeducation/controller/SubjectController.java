@@ -24,7 +24,7 @@ public class SubjectController {
     }
 
     @RequestMapping(value = "/findbyid", method = RequestMethod.POST)
-    public Object findById(long id) throws Exception {
+    public Object findById(Long id) throws Exception {
         return subjectService.findById(id);
     }
 
@@ -35,7 +35,7 @@ public class SubjectController {
     }
 
     @RequestMapping(value = "/delect", method = RequestMethod.POST)
-    public Object delect(long id) {
+    public Object delect(Long id) {
         subjectService.delectd(id);
         return JsonData.buildSuccess();
     }

@@ -10,8 +10,8 @@ public interface ILoginLogService {
 
     List<LoginLog> list();
 
-    LoginLog getByUserId(long uid);
+    LoginLog getByUserId(Long uid);
 
-    void getByUserIdLoginUpdate(long uid);
+    void getByUserIdLoginUpdate(Long uid);
 
 }

@@ -24,7 +24,7 @@ public class SubjectServiceImpl implements ISubjectService {
 
     @Override
     @Transactional(readOnly = true)
-    public Subject findById(long id) {
+    public Subject findById(Long id) {
         return subjectDao.findById(id);
     }
 
@@ -37,7 +37,7 @@ public class SubjectServiceImpl implements ISubjectService {
 
     @Override
     @Transactional
-    public void delectd(long id) {
+    public void delectd(Long id) {
         subjectDao.delect(id);
     }
 

@@ -24,7 +24,7 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     @Transactional(readOnly = true)
-    public Role findByRole(long id) {
+    public Role findByRole(Long id) {
         return roleDao.findById(id);
     }
 
@@ -34,7 +34,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public void addRole(Role role, long[] permissionIds) {
+    public void addRole(Role role, Long[] permissionIds) {
         roleDao.insert(role);
         for (int i = 0; i < permissionIds.length; i++) {
             Permission permission = permissionService.getById(permissionIds[i]);
@@ -44,7 +44,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public void addPermissionByIds(long roleId, long[] permissionIds) {
+    public void addPermissionByIds(Long roleId, Long[] permissionIds) {
         Role role = roleDao.findById(roleId);
         for (int i = 0; i < permissionIds.length; i++) {
             Permission permission = permissionService.getById(permissionIds[i]);
@@ -59,7 +59,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public void delRoleById(long id) {
+    public void delRoleById(Long id) {
         roleDao.delRoleById(id);
     }
 
@@ -79,17 +79,18 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public void delMoreRolesByIds(long[] roleIds) {
+    public void delMoreRolesByIds(Long[] roleIds) {
         roleDao.delByIds(roleIds);
     }
 
     @Override
-    public List<Permission> getRoleByIdForPermission(long roleId) {
+    public List<Permission> getRoleByIdForPermission(Long roleId) {
         return roleDao.getRoleByIdForPermission(roleId);
     }
 
     @Override
-    public void updateRoleAndPermission(long id, String name, String remark, long[] permissionIds) {
+    public void updateRoleAndPermission(Long id, String name, String remark,
+                                        Long[] permissionIds) {
         Role role = roleDao.findById(id);
         role.setName(name);
         role.setRemark(remark);

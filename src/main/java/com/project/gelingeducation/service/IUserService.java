@@ -14,29 +14,28 @@ public interface IUserService {
 
     Object addUser(User user);
 
+    User findById(Long id);
 
-    User findById(long id);
+    PageResult getLists(Integer currentPage, Integer pageSize);
 
-    PageResult getLists(int currentPage, int pageSize);
-
-    void updateCoverImg(long id,String coverImg);
+    void updateCoverImg(Long id,String coverImg);
 
     void update(User user);
 
-    void updatePassword(long id,String oldPassword,String newPassword);
+    void updatePassword(Long id,String oldPassword,String newPassword);
 
-    void delUser(long id);
+    void delUser(Long id);
 
-    void delSelUser(long[] ids);
+    void delSelUser(Long[] ids);
 
-    PageResult selbyname(String name,int currentPage, int pageSize);
+    PageResult selbyname(String name,Integer currentPage, Integer pageSize);
 
     User findUserByAccount(String account);
 
-    Role findRoleByUserId(long id);
+    Role findRoleByUserId(Long id);
 
-    Set<Permission> findPermissionByUserId(long id);
+    Set<Permission> findPermissionByUserId(Long id);
 
-    void addRole(long userId, long roleId);
+    void addRole(Long userId, Long roleId);
 
 }

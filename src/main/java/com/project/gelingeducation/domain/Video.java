@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -14,11 +15,11 @@ import java.util.Date;
 @Builder
 @Entity
 @Table(name = "video")
-public class Video {
+public class Video implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "big_img")
@@ -30,9 +31,9 @@ public class Video {
     @Column(name = "teacher_name")
     private String teacherName;
     @Column(name = "is_free")
-    private int isFree;
+    private Integer isFree;
     @Column(name = "course_id")
-    private long courseId;
+    private Long courseId;
     @ManyToOne(targetEntity = Teacher.class)
     @JoinColumn(name = "teacher_id") //视频表维护老师的外键
     private Teacher teacher;
@@ -52,6 +53,4 @@ public class Video {
     @Column(name = "last_update_time", nullable = false)
     @LastModifiedDate
     private Date lastUpdateTime;
-
-
 }

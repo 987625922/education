@@ -16,7 +16,7 @@ public class LogController {
     private ILogService logService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public Object queryAll(int currentPage, int pageSize) {
+    public Object queryAll(Integer currentPage, Integer pageSize) {
         return JsonData.buildSuccess(logService.queryAll(currentPage, pageSize));
     }
 

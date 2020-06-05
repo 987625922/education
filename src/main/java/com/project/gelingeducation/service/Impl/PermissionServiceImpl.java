@@ -22,7 +22,7 @@ public class PermissionServiceImpl implements IPermissionService {
     }
 
     @Override
-    public Permission getById(long id) {
+    public Permission getById(Long id) {
         return permissionDao.getById(id);
     }
 
@@ -32,7 +32,7 @@ public class PermissionServiceImpl implements IPermissionService {
     }
 
     @Override
-    public List<Permission> getPermissionListByIds(long[] ids) {
+    public List<Permission> getPermissionListByIds(Long[] ids) {
         return permissionDao.getPermissionListByIds(ids);
     }
 }

@@ -8,10 +8,10 @@ public interface IPermissionService {
 
     void add(Permission permission);
 
-    Permission getById(long id);
+    Permission getById(Long id);
 
     List<Permission> list();
 
-    List<Permission> getPermissionListByIds(long[] ids);
+    List<Permission> getPermissionListByIds(Long[] ids);
 
 }

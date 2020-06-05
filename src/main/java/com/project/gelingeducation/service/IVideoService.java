@@ -8,11 +8,11 @@ public interface IVideoService {
 
     List<Video> findAll();
 
-    Video findById(long id);
+    Video findById(Long id);
 
     long insert(Video video);
 
-    void delectd(long id);
+    void delectd(Long id);
 
     void updated(Video video);
 }

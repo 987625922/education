@@ -36,12 +36,12 @@ public class LoginLogServiceImpl implements ILoginLogService {
 
     @Override
     @Transactional(readOnly = true)
-    public LoginLog getByUserId(long uid) {
+    public LoginLog getByUserId(Long uid) {
         return loginLogDao.getByUid(uid);
     }
 
     @Override
-    public void getByUserIdLoginUpdate(long uid) {
+    public void getByUserIdLoginUpdate(Long uid) {
         LoginLog loginLog = loginLogDao.getByUid(uid);
         if (loginLog == null) {
             loginLog = new LoginLog();

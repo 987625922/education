@@ -83,7 +83,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public User findById(long id) {
+    public User findById(Long id) {
         User user = userDao.findById(id);
         return user;
     }
@@ -96,7 +96,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public PageResult getLists(int currentPage, int pageSize) {
+    public PageResult getLists(Integer currentPage, Integer pageSize) {
         return userDao.getLists(currentPage, pageSize);
     }
 
@@ -108,7 +108,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateCoverImg(long id, String coverImg) {
+    public void updateCoverImg(Long id, String coverImg) {
         userDao.updateCoverImg(id, coverImg);
     }
 
@@ -130,7 +130,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updatePassword(long id, String oldPassword, String newPassword) {
+    public void updatePassword(Long id, String oldPassword, String newPassword) {
         User user = userDao.findById(id);
         if (user.getPassword().equals(MD5Util.encrypt(user.getAccount().toLowerCase(),
                 oldPassword))) {
@@ -148,7 +148,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delUser(long id) {
+    public void delUser(Long id) {
         userDao.delect(id);
     }
 
@@ -159,7 +159,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delSelUser(long[] ids) {
+    public void delSelUser(Long[] ids) {
         userDao.delSel(ids);
     }
 
@@ -172,7 +172,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public PageResult selbyname(String name, int currentPage, int pageSize) {
+    public PageResult selbyname(String name, Integer currentPage, Integer pageSize) {
         return userDao.selbyname(name, currentPage, pageSize);
     }
 
@@ -195,7 +195,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public Role findRoleByUserId(long id) {
+    public Role findRoleByUserId(Long id) {
         User user = userDao.findById(id);
         return user.getRole();
     }
@@ -207,7 +207,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public Set<Permission> findPermissionByUserId(long id) {
+    public Set<Permission> findPermissionByUserId(Long id) {
         User user = userDao.findById(id);
         Role role = user.getRole();
         Set<Permission> permissions = new HashSet<>();
@@ -225,7 +225,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addRole(long userId, long roleId) {
+    public void addRole(Long userId, Long roleId) {
         User user = userDao.findById(userId);
         Role role = roleService.findByRole(roleId);
         user.setRole(role);

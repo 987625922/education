@@ -24,7 +24,7 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
     private ILoginLogDao loginLogDao;
 
     @Override
-    public WebDataBean findById(int id) {
+    public WebDataBean findById(Integer id) {
         return webDataBeanDao.findById(id);
     }
 

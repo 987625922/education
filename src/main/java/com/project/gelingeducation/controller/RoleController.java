@@ -33,7 +33,7 @@ public class RoleController {
      * 添加身份
      */
     @RequestMapping(value = "/add_role_and_permissionids", method = RequestMethod.POST)
-    public Object selByName(String name, String remark, long[] permissionIds) {
+    public Object selByName(String name, String remark, Long[] permissionIds) {
         Role role = new Role();
         role.setName(name);
         role.setRemark(remark);
@@ -46,7 +46,7 @@ public class RoleController {
      */
     @RequiresPermissions("user:root")
     @RequestMapping(value = "/batches_deletes", method = RequestMethod.POST)
-    public Object delMoreUser(long[] roleIds) {
+    public Object delMoreUser(Long[] roleIds) {
         roleService.delMoreRolesByIds(roleIds);
         return JsonData.buildSuccess();
     }
@@ -59,7 +59,7 @@ public class RoleController {
      */
     @RequiresPermissions("user:root")
     @RequestMapping(value = "/del_role", method = RequestMethod.POST)
-    public Object deluser(long id) {
+    public Object deluser(Long id) {
         roleService.delRoleById(id);
         return JsonData.buildSuccess();
     }
@@ -72,7 +72,7 @@ public class RoleController {
      */
     @RequiresPermissions("user:root")
     @RequestMapping(value = "/get_role_by_id_for_permission", method = RequestMethod.POST)
-    public Object getRoleByIdForPermission(long id) {
+    public Object getRoleByIdForPermission(Long id) {
         return JsonData.buildSuccess(roleService.getRoleByIdForPermission(id));
     }
 
@@ -84,7 +84,8 @@ public class RoleController {
      */
     @RequiresPermissions("user:root")
     @RequestMapping(value = "/update_role_and_permission", method = RequestMethod.POST)
-    public Object updateRoleAndPermission(long id, String name, String remark, long[] permissionIds) {
+    public Object updateRoleAndPermission(Long id, String name, String remark,
+                                          Long[] permissionIds) {
         roleService.updateRoleAndPermission(id, name, remark, permissionIds);
         return JsonData.buildSuccess();
     }

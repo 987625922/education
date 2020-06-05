@@ -32,7 +32,7 @@ public class VideoController {
      * @return
      */
     @RequestMapping(value = "/findbyid", method = RequestMethod.POST)
-    public Object findById(long id) throws Exception {
+    public Object findById(Long id) throws Exception {
         return videoService.findById(id);
     }
 //    public Object findById(@RequestBody RequestBaseBean baseBean) throws Exception {
@@ -47,7 +47,7 @@ public class VideoController {
     }
 
     @RequestMapping(value = "/delect", method = RequestMethod.POST)
-    public Object delect(long id) {
+    public Object delect(Long id) {
         videoService.delectd(id);
         return JsonData.buildSuccess();
     }

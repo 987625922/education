@@ -9,21 +9,21 @@ public class PageResult {
     /**
      * 当前页码
      */
-    private int currentPage = 0;
+    private Integer currentPage;
     /**
      * 每页数量
      */
-    private int pageSize = 0;
+    private Integer pageSize;
 
     /**
      * 页码总数
      */
-    private long totalPages = 0;
+    private Long totalPages;
 
     /**
      * 总数量
      */
-    private long totalRows;
+    private Long totalRows;
 
     /**
      * 数据模型
