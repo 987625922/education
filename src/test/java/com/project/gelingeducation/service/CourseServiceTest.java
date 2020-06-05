@@ -41,13 +41,14 @@ public class CourseServiceTest {
 
     @Test
     public void courseAddTeacher() {
-        courseService.courseAddTeacher(2, 2);
+        courseService.courseAddTeacher(new Long(2), new Long(2));
     }
 
     @Test
     public void selByNameOrStatusOrPriceOrTeacher() {
-        PageResult pageResult = courseService.selByNameOrStatusOrPriceOrTeacher("", -1, -1, -1, 1
-                , 1, 10);
+        PageResult pageResult = courseService.selByNameOrStatusOrPriceOrTeacher(null, -1,
+                new Double(-1), new Double(-1), new Long(1),
+                new Integer(1), new Integer(10));
         System.out.println();
     }
 }

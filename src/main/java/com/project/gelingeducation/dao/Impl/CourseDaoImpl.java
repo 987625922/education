@@ -33,19 +33,19 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
     }
 
     @Override
-    public Course findById(long id) {
+    public Course findById(Long id) {
         Course course = getSession().get(Course.class, id);
         return course;
     }
 
     @Override
-    public long insert(Course course) {
+    public Long insert(Course course) {
         getSession().save(course);
         return course.getId();
     }
 
     @Override
-    public void delect(long id) {
+    public void delect(Long id) {
         getSession().delete(getSession().get(Course.class, id));
     }
 
@@ -54,7 +54,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
         Session session = getSession();
         Course findCourse = session.get(Course.class, course.getId());
         BeanUtils.copyPropertiesIgnoreNull(course, findCourse);
-        session.merge(findCourse);
+        session.update(findCourse);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
     }
 
     @Override
-    public PageResult getLists(int currentPage, int pageSize) {
+    public PageResult getLists(Integer currentPage, Integer pageSize) {
         Session session = getSession();
 
         String hql = "select count(*) from Course";
@@ -106,28 +106,28 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
 
     @Override
-    public PageResult selByNameOrStatusOrPriceOrTeacher(String name, int status,
-                                                        double startPrice, double endPrice,
-                                                        long teacherId, int currentPage,
-                                                        int pageSize) {
+    public PageResult selByNameOrStatusOrPriceOrTeacher(String name, Integer status,
+                                                        Double startPrice, Double endPrice,
+                                                        Long teacherId, Integer currentPage,
+                                                        Integer pageSize) {
         Session session = getSession();
 
         StringBuffer hql = new StringBuffer("from Course as course");
 
-        if (teacherId != -1) {
+        if (teacherId != null) {
             hql.append(" inner join fetch course.teachers as teacher ");
         }
 
         hql.append(" where 1=1");
 
-        if (teacherId != -1) {
+        if (teacherId != null) {
             hql.append(" AND teacher.id = " + teacherId);
         }
 
-        if (status != -1) {
+        if (status != null) {
             hql.append(" AND course.status = " + status);
         }
-        if (startPrice != -1 && endPrice != -1) {
+        if (startPrice != null && endPrice != null) {
             hql.append(" AND course.price BETWEEN " + startPrice + " AND " + endPrice);
         }
         if (!name.isEmpty()) {
@@ -144,8 +144,8 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
 
         Query queryCount = session.createQuery(hql.toString().replace("fetch", ""));
-        long allrows = (long) queryCount.uniqueResult();
-        long totalPage = (allrows - 1) / pageSize + 1;
+        Long allrows = (Long) queryCount.uniqueResult();
+        Long totalPage = (allrows - 1) / pageSize + 1;
 
         PageResult pageResult = new PageResult();
         pageResult.setTotalPages(totalPage);

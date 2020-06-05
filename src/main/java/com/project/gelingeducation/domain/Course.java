@@ -28,7 +28,7 @@ public class Course implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     /**
      * 课程名
@@ -49,14 +49,14 @@ public class Course implements Serializable {
      * 价格
      */
     @Column(name = "price")
-    private double price = 0;
+    private Double price;
 
     /**
      * 状态
      * 1为正常，0为禁用
      */
     @Column(name = "status", length = 1)
-    private int status = 1;
+    private Integer status = 1;
 
     /**
      * 创建时间

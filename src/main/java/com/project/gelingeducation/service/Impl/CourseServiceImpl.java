@@ -31,13 +31,13 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public Course findById(long id) {
+    public Course findById(Long id) {
         return courseDao.findById(id);
     }
 
     @Override
     @Transactional
-    public long insert(Course course) {
+    public Long insert(Course course) {
         Date date = new Date();
         course.setLastUpdateTime(date);
         course.setCreateTime(date);
@@ -46,7 +46,7 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     @Transactional
-    public void delect(long id) {
+    public void delect(Long id) {
         courseDao.delect(id);
     }
 
@@ -70,7 +70,7 @@ public class CourseServiceImpl implements ICourseService {
      * @return
      */
     @Override
-    public PageResult getLists(int currentPage, int pageSize) {
+    public PageResult getLists(Integer currentPage, Integer pageSize) {
         if (currentPage != -1 && pageSize != -1) {
             return courseDao.getLists(currentPage, pageSize);
         } else {
@@ -90,14 +90,14 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public PageResult selByNameOrStatusOrPriceOrTeacher(String name, int status, double startPrice, double endPrice,
-                                                        long teacherId, int currentPage, int pageSize) {
+    public PageResult selByNameOrStatusOrPriceOrTeacher(String name, Integer status, Double startPrice, Double endPrice,
+                                                        Long teacherId, Integer currentPage, Integer pageSize) {
         return courseDao.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice, endPrice, teacherId, currentPage, pageSize);
     }
 
     @Override
     @Transactional
-    public void courseAddTeacher(long courseId, long teacherId) {
+    public void courseAddTeacher(Long courseId, Long teacherId) {
         Course course = courseDao.findById(courseId);
         Teacher teacher = teacherDao.findById(teacherId);
 

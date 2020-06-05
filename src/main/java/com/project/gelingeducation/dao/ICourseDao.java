@@ -10,21 +10,21 @@ import java.util.Map;
 public interface ICourseDao {
     PageResult findAll();
 
-    Course findById(long id);
+    Course findById(Long id);
 
-    long insert(Course video);
+    Long insert(Course video);
 
-    void delect(long id);
+    void delect(Long id);
 
     void update(Course video) throws IllegalAccessException, InvocationTargetException;
 
     void update(Long id, Map<String,String> data);
 
-    PageResult getLists(int currentPage, int pageSize);
+    PageResult getLists(Integer currentPage, Integer pageSize);
 
     void delSel(String ids);
 
-    PageResult selByNameOrStatusOrPriceOrTeacher(String name, int status, double startPrice,
-                                                 double endPrice, long teacherId,
-                                                 int currentPage, int pageSize);
+    PageResult selByNameOrStatusOrPriceOrTeacher(String name, Integer status, Double startPrice,
+                                                 Double endPrice, Long teacherId,
+                                                 Integer currentPage, Integer pageSize);
 }

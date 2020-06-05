@@ -12,22 +12,22 @@ public interface ICourseService {
 
     PageResult findAll();
 
-    Course findById(long id);
+    Course findById(Long id);
 
-    long insert(Course course);
+    Long insert(Course course);
 
-    void delect(long id);
+    void delect(Long id);
 
     void update(Course course)  throws IllegalAccessException, InvocationTargetException;
 
     void update(Long id, Map<String, String> data);
 
-    PageResult getLists(int currentPage, int pageSize);
+    PageResult getLists(Integer currentPage, Integer pageSize);
 
     void batchesDeletes(String ids);
 
-    PageResult selByNameOrStatusOrPriceOrTeacher(String name, int status, double startPrice,
-                                                 double endPrice, long teacherId,
-                                                 int currentPage, int pageSize);
-    void courseAddTeacher(long courseId,long teacherId);
+    PageResult selByNameOrStatusOrPriceOrTeacher(String name, Integer status, Double startPrice,
+                                                 Double endPrice, Long teacherId,
+                                                 Integer currentPage, Integer pageSize);
+    void courseAddTeacher(Long courseId,Long teacherId);
 }

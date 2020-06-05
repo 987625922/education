@@ -35,12 +35,12 @@ public class CourseController {
 
     @RequestMapping(value = "/findall")
     public Object findAll() throws Exception {
-        return courseService.findAll();
+        return JsonData.buildSuccess(courseService.findAll());
     }
 
     @RequestMapping(value = "/findbyid", method = RequestMethod.POST)
     public Object findById(long id) throws Exception {
-        return courseService.findById(id);
+        return JsonData.buildSuccess(courseService.findById(id));
     }
 
     /**
@@ -81,8 +81,12 @@ public class CourseController {
      * 按名字搜索
      */
     @RequestMapping(value = "/sel_by_name_or_status_price_teacher")
-    public Object selByNameOrStatusOrPriceOrTeacher(String name,int status, double startPrice, double endPrice,
-                                                    long teacherId, int currentPage, int pageSize) {
+    public Object selByNameOrStatusOrPriceOrTeacher(@RequestParam(required = false) String name,
+                                                    @RequestParam(required = false)Integer status,
+                                                    @RequestParam(required = false)Double startPrice,
+                                                    @RequestParam(required = false)Double endPrice,
+                                                    @RequestParam(required = false)Long teacherId,
+                                                    Integer currentPage, Integer pageSize) {
         return JsonData.buildSuccess(courseService.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice,
                 endPrice, teacherId, currentPage, pageSize));
     }
