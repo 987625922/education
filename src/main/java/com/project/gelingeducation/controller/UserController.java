@@ -123,7 +123,7 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping(value = "/lists", method = RequestMethod.POST)
+    @RequestMapping(value = "/lists")
     public Object lists(Integer currentPage, Integer pageSize) {
         return JsonData.buildSuccess(userService.getLists(currentPage, pageSize));
     }
@@ -134,7 +134,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @RequestMapping(value = "/add_user", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object addUser(@RequestBody User user) {
         return JsonData.buildSuccess(userService.addUser(user));
     }
@@ -146,7 +146,7 @@ public class UserController {
      * @return
      */
     @RequiresPermissions("user:root")
-    @RequestMapping(value = "/del_user", method = RequestMethod.POST)
+    @RequestMapping(value = "/del")
     public Object deluser(Long id) {
         userService.delUser(id);
         return JsonData.buildSuccess();

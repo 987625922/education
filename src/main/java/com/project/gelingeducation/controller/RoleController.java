@@ -44,8 +44,8 @@ public class RoleController {
      */
     @RequiresPermissions("user:root")
     @RequestMapping(value = "/batches_deletes")
-    public Object delMoreUser(Long[] roleIds) {
-        roleService.delMoreRolesByIds(roleIds);
+    public Object delMoreUser(String ids) {
+        roleService.delMoreRolesByIds(ids);
         return JsonData.buildSuccess();
     }
 

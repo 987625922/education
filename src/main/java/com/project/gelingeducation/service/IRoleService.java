@@ -25,7 +25,7 @@ public interface IRoleService {
 
     List<Role> selByName(String name);
 
-    void delMoreRolesByIds(Long[] roleIds);
+    void delMoreRolesByIds(String roleIds);
 
     List<Permission> getRoleByIdForPermission(Long roleId);
 

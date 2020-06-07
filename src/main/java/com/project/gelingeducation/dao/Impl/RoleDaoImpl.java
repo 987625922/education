@@ -84,22 +84,14 @@ public class RoleDaoImpl implements IRoleDao {
 
     @Override
     public List selByName(String name) {
-        return getSession().createQuery("from Role where name LIKE '%" + name + "%'").list();
+        return getSession().createQuery("FROM Role WHERE name LIKE '%" + name + "%'").list();
     }
 
     @Override
-    public void delByIds(Long[] ids) {
-        String sql = "";
-        for (int i = 0; i < ids.length; i++) {
-            if (i == 0) {
-                sql = sql + ids[i];
-            } else {
-                sql = sql + "," + ids[i];
-            }
-        }
-        Query query = getSession().createQuery("DELETE FROM Role WHERE id in(" + sql + ")");
+    public void delByIds(String ids) {
+        Query query = getSession().createQuery
+                ("DELETE FROM Role WHERE id in(" + ids + ")");
         query.executeUpdate();
-
     }
 
     @Override

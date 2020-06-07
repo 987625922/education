@@ -40,7 +40,8 @@ public class Role implements Serializable {
     @Column(name = "is_default")
     private int isDefault = 0;
 
-    @OneToMany(targetEntity = User.class, mappedBy = "role")
+    @OneToMany(targetEntity = User.class, mappedBy = "role"
+            , cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<User> users = new HashSet<>();
 

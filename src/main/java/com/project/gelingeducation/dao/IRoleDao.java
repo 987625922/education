@@ -22,7 +22,7 @@ public interface IRoleDao {
 
     List selByName(String name);
 
-    void delByIds(Long[] ids);
+    void delByIds(String ids);
 
     List<Permission> getRoleByIdForPermission(Long id);
 }

@@ -81,7 +81,7 @@ public class RoleTest {
 
     @Test
     public void selByName() {
-        List<Role> roles = roleService.selByName("管理员");
+        List<Role> roles = roleService.selByName("d");
         for (int i = 0; i < roles.size(); i++) {
             log.debug("==>" + roles.get(i).getName());
         }

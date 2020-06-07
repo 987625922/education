@@ -69,7 +69,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public void delMoreRolesByIds(Long[] roleIds) {
+    public void delMoreRolesByIds(String roleIds) {
         roleDao.delByIds(roleIds);
     }
 
