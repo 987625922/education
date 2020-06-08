@@ -28,4 +28,6 @@ public interface IRoleDao {
 
     Role getRoleByUserId(Long userId);
 
+    void update(Role role);
+
 }

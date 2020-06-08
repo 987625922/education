@@ -3,10 +3,12 @@ package com.project.gelingeducation.controller;
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.common.exception.StatusEnum;
 import com.project.gelingeducation.common.utils.FileUtils;
+import com.project.gelingeducation.common.vo.UserPassVo;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IRedisCacheService;
 import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,14 +45,14 @@ public class UserController {
     /**
      * 获取用户信息接口
      *
-     * @param id 用户id
      * @return
      */
-    @RequestMapping(value = "/get_info", method = RequestMethod.GET)
-    public Object getInfo(Long id) throws Exception {
-        User user = cacheService.getUserById(id);
+    @RequestMapping(value = "/get_info")
+    public Object getInfo() throws Exception {
+        User shiroUser = (User) SecurityUtils.getSubject().getPrincipal();
+        User user = cacheService.getUserById(shiroUser.getId());
         if (user == null) {
-            user = userService.findById(id);
+            user = userService.findById(shiroUser.getId());
             cacheService.saveUser(user);
         }
         return JsonData.buildSuccess(user);
@@ -102,6 +104,8 @@ public class UserController {
      */
     @RequestMapping(value = "/edit_info", method = RequestMethod.POST)
     public Object update(@RequestBody User user) throws Exception {
+        User shiroUser = (User) SecurityUtils.getSubject().getPrincipal();
+        user.setId(shiroUser.getId());
         userService.update(user);
         cacheService.saveUser(user);
         return JsonData.buildSuccess();
@@ -110,13 +114,13 @@ public class UserController {
     /**
      * 修改密码
      *
-     * @param oldPassword 旧密码
-     * @param newPassword 新密码
      * @return
      */
     @RequestMapping(value = "/update_password", method = RequestMethod.POST)
-    public Object updatePassword(Long id, String oldPassword, String newPassword) {
-        userService.updatePassword(id, oldPassword, newPassword);
+    public Object updatePassword(@RequestBody UserPassVo userPassVo) {
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        userService.updatePassword(user.getId(), userPassVo.getOldPass(),
+                userPassVo.getNewPass());
         return JsonData.buildSuccess();
     }
 

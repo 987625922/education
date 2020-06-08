@@ -12,6 +12,7 @@ import com.project.gelingeducation.domain.WebDataBean;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.IWebDataBeanService;
 import com.project.gelingeducation.service.ILoginLogService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,12 +36,12 @@ public class WebController {
     /**
      * web端首页
      *
-     * @param id
      * @return
      */
-    @RequestMapping(value = "/web/index", method = RequestMethod.GET)
-    public Object index(Long id) {
-        LoginLog loginLog = loginLogService.getByUserId(id);
+    @RequestMapping(value = "/web/index")
+    public Object index() {
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        LoginLog loginLog = loginLogService.getByUserId(user.getId());
         WebDataBean webDataBean = webDataBeanService.getWebDataBean();
         WebIndex webIndex = new WebIndex();
         webIndex.setLastLoginTime(loginLog.getLastLoginTime());

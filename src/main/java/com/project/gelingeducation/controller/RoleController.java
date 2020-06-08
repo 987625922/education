@@ -40,6 +40,15 @@ public class RoleController {
     }
 
     /**
+     * 添加身份
+     */
+    @RequestMapping(value = "/update")
+    public Object update(@RequestBody Role role) {
+        roleService.update(role);
+        return JsonData.buildSuccess();
+    }
+
+    /**
      * 批量删除客户
      */
     @RequiresPermissions("user:root")

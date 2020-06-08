@@ -17,6 +17,8 @@ public interface IRoleService {
 
     List<Role> list();
 
+    void update(Role role);
+
     void delRoleById(Long id);
 
     PageResult getRolePageList(Integer currentPage, Integer pageSize);

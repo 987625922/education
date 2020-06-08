@@ -43,9 +43,16 @@ public class RoleServiceImpl implements IRoleService {
         }
     }
 
+
+
     @Override
     public List<Role> list() {
         return roleDao.list();
+    }
+
+    @Override
+    public void update(Role role) {
+
     }
 
     @Override
