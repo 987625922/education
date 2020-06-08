@@ -31,4 +31,6 @@ public interface IRoleService {
 
     void updateRoleAndPermission(Long id,String name,String remark,
                                  Long[] permissionIds);
+
+    Role getRoleByUserId(Long userId);
 }

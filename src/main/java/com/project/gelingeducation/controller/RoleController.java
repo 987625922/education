@@ -87,4 +87,9 @@ public class RoleController {
         roleService.updateRoleAndPermission(id, name, remark, permissionIds);
         return JsonData.buildSuccess();
     }
+
+    @RequestMapping("/get_role_by_user_id")
+    public Object getRoleByUserId(Long userId){
+        return JsonData.buildSuccess(roleService.getRoleByUserId(userId));
+    }
 }

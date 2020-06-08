@@ -25,4 +25,7 @@ public interface IRoleDao {
     void delByIds(String ids);
 
     List<Permission> getRoleByIdForPermission(Long id);
+
+    Role getRoleByUserId(Long userId);
+
 }

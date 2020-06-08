@@ -1,5 +1,6 @@
 package com.project.gelingeducation.dao;
 
+import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.common.dto.PageResult;
 
@@ -14,7 +15,7 @@ public interface IUserDao {
 
     void delect(Long id);
 
-    void delSel(Long[] ids);
+    void delSel(String ids);
 
     void update(User user);
 

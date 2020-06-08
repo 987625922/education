@@ -91,5 +91,10 @@ public class RoleServiceImpl implements IRoleService {
         }
     }
 
+    @Override
+    public Role getRoleByUserId(Long userId) {
+        return roleDao.getRoleByUserId(userId);
+    }
+
 
 }

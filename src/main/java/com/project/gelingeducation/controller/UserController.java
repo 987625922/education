@@ -20,6 +20,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Iterator;
 
 
@@ -156,8 +158,8 @@ public class UserController {
      * 批量删除客户
      */
     @RequiresPermissions("user:root")
-    @RequestMapping(value = "/batches_deletes", method = RequestMethod.POST)
-    public Object delMoreUser(Long[] ids) {
+    @RequestMapping(value = "/batches_deletes")
+    public Object delMoreUser(String ids) {
         userService.delSelUser(ids);
         return JsonData.buildSuccess();
     }
@@ -165,9 +167,11 @@ public class UserController {
     /**
      * 按名字搜索
      */
-    @RequestMapping(value = "/sel_by_name", method = RequestMethod.POST)
-    public Object selByName(String name, Integer currentPage, Integer pageSize) {
-        return JsonData.buildSuccess(userService.selbyname(name, currentPage, pageSize));
+    @RequestMapping(value = "/sel_by_name")
+    public Object selByName(String name, Integer currentPage, Integer pageSize)
+            throws UnsupportedEncodingException {
+        return JsonData.buildSuccess(userService.selbyname(URLDecoder.decode(name,"UTF-8"),
+                currentPage, pageSize));
     }
 
     /**

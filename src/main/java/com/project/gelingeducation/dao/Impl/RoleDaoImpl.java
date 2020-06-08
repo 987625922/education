@@ -20,14 +20,7 @@ import java.util.Set;
  *
  */
 @Repository
-public class RoleDaoImpl implements IRoleDao {
-
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    public Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
+public class RoleDaoImpl extends BaseDao implements IRoleDao {
 
 
     @Override
@@ -104,6 +97,11 @@ public class RoleDaoImpl implements IRoleDao {
             permissionList.add(permission);
         }
         return permissionList;
+    }
+
+    @Override
+    public Role getRoleByUserId(Long userId) {
+        return getSession().get(User.class,userId).getRole();
     }
 
 }

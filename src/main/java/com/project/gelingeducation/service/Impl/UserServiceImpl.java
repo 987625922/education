@@ -159,7 +159,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delSelUser(Long[] ids) {
+    public void delSelUser(String ids) {
         userDao.delSel(ids);
     }
 

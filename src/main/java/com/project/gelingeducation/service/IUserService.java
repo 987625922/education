@@ -26,7 +26,7 @@ public interface IUserService {
 
     void delUser(Long id);
 
-    void delSelUser(Long[] ids);
+    void delSelUser(String ids);
 
     PageResult selbyname(String name,Integer currentPage, Integer pageSize);
 

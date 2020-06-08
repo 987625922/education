@@ -3,8 +3,6 @@ package com.project.gelingeducation.dao.Impl;
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.common.utils.BeanUtils;
 import com.project.gelingeducation.dao.IUserDao;
-import com.project.gelingeducation.domain.Course;
-import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
@@ -12,7 +10,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -78,16 +75,9 @@ public class UserDaoImpl implements IUserDao {
     }
 
     @Override
-    public void delSel(Long[] ids) {
-        String sql = "";
-        for (int i = 0; i < ids.length; i++) {
-            if (i == 0) {
-                sql = sql + ids[i];
-            } else {
-                sql = sql + "," + ids[i];
-            }
-        }
-        Query query = getSession().createQuery("DELETE FROM User WHERE id in(" + sql + ")");
+    public void delSel(String ids) {
+        Query query = getSession().createQuery
+                ("DELETE FROM User WHERE id in(" + ids + ")");
         query.executeUpdate();
     }
 
