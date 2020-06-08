@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service.Impl;
 
+import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.IVideoDao;
 import com.project.gelingeducation.domain.Video;
 import com.project.gelingeducation.service.IVideoService;
@@ -18,8 +19,8 @@ public class VideoServiceImpl implements IVideoService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Video> findAll() {
-        return videoDao.findAll();
+    public PageResult list(Integer currentPage, Integer pageSize) {
+        return videoDao.list(currentPage, pageSize);
     }
 
     @Override
@@ -31,7 +32,7 @@ public class VideoServiceImpl implements IVideoService {
 
     @Override
     @Transactional
-    public long insert(Video video) {
+    public Video insert(Video video) {
         return videoDao.insert(video);
     }
 

@@ -18,9 +18,9 @@ public class SubjectController {
     @Autowired
     private ISubjectService subjectService;
 
-    @RequestMapping(value = "/findall")
-    public Object findAll() throws Exception {
-        return subjectService.findAll();
+    @RequestMapping(value = "/lists")
+    public Object lists(Integer currentPage,Integer pageSize) throws Exception {
+        return subjectService.lists(currentPage, pageSize);
     }
 
     @RequestMapping(value = "/findbyid", method = RequestMethod.POST)

@@ -17,10 +17,9 @@ public class VideoController {
     @Autowired
     private IVideoService videoService;
 
-    @RequestMapping(value = "/findall")
-    public Object findAll() throws Exception {
-//        return CommonDEUtils.getEncodedPostString(JsonData.buildSuccess(videoService.findAll()));
-        return JsonData.buildSuccess(videoService.findAll());
+    @RequestMapping(value = "/lists")
+    public Object findAll(Integer currentPage, Integer pageSize) throws Exception {
+        return JsonData.buildSuccess(videoService.list(currentPage, pageSize));
     }
 
     /**
@@ -31,7 +30,7 @@ public class VideoController {
      *
      * @return
      */
-    @RequestMapping(value = "/findbyid", method = RequestMethod.POST)
+    @RequestMapping(value = "/get_by_id")
     public Object findById(Long id) throws Exception {
         return videoService.findById(id);
     }

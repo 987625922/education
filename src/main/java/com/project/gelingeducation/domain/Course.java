@@ -83,5 +83,12 @@ public class Course implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private Set<Teacher> teachers = new HashSet<>();
 
+    @ManyToMany(targetEntity = Subject.class,
+            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "t_course_subject",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id"))
+    private Set<Subject> subjects = new HashSet<>();
 }
 

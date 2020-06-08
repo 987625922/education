@@ -28,12 +28,11 @@ public class Video implements Serializable {
     private String remark;
     @Column(name = "video_url")
     private String videoUrl;
-    @Column(name = "teacher_name")
-    private String teacherName;
     @Column(name = "is_free")
     private Integer isFree;
     @Column(name = "course_id")
     private Long courseId;
+
     @ManyToOne(targetEntity = Teacher.class)
     @JoinColumn(name = "teacher_id") //视频表维护老师的外键
     private Teacher teacher;

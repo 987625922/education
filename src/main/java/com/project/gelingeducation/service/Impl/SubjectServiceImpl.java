@@ -1,9 +1,12 @@
 package com.project.gelingeducation.service.Impl;
 
+import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.ISubjectDao;
 import com.project.gelingeducation.domain.Subject;
+import com.project.gelingeducation.domain.Video;
 import com.project.gelingeducation.service.ISubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +21,8 @@ public class SubjectServiceImpl implements ISubjectService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Subject> findAll() {
-        return subjectDao.findAll();
+    public PageResult lists(Integer currentPage, Integer pageSize) {
+        return subjectDao.lists(currentPage,pageSize);
     }
 
     @Override
@@ -31,7 +34,7 @@ public class SubjectServiceImpl implements ISubjectService {
 
     @Override
     @Transactional
-    public long insert(Subject video) {
+    public Subject insert(Subject video) {
         return subjectDao.insert(video);
     }
 
