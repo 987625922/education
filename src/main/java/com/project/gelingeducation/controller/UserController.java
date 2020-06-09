@@ -181,6 +181,7 @@ public class UserController {
     /**
      * 添加身份
      */
+    @RequiresPermissions("user:root")
     @RequestMapping(value = "/add_roles", method = RequestMethod.POST)
     public Object addRole(Long userId, Long roleId) {
         userService.addRole(userId, roleId);

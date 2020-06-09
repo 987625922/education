@@ -11,15 +11,14 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Setter
-@Getter
+@Data
 @Entity
-@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "role")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 9205096691157148000L;

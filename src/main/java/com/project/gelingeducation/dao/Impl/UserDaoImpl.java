@@ -16,15 +16,7 @@ import java.util.List;
 
 @Slf4j
 @Repository
-public class UserDaoImpl implements IUserDao {
-
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    public Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
-
+public class UserDaoImpl extends BaseDao implements IUserDao {
 
     @Override
     public PageResult getLists(Integer currentPage, Integer pageSize) {

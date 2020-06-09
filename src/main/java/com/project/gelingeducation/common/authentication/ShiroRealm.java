@@ -16,6 +16,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -28,7 +29,12 @@ import java.util.Set;
 @Slf4j
 public class ShiroRealm extends AuthorizingRealm {
 
+    /**
+     * 不添加@Lazy会报错：
+     * Could not obtain transaction-synchronized Session for current thread
+     */
     @Autowired
+    @Lazy
     private IUserService userService;
 
     @Override
@@ -44,16 +50,14 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String token = (String) principals.getPrimaryPrincipal();
-        String username = JWTUtil.getUsername(token);
-        User user = userService.findUserByAccount(username);
+        User user = (User) principals.getPrimaryPrincipal();
 
         Set<String> stringRoleList = new HashSet<>();
         Set<String> stringPermissionList = new HashSet<>();
         Role role = user.getRole();
 
         stringRoleList.add(role.getName());
-        Set<Permission> permissionList = userService.findPermissionByUserId(user.getId());
+        Set<Permission> permissionList = role.getPermissions();
         for (Permission p : permissionList) {
             if (p != null) {
                 stringPermissionList.add(p.getPerms());

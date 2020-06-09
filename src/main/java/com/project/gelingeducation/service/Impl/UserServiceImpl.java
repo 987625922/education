@@ -21,7 +21,7 @@ import java.util.Set;
 
 @Slf4j
 @Service
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+@Transactional
 public class UserServiceImpl implements IUserService {
 
     @Autowired
