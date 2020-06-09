@@ -2,10 +2,9 @@ package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.common.exception.StatusEnum;
-import com.project.gelingeducation.common.utils.FileUtils;
 import com.project.gelingeducation.common.vo.UserPassVo;
 import com.project.gelingeducation.domain.User;
-import com.project.gelingeducation.service.IRedisCacheService;
+import com.project.gelingeducation.common.redis.servicr.IRedisCacheService;
 import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class RoleServiceImpl implements IRoleService {
 
     @Autowired
@@ -23,16 +23,17 @@ public class RoleServiceImpl implements IRoleService {
     private IPermissionService permissionService;
 
     @Override
-    @Transactional(readOnly = true)
     public Role findByRole(Long id) {
+
         return roleDao.findById(id);
     }
-
+    @Transactional
     @Override
     public void addRole(Role role) {
         roleDao.insert(role);
     }
 
+    @Transactional
     @Override
     public void addPermissionByIds(Long roleId, Long[] permissionIds) {
         Role role = roleDao.findById(roleId);
@@ -51,11 +52,13 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
+    @Transactional
     public void update(Role role) {
 
     }
 
     @Override
+    @Transactional
     public void delRoleById(Long id) {
         roleDao.delRoleById(id);
     }
@@ -76,6 +79,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
+    @Transactional
     public void delMoreRolesByIds(String roleIds) {
         roleDao.delByIds(roleIds);
     }
@@ -86,6 +90,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
+    @Transactional
     public void updateRoleAndPermission(Long id, String name, String remark,
                                         Long[] permissionIds) {
         Role role = roleDao.findById(id);

@@ -11,15 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class PermissionDaoImpl implements IPermissionDao {
-
-
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    public Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
+public class PermissionDaoImpl extends BaseDao implements IPermissionDao {
 
 
     @Override

@@ -9,13 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class TeacherServiceImpl implements ITeacherService {
 
     @Autowired
     private ITeacherDao teacherDao;
 
     @Override
+    @Transactional
     public Teacher addTeacher(Teacher teacher) {
         return teacherDao.insert(teacher);
     }
@@ -31,6 +32,7 @@ public class TeacherServiceImpl implements ITeacherService {
     }
 
     @Override
+    @Transactional
     public void delTeacher(Long id) {
         teacherDao.delete(id);
     }

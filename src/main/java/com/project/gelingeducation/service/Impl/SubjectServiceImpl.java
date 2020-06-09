@@ -14,19 +14,18 @@ import java.util.List;
 
 
 @Service
+@Transactional(readOnly = true)
 public class SubjectServiceImpl implements ISubjectService {
 
     @Autowired
     private ISubjectDao subjectDao;
 
     @Override
-    @Transactional(readOnly = true)
     public PageResult lists(Integer currentPage, Integer pageSize) {
         return subjectDao.lists(currentPage,pageSize);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Subject findById(Long id) {
         return subjectDao.findById(id);
     }

@@ -15,9 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
-@Transactional
+@Transactional(readOnly = true)
 @Service
 public class WebDataBeanServiceImpl implements IWebDataBeanService {
+
     @Autowired
     private IWebDataBeanDao webDataBeanDao;
     @Autowired
@@ -29,16 +30,19 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
     }
 
     @Override
+    @Transactional
     public void save(WebDataBean webDataBean) {
         webDataBeanDao.save(webDataBean);
     }
 
     @Override
+    @Transactional
     public void update(WebDataBean webDataBean) {
         webDataBeanDao.update(webDataBean);
     }
 
     @Override
+    @Transactional
     public void userLogin() {
         String ip = IPUtil.getIpAddr(HttpUtil.getHttpServletRequest());
         WebDataBean webDataBean = webDataBeanDao.getOnlyData();
@@ -68,5 +72,5 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         return webDataBeanDao.getOnlyData();
     }
 
-
 }
+

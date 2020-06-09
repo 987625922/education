@@ -1,4 +1,4 @@
-package com.project.gelingeducation.service;
+package com.project.gelingeducation.common.redis.servicr;
 
 import com.project.gelingeducation.domain.User;
 

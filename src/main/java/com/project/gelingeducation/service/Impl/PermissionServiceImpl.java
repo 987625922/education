@@ -10,12 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class PermissionServiceImpl implements IPermissionService {
 
     @Autowired
     private IPermissionDao permissionDao;
 
+    @Transactional
     @Override
     public void add(Permission permission) {
         permissionDao.insertPermission(permission);

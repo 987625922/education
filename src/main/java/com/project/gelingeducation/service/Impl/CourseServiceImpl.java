@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
-import java.util.Map;
 
 
 @Service
@@ -52,7 +51,7 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     @Transactional
-    public void update(Course course)  throws IllegalAccessException, InvocationTargetException {
+    public void update(Course course) throws IllegalAccessException, InvocationTargetException {
         course.setLastUpdateTime(new Date());
         courseDao.update(course);
     }

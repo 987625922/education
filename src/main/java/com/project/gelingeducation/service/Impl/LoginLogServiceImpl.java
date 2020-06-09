@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class LoginLogServiceImpl implements ILoginLogService {
 
     @Autowired
@@ -29,17 +29,18 @@ public class LoginLogServiceImpl implements ILoginLogService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<LoginLog> list() {
         return loginLogDao.list();
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public LoginLog getByUserId(Long uid) {
         return loginLogDao.getByUid(uid);
     }
 
+    @Transactional
     @Override
     public void getByUserIdLoginUpdate(Long uid) {
         LoginLog loginLog = loginLogDao.getByUid(uid);

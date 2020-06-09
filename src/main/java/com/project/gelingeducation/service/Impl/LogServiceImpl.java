@@ -9,7 +9,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +17,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 @Service
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+@Transactional(readOnly = true)
 public class LogServiceImpl implements ILogService {
 
     @Autowired
@@ -30,7 +29,7 @@ public class LogServiceImpl implements ILogService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void save(String username, String browser, String ip,
                      ProceedingJoinPoint joinPoint, Log log) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -75,11 +74,13 @@ public class LogServiceImpl implements ILogService {
         logDao.download(logs, response);
     }
 
+    @Transactional
     @Override
     public void delAllByError() {
         logDao.delAllByError();
     }
 
+    @Transactional
     @Override
     public void delAllByInfo() {
         logDao.delAllByInfo();

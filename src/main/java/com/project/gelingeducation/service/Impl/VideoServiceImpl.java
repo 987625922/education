@@ -12,19 +12,18 @@ import java.util.List;
 
 
 @Service
+@Transactional(readOnly = true)
 public class VideoServiceImpl implements IVideoService {
 
     @Autowired
     private IVideoDao videoDao;
 
     @Override
-    @Transactional(readOnly = true)
     public PageResult list(Integer currentPage, Integer pageSize) {
         return videoDao.list(currentPage, pageSize);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Video findById(Long id) {
         return videoDao.findById(id);
     }

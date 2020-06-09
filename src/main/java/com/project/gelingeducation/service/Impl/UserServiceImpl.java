@@ -21,7 +21,7 @@ import java.util.Set;
 
 @Slf4j
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class UserServiceImpl implements IUserService {
 
     @Autowired
@@ -37,7 +37,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public User register(User user) {
         if (userDao.findByPhone(user.getAccount()) == null) {
             user.setUserName("管理员");
@@ -56,7 +56,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public User addUser(User user) {
         if (user.getRole() == null) {
             user.setRole(roleService.findDefault());
@@ -107,7 +107,7 @@ public class UserServiceImpl implements IUserService {
      * @param coverImg
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void updateCoverImg(Long id, String coverImg) {
         userDao.updateCoverImg(id, coverImg);
     }
@@ -118,7 +118,7 @@ public class UserServiceImpl implements IUserService {
      * @param user
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void update(User user) {
         userDao.update(user);
     }
@@ -129,7 +129,7 @@ public class UserServiceImpl implements IUserService {
      * @param newPassword
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void updatePassword(Long id, String oldPassword, String newPassword) {
         User user = userDao.findById(id);
         if (user.getPassword().equals(MD5Util.encrypt(user.getAccount().toLowerCase(),
@@ -147,7 +147,7 @@ public class UserServiceImpl implements IUserService {
      * @param id
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void delUser(Long id) {
         userDao.delect(id);
     }
@@ -158,7 +158,7 @@ public class UserServiceImpl implements IUserService {
      * @param ids
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void delSelUser(String ids) {
         userDao.delSel(ids);
     }
@@ -224,7 +224,7 @@ public class UserServiceImpl implements IUserService {
      * @param roleId
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void addRole(Long userId, Long roleId) {
         User user = userDao.findById(userId);
         Role role = roleService.findByRole(roleId);
