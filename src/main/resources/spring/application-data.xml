@@ -73,13 +73,13 @@
     </bean>
 
     <!--                        redis                                -->
-    <!-- JedisPool资源池 -->
-    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+    <bean class="redis.clients.jedis.JedisPool" id="jedisPool">
         <constructor-arg name="host" value="${redis.host}"></constructor-arg>
         <constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>
         <constructor-arg name="port" value="${redis.port}"></constructor-arg>
     </bean>
 
+    <!--            spring data          -->
     <!-- JedisPool资源池设置 -->
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxIdle" value="${redis.maxIdle}"/>

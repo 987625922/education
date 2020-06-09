@@ -6,5 +6,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Cache {
     //过期时间
-    long time() default 30*60;
+    int time() default 30*60;
 }

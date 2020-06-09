@@ -1,5 +1,6 @@
 package com.project.gelingeducation.common.redis;
 
+import com.project.gelingeducation.common.exception.AllException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
@@ -34,7 +35,7 @@ public class JedisCacheClient {
     /**
      * (存入redis数据)
      */
-    public void expire(String key, String value, Integer times) {
+    public void set(String key, String value, Integer times) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -79,6 +80,20 @@ public class JedisCacheClient {
             this.close(jedis);
         }
         return null;
+    }
+
+    public boolean containKey(String key){
+        boolean b;
+        Jedis jedis = null;
+        try{
+            jedis = jedisPool.getResource();
+            b = jedis.exists(key);
+            return b;
+        }catch (Exception e){
+            return false;
+        }finally {
+            close(jedis);
+        }
     }
 
     /**

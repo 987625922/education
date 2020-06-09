@@ -32,6 +32,7 @@ public class CourseController {
         return JsonData.buildSuccess(courseService.queryAll(currentPage, pageSize));
     }
 
+    @Cache
     @Log("通过id获取单个课程")
     @RequestMapping(value = "/find_by_id")
     public Object findById(Long id) throws Exception {
