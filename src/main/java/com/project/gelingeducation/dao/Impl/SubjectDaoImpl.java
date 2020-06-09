@@ -18,7 +18,7 @@ import java.util.List;
 public class SubjectDaoImpl extends BaseDao implements ISubjectDao {
 
     @Override
-    public PageResult lists(Integer currentPage,Integer pageSize) {
+    public PageResult queryAll(Integer currentPage,Integer pageSize) {
         Session session = getSession();
 
         String hql = "select count(*) from Subject";
@@ -40,6 +40,11 @@ public class SubjectDaoImpl extends BaseDao implements ISubjectDao {
         pageResult.setPageSize(pageSize);
 
         return pageResult;
+    }
+
+    @Override
+    public List<Subject> queryAll() {
+        return getSession().createQuery("FROM Subject").list();
     }
 
     @Override

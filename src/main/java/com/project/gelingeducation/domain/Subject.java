@@ -1,6 +1,8 @@
 package com.project.gelingeducation.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +15,8 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "subject")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Subject implements Serializable {
 
     @Id
@@ -22,7 +26,9 @@ public class Subject implements Serializable {
     private String name;
     @Column(name = "big_img")
     private String bigImg;
-    @ManyToMany(mappedBy = "teachers",fetch = FetchType.EAGER)
+
+    @ManyToMany(mappedBy = "teachers",
+            fetch = FetchType.EAGER)
     @JsonBackReference
     private Set<Course> courses = new HashSet<>();
 

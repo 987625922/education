@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service;
 
+import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.domain.Permission;
 import com.project.gelingeducation.domain.Role;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +34,9 @@ public class RoleTest {
         role.setName("editor");
         role.setIsDefault(1);
         Permission permission = new Permission();
-        permission.setId(165L);
+        permission.setId(191L);
         permission.setName("用户编辑");
+        permission.setPerms("user:root");
         role.getPermissions().add(permission);
         roleService.addRole(role);
 
@@ -68,7 +70,8 @@ public class RoleTest {
 
     @Test
     public void list() {
-        for (Role role : roleService.list()) {
+        PageResult pageResult = (PageResult)roleService.queryAll(1,3);
+        for (Role role : (List<Role>)pageResult.getLists()) {
             log.info("==>" + role);
         }
     }

@@ -1,6 +1,8 @@
 package com.project.gelingeducation.controller;
 
 
+import com.project.gelingeducation.common.annotation.Cache;
+import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.domain.Course;
 import com.project.gelingeducation.service.ICourseService;
@@ -22,65 +24,54 @@ public class CourseController {
     @Autowired
     private ICourseService courseService;
 
-    /**
-     * 获取所有课程
-     *
-     * @return
-     */
+    @Cache
+    @Log("获取所有课程")
     @RequestMapping(value = "/lists")
-    public Object lists(Integer currentPage, Integer pageSize) {
-        return JsonData.buildSuccess(courseService.getLists(currentPage, pageSize));
+    public Object lists(@RequestParam(required = false) Integer currentPage,
+                        @RequestParam(required = false) Integer pageSize) {
+        return JsonData.buildSuccess(courseService.queryAll(currentPage, pageSize));
     }
 
-    @RequestMapping(value = "/findall")
-    public Object findAll() throws Exception {
-        return JsonData.buildSuccess(courseService.findAll());
-    }
-
-    @RequestMapping(value = "/findbyid")
+    @Log("通过id获取单个课程")
+    @RequestMapping(value = "/find_by_id")
     public Object findById(Long id) throws Exception {
         return JsonData.buildSuccess(courseService.findById(id));
     }
 
-    /**
-     * 添加
-     *
-     * @param course
-     * @return
-     */
+    @Log("添加课程")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object add(@RequestBody Course course) {
         courseService.insert(course);
         return JsonData.buildSuccess();
     }
 
-    @RequestMapping(value = "/delect")
-    public Object delect(Long id) {
+    @Log("通过id删除课程")
+    @RequestMapping(value = "/delete")
+    public Object delete(Long id) {
         courseService.delect(id);
         return JsonData.buildSuccess();
     }
 
+    @Log("更新课程")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Object update(@RequestBody Course course) throws InvocationTargetException, IllegalAccessException {
         courseService.update(course);
         return JsonData.buildSuccess();
     }
 
-    /**
-     * 批量删除课程
-     */
+
+    @Log("通过id批量删除课程")
     @RequiresPermissions("user:root")
-    @RequestMapping(value = "/batches_deletes")
+    @RequestMapping(value = "/batches_delete")
     public Object delMore(String ids) {
         courseService.batchesDeletes(ids);
         return JsonData.buildSuccess();
     }
 
-    /**
-     * 按名字搜索
-     */
-    @RequestMapping(value = "/sel_by_name_or_status_price_teacher")
-    public Object selByNameOrStatusOrPriceOrTeacher(@RequestParam(required = false) String name,
+
+    @Log("多参数搜索课程")
+    @RequestMapping(value = "/find_by_name_status_price_teacher")
+    public Object findByNameOrStatusOrPriceOrTeacher(@RequestParam(required = false) String name,
                                                     @RequestParam(required = false)Integer status,
                                                     @RequestParam(required = false)Double startPrice,
                                                     @RequestParam(required = false)Double endPrice,

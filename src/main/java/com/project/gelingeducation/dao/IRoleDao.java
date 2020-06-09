@@ -12,11 +12,11 @@ public interface IRoleDao {
 
     Role findById(Long id);
 
-    List<Role> list();
+    List<Role> queryAll();
 
     void delRoleById(Long id);
 
-    PageResult getRolePageList(Integer currentPage, Integer pageSize);
+    PageResult queryAll(Integer currentPage, Integer pageSize);
 
     Role findDefault();
 

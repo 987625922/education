@@ -76,7 +76,7 @@ public class SpringTest {
 
     @Test
     public void test5() {
-        System.out.println("===>> " + service.getLists(0, 3));
+        System.out.println("===>> " + service.queryAll(0, 3));
     }
 
 

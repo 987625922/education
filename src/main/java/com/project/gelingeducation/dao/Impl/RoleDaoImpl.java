@@ -33,7 +33,7 @@ public class RoleDaoImpl extends BaseDao implements IRoleDao {
     }
 
     @Override
-    public List<Role> list() {
+    public List<Role> queryAll() {
         return getSession().createQuery("from Role").list();
     }
 
@@ -45,7 +45,7 @@ public class RoleDaoImpl extends BaseDao implements IRoleDao {
     }
 
     @Override
-    public PageResult getRolePageList(Integer currentPage, Integer pageSize) {
+    public PageResult queryAll(Integer currentPage, Integer pageSize) {
         Session session = getSession();
 
         String hql = "select count(*) from Role";//此处的Product是对象

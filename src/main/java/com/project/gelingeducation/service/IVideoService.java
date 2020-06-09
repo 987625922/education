@@ -1,13 +1,10 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.domain.Video;
-
-import java.util.List;
 
 public interface IVideoService {
 
-    PageResult list(Integer currentPage, Integer pageSize);
+    Object queryAll(Integer currentPage, Integer pageSize);
 
     Video findById(Long id);
 

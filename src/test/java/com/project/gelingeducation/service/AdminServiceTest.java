@@ -30,7 +30,7 @@ public class AdminServiceTest {
         user.setAccount("123456");
         user.setPassword("123456");
         Role role = new Role();
-        role.setId(186L);
+        role.setId(193L);
         user.setRole(role);
         log.debug("findById获取的结果：" + userservice.addUser(user));
 
@@ -79,7 +79,7 @@ public class AdminServiceTest {
 
     @Test
     public void lists() {
-        PageResult bean = userservice.getLists(1, 3);
+        PageResult bean = (PageResult) userservice.queryAll(1, 3);
         List<User> users = (List<User>) bean.getLists();
         for (User user : users) {
             log.debug("==>  " + user);

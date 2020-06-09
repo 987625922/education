@@ -42,7 +42,7 @@ public class LoginLogServiceTest {
 
     @Test
     public void test1() {
-        List<LoginLog> list = loginLogService.list();
+        List<LoginLog> list = (List<LoginLog>) loginLogService.queryAll(1,3);
         for (int i = 0; i < list.size(); i++) {
             log.debug("==>" + list.get(i).getLoginTime());
         }

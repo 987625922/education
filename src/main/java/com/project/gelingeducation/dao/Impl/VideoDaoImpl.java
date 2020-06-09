@@ -16,7 +16,7 @@ import java.util.List;
 public class VideoDaoImpl extends BaseDao implements IVideoDao {
 
     @Override
-    public PageResult list(Integer currentPage, Integer pageSize) {
+    public PageResult queryAll(Integer currentPage, Integer pageSize) {
         Session session = getSession();
 
         String hql = "select count(*) from Video";//此处的Product是对象
@@ -38,6 +38,11 @@ public class VideoDaoImpl extends BaseDao implements IVideoDao {
         pageResult.setPageSize(pageSize);
 
         return pageResult;
+    }
+
+    @Override
+    public List<Video> queryAll() {
+        return getSession().createQuery("FROM Video").list();
     }
 
     @Override

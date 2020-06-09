@@ -19,7 +19,7 @@ import java.util.List;
 public class UserDaoImpl extends BaseDao implements IUserDao {
 
     @Override
-    public PageResult getLists(Integer currentPage, Integer pageSize) {
+    public PageResult queryAll(Integer currentPage, Integer pageSize) {
         Session session = getSession();
 
         String hql = "select count(*) from User";//此处的Product是对象
@@ -41,6 +41,11 @@ public class UserDaoImpl extends BaseDao implements IUserDao {
         pageResult.setPageSize(pageSize);
 
         return pageResult;
+    }
+
+    @Override
+    public List<User> queryAll() {
+        return getSession().createQuery("FROM User").list();
     }
 
     @Override

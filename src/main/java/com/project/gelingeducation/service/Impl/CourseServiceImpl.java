@@ -26,7 +26,7 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public Object findAll() {
-        return courseDao.findAll();
+        return courseDao.queryAll();
     }
 
     @Override
@@ -65,11 +65,11 @@ public class CourseServiceImpl implements ICourseService {
      * @return
      */
     @Override
-    public Object getLists(Integer currentPage, Integer pageSize) {
-        if (currentPage != -1 && pageSize != -1) {
-            return courseDao.getLists(currentPage, pageSize);
+    public Object queryAll(Integer currentPage, Integer pageSize) {
+        if (currentPage != null && pageSize != null) {
+            return courseDao.queryAll(currentPage, pageSize);
         } else {
-            return courseDao.findAll();
+            return courseDao.queryAll();
         }
     }
 

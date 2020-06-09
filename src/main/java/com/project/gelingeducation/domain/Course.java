@@ -21,7 +21,8 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "course")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Course implements Serializable {
 
     private static final long serialVersionUID = 2726599374475533725L;

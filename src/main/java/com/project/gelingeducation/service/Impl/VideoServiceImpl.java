@@ -1,14 +1,11 @@
 package com.project.gelingeducation.service.Impl;
 
-import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.IVideoDao;
 import com.project.gelingeducation.domain.Video;
 import com.project.gelingeducation.service.IVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 
 @Service
@@ -19,8 +16,12 @@ public class VideoServiceImpl implements IVideoService {
     private IVideoDao videoDao;
 
     @Override
-    public PageResult list(Integer currentPage, Integer pageSize) {
-        return videoDao.list(currentPage, pageSize);
+    public Object queryAll(Integer currentPage, Integer pageSize) {
+        if (currentPage != null && pageSize != null) {
+            return videoDao.queryAll(currentPage, pageSize);
+        } else {
+            return videoDao.queryAll();
+        }
     }
 
     @Override

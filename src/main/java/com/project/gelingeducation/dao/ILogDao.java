@@ -15,9 +15,9 @@ public interface ILogDao {
      * 分页查询
      * @return /
      */
-    PageResult getList(Integer currentPage, Integer pageSize);
+    PageResult queryAll(Integer currentPage, Integer pageSize);
 
-    List getList();
+    List queryAll();
 
     /**
      * 保存日志数据

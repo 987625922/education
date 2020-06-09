@@ -13,7 +13,6 @@ import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
@@ -96,8 +95,12 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public PageResult getLists(Integer currentPage, Integer pageSize) {
-        return userDao.getLists(currentPage, pageSize);
+    public Object queryAll(Integer currentPage, Integer pageSize) {
+        if (currentPage != null && pageSize != null) {
+            return userDao.queryAll(currentPage, pageSize);
+        }else {
+            return userDao.queryAll();
+        }
     }
 
     /**

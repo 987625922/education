@@ -36,12 +36,12 @@ public class TestController {
      * @param userName
      * @return
      */
+    @Log("注解cache测试")
     @Cache
     @RequestMapping(path = "/get5/{userName}/info", method = RequestMethod.GET)
     @ResponseBody
     public Object req6(@PathVariable(name = "userName") String userName) {
         return "输入的数据为："+userName;
-//        return JsonData.buildSuccess(userName);
     }
 
 }

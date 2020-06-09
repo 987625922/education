@@ -6,7 +6,9 @@ import com.project.gelingeducation.domain.Subject;
 import java.util.List;
 
 public interface ISubjectDao {
-    PageResult lists(Integer currentPage,Integer pageSize);
+    PageResult queryAll(Integer currentPage,Integer pageSize);
+
+    List<Subject> queryAll();
 
     Subject findById(Long id);
 

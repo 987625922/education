@@ -16,7 +16,7 @@ public interface ILogService {
      *
      * @return /
      */
-    PageResult queryAll(Integer currentPage, Integer pageSize);
+    Object queryAll(Integer currentPage, Integer pageSize);
 
 
     /**

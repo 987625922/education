@@ -1,19 +1,17 @@
 package com.project.gelingeducation.controller;
 
+import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.common.exception.StatusEnum;
+import com.project.gelingeducation.common.redis.servicr.IRedisCacheService;
 import com.project.gelingeducation.common.vo.UserPassVo;
 import com.project.gelingeducation.domain.User;
-import com.project.gelingeducation.common.redis.servicr.IRedisCacheService;
 import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -41,11 +39,14 @@ public class UserController {
     @Autowired
     private IRedisCacheService cacheService;
 
-    /**
-     * 获取用户信息接口
-     *
-     * @return
-     */
+    @Log("获取所有用户")
+    @RequestMapping(value = "/lists")
+    public Object queryAll(@RequestParam(required = false) Integer currentPage,
+                           @RequestParam(required = false) Integer pageSize) {
+        return JsonData.buildSuccess(userService.queryAll(currentPage, pageSize));
+    }
+
+    @Log("获取用户信息")
     @RequestMapping(value = "/get_info")
     public Object getInfo() throws Exception {
         User shiroUser = (User) SecurityUtils.getSubject().getPrincipal();
@@ -57,11 +58,7 @@ public class UserController {
         return JsonData.buildSuccess(user);
     }
 
-    /**
-     * 用户头像上传
-     * userid 用户id
-     * files 图片
-     */
+    @Log("上传用户头像")
     @RequestMapping("/upload_icon")
     public Object springUpload(HttpServletRequest request)
             throws IllegalStateException, IOException {
@@ -95,13 +92,8 @@ public class UserController {
         return JsonData.buildSuccess(path);
     }
 
-    /**
-     * 编辑个人信息
-     *
-     * @param user 个人信息
-     * @return
-     */
-    @RequestMapping(value = "/edit_info", method = RequestMethod.POST)
+    @Log("更新用户")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Object update(@RequestBody User user) throws Exception {
         User shiroUser = (User) SecurityUtils.getSubject().getPrincipal();
         user.setId(shiroUser.getId());
@@ -110,11 +102,7 @@ public class UserController {
         return JsonData.buildSuccess();
     }
 
-    /**
-     * 修改密码
-     *
-     * @return
-     */
+    @Log("修改密码")
     @RequestMapping(value = "/update_password", method = RequestMethod.POST)
     public Object updatePassword(@RequestBody UserPassVo userPassVo) {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
@@ -123,65 +111,41 @@ public class UserController {
         return JsonData.buildSuccess();
     }
 
-    /**
-     * 获取所有管理员
-     *
-     * @return
-     */
-    @RequestMapping(value = "/lists")
-    public Object lists(Integer currentPage, Integer pageSize) {
-        return JsonData.buildSuccess(userService.getLists(currentPage, pageSize));
-    }
 
-    /**
-     * 添加用户
-     *
-     * @param user
-     * @return
-     */
+    @Log("添加用户")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object addUser(@RequestBody User user) {
         return JsonData.buildSuccess(userService.addUser(user));
     }
 
-    /**
-     * 删除用户
-     *
-     * @param id
-     * @return
-     */
+    @Log("删除用户")
     @RequiresPermissions("user:root")
-    @RequestMapping(value = "/del")
-    public Object deluser(Long id) {
+    @RequestMapping(value = "/delete")
+    public Object delete(Long id) {
         userService.delUser(id);
         return JsonData.buildSuccess();
     }
 
-    /**
-     * 批量删除客户
-     */
+    @Log("批量删除用户")
     @RequiresPermissions("user:root")
-    @RequestMapping(value = "/batches_deletes")
+    @RequestMapping(value = "/batches_delete")
     public Object delMoreUser(String ids) {
         userService.delSelUser(ids);
         return JsonData.buildSuccess();
     }
 
-    /**
-     * 按名字搜索
-     */
-    @RequestMapping(value = "/sel_by_name")
-    public Object selByName(String name, Integer currentPage, Integer pageSize)
+
+    @Log("按用户名搜索用户")
+    @RequestMapping(value = "/find_by_name")
+    public Object findByName(String name, Integer currentPage, Integer pageSize)
             throws UnsupportedEncodingException {
-        return JsonData.buildSuccess(userService.selbyname(URLDecoder.decode(name,"UTF-8"),
+        return JsonData.buildSuccess(userService.selbyname(URLDecoder.decode(name, "UTF-8"),
                 currentPage, pageSize));
     }
 
-    /**
-     * 添加身份
-     */
+    @Log("通过用户id给用户添加身份")
     @RequiresPermissions("user:root")
-    @RequestMapping(value = "/add_roles", method = RequestMethod.POST)
+    @RequestMapping(value = "/add_roles_binding_user_id")
     public Object addRole(Long userId, Long roleId) {
         userService.addRole(userId, roleId);
         return JsonData.buildSuccess();

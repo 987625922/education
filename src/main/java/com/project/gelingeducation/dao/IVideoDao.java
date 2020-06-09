@@ -6,7 +6,9 @@ import com.project.gelingeducation.domain.Video;
 import java.util.List;
 
 public interface IVideoDao {
-    PageResult list(Integer currentPage, Integer pageSize);
+    PageResult queryAll(Integer currentPage, Integer pageSize);
+
+    List<Video> queryAll();
 
     Video findById(Long id);
 

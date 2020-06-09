@@ -1,16 +1,15 @@
 package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.common.utils.HttpUtil;
+import com.project.gelingeducation.common.utils.IPUtil;
 import com.project.gelingeducation.dao.ILoginLogDao;
 import com.project.gelingeducation.domain.LoginLog;
 import com.project.gelingeducation.service.ILoginLogService;
-import com.project.gelingeducation.common.utils.IPUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -28,11 +27,16 @@ public class LoginLogServiceImpl implements ILoginLogService {
         loginLogDao.insert(loginLog);
     }
 
+
     @Override
-    @Transactional
-    public List<LoginLog> list() {
-        return loginLogDao.list();
+    public Object queryAll(Integer currentPage, Integer pageSize) {
+        if (currentPage != null && pageSize != null) {
+            return loginLogDao.queryAll(currentPage, pageSize);
+        } else {
+            return loginLogDao.queryAll();
+        }
     }
+
 
     @Override
     @Transactional

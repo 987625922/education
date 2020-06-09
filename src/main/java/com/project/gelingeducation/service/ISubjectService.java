@@ -5,7 +5,7 @@ import com.project.gelingeducation.domain.Subject;
 
 public interface ISubjectService {
 
-    PageResult lists(Integer currentPage, Integer pageSize);
+    Object queryAll(Integer currentPage, Integer pageSize);
 
     Subject findById(Long id);
 

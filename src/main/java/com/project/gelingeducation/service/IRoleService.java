@@ -15,13 +15,11 @@ public interface IRoleService {
 
     void addPermissionByIds(Long roleId,Long[] permissionIds);
 
-    List<Role> list();
-
     void update(Role role);
 
     void delRoleById(Long id);
 
-    PageResult getRolePageList(Integer currentPage, Integer pageSize);
+    Object queryAll(Integer currentPage, Integer pageSize);
 
     Role findDefault();
 

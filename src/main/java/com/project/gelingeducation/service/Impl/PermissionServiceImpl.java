@@ -28,8 +28,12 @@ public class PermissionServiceImpl implements IPermissionService {
     }
 
     @Override
-    public List<Permission> list() {
-        return permissionDao.list();
+    public Object queryAll(Integer currentPage,Integer pageSize) {
+        if (currentPage != null && pageSize != null){
+            return permissionDao.queryAll(currentPage, pageSize);
+        }else {
+            return permissionDao.queryAll();
+        }
     }
 
     @Override

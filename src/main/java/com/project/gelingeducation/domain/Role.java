@@ -27,7 +27,7 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name", length = 24, nullable = false)
+    @Column(name = "name", length = 24)
     private String name;
 
     //创建时间
@@ -39,7 +39,7 @@ public class Role implements Serializable {
     @Column(name = "remark")
     private String remark;
     //0为不是默认注册时的身份,1为默认
-    @Column(name = "is_default")
+    @Column(name = "is_default", nullable = false)
     private Integer isDefault = 0;
 
     @OneToMany(mappedBy = "role")

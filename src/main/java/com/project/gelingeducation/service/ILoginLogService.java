@@ -8,7 +8,7 @@ public interface ILoginLogService {
 
     void insert(LoginLog loginLog);
 
-    List<LoginLog> list();
+    Object queryAll(Integer currentPage,Integer pageSize);
 
     LoginLog getByUserId(Long uid);
 

@@ -4,8 +4,12 @@ import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.common.dto.PageResult;
 
+import java.util.List;
+
 public interface IUserDao {
-    PageResult getLists(Integer currentPage, Integer pageSize);
+    PageResult queryAll(Integer currentPage, Integer pageSize);
+
+    List<User> queryAll();
 
     User findById(Long id);
 

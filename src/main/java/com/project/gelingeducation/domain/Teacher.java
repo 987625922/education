@@ -16,7 +16,8 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "teacher")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Teacher implements Serializable {
 
     private static final long serialVersionUID = 1595117855604940548L;
@@ -50,11 +51,11 @@ public class Teacher implements Serializable {
     @Column(name = "modify_time")
     private Date modifyTime;
 
-    @ManyToMany(mappedBy = "teachers")
+    @ManyToMany(mappedBy = "teachers", fetch = FetchType.EAGER)
     private Set<Course> courses = new HashSet<>();
 
     //mappdBy 映射的是哪一个属性
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
     private Set<Video> videos = new HashSet<>();
 
 

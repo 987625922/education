@@ -16,7 +16,7 @@ import java.util.List;
 public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
     @Override
-    public List findAll() {
+    public List queryAll() {
         return getSession().createQuery("from Course").getResultList();
     }
 
@@ -46,7 +46,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
 
     @Override
-    public PageResult getLists(Integer currentPage, Integer pageSize) {
+    public PageResult queryAll(Integer currentPage, Integer pageSize) {
         Session session = getSession();
 
         String hql = "select count(*) from Course";

@@ -20,7 +20,7 @@ public interface ICourseService {
 
     void update(Course course)  throws IllegalAccessException, InvocationTargetException;
 
-    Object getLists(Integer currentPage, Integer pageSize);
+    Object queryAll(Integer currentPage, Integer pageSize);
 
     void batchesDeletes(String ids);
 

@@ -17,7 +17,8 @@ import java.util.Date;
 @Builder
 @Entity
 @Table(name = "video")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Video implements Serializable {
 
     @Id
@@ -38,7 +39,8 @@ public class Video implements Serializable {
 
     @Column(name = "teacher_id",insertable = false,updatable = false)
     private Long teacherId;
-    @ManyToOne(targetEntity = Teacher.class)
+
+    @ManyToOne(targetEntity = Teacher.class,fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id",referencedColumnName = "id") //视频表维护老师的外键
     private Teacher teacher;
 

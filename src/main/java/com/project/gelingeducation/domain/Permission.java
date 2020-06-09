@@ -44,7 +44,7 @@ public class Permission implements Serializable {
     /**
      * 权限标识
      */
-    @Column(name = "perms",length = 12)
+    @Column(name = "perms",length = 12, nullable = false)
     private String perms;
 
     @ManyToMany(mappedBy = "permissions", fetch = FetchType.EAGER)

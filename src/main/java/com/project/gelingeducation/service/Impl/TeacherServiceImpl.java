@@ -27,8 +27,12 @@ public class TeacherServiceImpl implements ITeacherService {
     }
 
     @Override
-    public PageResult getLists(Integer currentPage, Integer pageSize) {
-        return teacherDao.getLists(currentPage, pageSize);
+    public Object queryAll(Integer currentPage, Integer pageSize) {
+        if (currentPage != null && pageSize != null) {
+            return teacherDao.queryAll(currentPage, pageSize);
+        }else {
+            return teacherDao.queryAll();
+        }
     }
 
     @Override

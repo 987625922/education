@@ -25,8 +25,14 @@ public class TeacherDaoImpl extends BaseDao implements ITeacherDao {
         return getSession().get(Teacher.class, id);
     }
 
+
     @Override
-    public PageResult getLists(Integer currentPage, Integer pageSize) {
+    public List<Teacher> queryAll() {
+        return getSession().createQuery("FROM Teacher").list();
+    }
+
+    @Override
+    public PageResult queryAll(Integer currentPage, Integer pageSize) {
         Session session = getSession();
 
         String hql = "select count(*) from Teacher";

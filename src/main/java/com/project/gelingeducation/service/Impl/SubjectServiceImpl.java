@@ -21,8 +21,12 @@ public class SubjectServiceImpl implements ISubjectService {
     private ISubjectDao subjectDao;
 
     @Override
-    public PageResult lists(Integer currentPage, Integer pageSize) {
-        return subjectDao.lists(currentPage,pageSize);
+    public Object queryAll(Integer currentPage, Integer pageSize) {
+        if (currentPage != null && pageSize != null) {
+            return subjectDao.queryAll(currentPage, pageSize);
+        }else {
+            return subjectDao.queryAll();
+        }
     }
 
     @Override
