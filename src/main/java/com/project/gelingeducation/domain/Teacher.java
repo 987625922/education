@@ -1,10 +1,9 @@
 package com.project.gelingeducation.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -17,6 +16,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "teacher")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Teacher implements Serializable {
 
     private static final long serialVersionUID = 1595117855604940548L;
@@ -50,25 +50,12 @@ public class Teacher implements Serializable {
     @Column(name = "modify_time")
     private Date modifyTime;
 
-    @ManyToMany(mappedBy = "teachers",fetch = FetchType.EAGER)
-    @JsonBackReference
+    @ManyToMany(mappedBy = "teachers")
     private Set<Course> courses = new HashSet<>();
 
     //mappdBy 映射的是哪一个属性
-    @OneToMany(targetEntity = Video.class,mappedBy = "teacher"
-            ,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "teacher")
     private Set<Video> videos = new HashSet<>();
 
 
-    @Override
-    public String toString() {
-        return "Teacher{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", bigImg='" + bigImg + '\'' +
-                ", remark='" + remark + '\'' +
-                ", createTime=" + createTime +
-                ", modifyTime=" + modifyTime +
-                '}';
-    }
 }

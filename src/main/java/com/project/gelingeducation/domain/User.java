@@ -1,5 +1,7 @@
 package com.project.gelingeducation.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +31,7 @@ import java.util.Date;
 @Table(name = "user")
 @Setter
 @Getter
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User implements Serializable {
 
     private static final long serialVersionUID = -218595055003268321L;
@@ -63,28 +66,12 @@ public class User implements Serializable {
     //修改时间
     @Column(name = "modify_time")
     private Date modifyTime;
+
+    @Column(name = "role_id",insertable = false,updatable = false)
+    private Long roleId;
     //身份列表
-//    @ManyToMany(targetEntity = Role.class, mappedBy = "users")
-//    @JsonIgnore
-//    private Set<Role> roles = new HashSet<>();
     @ManyToOne(targetEntity = Role.class)
-    @JoinColumn(name = "role_id")//表示这个表在维护外键
+    @JoinColumn(name = "role_id",referencedColumnName = "id")//表示这个表在维护外键
     private Role role;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", account='" + account + '\'' +
-                ", password='" + password + '\'' +
-                ", userName='" + userName + '\'' +
-                ", coverImg='" + coverImg + '\'' +
-                ", eMail='" + eMail + '\'' +
-                ", sex=" + sex +
-                ", note='" + note + '\'' +
-                ", status=" + status +
-                ", createTime=" + createTime +
-                ", modifyTime=" + modifyTime +
-                '}';
-    }
 }

@@ -1,6 +1,7 @@
 package com.project.gelingeducation.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -14,9 +15,11 @@ import java.util.Set;
 @Getter
 @Entity
 @ToString
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "role")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 9205096691157148000L;
@@ -38,16 +41,14 @@ public class Role implements Serializable {
     private String remark;
     //0为不是默认注册时的身份,1为默认
     @Column(name = "is_default")
-    private int isDefault = 0;
+    private Integer isDefault = 0;
 
-    @OneToMany(targetEntity = User.class, mappedBy = "role"
-            , cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnore
+    @OneToMany(mappedBy = "role")
     private Set<User> users = new HashSet<>();
 
 
     @ManyToMany(targetEntity = Permission.class
-            , cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+            ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "t_role_permission",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id"))

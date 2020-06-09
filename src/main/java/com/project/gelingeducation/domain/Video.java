@@ -1,6 +1,8 @@
 package com.project.gelingeducation.domain;
 //
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,6 +17,7 @@ import java.util.Date;
 @Builder
 @Entity
 @Table(name = "video")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Video implements Serializable {
 
     @Id
@@ -33,8 +36,10 @@ public class Video implements Serializable {
     @Column(name = "course_id")
     private Long courseId;
 
+    @Column(name = "teacher_id",insertable = false,updatable = false)
+    private Long teacherId;
     @ManyToOne(targetEntity = Teacher.class)
-    @JoinColumn(name = "teacher_id") //视频表维护老师的外键
+    @JoinColumn(name = "teacher_id",referencedColumnName = "id") //视频表维护老师的外键
     private Teacher teacher;
 
     /**

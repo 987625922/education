@@ -1,5 +1,7 @@
 package com.project.gelingeducation.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +21,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "course")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Course implements Serializable {
 
     private static final long serialVersionUID = 2726599374475533725L;
