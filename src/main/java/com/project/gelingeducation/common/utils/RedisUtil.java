@@ -5,13 +5,13 @@ import org.aspectj.lang.JoinPoint;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 
-public class RedisUtils {
+public class RedisUtil {
 
     public static String getKeyForAop(JoinPoint joinPoint,
                                HttpServletRequest request) {
         //获取参数的序列化
         Object[] objects = joinPoint.getArgs();
-        String args = JsonUtils.jsonToString(objects[0]);
+        String args = JsonUtil.jsonToString(objects[0]);
         //获取请求url
         String url = request.getRequestURI();
         //获取请求的方法

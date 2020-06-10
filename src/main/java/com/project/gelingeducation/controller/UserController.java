@@ -3,7 +3,6 @@ package com.project.gelingeducation.controller;
 import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.common.exception.StatusEnum;
-import com.project.gelingeducation.common.redis.servicr.IRedisCacheService;
 import com.project.gelingeducation.common.vo.UserPassVo;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.service.IUserService;
@@ -36,9 +35,6 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-    @Autowired
-    private IRedisCacheService cacheService;
-
     @Log("获取所有用户")
     @RequestMapping(value = "/lists")
     public Object queryAll(@RequestParam(required = false) Integer currentPage,
@@ -48,13 +44,9 @@ public class UserController {
 
     @Log("获取用户信息")
     @RequestMapping(value = "/get_info")
-    public Object getInfo() throws Exception {
+    public Object getInfo() {
         User shiroUser = (User) SecurityUtils.getSubject().getPrincipal();
-        User user = cacheService.getUserById(shiroUser.getId());
-        if (user == null) {
-            user = userService.findById(shiroUser.getId());
-            cacheService.saveUser(user);
-        }
+        User user = userService.findById(shiroUser.getId());
         return JsonData.buildSuccess(user);
     }
 
@@ -79,7 +71,7 @@ public class UserController {
                 MultipartFile file = multiRequest.getFile(iter.next().toString());
                 if (file != null) {
                     path = System.getProperty("user.home") + "/.gelingeducation/file/tmp";
-//                    path = "D:/gelingeducation/admin/icon/" + time + userId + FileUtils.getSuffixName(file.getOriginalFilename());
+//                    path = "D:/gelingeducation/admin/icon/" + time + userId + FileUtil.getSuffixName(file.getOriginalFilename());
                     //上传
                     file.transferTo(new File(path));
                 }
@@ -98,7 +90,6 @@ public class UserController {
         User shiroUser = (User) SecurityUtils.getSubject().getPrincipal();
         user.setId(shiroUser.getId());
         userService.update(user);
-        cacheService.saveUser(user);
         return JsonData.buildSuccess();
     }
 

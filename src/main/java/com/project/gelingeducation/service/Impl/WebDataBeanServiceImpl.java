@@ -1,7 +1,6 @@
 package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.common.utils.HttpUtil;
-import com.project.gelingeducation.common.utils.IPUtil;
 import com.project.gelingeducation.dao.ILoginLogDao;
 import com.project.gelingeducation.dao.IWebDataBeanDao;
 import com.project.gelingeducation.domain.LoginLog;
@@ -44,7 +43,7 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
     @Override
     @Transactional
     public void userLogin() {
-        String ip = IPUtil.getIpAddr(HttpUtil.getHttpServletRequest());
+        String ip = HttpUtil.getCityInfo(HttpUtil.getIp(HttpUtil.getHttpServletRequest()));
         WebDataBean webDataBean = webDataBeanDao.getOnlyData();
         if (webDataBean == null) {
             webDataBean = new WebDataBean();

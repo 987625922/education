@@ -3,12 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context.xsd
 
-     http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+     http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd"
 >
     <context:component-scan base-package="com.project.gelingeducation">
     </context:component-scan>
@@ -18,6 +19,8 @@
     <!-- 启动AspectJ自动代理,即基于注解的aop使用-->
     <aop:aspectj-autoproxy expose-proxy="true">
     </aop:aspectj-autoproxy>
+    <!-- 开启@Cache注解 -->
+    <cache:annotation-driven/>
 
     <!--                         hibernate                                -->
     <bean id="transactionManager"
@@ -73,20 +76,40 @@
     </bean>
 
     <!--                        redis                                -->
-    <bean class="redis.clients.jedis.JedisPool" id="jedisPool">
-        <constructor-arg name="host" value="${redis.host}"></constructor-arg>
-        <constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>
-        <constructor-arg name="port" value="${redis.port}"></constructor-arg>
-    </bean>
-
-    <!--            spring data          -->
-    <!-- JedisPool资源池设置 -->
-    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxIdle" value="${redis.maxIdle}"/>
         <property name="maxTotal" value="${redis.maxActive}"/>
         <property name="maxWaitMillis" value="${redis.maxWait}"/>
         <property name="testOnBorrow" value="${redis.testOnBorrowconfig}"/>
         <property name="blockWhenExhausted" value="${redis.blockWhenExhausted}"/>
+    </bean>
+
+    <!--获取redis的连接工厂-->
+    <bean id="jedisConnectionFactory"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.pass}"
+          p:pool-config-ref="poolConfig"
+    />
+
+    <!--获取redisTemplate,template需要redis连接工厂-->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+    </bean>
+    <!--  redis缓存的spring cache manager-->
+    <bean id="cacheManager"
+          class="com.project.gelingeducation.common.cache.RedisCacheManager">
+        <property name="caches">
+            <set>
+                <bean class="com.project.gelingeducation.common.cache.RedisCache"
+                      p:name="cache"/>
+            </set>
+        </property>
     </bean>
 
     <!--                        common                             -->

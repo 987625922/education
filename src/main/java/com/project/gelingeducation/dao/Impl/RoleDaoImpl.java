@@ -1,7 +1,7 @@
 package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.common.utils.BeanUtils;
+import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.dao.IRoleDao;
 import com.project.gelingeducation.domain.Permission;
 import com.project.gelingeducation.domain.Role;
@@ -109,7 +109,7 @@ public class RoleDaoImpl extends BaseDao implements IRoleDao {
     public void update(Role role) {
         Session session = getSession();
         Role findRole = session.get(Role.class, role.getId());
-        BeanUtils.copyPropertiesIgnoreNull(role, findRole);
+        BeanUtil.copyPropertiesIgnoreNull(role, findRole);
         session.update(findRole);
     }
 

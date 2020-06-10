@@ -1,16 +1,14 @@
 package com.project.gelingeducation.common.authentication;
 
 import com.project.gelingeducation.common.dto.JsonData;
-import com.project.gelingeducation.common.utils.JsonUtils;
+import com.project.gelingeducation.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -32,7 +30,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();
 
-    //不用登陆就可以访问的接口，多个用,号隔开
+    //不用登陆就可以访问的接口
     private String annonUrl = "/web/login,/web/register,/api/test/**";
 
     /**
@@ -133,7 +131,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         httpResponse.setCharacterEncoding("utf-8");
         httpResponse.setContentType("application/json; charset=utf-8");
         try (PrintWriter out = httpResponse.getWriter()) {
-            String responseJson = JsonUtils.jsonToString(JsonData.buildError("用户未登录",
+            String responseJson = JsonUtil.jsonToString(JsonData.buildError("用户未登录",
                     -103));
             out.print(responseJson);
         } catch (IOException e) {

@@ -7,7 +7,7 @@ import java.util.Base64;
 /**
  * base64 加密与解密
  */
-public final class EncryptionUtils {
+public final class EncryptionUtil {
 
 
     /**

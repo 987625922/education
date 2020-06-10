@@ -1,7 +1,7 @@
 package com.project.gelingeducation.common.utils;
 
 
-public class FileUtils {
+public class FileUtil {
 
     /**
      *  获取文件的后缀名

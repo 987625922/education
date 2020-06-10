@@ -1,5 +1,9 @@
 package com.project.gelingeducation.common.authentication;
 
+import com.project.gelingeducation.common.config.GLConstant;
+import com.project.gelingeducation.common.utils.JWTUtil;
+import com.project.gelingeducation.common.utils.RedisTemplateUtil;
+import com.project.gelingeducation.common.utils.TokenUtil;
 import com.project.gelingeducation.domain.Permission;
 import com.project.gelingeducation.domain.Role;
 import com.project.gelingeducation.domain.User;
@@ -36,6 +40,9 @@ public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     @Lazy
     private IUserService userService;
+
+    @Autowired
+    RedisTemplateUtil templateUtil;
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -85,35 +92,29 @@ public class ShiroRealm extends AuthorizingRealm {
 
         String token = (String) authenticationToken.getCredentials();
 
-        // 从 redis里获取这个 token 主要是判断token是否过期
-//        HttpServletRequest request = HttpUtil.getHttpServletRequest();
-//        String ip = IPUtil.getIpAddr(request);
-//
-//        String encryptToken = FebsUtil.encryptToken(token);
-//        String encryptTokenInRedis = null;
-//        try {
-//            encryptTokenInRedis = redisService.get(FebsConstant.TOKEN_CACHE_PREFIX + encryptToken + "." + ip);
-//        } catch (Exception ignore) {
-//        }
-        // 如果找不到，说明已经失效
-//        if (StringUtils.isBlank(encryptTokenInRedis))
-//            throw new AuthenticationException("token已经过期");
-
         String account = JWTUtil.getUsername(token);
+
+        String encryptToken = TokenUtil.encryptToken(token);
+
+        String encryptTokenInRedis =
+                (String) templateUtil.get(GLConstant.TOKEN_CACHE_PREFIX + encryptToken + "." + account);
+
+        // 如果找不到，说明已经失效
+        if (StringUtils.isBlank(encryptTokenInRedis))
+            throw new AuthenticationException("token已经过期");
 
         if (StringUtils.isBlank(account))
             throw new AuthenticationException("token校验不通过");
-//
-//        // 通过用户名查询用户信息
+
+        // 通过用户名查询用户信息
         User user = userService.findUserByAccount(account);
-//
+
         if (user == null)
             throw new AuthenticationException("用户名或密码错误");
         if (!JWTUtil.verify(token, account, user.getPassword()))
             throw new AuthenticationException("token校验不通过");
 
         return new SimpleAuthenticationInfo(user, token, "gl_realm");
-
     }
 
     /**

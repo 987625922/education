@@ -1,14 +1,12 @@
 package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.common.utils.BeanUtils;
+import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.dao.IUserDao;
 import com.project.gelingeducation.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
@@ -83,7 +81,7 @@ public class UserDaoImpl extends BaseDao implements IUserDao {
     public void update(User user) {
         Session session = getSession();
         User findUser = session.get(User.class, user.getId());
-        BeanUtils.copyPropertiesIgnoreNull(user, findUser);
+        BeanUtil.copyPropertiesIgnoreNull(user, findUser);
         session.update(findUser);
     }
 

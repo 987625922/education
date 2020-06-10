@@ -1,7 +1,6 @@
 package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.common.utils.HttpUtil;
-import com.project.gelingeducation.common.utils.IPUtil;
 import com.project.gelingeducation.dao.ILoginLogDao;
 import com.project.gelingeducation.domain.LoginLog;
 import com.project.gelingeducation.service.ILoginLogService;
@@ -21,7 +20,7 @@ public class LoginLogServiceImpl implements ILoginLogService {
     @Override
     public void insert(LoginLog loginLog) {
         loginLog.setLoginTime(new Date());
-        String ip = IPUtil.getIpAddr(HttpUtil.getHttpServletRequest());
+        String ip = HttpUtil.getCityInfo(HttpUtil.getIp(HttpUtil.getHttpServletRequest()));
         loginLog.setIp(ip);
         loginLog.setLocation(HttpUtil.getCityInfo(ip));
         loginLogDao.insert(loginLog);
@@ -52,14 +51,14 @@ public class LoginLogServiceImpl implements ILoginLogService {
             loginLog = new LoginLog();
             loginLog.setUid(uid);
             loginLog.setLoginTime(new Date());
-            String ip = IPUtil.getIpAddr(HttpUtil.getHttpServletRequest());
+            String ip = HttpUtil.getCityInfo(HttpUtil.getIp(HttpUtil.getHttpServletRequest()));
             loginLog.setIp(ip);
             loginLog.setLocation(HttpUtil.getCityInfo(ip));
             loginLogDao.insert(loginLog);
         } else {
             loginLog.setLastLoginTime(loginLog.getLoginTime());
             loginLog.setLoginTime(new Date());
-            String ip = IPUtil.getIpAddr(HttpUtil.getHttpServletRequest());
+            String ip = HttpUtil.getCityInfo(HttpUtil.getIp(HttpUtil.getHttpServletRequest()));
             loginLog.setIp(ip);
             loginLog.setLocation(HttpUtil.getCityInfo(ip));
         }

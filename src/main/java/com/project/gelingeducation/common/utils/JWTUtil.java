@@ -1,4 +1,4 @@
-package com.project.gelingeducation.common.authentication;
+package com.project.gelingeducation.common.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -30,7 +30,6 @@ public class JWTUtil {
                     .withClaim("username", username)
                     .build();
             verifier.verify(token);
-//            log.info("token is valid");
             return true;
         } catch (Exception e) {
             log.info("token is invalid{}", e.getMessage());

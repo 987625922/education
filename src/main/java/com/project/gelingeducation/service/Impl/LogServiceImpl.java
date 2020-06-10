@@ -1,6 +1,5 @@
 package com.project.gelingeducation.service.Impl;
 
-import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.common.utils.HttpUtil;
 import com.project.gelingeducation.dao.ILogDao;
 import com.project.gelingeducation.domain.Log;

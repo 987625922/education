@@ -19,9 +19,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Objects;
 
-/**
- * @author MrBird
- */
+
 @Slf4j
 public class HttpUtil {
     private static final String UNKNOWN = "unknown";
@@ -35,6 +33,12 @@ public class HttpUtil {
                 .requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
     }
 
+    /**
+     * 获取浏览器
+     *
+     * @param request
+     * @return
+     */
     public static String getBrowser(HttpServletRequest request) {
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
         Browser browser = userAgent.getBrowser();
@@ -42,7 +46,7 @@ public class HttpUtil {
     }
 
     /**
-     * 获取地址
+     * 获取城市
      *
      * @param ip
      * @return
@@ -114,7 +118,7 @@ public class HttpUtil {
         if (ip.contains(comma)) {
             ip = ip.split(",")[0];
         }
-        if  (localhost.equals(ip))  {
+        if (localhost.equals(ip)) {
             // 获取本机真正的ip地址
             try {
                 ip = InetAddress.getLocalHost().getHostAddress();

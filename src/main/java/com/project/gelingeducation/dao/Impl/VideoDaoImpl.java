@@ -1,7 +1,7 @@
 package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.common.utils.BeanUtils;
+import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.dao.IVideoDao;
 import com.project.gelingeducation.domain.Video;
 import org.hibernate.Session;
@@ -65,7 +65,7 @@ public class VideoDaoImpl extends BaseDao implements IVideoDao {
     public void update(Video video) {
         Session session = getSession();
         Video findvideo = session.get(Video.class, video.getId());
-        BeanUtils.copyPropertiesIgnoreNull(video, findvideo);
+        BeanUtil.copyPropertiesIgnoreNull(video, findvideo);
         session.update(findvideo);
     }
 }

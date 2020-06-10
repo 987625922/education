@@ -1,7 +1,7 @@
 package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.common.utils.BeanUtils;
+import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.dao.ICourseDao;
 import com.project.gelingeducation.domain.Course;
 import org.hibernate.Session;
@@ -40,7 +40,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
     public void update(Course course) {
         Session session = getSession();
         Course findCourse = session.get(Course.class, course.getId());
-        BeanUtils.copyPropertiesIgnoreNull(course, findCourse);
+        BeanUtil.copyPropertiesIgnoreNull(course, findCourse);
         session.update(findCourse);
     }
 

@@ -1,7 +1,5 @@
 package com.project.gelingeducation.controller;
 
-
-import com.project.gelingeducation.common.annotation.Cache;
 import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.domain.Course;
@@ -24,7 +22,6 @@ public class CourseController {
     @Autowired
     private ICourseService courseService;
 
-    @Cache
     @Log("获取所有课程")
     @RequestMapping(value = "/lists")
     public Object lists(@RequestParam(required = false) Integer currentPage,
@@ -32,7 +29,6 @@ public class CourseController {
         return JsonData.buildSuccess(courseService.queryAll(currentPage, pageSize));
     }
 
-    @Cache
     @Log("通过id获取单个课程")
     @RequestMapping(value = "/find_by_id")
     public Object findById(Long id) throws Exception {
@@ -73,11 +69,11 @@ public class CourseController {
     @Log("多参数搜索课程")
     @RequestMapping(value = "/find_by_name_status_price_teacher")
     public Object findByNameOrStatusOrPriceOrTeacher(@RequestParam(required = false) String name,
-                                                    @RequestParam(required = false)Integer status,
-                                                    @RequestParam(required = false)Double startPrice,
-                                                    @RequestParam(required = false)Double endPrice,
-                                                    @RequestParam(required = false)Long teacherId,
-                                                    Integer currentPage, Integer pageSize) {
+                                                     @RequestParam(required = false) Integer status,
+                                                     @RequestParam(required = false) Double startPrice,
+                                                     @RequestParam(required = false) Double endPrice,
+                                                     @RequestParam(required = false) Long teacherId,
+                                                     Integer currentPage, Integer pageSize) {
         return JsonData.buildSuccess(courseService.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice,
                 endPrice, teacherId, currentPage, pageSize));
     }

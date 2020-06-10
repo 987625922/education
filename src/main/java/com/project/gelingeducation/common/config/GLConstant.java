@@ -2,7 +2,7 @@ package com.project.gelingeducation.common.config;
 
 public class GLConstant {
     //user缓存前缀
-    public static final String USER_CACHE_PREFIX = "gl.cache.user.";
+    public static final String TOKEN_CACHE_PREFIX = "gl.cache.token.";
 
     /**
      * 常用接口
