@@ -37,7 +37,9 @@
     <bean id="securityManager"
           class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="shiroRealm"/>
+        <!--<property name="cacheManager" ref="shirocache"/>-->
     </bean>
+
     <!-- shiro 注解开启 -->
     <bean id="authorizationAttributeSourceAdvisor"
           class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
