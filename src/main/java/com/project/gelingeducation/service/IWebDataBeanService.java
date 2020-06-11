@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service;
 
+import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.domain.WebDataBean;
 
 public interface IWebDataBeanService {
@@ -10,7 +11,7 @@ public interface IWebDataBeanService {
 
     void update(WebDataBean webDataBean);
 
-    void userLogin();
+    Object login(User user);
 
     WebDataBean getWebDataBean();
 }

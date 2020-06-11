@@ -1,15 +1,9 @@
 package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.annotation.Log;
-import com.project.gelingeducation.common.utils.JWTUtil;
-import com.project.gelingeducation.common.config.GLConstant;
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.common.dto.WebIndex;
-import com.project.gelingeducation.common.exception.AllException;
-import com.project.gelingeducation.common.exception.StatusEnum;
-import com.project.gelingeducation.common.utils.MD5Util;
 import com.project.gelingeducation.common.utils.RedisTemplateUtil;
-import com.project.gelingeducation.common.utils.TokenUtil;
 import com.project.gelingeducation.domain.LoginLog;
 import com.project.gelingeducation.domain.User;
 import com.project.gelingeducation.domain.WebDataBean;
@@ -23,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-
 @RestController
 public class WebController {
 
@@ -34,10 +25,7 @@ public class WebController {
     @Autowired
     private IWebDataBeanService webDataBeanService;
     @Autowired
-    private IUserService UserService;
-    @Autowired
-    RedisTemplateUtil templateUtil;
-
+    private IUserService userService;
 
     @Log("web端首页")
     @RequestMapping(value = "/web/index")
@@ -54,35 +42,14 @@ public class WebController {
     }
 
     @RequestMapping(value = "/web/login", method = RequestMethod.POST)
-    public Object login(@RequestBody User user, HttpServletRequest request) {
-
-        User reUser = UserService.findUserByAccount(user.getAccount());
-
-        if (reUser == null) {
-            throw new AllException(StatusEnum.NO_USER);
-        } else if (!reUser.getPassword().equals(MD5Util.encrypt(user.getAccount().toLowerCase(),
-                user.getPassword()))) {
-            throw new AllException(StatusEnum.ACCOUNT_PASSWORD_ERROR);
-        } else if (reUser.getStatus() == 0) {
-            throw new AllException(StatusEnum.BAN_USER);
-        }
-
-        loginLogService.getByUserIdLoginUpdate(reUser.getId());
-
-        webDataBeanService.userLogin();
-        String token = JWTUtil.sign(reUser.getAccount(), reUser.getPassword());
-        HashMap userMap = new HashMap();
-        userMap.put("id", reUser.getId());
-        userMap.put("token", token);
-        templateUtil.set(GLConstant.TOKEN_CACHE_PREFIX + TokenUtil.encryptToken(token)
-                + "." + reUser.getAccount(), reUser.getId().toString());
-        return JsonData.buildSuccess(userMap);
+    public Object login(@RequestBody User user) {
+        return JsonData.buildSuccess(webDataBeanService.login(user));
     }
 
     @Log("注册接口")
     @RequestMapping(value = "/web/register", method = RequestMethod.POST)
     public Object register(@RequestBody User user) {
-        return JsonData.buildSuccess(UserService.register(user));
+        return JsonData.buildSuccess(userService.register(user));
     }
 
 

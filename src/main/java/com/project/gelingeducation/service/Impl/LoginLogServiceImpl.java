@@ -45,22 +45,20 @@ public class LoginLogServiceImpl implements ILoginLogService {
 
     @Transactional
     @Override
-    public void getByUserIdLoginUpdate(Long uid) {
+    public void saveOrUpdateLoginLogByUid(Long uid) {
         LoginLog loginLog = loginLogDao.getByUid(uid);
+        String ip = HttpUtil.getCityInfo(HttpUtil.getIp(HttpUtil.getHttpServletRequest()));
+        loginLog.setLocation(HttpUtil.getCityInfo(ip));
         if (loginLog == null) {
             loginLog = new LoginLog();
             loginLog.setUid(uid);
             loginLog.setLoginTime(new Date());
-            String ip = HttpUtil.getCityInfo(HttpUtil.getIp(HttpUtil.getHttpServletRequest()));
             loginLog.setIp(ip);
-            loginLog.setLocation(HttpUtil.getCityInfo(ip));
             loginLogDao.insert(loginLog);
         } else {
             loginLog.setLastLoginTime(loginLog.getLoginTime());
             loginLog.setLoginTime(new Date());
-            String ip = HttpUtil.getCityInfo(HttpUtil.getIp(HttpUtil.getHttpServletRequest()));
             loginLog.setIp(ip);
-            loginLog.setLocation(HttpUtil.getCityInfo(ip));
         }
     }
 

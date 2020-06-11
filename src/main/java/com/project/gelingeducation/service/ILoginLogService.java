@@ -12,6 +12,6 @@ public interface ILoginLogService {
 
     LoginLog getByUserId(Long uid);
 
-    void getByUserIdLoginUpdate(Long uid);
+    void saveOrUpdateLoginLogByUid(Long uid);
 
 }
