@@ -51,6 +51,4 @@ public class WebController {
     public Object register(@RequestBody User user) {
         return JsonData.buildSuccess(userService.register(user));
     }
-
-
 }

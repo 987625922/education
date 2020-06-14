@@ -1,6 +1,7 @@
 package com.project.gelingeducation.common.utils;
 
 import eu.bitwalker.useragentutils.Browser;
+import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -117,5 +118,15 @@ public class HttpUtil {
             }
         }
         return ip;
+    }
+
+    /**
+     * 获取发起请求的操作系统名称
+     */
+    public static String getOsName(HttpServletRequest request) {
+        String header = request.getHeader("User-Agent");
+        UserAgent userAgent = UserAgent.parseUserAgentString(header);
+        OperatingSystem operatingSystem = userAgent.getOperatingSystem();
+        return operatingSystem.getName();
     }
 }

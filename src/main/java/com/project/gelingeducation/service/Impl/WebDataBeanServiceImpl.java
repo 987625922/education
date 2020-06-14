@@ -63,29 +63,7 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
             throw new AllException(StatusEnum.BAN_USER);
         }
         //更新登录log
-        loginLogService.saveOrUpdateLoginLogByUid(reUser.getId());
-        //更新系统的登录人数ip等等
-//        String ip = HttpUtil.getCityInfo(HttpUtil.getIp(HttpUtil.getHttpServletRequest()));
-//        WebDataBean webDataBean = webDataBeanDao.getOnlyData();
-//        if (webDataBean == null) {
-//            webDataBean = new WebDataBean();
-//            webDataBeanDao.save(webDataBean);
-//        }
-//        List<LoginLog> loginLogs = loginLogDao.getLoginLogByIp(ip);
-//        Date loginDate = new Date();
-//        for (LoginLog loginLog : loginLogs) {
-//            boolean isSameDate = DateUtils.isSameDay(loginDate, loginLog.getLoginTime());
-//            if (isSameDate) {
-//                if (loginLog.getLastLoginTime() == null ||
-//                        DateUtils.isSameDay(loginLog.getLastLoginTime(), loginLog.getLoginTime())) {
-//                    webDataBean.setTodayLoginIpMun(webDataBean.getTodayLoginIpMun() + 1);
-//                    break;
-//                }
-//            }
-//        }
-//        webDataBean.setTodayLoginMun(webDataBean.getTodayLoginMun() + 1);
-//        webDataBean.setAllLoginMun(webDataBean.getAllLoginMun() + 1);
-//        webDataBean.setTodayLoginTime(loginDate);
+        loginLogService.saveOrUpdateLoginLogByUid(reUser);
         //返回uid和jwtToken
         String token = JWTUtil.sign(reUser.getAccount(), reUser.getPassword());
         HashMap userMap = new HashMap();

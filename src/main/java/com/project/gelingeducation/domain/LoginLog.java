@@ -54,11 +54,13 @@ public class LoginLog implements Serializable {
      */
     @Column(name = "location", length = 48)
     private String location;
+
     /**
      * 操作系统
      */
     @Column(name = "user_system", length = 20)
     private String userSystem;
+
     /**
      * 登录浏览器
      */

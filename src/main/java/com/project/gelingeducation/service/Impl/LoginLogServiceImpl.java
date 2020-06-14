@@ -2,7 +2,10 @@ package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.common.utils.HttpUtil;
 import com.project.gelingeducation.dao.ILoginLogDao;
+import com.project.gelingeducation.dao.IWebDataBeanDao;
 import com.project.gelingeducation.domain.LoginLog;
+import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.domain.WebDataBean;
 import com.project.gelingeducation.service.ILoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,8 @@ public class LoginLogServiceImpl implements ILoginLogService {
 
     @Autowired
     private ILoginLogDao loginLogDao;
+    @Autowired
+    private IWebDataBeanDao webDataBeanDao;
 
     @Override
     public void insert(LoginLog loginLog) {
@@ -28,7 +33,6 @@ public class LoginLogServiceImpl implements ILoginLogService {
         loginLogDao.insert(loginLog);
     }
 
-
     @Override
     public Object queryAll(Integer currentPage, Integer pageSize) {
         if (currentPage != null && pageSize != null) {
@@ -38,7 +42,6 @@ public class LoginLogServiceImpl implements ILoginLogService {
         }
     }
 
-
     @Override
     @Transactional
     public LoginLog getByUserId(Long uid) {
@@ -47,24 +50,40 @@ public class LoginLogServiceImpl implements ILoginLogService {
 
     @Transactional
     @Override
-    public void saveOrUpdateLoginLogByUid(Long uid) {
-        Optional<LoginLog> optionalLoginLog = Optional.ofNullable(loginLogDao.getByUid(uid));
-        LoginLog loginLog = loginLogDao.getByUid(uid);
+    public void saveOrUpdateLoginLogByUid(User user) {
+        Optional<LoginLog> optionalLoginLog = Optional.ofNullable(user.getLoginLog());
         HttpServletRequest servletRequest = HttpUtil.getHttpServletRequest();
         String ip = HttpUtil.getIp(servletRequest);
-        if (loginLog == null) {
-            loginLog = new LoginLog();
-            loginLog.setUid(uid);
-            loginLog.setLoginTime(new Date());
-            loginLog.setIp(ip);
-            loginLog.setLocation(HttpUtil.getCityInfo("122.51.177.223"));
-            loginLogDao.insert(loginLog);
-        } else {
+        optionalLoginLog.ifPresent(loginLog -> {
             loginLog.setLastLoginTime(loginLog.getLoginTime());
-            loginLog.setLocation(HttpUtil.getCityInfo("122.51.177.223"));
+            loginLog.setLocation(HttpUtil.getCityInfo(ip));
+            loginLog.setBrowser(HttpUtil.getBrowser(servletRequest));
             loginLog.setLoginTime(new Date());
+            loginLog.setUserSystem(HttpUtil.getOsName(servletRequest));
             loginLog.setIp(ip);
-        }
+        });
+        optionalLoginLog.orElseGet(() -> {
+            LoginLog loginLog = new LoginLog();
+            loginLog.setUser(user);
+            loginLog.setLoginTime(new Date());
+            loginLog.setBrowser(HttpUtil.getBrowser(servletRequest));
+            loginLog.setIp(ip);
+            loginLog.setLocation(HttpUtil.getCityInfo(ip));
+            loginLog.setUserSystem(HttpUtil.getOsName(servletRequest));
+            loginLogDao.insert(loginLog);
+            return loginLog;
+        });
+        //全局登录数据统计
+        Optional<WebDataBean> optionalWebData = Optional.ofNullable(webDataBeanDao.getOnlyData());
+        optionalWebData.ifPresent(webDataBean -> {
+            webDataBean.setAllLoginMun(webDataBean.getAllLoginMun() + 1);
+//            webDataBean.setTodayLoginMun();
+        });
+        optionalWebData.orElseGet(() -> {
+            WebDataBean webDataBean = new WebDataBean();
+            webDataBeanDao.save(webDataBean);
+            return webDataBean;
+        });
     }
 
 
