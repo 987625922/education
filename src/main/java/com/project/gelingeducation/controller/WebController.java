@@ -41,6 +41,7 @@ public class WebController {
         return JsonData.buildSuccess(webIndex);
     }
 
+    @Log("登录接口")
     @RequestMapping(value = "/web/login", method = RequestMethod.POST)
     public Object login(@RequestBody User user) {
         return JsonData.buildSuccess(webDataBeanService.login(user));

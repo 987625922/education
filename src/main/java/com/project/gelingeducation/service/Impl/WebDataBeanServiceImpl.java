@@ -62,7 +62,7 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         } else if (reUser.getStatus() == 0) {
             throw new AllException(StatusEnum.BAN_USER);
         }
-        //更新登录log
+        //更新登录log,可以开启一个格外的线程去处理，先把结果返回了
         loginLogService.saveOrUpdateLoginLogByUid(reUser);
         //返回uid和jwtToken
         String token = JWTUtil.sign(reUser.getAccount(), reUser.getPassword());

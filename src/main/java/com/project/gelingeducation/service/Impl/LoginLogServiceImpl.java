@@ -77,7 +77,11 @@ public class LoginLogServiceImpl implements ILoginLogService {
         Optional<WebDataBean> optionalWebData = Optional.ofNullable(webDataBeanDao.getOnlyData());
         optionalWebData.ifPresent(webDataBean -> {
             webDataBean.setAllLoginMun(webDataBean.getAllLoginMun() + 1);
-//            webDataBean.setTodayLoginMun();
+            //还需要一个定时任务，在0点的时候清空
+            webDataBean.setTodayLoginMun(webDataBean.getTodayLoginMun() + 1);
+            //今日登录ip
+            webDataBean.setTodayLoginIpMun(webDataBean.getTodayLoginIpMun() + 1);
+
         });
         optionalWebData.orElseGet(() -> {
             WebDataBean webDataBean = new WebDataBean();
