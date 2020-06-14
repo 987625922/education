@@ -27,12 +27,6 @@ public class LoginLog implements Serializable {
     private Long id;
 
     /**
-     * 用户表的id
-     */
-    @Column(name = "uid", nullable = false)
-    private Long uid;
-
-    /**
      * 第一次登录时间
      */
     //默认创建时间
@@ -63,19 +57,31 @@ public class LoginLog implements Serializable {
     /**
      * 操作系统
      */
-    @Column(name = "user_system", length = 14)
+    @Column(name = "user_system", length = 20)
     private String userSystem;
     /**
      * 登录浏览器
      */
-    @Column(name = "browser", length = 14)
+    @Column(name = "browser", length = 20)
     private String browser;
 
     /**
      * 登录 IP
      */
-    @Column(name = "ip", length = 14)
+    @Column(name = "ip", length = 20)
     private String ip;
+    /**
+     * 用户表的id
+     */
+    @Column(name = "uid",insertable = false,updatable = false)
+    private Long uid;
+
+    /**
+     * @JoinColumn 会在这张表维护一个名为uid的外键id
+     */
+    @OneToOne(targetEntity = User.class)
+    @JoinColumn(name = "uid")
+    private User user;
 
     private transient String loginTimeFrom;
     private transient String loginTimeTo;

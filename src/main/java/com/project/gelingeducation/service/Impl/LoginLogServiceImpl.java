@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -46,17 +48,20 @@ public class LoginLogServiceImpl implements ILoginLogService {
     @Transactional
     @Override
     public void saveOrUpdateLoginLogByUid(Long uid) {
+        Optional<LoginLog> optionalLoginLog = Optional.ofNullable(loginLogDao.getByUid(uid));
         LoginLog loginLog = loginLogDao.getByUid(uid);
-        String ip = HttpUtil.getCityInfo(HttpUtil.getIp(HttpUtil.getHttpServletRequest()));
-        loginLog.setLocation(HttpUtil.getCityInfo(ip));
+        HttpServletRequest servletRequest = HttpUtil.getHttpServletRequest();
+        String ip = HttpUtil.getIp(servletRequest);
         if (loginLog == null) {
             loginLog = new LoginLog();
             loginLog.setUid(uid);
             loginLog.setLoginTime(new Date());
             loginLog.setIp(ip);
+            loginLog.setLocation(HttpUtil.getCityInfo("122.51.177.223"));
             loginLogDao.insert(loginLog);
         } else {
             loginLog.setLastLoginTime(loginLog.getLoginTime());
+            loginLog.setLocation(HttpUtil.getCityInfo("122.51.177.223"));
             loginLog.setLoginTime(new Date());
             loginLog.setIp(ip);
         }

@@ -75,4 +75,6 @@ public class User implements Serializable {
     @JoinColumn(name = "role_id",referencedColumnName = "id")//表示这个表在维护外键
     private Role role;
 
+    @OneToOne(targetEntity = LoginLog.class,mappedBy = "user")
+    private LoginLog loginLog;
 }
