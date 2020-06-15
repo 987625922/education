@@ -41,7 +41,7 @@ public class CourseServiceTest {
 
     @Test
     public void courseAddTeacher() {
-        courseService.courseAddTeacher(new Long(2), new Long(2));
+        courseService.courseAddTeacher(new Long(1), new Long(1));
     }
 
     @Test

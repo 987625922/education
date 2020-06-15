@@ -30,7 +30,7 @@ public class AdminServiceTest {
         user.setAccount("123456");
         user.setPassword("123456");
         Role role = new Role();
-        role.setId(17L);
+        role.setId(43L);
         user.setRole(role);
         log.debug("findById获取的结果：" + userservice.addUser(user));
 

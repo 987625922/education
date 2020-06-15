@@ -65,7 +65,7 @@ public class CourseServiceImpl implements ICourseService {
      * @param pageSize
      * @return
      */
-    @Cacheable(value = "cache")
+//    @Cacheable(value = "cache")
     @Override
     public Object queryAll(Integer currentPage, Integer pageSize) {
         if (currentPage != null && pageSize != null) {

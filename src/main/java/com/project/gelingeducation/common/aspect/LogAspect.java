@@ -93,6 +93,9 @@ public class LogAspect {
 
     public String getUsername() {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
+        if(user == null){
+            return "";
+        }
         return user.getUserName();
     }
 }

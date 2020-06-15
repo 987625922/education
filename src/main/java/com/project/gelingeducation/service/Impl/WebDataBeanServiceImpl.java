@@ -71,7 +71,7 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         userMap.put("token", token);
         //设置redis token缓存和过期时间
         templateUtil.set(GLConstant.TOKEN_CACHE_PREFIX + TokenUtil.encryptToken(token)
-                + "." + reUser.getAccount(), reUser.getId().toString(), GLConstant.TOKEN_CACHE_TIME);
+                + "." + reUser.getAccount(), reUser.getId().toString(), GLConstant.TOKEN_CACHE_TIME_SECONDS);
         return userMap;
     }
 
