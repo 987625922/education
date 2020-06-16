@@ -16,8 +16,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "permission")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Permission implements Serializable {
 
     private static final long serialVersionUID = 6400268759155522604L;
@@ -48,6 +46,7 @@ public class Permission implements Serializable {
     private String perms;
 
     @ManyToMany(mappedBy = "permissions", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Role> roles = new HashSet<>();
 
 }

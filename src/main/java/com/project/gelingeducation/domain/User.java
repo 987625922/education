@@ -31,8 +31,6 @@ import java.util.Date;
 @Table(name = "user")
 @Setter
 @Getter
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class User implements Serializable {
 
     private static final long serialVersionUID = -218595055003268321L;

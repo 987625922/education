@@ -1,6 +1,7 @@
 package com.project.gelingeducation.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,8 +18,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "role")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 9205096691157148000L;
@@ -43,6 +42,7 @@ public class Role implements Serializable {
     private Integer isDefault = 0;
 
     @OneToMany(mappedBy = "role")
+    @JsonIgnore
     private Set<User> users = new HashSet<>();
 
 

@@ -1,6 +1,7 @@
 package com.project.gelingeducation.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -83,6 +84,7 @@ public class LoginLog implements Serializable {
      */
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "uid")
+    @JsonIgnore
     private User user;
 
     private transient String loginTimeFrom;
