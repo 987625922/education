@@ -7,6 +7,7 @@ import com.project.gelingeducation.domain.Course;
 import com.project.gelingeducation.domain.Teacher;
 import com.project.gelingeducation.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,16 +26,13 @@ public class CourseServiceImpl implements ICourseService {
     @Autowired
     private ITeacherDao teacherDao;
 
-    @Override
-    public Object findAll() {
-        return courseDao.queryAll();
-    }
-
+    @Cacheable(value = "cache", key = "course.id.#id")
     @Override
     public Course findById(Long id) {
         return courseDao.findById(id);
     }
 
+    @CacheEvict(value = "cache")
     @Override
     @Transactional
     public Long insert(Course course) {
@@ -44,12 +42,14 @@ public class CourseServiceImpl implements ICourseService {
         return courseDao.insert(course);
     }
 
+    @CacheEvict(value = "cache")
     @Override
     @Transactional
     public void delect(Long id) {
         courseDao.delect(id);
     }
 
+    @CacheEvict(value = "cache")
     @Override
     @Transactional
     public void update(Course course) throws IllegalAccessException, InvocationTargetException {
@@ -65,7 +65,7 @@ public class CourseServiceImpl implements ICourseService {
      * @param pageSize
      * @return
      */
-//    @Cacheable(value = "cache")
+    @Cacheable(value = "cache", key = "course.list.#currentPage.#pageSize")
     @Override
     public Object queryAll(Integer currentPage, Integer pageSize) {
         if (currentPage != null && pageSize != null) {
@@ -80,18 +80,21 @@ public class CourseServiceImpl implements ICourseService {
      *
      * @param ids
      */
+    @CacheEvict(value = "cache")
     @Override
     @Transactional
     public void batchesDeletes(String ids) {
         courseDao.delMore(ids);
     }
 
+    @Cacheable(value = "cache")
     @Override
     public PageResult selByNameOrStatusOrPriceOrTeacher(String name, Integer status, Double startPrice, Double endPrice,
                                                         Long teacherId, Integer currentPage, Integer pageSize) {
         return courseDao.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice, endPrice, teacherId, currentPage, pageSize);
     }
 
+    @CacheEvict(value = "cache")
     @Override
     @Transactional
     public void courseAddTeacher(Long courseId, Long teacherId) {

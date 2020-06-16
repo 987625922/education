@@ -102,14 +102,19 @@
         </property>
     </bean>
     <!--  redis缓存的spring cache manager-->
-    <bean id="cacheManager"
-          class="com.project.gelingeducation.common.cache.RedisCacheManager">
-        <property name="caches">
-            <set>
-                <bean class="com.project.gelingeducation.common.cache.RedisCache"
-                      p:name="cache"/>
-            </set>
-        </property>
+    <!--<bean id="cacheManager"-->
+          <!--class="com.project.gelingeducation.common.cache.RedisCacheManager">-->
+        <!--<property name="caches">-->
+            <!--<set>-->
+                <!--<bean class="com.project.gelingeducation.common.cache.RedisCache"-->
+                      <!--p:name="cache"/>-->
+            <!--</set>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+
+        <constructor-arg name=""/>
+        <constructor-arg index="1" ref=""/>
     </bean>
 
     <!--                        common                             -->

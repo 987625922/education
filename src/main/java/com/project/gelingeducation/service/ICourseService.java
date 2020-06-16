@@ -10,8 +10,6 @@ import java.util.Map;
 
 public interface ICourseService {
 
-    Object findAll();
-
     Course findById(Long id);
 
     Long insert(Course course);
