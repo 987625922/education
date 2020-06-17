@@ -67,10 +67,10 @@ public class LogAspect {
         currentTime.set(System.currentTimeMillis());
         result = joinPoint.proceed();
         Log log = new Log("INFO", System.currentTimeMillis() - currentTime.get());
-        currentTime.remove();
         HttpServletRequest request = HttpUtil.getHttpServletRequest();
         logService.save(getUsername(), HttpUtil.getBrowser(request), HttpUtil.getIp(request),
                 joinPoint, log);
+        currentTime.remove();
         return result;
     }
 
@@ -83,19 +83,28 @@ public class LogAspect {
      */
     @AfterThrowing(pointcut = "logPointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
-        Log log = new Log("ERROR", System.currentTimeMillis() - currentTime.get());
+        Log log = new Log("ERROR", System.currentTimeMillis()
+                - currentTime.get());
         currentTime.remove();
-        log.setExceptionDetail(ThrowableUtil.getStackTrace(e).substring(0,3000));
+        log.setExceptionDetail(ThrowableUtil.getStackTrace(e).substring(0, 3000));
         HttpServletRequest request = HttpUtil.getHttpServletRequest();
         logService.save(getUsername(), HttpUtil.getBrowser(request), HttpUtil.getIp(request)
                 , (ProceedingJoinPoint) joinPoint, log);
     }
 
     public String getUsername() {
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        if(user == null){
+        User user;
+        try {
+            user = (User) SecurityUtils.getSubject().getPrincipal();
+        } catch (Exception e) {
             return "";
         }
-        return user.getUserName();
+
+        if (user == null) {
+            return "";
+        } else {
+            return user.getUserName();
+        }
+
     }
 }

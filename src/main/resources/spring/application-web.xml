@@ -47,6 +47,70 @@
     </bean>
 
 
+    <!--<bean name="redisManager" class="org.crazycake.shiro.RedisManager">-->
+    <!--&lt;!&ndash;<property name="host" value="${shiro.redis.host}"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="timeout" value="${shiro.session.timeout}"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="database" value="${shiro.session.database}"/>&ndash;&gt;-->
+    <!--</bean>-->
+
+    <!--<bean id="shiroCacheManager" class="org.crazycake.shiro.RedisCacheManager">-->
+    <!--<property name="redisManager" ref="redisManager"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="shiroFilterFactoryBean"-->
+    <!--class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">-->
+    <!--<property name="securityManager" ref="securityManager"/>-->
+    <!--&lt;!&ndash;<property name="loginUrl" value="/web/login"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="successUrl" value="/success"/>&ndash;&gt;-->
+    <!--<property name="unauthorizedUrl" value="/unauthorizedUrl"/>-->
+    <!--<property name="filterChainDefinitionMap">-->
+    <!--<map>-->
+    <!--<entry key="/web/login,/web/register,/api/test/**" value="anon"/>-->
+    <!--<entry key="/logout" value="logout"/>-->
+    <!--<entry key="/**" value="user"/>-->
+    <!--</map>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">-->
+    <!--<property name="realm" ref="shiroRealm"/>-->
+    <!--<property name="sessionManager" ref="sessionManager"/>-->
+    <!--<property name="cacheManager" ref="shiroCacheManager"/>-->
+    <!--<property name="rememberMeManager" ref="rememberMeManager"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">-->
+    <!--<property name="name" value="rememberMe"/>-->
+    <!--<property name="maxAge" value="${shiro.cookie.maxage}"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="rememberMeManager"-->
+    <!--class="org.apache.shiro.web.mgt.CookieRememberMeManager">-->
+    <!--<property name="cookie" ref="rememberMeCookie"/>-->
+    <!--<property name="cipherKey" value="shiro_key"/>-->
+    <!--</bean>-->
+
+    <!--<bean name="authorizationAttributeSourceAdvisor"-->
+    <!--class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">-->
+    <!--<property name="securityManager" ref="securityManager"/>-->
+    <!--</bean>-->
+
+    <!--<bean name="redisSessionDAO" class="org.crazycake.shiro.RedisSessionDAO">-->
+    <!--<property name="redisManager" ref="redisManager"/>-->
+    <!--</bean>-->
+
+    <!--<bean name="sessionManager"-->
+    <!--class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">-->
+    <!--<property name="sessionListeners">-->
+    <!--<list>-->
+    <!--<ref bean="shiroSessionListener"/>-->
+    <!--</list>-->
+    <!--</property>-->
+    <!--<property name="globalSessionTimeout" value="${shiro.cookie.maxage}"/>-->
+    <!--<property name="sessionDAO" ref="redisSessionDAO"/>-->
+    <!--<property name="sessionIdUrlRewritingEnabled" value="false"/>-->
+    <!--</bean>-->
+
     <!-- 开发环境配置文件 -->
     <beans profile="development">
         <context:property-placeholder

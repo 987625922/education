@@ -1,6 +1,7 @@
 package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.annotation.Log;
+import com.project.gelingeducation.common.controller.BaseController;
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.common.dto.WebIndex;
 import com.project.gelingeducation.common.utils.RedisTemplateUtil;
@@ -11,6 +12,7 @@ import com.project.gelingeducation.service.ILoginLogService;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.IWebDataBeanService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class WebController {
+public class WebController extends BaseController {
 
     @Autowired
     private ILoginLogService loginLogService;
