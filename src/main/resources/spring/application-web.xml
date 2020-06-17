@@ -2,13 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context.xsd
 	http://www.springframework.org/schema/mvc
-	https://www.springframework.org/schema/mvc/spring-mvc.xsd"
+	https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd"
 >
 
     <!-- 导入数据库的相关配置 -->
@@ -17,99 +17,152 @@
     <mvc:annotation-driven/>
 
 
-    <bean id="shiroFilterFactoryBean"
-          class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-        <property name="securityManager" ref="securityManager"/>
-        <!-- 在 Shiro过滤器链上加入 JWTFilter-->
-        <property name="filters">
-            <map>
-                <entry key="jwt" value-ref="JWTFilter"/>
-            </map>
+<!--    <bean id="shiroFilterFactoryBean"-->
+<!--          class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">-->
+<!--        <property name="securityManager" ref="securityManager"/>-->
+<!--        &lt;!&ndash; 在 Shiro过滤器链上加入 JWTFilter&ndash;&gt;-->
+<!--        <property name="filters">-->
+<!--            <map>-->
+<!--                <entry key="jwt" value-ref="JWTFilter"/>-->
+<!--            </map>-->
+<!--        </property>-->
+<!--        &lt;!&ndash;所有请求都要经过 jwt过滤器&ndash;&gt;-->
+<!--        <property name="filterChainDefinitionMap">-->
+<!--            <map>-->
+<!--                <entry key="/**" value="jwt"/>-->
+<!--            </map>-->
+<!--        </property>-->
+<!--    </bean>-->
+
+<!--    <bean id="securityManager"-->
+<!--          class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">-->
+<!--        <property name="realm" ref="shiroRealm"/>-->
+<!--        &lt;!&ndash;<property name="cacheManager" ref="shirocache"/>&ndash;&gt;-->
+<!--    </bean>-->
+
+<!--    &lt;!&ndash; shiro 注解开启 &ndash;&gt;-->
+<!--    <bean id="authorizationAttributeSourceAdvisor"-->
+<!--          class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">-->
+<!--        <property name="securityManager" ref="securityManager"/>-->
+<!--    </bean>-->
+
+    <!-- Redis Manager [start] -->
+    <bean id="redisManager" class="org.crazycake.shiro.RedisManager">
+        <property name="host" value="127.0.0.1:6379" />
+    </bean>
+    <!-- Redis Manager [end] -->
+
+    <!-- Redis session DAO [start] -->
+    <bean id="redisSessionDAO" class="org.crazycake.shiro.RedisSessionDAO">
+        <property name="redisManager" ref="redisManager" />
+    </bean>
+
+    <!-- Redis cache manager [start] -->
+    <bean id="cacheManager" class="org.crazycake.shiro.RedisCacheManager">
+        <property name="redisManager" ref="redisManager" />
+        <!-- shiro-redis will call userInfo.getUserid() to get the id for storing Redis object.  -->
+        <property name="principalIdFieldName" value="userid" />
+    </bean>
+    <!-- Redis cache manager [end] -->
+
+    <!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="myRealm" />
+        <!-- 记住我 -->
+        <property name="rememberMeManager" ref="rememberMeManager" />
+        <!-- 注入缓存管理器 -->
+        <property name="cacheManager" ref="cacheManager" />
+        <!-- 注入session管理器 -->
+        <property name="sessionManager" ref="sessionManager" />
+    </bean>
+
+    <!-- 自定义Realm -->
+    <bean id="myRealm" class="cn.xm.exam.utils.realm.MyRealm" />
+
+    <!-- 自定义form认证过虑器 -->
+    <!-- 基于Form表单的身份验证过滤器，不配置将也会注册此过虑器，表单中的用户账号、密码及loginurl将采用默认值，建议配置 -->
+    <bean id="formAuthenticationFilter"
+          class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter ">
+        <property name="usernameParam" value="username" />
+        <property name="passwordParam" value="password" />
+        <property name="rememberMeParam" value="rememberMe" />
+    </bean>
+
+    <!-- session会话管理器 -->
+    <bean id="sessionManager"
+          class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- session失效时间 单位毫秒 -->
+        <property name="globalSessionTimeout" value="18000000" />
+        <!-- 删除失效的session -->
+        <property name="deleteInvalidSessions" value="true" />
+        <property name="sessionDAO" ref="redisSessionDAO" />
+    </bean>
+
+    <!-- rememberMeManager管理器，写cookie，取出cookie生成用户信息 -->
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="rememberMeCookie" />
+    </bean>
+    <!-- 会话Cookie模板 -->
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="sid" />
+        <property name="httpOnly" value="true" />
+        <property name="maxAge" value="-1" />
+    </bean>
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="rememberMe" />
+        <property name="httpOnly" value="true" />
+        <property name="maxAge" value="2592000" /><!-- 30天 -->
+    </bean>
+
+    <!-- shiro 过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager" />
+        <!-- loginUrl认证提交地址，如果没有认证将会请求此地址进行认证，请求此地址将由formAuthenticationFilter进行表单认证 -->
+        <!-- <property name="loginUrl" value="/index.jsp" /> -->
+        <property name="loginUrl" value="/view/index/studyMainpage2.jsp" />
+        <!-- 认证成功统一跳转到first.action，建议不配置，shiro认证成功自动到上一个请求路径 -->
+        <!--  <property name="successUrl" value="/login"/>  -->
+        <!-- 通过unauthorizedUrl指定没有权限操作时跳转页面-->
+        <property name="unauthorizedUrl" value="unauthorized.jsp" />
+<!--        <property name="filters">-->
+<!--            <map>-->
+<!--                <entry key="logout" value-ref="logoutFilter" />-->
+<!--            </map>-->
+<!--        </property>-->
+        <!-- 过虑器链定义，从上向下顺序执行，一般将/**放在最下边 -->
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 对静态资源设置匿名访问 -->
+                / = anon <!-- 不拦截首页的地址 -->
+                /index.jsp = anon
+                /WS/** = anon
+                /newsIP_**.action = anon
+                /train_**.action = anon
+                /dic_***.action = anon
+                /unauthorized.jsp = anon
+                /user_login.action = anon
+                /view/public/** = anon
+                /view/index/** = anon
+                /bs/** = anon
+                /controls/** = anon
+                /css/** = anon
+                /image/** = anon
+                /js/** = anon
+                /META-INF/** = anon
+                <!-- 请求 logout.action地址，shiro去清除session-->
+                /logout.action = logout
+                <!-- /** = authc 所有url都必须认证通过才可以访问-->
+                /** = authc
+            </value>
         </property>
-        <!--所有请求都要经过 jwt过滤器-->
-        <property name="filterChainDefinitionMap">
-            <map>
-                <entry key="/**" value="jwt"/>
-            </map>
-        </property>
     </bean>
 
-    <bean id="securityManager"
-          class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="shiroRealm"/>
-        <!--<property name="cacheManager" ref="shirocache"/>-->
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager" />
     </bean>
 
-    <!-- shiro 注解开启 -->
-    <bean id="authorizationAttributeSourceAdvisor"
-          class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-        <property name="securityManager" ref="securityManager"/>
-    </bean>
-
-
-    <!--<bean name="redisManager" class="org.crazycake.shiro.RedisManager">-->
-    <!--&lt;!&ndash;<property name="host" value="${shiro.redis.host}"/>&ndash;&gt;-->
-    <!--&lt;!&ndash;<property name="timeout" value="${shiro.session.timeout}"/>&ndash;&gt;-->
-    <!--&lt;!&ndash;<property name="database" value="${shiro.session.database}"/>&ndash;&gt;-->
-    <!--</bean>-->
-
-    <!--<bean id="shiroCacheManager" class="org.crazycake.shiro.RedisCacheManager">-->
-    <!--<property name="redisManager" ref="redisManager"/>-->
-    <!--</bean>-->
-
-    <!--<bean id="shiroFilterFactoryBean"-->
-    <!--class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">-->
-    <!--<property name="securityManager" ref="securityManager"/>-->
-    <!--&lt;!&ndash;<property name="loginUrl" value="/web/login"/>&ndash;&gt;-->
-    <!--&lt;!&ndash;<property name="successUrl" value="/success"/>&ndash;&gt;-->
-    <!--<property name="unauthorizedUrl" value="/unauthorizedUrl"/>-->
-    <!--<property name="filterChainDefinitionMap">-->
-    <!--<map>-->
-    <!--<entry key="/web/login,/web/register,/api/test/**" value="anon"/>-->
-    <!--<entry key="/logout" value="logout"/>-->
-    <!--<entry key="/**" value="user"/>-->
-    <!--</map>-->
-    <!--</property>-->
-    <!--</bean>-->
-
-    <!--<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">-->
-    <!--<property name="realm" ref="shiroRealm"/>-->
-    <!--<property name="sessionManager" ref="sessionManager"/>-->
-    <!--<property name="cacheManager" ref="shiroCacheManager"/>-->
-    <!--<property name="rememberMeManager" ref="rememberMeManager"/>-->
-    <!--</bean>-->
-
-    <!--<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">-->
-    <!--<property name="name" value="rememberMe"/>-->
-    <!--<property name="maxAge" value="${shiro.cookie.maxage}"/>-->
-    <!--</bean>-->
-
-    <!--<bean id="rememberMeManager"-->
-    <!--class="org.apache.shiro.web.mgt.CookieRememberMeManager">-->
-    <!--<property name="cookie" ref="rememberMeCookie"/>-->
-    <!--<property name="cipherKey" value="shiro_key"/>-->
-    <!--</bean>-->
-
-    <!--<bean name="authorizationAttributeSourceAdvisor"-->
-    <!--class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">-->
-    <!--<property name="securityManager" ref="securityManager"/>-->
-    <!--</bean>-->
-
-    <!--<bean name="redisSessionDAO" class="org.crazycake.shiro.RedisSessionDAO">-->
-    <!--<property name="redisManager" ref="redisManager"/>-->
-    <!--</bean>-->
-
-    <!--<bean name="sessionManager"-->
-    <!--class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">-->
-    <!--<property name="sessionListeners">-->
-    <!--<list>-->
-    <!--<ref bean="shiroSessionListener"/>-->
-    <!--</list>-->
-    <!--</property>-->
-    <!--<property name="globalSessionTimeout" value="${shiro.cookie.maxage}"/>-->
-    <!--<property name="sessionDAO" ref="redisSessionDAO"/>-->
-    <!--<property name="sessionIdUrlRewritingEnabled" value="false"/>-->
-    <!--</bean>-->
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 
     <!-- 开发环境配置文件 -->
     <beans profile="development">

@@ -29,7 +29,7 @@ public class Subject implements Serializable {
 
     @ManyToMany(mappedBy = "teachers",
             fetch = FetchType.EAGER)
-    @JsonBackReference
+        @JsonBackReference
     private Set<Course> courses = new HashSet<>();
 
 }
