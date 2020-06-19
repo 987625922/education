@@ -23,6 +23,7 @@ public class CourseController {
     private ICourseService courseService;
 
     @Log("获取所有课程")
+//    @RequiresPermissions("user:root")
     @RequestMapping(value = "/lists")
     public Object lists(@RequestParam(required = false) Integer currentPage,
                         @RequestParam(required = false) Integer pageSize) {
