@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
  * 定时任务
  * 0点清空当天登录人数
  */
-//@Component
+@Component
 public class DealTodayLogJob {
 
     @Autowired
     private IWebDataBeanService webDataBeanService;
 
-    @Scheduled(cron = "0 0 0 0 0 ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void dealLoginStatus() {
         webDataBeanService.clearTodayLoginMun();
     }

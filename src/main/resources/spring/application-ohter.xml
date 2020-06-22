@@ -12,11 +12,8 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframew
 
 
     <!-- 启用注解驱动的定时任务 -->
-    <!--<task:annotation-driven/>-->
-    <!--&lt;!&ndash; 扫描定时任务的包 &ndash;&gt;-->
-    <!--<context:component-scan-->
-            <!--base-package="com.project.gelingeducation.common.quartz"></context:component-scan>-->
-    <!--&lt;!&ndash; 配置定时任务的线程池 &ndash;&gt;-->
-    <!--<task:scheduler id="myScheduler" pool-size="5"/>-->
+    <task:annotation-driven/>
+    <!-- 配置定时任务的线程池 -->
+    <task:scheduler id="myScheduler" pool-size="5"/>
 
 </beans>

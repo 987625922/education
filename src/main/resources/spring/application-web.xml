@@ -13,13 +13,13 @@
 
     <!-- 导入数据库的相关配置 -->
     <import resource="classpath:spring/application-data.xml"/>
-    <!--<import resource="classpath:spring/application-ohter.xml"/>-->
+    <import resource="classpath:spring/application-ohter.xml"/>
 
     <mvc:annotation-driven/>
 
     <!-- shiro 注解开启 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="shiroRealm1"/>
+        <property name="realm" ref="shiroRealm"/>
         <property name="subjectDAO" ref="subjectDao"/>
         <property name="cacheManager" ref="redisCacheManager"/>
     </bean>

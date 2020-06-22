@@ -3,10 +3,7 @@ package com.project.gelingeducation.service.Impl;
 import com.project.gelingeducation.common.config.GLConstant;
 import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.common.exception.StatusEnum;
-import com.project.gelingeducation.common.utils.JWTUtil;
-import com.project.gelingeducation.common.utils.MD5Util;
-import com.project.gelingeducation.common.utils.RedisTemplateUtil;
-import com.project.gelingeducation.common.utils.TokenUtil;
+import com.project.gelingeducation.common.utils.*;
 import com.project.gelingeducation.dao.IWebDataBeanDao;
 import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.entity.WebDataBean;
@@ -28,8 +25,8 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
     private IWebDataBeanDao webDataBeanDao;
     @Autowired
     private IUserService userService;
-//    @Autowired
-//    private ILoginLogService loginLogService;
+    @Autowired
+    private ILoginLogService loginLogService;
     @Autowired
     RedisTemplateUtil templateUtil;
 
@@ -46,10 +43,11 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         } else if (reUser.getStatus() == 0) {
             throw new AllException(StatusEnum.BAN_USER);
         }
-        //更新登录log,可以开启一个格外的线程去处理，先把结果返回了
-//        loginLogService.saveOrUpdateLoginLogByUid(reUser);
-
-//        addLoginMun();
+        //更新登录log,可以开启一个格外的线程去处理
+        ExecutorsUtils.getInstance().execute(() -> {
+            loginLogService.saveOrUpdateLoginLogByUid(reUser);
+            addLoginMun();
+        });
 
         //返回uid和jwtToken
         String token = JWTUtil.sign(reUser.getAccount(), reUser.getPassword());

@@ -29,7 +29,7 @@ import java.util.Set;
 /**
  * 自定义实现 ShiroRealm，包含认证和授权两大模块
  */
-@Component(value = "shiroRealm1")
+@Component(value = "shiroRealm")
 @Slf4j
 public class ShiroRealm extends AuthorizingRealm {
 

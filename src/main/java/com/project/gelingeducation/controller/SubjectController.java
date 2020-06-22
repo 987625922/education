@@ -19,13 +19,13 @@ public class SubjectController {
     @Log("获取专题")
     @RequestMapping(value = "/lists")
     public Object lists(@RequestParam(required = false) Integer currentPage,
-                        @RequestParam(required = false) Integer pageSize) throws Exception {
+                        @RequestParam(required = false) Integer pageSize){
         return subjectService.queryAll(currentPage, pageSize);
     }
 
     @Log("通过id获取专题")
     @RequestMapping(value = "/find_by_id")
-    public Object findById(Long id) throws Exception {
+    public Object findById(Long id){
         return subjectService.findById(id);
     }
 
