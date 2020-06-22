@@ -1,8 +1,8 @@
 package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.dao.IRoleDao;
-import com.project.gelingeducation.domain.Permission;
-import com.project.gelingeducation.domain.Role;
+import com.project.gelingeducation.entity.Permission;
+import com.project.gelingeducation.entity.Role;
 import com.project.gelingeducation.service.IPermissionService;
 import com.project.gelingeducation.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;

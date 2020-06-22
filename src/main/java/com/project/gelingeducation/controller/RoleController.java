@@ -2,7 +2,7 @@ package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.dto.JsonData;
-import com.project.gelingeducation.domain.Role;
+import com.project.gelingeducation.entity.Role;
 import com.project.gelingeducation.service.IRoleService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;

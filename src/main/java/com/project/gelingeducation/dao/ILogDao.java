@@ -1,8 +1,7 @@
 package com.project.gelingeducation.dao;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.domain.Log;
-import org.aspectj.lang.ProceedingJoinPoint;
+import com.project.gelingeducation.entity.Log;
 import org.springframework.scheduling.annotation.Async;
 
 import javax.servlet.http.HttpServletResponse;

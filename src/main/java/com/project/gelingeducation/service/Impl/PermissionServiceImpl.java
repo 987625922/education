@@ -1,7 +1,7 @@
 package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.dao.IPermissionDao;
-import com.project.gelingeducation.domain.Permission;
+import com.project.gelingeducation.entity.Permission;
 import com.project.gelingeducation.service.IPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

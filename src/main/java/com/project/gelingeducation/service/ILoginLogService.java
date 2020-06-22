@@ -1,9 +1,7 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.domain.LoginLog;
-import com.project.gelingeducation.domain.User;
-
-import java.util.List;
+import com.project.gelingeducation.entity.LoginLog;
+import com.project.gelingeducation.entity.User;
 
 public interface ILoginLogService {
 

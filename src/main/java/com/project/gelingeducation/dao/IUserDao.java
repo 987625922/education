@@ -1,7 +1,6 @@
 package com.project.gelingeducation.dao;
 
-import com.project.gelingeducation.domain.Role;
-import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.common.dto.PageResult;
 
 import java.util.List;

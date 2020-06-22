@@ -3,9 +3,9 @@ package com.project.gelingeducation.service.Impl;
 import com.project.gelingeducation.common.utils.HttpUtil;
 import com.project.gelingeducation.dao.ILoginLogDao;
 import com.project.gelingeducation.dao.IWebDataBeanDao;
-import com.project.gelingeducation.domain.LoginLog;
-import com.project.gelingeducation.domain.User;
-import com.project.gelingeducation.domain.WebDataBean;
+import com.project.gelingeducation.entity.LoginLog;
+import com.project.gelingeducation.entity.User;
+import com.project.gelingeducation.entity.WebDataBean;
 import com.project.gelingeducation.service.ILoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,21 +73,7 @@ public class LoginLogServiceImpl implements ILoginLogService {
             loginLogDao.insert(loginLog);
             return loginLog;
         });
-        //全局登录数据统计
-        Optional<WebDataBean> optionalWebData = Optional.ofNullable(webDataBeanDao.getOnlyData());
-        optionalWebData.ifPresent(webDataBean -> {
-            webDataBean.setAllLoginMun(webDataBean.getAllLoginMun() + 1);
-            //还需要一个定时任务，在0点的时候清空
-            webDataBean.setTodayLoginMun(webDataBean.getTodayLoginMun() + 1);
-            //今日登录ip
-            webDataBean.setTodayLoginIpMun(webDataBean.getTodayLoginIpMun() + 1);
 
-        });
-        optionalWebData.orElseGet(() -> {
-            WebDataBean webDataBean = new WebDataBean();
-            webDataBeanDao.save(webDataBean);
-            return webDataBean;
-        });
     }
 
 

@@ -3,7 +3,7 @@ package com.project.gelingeducation.dao.Impl;
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.dao.IUserDao;
-import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.query.Query;

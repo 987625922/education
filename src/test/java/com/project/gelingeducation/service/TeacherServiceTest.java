@@ -1,6 +1,6 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.domain.Teacher;
+import com.project.gelingeducation.entity.Teacher;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

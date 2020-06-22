@@ -17,8 +17,8 @@ package com.project.gelingeducation.common.aspect;
 
 import com.project.gelingeducation.common.utils.HttpUtil;
 import com.project.gelingeducation.common.utils.ThrowableUtil;
-import com.project.gelingeducation.domain.Log;
-import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.entity.Log;
+import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.service.ILogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;

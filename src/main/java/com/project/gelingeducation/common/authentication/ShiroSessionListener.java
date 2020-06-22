@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * 当前登录数量
  */
-@Component
+//@Component
 public class ShiroSessionListener implements SessionListener{
 
 	private final AtomicInteger sessionCount = new AtomicInteger(0);

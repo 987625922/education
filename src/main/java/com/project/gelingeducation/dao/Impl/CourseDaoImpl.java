@@ -3,7 +3,7 @@ package com.project.gelingeducation.dao.Impl;
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.dao.ICourseDao;
-import com.project.gelingeducation.domain.Course;
+import com.project.gelingeducation.entity.Course;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;

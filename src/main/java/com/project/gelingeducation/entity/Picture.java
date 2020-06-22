@@ -1,19 +1,20 @@
-package com.project.gelingeducation.domain;
+package com.project.gelingeducation.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "picture")
-@NoArgsConstructor
+@Accessors(chain = true)
+@Setter
+@Getter
 public class Picture implements Serializable {
 
     private static final long serialVersionUID = -7091551288233462841L;

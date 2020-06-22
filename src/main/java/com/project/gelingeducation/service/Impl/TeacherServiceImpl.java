@@ -1,8 +1,7 @@
 package com.project.gelingeducation.service.Impl;
 
-import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.ITeacherDao;
-import com.project.gelingeducation.domain.Teacher;
+import com.project.gelingeducation.entity.Teacher;
 import com.project.gelingeducation.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

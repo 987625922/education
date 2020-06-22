@@ -1,7 +1,8 @@
-package com.project.gelingeducation.domain;
+package com.project.gelingeducation.entity;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -10,12 +11,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
+@Table(name = "permission")
+@Accessors(chain = true)
 @Setter
 @Getter
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "permission")
 public class Permission implements Serializable {
 
     private static final long serialVersionUID = 6400268759155522604L;

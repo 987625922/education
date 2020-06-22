@@ -1,6 +1,6 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.domain.LoginLog;
+import com.project.gelingeducation.entity.LoginLog;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

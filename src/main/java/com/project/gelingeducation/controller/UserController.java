@@ -4,7 +4,7 @@ import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.common.exception.StatusEnum;
 import com.project.gelingeducation.common.vo.UserPassVo;
-import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;

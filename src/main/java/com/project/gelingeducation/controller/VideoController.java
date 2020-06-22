@@ -2,7 +2,7 @@ package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.dto.JsonData;
-import com.project.gelingeducation.domain.Video;
+import com.project.gelingeducation.entity.Video;
 import com.project.gelingeducation.service.IVideoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

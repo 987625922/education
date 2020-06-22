@@ -13,6 +13,7 @@
 
     <!-- 导入数据库的相关配置 -->
     <import resource="classpath:spring/application-data.xml"/>
+    <!--<import resource="classpath:spring/application-ohter.xml"/>-->
 
     <mvc:annotation-driven/>
 

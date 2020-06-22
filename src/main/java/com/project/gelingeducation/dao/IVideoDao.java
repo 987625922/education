@@ -1,7 +1,7 @@
 package com.project.gelingeducation.dao;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.domain.Video;
+import com.project.gelingeducation.entity.Video;
 
 import java.util.List;
 

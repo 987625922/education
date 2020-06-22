@@ -1,7 +1,6 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.domain.Subject;
+import com.project.gelingeducation.entity.Subject;
 
 public interface ISubjectService {
 

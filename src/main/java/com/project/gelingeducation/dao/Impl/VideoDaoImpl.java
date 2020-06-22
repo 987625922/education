@@ -3,7 +3,7 @@ package com.project.gelingeducation.dao.Impl;
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.dao.IVideoDao;
-import com.project.gelingeducation.domain.Video;
+import com.project.gelingeducation.entity.Video;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;

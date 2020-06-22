@@ -8,8 +8,8 @@ import com.project.gelingeducation.common.utils.MD5Util;
 import com.project.gelingeducation.common.utils.RedisTemplateUtil;
 import com.project.gelingeducation.common.utils.TokenUtil;
 import com.project.gelingeducation.dao.IWebDataBeanDao;
-import com.project.gelingeducation.domain.User;
-import com.project.gelingeducation.domain.WebDataBean;
+import com.project.gelingeducation.entity.User;
+import com.project.gelingeducation.entity.WebDataBean;
 import com.project.gelingeducation.service.ILoginLogService;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.IWebDataBeanService;
@@ -18,8 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.Optional;
 
-@Transactional(readOnly = true)
+@Transactional
 @Service
 public class WebDataBeanServiceImpl implements IWebDataBeanService {
 
@@ -27,30 +28,13 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
     private IWebDataBeanDao webDataBeanDao;
     @Autowired
     private IUserService userService;
-    @Autowired
-    private ILoginLogService loginLogService;
+//    @Autowired
+//    private ILoginLogService loginLogService;
     @Autowired
     RedisTemplateUtil templateUtil;
 
-    @Override
-    public WebDataBean findById(Integer id) {
-        return webDataBeanDao.findById(id);
-    }
 
     @Override
-    @Transactional
-    public void save(WebDataBean webDataBean) {
-        webDataBeanDao.save(webDataBean);
-    }
-
-    @Override
-    @Transactional
-    public void update(WebDataBean webDataBean) {
-        webDataBeanDao.update(webDataBean);
-    }
-
-    @Override
-    @Transactional
     public Object login(User user) {
         //通过用户名获取用户
         User reUser = userService.findUserByAccount(user.getAccount());
@@ -63,7 +47,10 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
             throw new AllException(StatusEnum.BAN_USER);
         }
         //更新登录log,可以开启一个格外的线程去处理，先把结果返回了
-        loginLogService.saveOrUpdateLoginLogByUid(reUser);
+//        loginLogService.saveOrUpdateLoginLogByUid(reUser);
+
+//        addLoginMun();
+
         //返回uid和jwtToken
         String token = JWTUtil.sign(reUser.getAccount(), reUser.getPassword());
         HashMap userMap = new HashMap();
@@ -75,10 +62,36 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         return userMap;
     }
 
+
     @Override
+    @Transactional(readOnly = true)
     public WebDataBean getWebDataBean() {
         return webDataBeanDao.getOnlyData();
     }
+
+    @Override
+    public void addLoginMun() {
+        //全局登录数据统计
+        Optional<WebDataBean> optionalWebData = Optional.ofNullable(webDataBeanDao.getOnlyData());
+        optionalWebData.ifPresent(webDataBean -> {
+            webDataBean.setAllLoginMun(webDataBean.getAllLoginMun() + 1);
+            webDataBean.setTodayLoginMun(webDataBean.getTodayLoginMun() + 1);
+            webDataBean.setTodayLoginIpMun(webDataBean.getTodayLoginIpMun() + 1);
+        });
+        //如果没有WebDataBean在数据库就创建
+        optionalWebData.orElseGet(() -> {
+            WebDataBean webDataBean = new WebDataBean();
+            webDataBeanDao.save(webDataBean);
+            return webDataBean;
+        });
+    }
+
+    @Override
+    public void clearTodayLoginMun() {
+        Optional<WebDataBean> optionalWebData = Optional.ofNullable(webDataBeanDao.getOnlyData());
+        optionalWebData.ifPresent(webDataBean -> webDataBean.setTodayLoginMun(0L).setTodayLoginIpMun(0L));
+    }
+
 
 }
 

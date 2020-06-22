@@ -2,15 +2,14 @@ package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.ILogDao;
-import com.project.gelingeducation.domain.Course;
-import com.project.gelingeducation.domain.Log;
+import com.project.gelingeducation.entity.Course;
+import com.project.gelingeducation.entity.Log;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 @Repository

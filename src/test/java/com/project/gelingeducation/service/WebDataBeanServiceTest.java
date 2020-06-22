@@ -1,6 +1,6 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.domain.WebDataBean;
+import com.project.gelingeducation.entity.WebDataBean;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,20 +18,6 @@ public class WebDataBeanServiceTest {
     @Autowired
     private IWebDataBeanService webDataBeanService;
 
-    @Test
-    public void save() {
-        WebDataBean webDataBean = new WebDataBean();
-        webDataBean.setAllLoginMun(11L);
-        webDataBeanService.save(webDataBean);
-    }
 
-    @Test
-    public void update() {
-        WebDataBean webDataBean = new WebDataBean();
-        webDataBean.setId(1);
-        webDataBean.setTodayLoginMun(2L);
-//        webDataBean.setAllLoginMun(11);
-        webDataBeanService.update(webDataBean);
-    }
 
 }

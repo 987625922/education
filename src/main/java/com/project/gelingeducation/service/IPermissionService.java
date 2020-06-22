@@ -1,6 +1,6 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.domain.Permission;
+import com.project.gelingeducation.entity.Permission;
 
 import java.util.List;
 

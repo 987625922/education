@@ -1,6 +1,6 @@
 package com.project.gelingeducation.common.controller;
 
-import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.session.Session;

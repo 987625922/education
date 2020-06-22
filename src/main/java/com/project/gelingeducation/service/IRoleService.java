@@ -1,11 +1,9 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.domain.Permission;
-import com.project.gelingeducation.domain.Role;
+import com.project.gelingeducation.entity.Permission;
+import com.project.gelingeducation.entity.Role;
 
 import java.util.List;
-import java.util.Set;
 
 public interface IRoleService {
 

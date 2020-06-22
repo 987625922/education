@@ -1,6 +1,6 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.domain.Video;
+import com.project.gelingeducation.entity.Video;
 
 public interface IVideoService {
 

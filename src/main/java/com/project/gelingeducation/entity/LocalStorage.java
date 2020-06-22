@@ -1,17 +1,18 @@
-package com.project.gelingeducation.domain;
+package com.project.gelingeducation.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "local_storage")
-@NoArgsConstructor
+@Accessors(chain = true)
+@Setter
+@Getter
 public class LocalStorage implements Serializable {
 
     private static final long serialVersionUID = -1162095861365288581L;

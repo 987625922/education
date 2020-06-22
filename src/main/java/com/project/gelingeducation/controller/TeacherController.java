@@ -2,7 +2,7 @@ package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.dto.JsonData;
-import com.project.gelingeducation.domain.Teacher;
+import com.project.gelingeducation.entity.Teacher;
 import com.project.gelingeducation.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

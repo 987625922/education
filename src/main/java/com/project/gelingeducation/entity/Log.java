@@ -13,11 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.project.gelingeducation.domain;
+package com.project.gelingeducation.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -29,10 +30,10 @@ import java.sql.Timestamp;
  * @date 2018-11-24
  */
 @Entity
-@Getter
-@Setter
 @Table(name = "sys_log")
-@NoArgsConstructor
+@Accessors(chain = true)
+@Setter
+@Getter
 public class Log implements Serializable {
 
     private static final long serialVersionUID = 7913187238778019641L;

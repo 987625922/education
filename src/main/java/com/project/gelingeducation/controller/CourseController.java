@@ -2,7 +2,7 @@ package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.dto.JsonData;
-import com.project.gelingeducation.domain.Course;
+import com.project.gelingeducation.entity.Course;
 import com.project.gelingeducation.service.ICourseService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

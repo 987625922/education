@@ -1,14 +1,15 @@
-package com.project.gelingeducation.domain;
+package com.project.gelingeducation.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -26,9 +27,8 @@ import java.util.Date;
  * 浏览资源的权限
  */
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "user")
+@Accessors(chain = true)
 @Setter
 @Getter
 public class User implements Serializable {
@@ -40,6 +40,9 @@ public class User implements Serializable {
     private Long id;
     @Column(name = "account", nullable = false, length = 11)
     private String account;
+    //密码进行长度和格式的验证，个性化提示
+    @Size(min=6, max=15,message="密码长度必须在 6 ~ 15 字符之间！")
+    @Pattern(regexp="^[a-zA-Z0-9|_]+$",message="密码必须由字母、数字、下划线组成！")
     @Column(name = "password", nullable = false, length = 32)
     private String password;
     @Column(name = "user_name", length = 32)

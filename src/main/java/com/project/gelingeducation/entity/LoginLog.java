@@ -1,4 +1,4 @@
-package com.project.gelingeducation.domain;
+package com.project.gelingeducation.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -6,19 +6,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@Entity
+@Table(name = "login_log")
+@Accessors(chain = true)
 @Setter
 @Getter
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "login_log")
 public class LoginLog implements Serializable {
 
     private static final long serialVersionUID = -7554456064719088058L;

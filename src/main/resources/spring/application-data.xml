@@ -8,8 +8,12 @@
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context.xsd
-
-     http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd"
+     http://www.springframework.org/schema/aop
+     https://www.springframework.org/schema/aop/spring-aop.xsd
+     http://www.springframework.org/schema/tx
+     http://www.springframework.org/schema/tx/spring-tx.xsd
+     http://www.springframework.org/schema/cache
+      http://www.springframework.org/schema/cache/spring-cache.xsd"
 >
     <context:component-scan base-package="com.project.gelingeducation">
     </context:component-scan>
@@ -61,16 +65,16 @@
         </property>
         <property name="annotatedClasses">
             <list>
-                <value>com.project.gelingeducation.domain.Course</value>
-                <value>com.project.gelingeducation.domain.LoginLog</value>
-                <value>com.project.gelingeducation.domain.Permission</value>
-                <value>com.project.gelingeducation.domain.Role</value>
-                <value>com.project.gelingeducation.domain.Subject</value>
-                <value>com.project.gelingeducation.domain.User</value>
-                <value>com.project.gelingeducation.domain.Video</value>
-                <value>com.project.gelingeducation.domain.WebDataBean</value>
-                <value>com.project.gelingeducation.domain.Teacher</value>
-                <value>com.project.gelingeducation.domain.Log</value>
+                <value>com.project.gelingeducation.entity.Course</value>
+                <value>com.project.gelingeducation.entity.LoginLog</value>
+                <value>com.project.gelingeducation.entity.Permission</value>
+                <value>com.project.gelingeducation.entity.Role</value>
+                <value>com.project.gelingeducation.entity.Subject</value>
+                <value>com.project.gelingeducation.entity.User</value>
+                <value>com.project.gelingeducation.entity.Video</value>
+                <value>com.project.gelingeducation.entity.WebDataBean</value>
+                <value>com.project.gelingeducation.entity.Teacher</value>
+                <value>com.project.gelingeducation.entity.Log</value>
             </list>
         </property>
     </bean>

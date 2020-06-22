@@ -1,6 +1,6 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.domain.Teacher;
+import com.project.gelingeducation.entity.Teacher;
 
 public interface ITeacherService {
 

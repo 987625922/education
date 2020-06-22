@@ -1,9 +1,10 @@
-package com.project.gelingeducation.domain;
+package com.project.gelingeducation.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,9 +14,8 @@ import java.util.Date;
  * web相关参数保存
  */
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "web_data_bean")
+@Accessors(chain = true)
 @Setter
 @Getter
 public class WebDataBean implements Serializable {

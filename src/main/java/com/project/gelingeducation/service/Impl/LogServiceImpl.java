@@ -2,7 +2,7 @@ package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.common.utils.HttpUtil;
 import com.project.gelingeducation.dao.ILogDao;
-import com.project.gelingeducation.domain.Log;
+import com.project.gelingeducation.entity.Log;
 import com.project.gelingeducation.service.ILogService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;

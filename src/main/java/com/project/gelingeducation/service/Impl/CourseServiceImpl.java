@@ -3,12 +3,10 @@ package com.project.gelingeducation.service.Impl;
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.ICourseDao;
 import com.project.gelingeducation.dao.ITeacherDao;
-import com.project.gelingeducation.domain.Course;
-import com.project.gelingeducation.domain.Teacher;
+import com.project.gelingeducation.entity.Course;
+import com.project.gelingeducation.entity.Teacher;
 import com.project.gelingeducation.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +46,8 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     @Transactional
-    public void update(Course course) throws IllegalAccessException, InvocationTargetException {
+    public void update(Course course)
+            throws IllegalAccessException, InvocationTargetException {
         course.setLastUpdateTime(new Date());
         courseDao.update(course);
     }

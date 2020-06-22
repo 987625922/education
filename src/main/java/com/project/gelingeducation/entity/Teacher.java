@@ -1,9 +1,10 @@
-package com.project.gelingeducation.domain;
+package com.project.gelingeducation.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -12,12 +13,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Setter
-@Getter
 @Entity
 @Table(name = "teacher")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
+@Accessors(chain = true)
+@Setter
+@Getter
 public class Teacher implements Serializable {
 
     private static final long serialVersionUID = 1595117855604940548L;

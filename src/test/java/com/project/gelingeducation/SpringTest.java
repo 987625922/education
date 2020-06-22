@@ -1,6 +1,6 @@
 package com.project.gelingeducation;
 
-import com.project.gelingeducation.domain.Video;
+import com.project.gelingeducation.entity.Video;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.ISubjectService;
 import com.project.gelingeducation.service.IVideoService;
@@ -15,7 +15,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 @Slf4j
 @WebAppConfiguration

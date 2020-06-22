@@ -1,9 +1,8 @@
-package com.project.gelingeducation.domain;
+package com.project.gelingeducation.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -12,12 +11,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "role")
+@Accessors(chain = true)
+@Setter
+@Getter
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 9205096691157148000L;

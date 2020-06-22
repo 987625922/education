@@ -1,9 +1,10 @@
-package com.project.gelingeducation.domain;
+package com.project.gelingeducation.entity;
 //
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -11,16 +12,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Builder
+@Accessors(chain = true)
+@Setter
+@Getter
 @Entity
 @Table(name = "video")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class Video implements Serializable {
 
+    private static final long serialVersionUID = 124213019183081702L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

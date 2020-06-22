@@ -1,6 +1,6 @@
 package com.project.gelingeducation.admin;
 
-import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

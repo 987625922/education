@@ -1,6 +1,6 @@
 package com.project.gelingeducation.dao;
 
-import com.project.gelingeducation.domain.WebDataBean;
+import com.project.gelingeducation.entity.WebDataBean;
 
 public interface IWebDataBeanDao {
 

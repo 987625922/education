@@ -1,8 +1,8 @@
 package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.domain.Permission;
-import com.project.gelingeducation.domain.Role;
+import com.project.gelingeducation.entity.Permission;
+import com.project.gelingeducation.entity.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

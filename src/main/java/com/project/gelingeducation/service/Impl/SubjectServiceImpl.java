@@ -1,16 +1,11 @@
 package com.project.gelingeducation.service.Impl;
 
-import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.ISubjectDao;
-import com.project.gelingeducation.domain.Subject;
-import com.project.gelingeducation.domain.Video;
+import com.project.gelingeducation.entity.Subject;
 import com.project.gelingeducation.service.ISubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 
 @Service

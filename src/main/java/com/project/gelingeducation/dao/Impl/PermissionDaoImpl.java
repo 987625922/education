@@ -2,12 +2,9 @@ package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.IPermissionDao;
-import com.project.gelingeducation.domain.Course;
-import com.project.gelingeducation.domain.Permission;
+import com.project.gelingeducation.entity.Permission;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
