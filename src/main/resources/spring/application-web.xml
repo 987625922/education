@@ -16,35 +16,17 @@
 
     <mvc:annotation-driven/>
 
+    <!-- shiro 注解开启 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="shiroRealm1"/>
+        <property name="subjectDAO" ref="subjectDao"/>
+        <property name="cacheManager" ref="redisCacheManager"/>
+    </bean>
 
-    <!--    <bean id="shiroFilterFactoryBean"-->
-    <!--          class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">-->
-    <!--        <property name="securityManager" ref="securityManager"/>-->
-    <!--        &lt;!&ndash; 在 Shiro过滤器链上加入 JWTFilter&ndash;&gt;-->
-    <!--        <property name="filters">-->
-    <!--            <map>-->
-    <!--                <entry key="jwt" value-ref="JWTFilter"/>-->
-    <!--            </map>-->
-    <!--        </property>-->
-    <!--        &lt;!&ndash;所有请求都要经过 jwt过滤器&ndash;&gt;-->
-    <!--        <property name="filterChainDefinitionMap">-->
-    <!--            <map>-->
-    <!--                <entry key="/**" value="jwt"/>-->
-    <!--            </map>-->
-    <!--        </property>-->
-    <!--    </bean>-->
-
-    <!--    <bean id="securityManager"-->
-    <!--          class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">-->
-    <!--        <property name="realm" ref="shiroRealm"/>-->
-    <!--        &lt;!&ndash;<property name="cacheManager" ref="shirocache"/>&ndash;&gt;-->
-    <!--    </bean>-->
-
-        <!-- shiro 注解开启 -->
-        <bean id="authorizationAttributeSourceAdvisor"
-              class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-            <property name="securityManager" ref="securityManager"/>
-        </bean>
+    <bean id="authorizationAttributeSourceAdvisor"
+          class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
@@ -56,16 +38,9 @@
         </property>
         <property name="filters">
             <map>
-                <entry key="jwt" value-ref="jwtFilter1"/>
+                <entry key="jwt" value-ref="jwtFilter"/>
             </map>
         </property>
-
-    </bean>
-
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="shiroRealm1"/>
-        <property name="subjectDAO" ref="subjectDao"/>
-        <property name="cacheManager" ref="redisCacheManager"/>
     </bean>
 
     <bean id="subjectDao" class="org.apache.shiro.mgt.DefaultSubjectDAO">
@@ -92,6 +67,7 @@
           class="org.apache.shiro.spring.LifecycleBeanPostProcessor">
     </bean>
 
+    <!-- 用户的权限保存到redis中 -->
     <bean id="redisCacheManager" class="org.crazycake.shiro.RedisCacheManager">
         <property name="redisManager" ref="redisManager"/>
         <!--//redis中针对不同用户缓存(此处的id需要对应user实体中的id字段,用于唯一标识)-->
@@ -99,9 +75,8 @@
         <!--        //用户权限信息缓存时间-->
         <property name="expire" value="200000"/>
     </bean>
-
     <bean id="redisManager" class="org.crazycake.shiro.RedisManager">
-        <property name="host" value="127.1.0.1:6379"/>
+        <property name="host" value="127.0.0.1:6379"/>
         <property name="timeout" value="10000"/>
     </bean>
 

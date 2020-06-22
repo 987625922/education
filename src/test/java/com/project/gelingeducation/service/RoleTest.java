@@ -34,7 +34,7 @@ public class RoleTest {
         role.setName("editor");
         role.setIsDefault(1);
         Permission permission = new Permission();
-        permission.setId(42L);
+        permission.setId(191L);
         permission.setName("用户编辑");
         permission.setPerms("user:root");
         role.getPermissions().add(permission);

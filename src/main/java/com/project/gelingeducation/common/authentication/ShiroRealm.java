@@ -29,7 +29,7 @@ import java.util.Set;
 /**
  * 自定义实现 ShiroRealm，包含认证和授权两大模块
  */
-@Component
+@Component(value = "shiroRealm1")
 @Slf4j
 public class ShiroRealm extends AuthorizingRealm {
 
@@ -46,7 +46,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Override
     public boolean supports(AuthenticationToken token) {
-        return token instanceof JWTToken;
+        return token instanceof JwtToken;
     }
 
     /**
@@ -114,7 +114,7 @@ public class ShiroRealm extends AuthorizingRealm {
         if (!JWTUtil.verify(token, account, user.getPassword()))
             throw new AuthenticationException("token校验不通过");
 
-        return new SimpleAuthenticationInfo(user, token, "gl_realm");
+        return new SimpleAuthenticationInfo(user, token, getName());
     }
 
     /**

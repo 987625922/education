@@ -94,7 +94,7 @@ public class AdminServiceTest {
 
     @Test
     public void addRoles() {
-        userservice.addRole(new Long(7), new Long(15));
+        userservice.addRole(new Long(196), new Long(200));
     }
 
     @Test
