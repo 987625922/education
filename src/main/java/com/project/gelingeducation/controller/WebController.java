@@ -12,6 +12,7 @@ import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.IWebDataBeanService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,7 +49,7 @@ public class WebController extends BaseController {
 
 //    @Log("登录接口")
     @RequestMapping(value = "/web/login", method = RequestMethod.POST)
-    public Object login(@Valid @RequestBody User user) {
+    public Object login(@RequestBody @Validated User user) {
         return JsonData.buildSuccess(webDataBeanService.login(user));
     }
 

@@ -1,8 +1,6 @@
 package com.project.gelingeducation.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
@@ -69,15 +67,15 @@ public class User implements Serializable {
     @Column(name = "modify_time")
     private Date modifyTime;
 
-    @Column(name = "role_id",insertable = false,updatable = false)
+    @Column(name = "role_id", insertable = false, updatable = false)
     private Long roleId;
 
     //身份列表
-    @ManyToOne(targetEntity = Role.class,cascade = CascadeType.ALL,
+    @ManyToOne(targetEntity = Role.class, cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id",referencedColumnName = "id")//表示这个表在维护外键
+    @JoinColumn(name = "role_id", referencedColumnName = "id")//表示这个表在维护外键
     private Role role;
 
-    @OneToOne(targetEntity = LoginLog.class,mappedBy = "user")
+    @OneToOne(targetEntity = LoginLog.class, mappedBy = "user")
     private LoginLog loginLog;
 }

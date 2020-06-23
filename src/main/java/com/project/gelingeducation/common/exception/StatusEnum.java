@@ -20,7 +20,8 @@ public enum StatusEnum {
     HTTP_BODY_MISS(-3405, "http请求参数主体错误"),
     REDIS_CONNECT_ERROR(-3406, "redis连接出错"),
     MISS_PARAME_EXCEPTION(-3407, "缺少参数"),
-    REDIS_CONNECTTION_FAILUER_EXCEPTION(-3408, "redis连接失败");
+    REDIS_CONNECTTION_FAILUER_EXCEPTION(-3408, "redis连接失败"),
+    LIMIT_ACCESS_EXCEPTION(-3409,"接口访问超出频率限制");
 
     /**
      * 状态码

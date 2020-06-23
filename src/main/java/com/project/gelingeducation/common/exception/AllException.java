@@ -15,6 +15,7 @@ public class AllException extends RuntimeException {
     private Integer code;
 
     private Object data = null;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
     /**
