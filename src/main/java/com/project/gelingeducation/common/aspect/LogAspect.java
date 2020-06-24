@@ -17,6 +17,7 @@ package com.project.gelingeducation.common.aspect;
 
 import com.project.gelingeducation.common.utils.HttpUtil;
 import com.project.gelingeducation.common.utils.ThrowableUtil;
+import com.project.gelingeducation.controller.SpringContextUtils;
 import com.project.gelingeducation.entity.Log;
 import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.service.ILogService;
@@ -28,9 +29,11 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
 
 /**
  * 接口日志切面
@@ -67,9 +70,23 @@ public class LogAspect {
         currentTime.set(System.currentTimeMillis());
         result = joinPoint.proceed();
         Log log = new Log("INFO", System.currentTimeMillis() - currentTime.get());
-        HttpServletRequest request = HttpUtil.getHttpServletRequest();
+        HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method method = signature.getMethod();
+        com.project.gelingeducation.common.annotation.Log aopLog
+                = method.getAnnotation(com.project.gelingeducation.common.annotation.Log.class);
+        StringBuilder params = new StringBuilder("{");
+        Object[] argValues = joinPoint.getArgs();
+        //参数名称
+        String[] argNames = ((MethodSignature) joinPoint.getSignature()).getParameterNames();
+        if (argValues != null) {
+            for (int i = 0; i < argValues.length; i++) {
+                params.append(" ").append(argNames[i]).append(": ").append(argValues[i]);
+            }
+        }
         logService.save(getUsername(), HttpUtil.getBrowser(request), HttpUtil.getIp(request),
-                joinPoint, log);
+                aopLog.value(), joinPoint.getTarget().getClass().getName() + "." + signature.getName() + "()"
+                , joinPoint.getArgs(), argNames, params.toString(), log);
         currentTime.remove();
         return result;
     }
@@ -87,9 +104,23 @@ public class LogAspect {
                 - currentTime.get());
         currentTime.remove();
         log.setExceptionDetail(ThrowableUtil.getStackTrace(e).substring(0, 3000));
-        HttpServletRequest request = HttpUtil.getHttpServletRequest();
-        logService.save(getUsername(), HttpUtil.getBrowser(request), HttpUtil.getIp(request)
-                , (ProceedingJoinPoint) joinPoint, log);
+        HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method method = signature.getMethod();
+        com.project.gelingeducation.common.annotation.Log aopLog
+                = method.getAnnotation(com.project.gelingeducation.common.annotation.Log.class);
+        StringBuilder params = new StringBuilder("{");
+        Object[] argValues = joinPoint.getArgs();
+        //参数名称
+        String[] argNames = ((MethodSignature) joinPoint.getSignature()).getParameterNames();
+        if (argValues != null) {
+            for (int i = 0; i < argValues.length; i++) {
+                params.append(" ").append(argNames[i]).append(": ").append(argValues[i]);
+            }
+        }
+        logService.save(getUsername(), HttpUtil.getBrowser(request), HttpUtil.getIp(request),
+                aopLog.value(), joinPoint.getTarget().getClass().getName() + "." + signature.getName() + "()"
+                , joinPoint.getArgs(), argNames, params.toString(), log);
     }
 
     public String getUsername() {

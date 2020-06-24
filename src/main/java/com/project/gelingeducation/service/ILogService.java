@@ -19,25 +19,29 @@ public interface ILogService {
 
 
     /**
-     * 保存日志数据
-     *
-     * @param username  用户
-     * @param browser   浏览器
-     * @param ip        请求IP
-     * @param joinPoint
-     * @param log       日志实体
-     */
-    @Async
-    void save(String username, String browser, String ip,
-              ProceedingJoinPoint joinPoint, Log log);
-
-    /**
      * 根据id查询异常详情
      *
      * @param id 日志ID
      * @return Object
      */
     Log findByErrDetail(Long id);
+
+    /**
+     * 保存日志数据
+     *
+     * @param username  用户
+     * @param browser   浏览器
+     * @param ip        请求IP
+     * @param description
+     * @param mehodName
+     * @param argValues
+     * @param argNames
+     * @param log       日志实体
+     */
+    @Async
+    void save(String username, String browser, String ip,
+              String description, String mehodName, Object[] argValues
+            , String[] argNames,String params, Log log);
 
     /**
      * 导出日志

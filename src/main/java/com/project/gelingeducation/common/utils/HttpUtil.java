@@ -20,8 +20,14 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Objects;
+import java.util.Optional;
 
 
+/**
+ * Http工具类
+ *
+ * @author LL
+ */
 @Slf4j
 public class HttpUtil {
     private static final String UNKNOWN = "unknown";
@@ -30,10 +36,6 @@ public class HttpUtil {
 
     }
 
-    public static HttpServletRequest getHttpServletRequest() {
-        return ((ServletRequestAttributes) Objects
-                .requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-    }
 
     /**
      * 获取浏览器

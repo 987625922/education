@@ -1,5 +1,6 @@
 package com.project.gelingeducation.controller;
 
+import com.project.gelingeducation.common.annotation.Limit;
 import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.controller.BaseController;
 import com.project.gelingeducation.common.dto.JsonData;
@@ -18,10 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-
 /**
  * @Valid 用于验证bean是否符合注解要求
+ * @author LL
  */
 @RestController
 public class WebController extends BaseController {
@@ -47,7 +47,8 @@ public class WebController extends BaseController {
         return JsonData.buildSuccess(webIndex);
     }
 
-//    @Log("登录接口")
+    @Limit(key = "login", period = 60, count = 20, name = "登录接口", prefix = "limit")
+    @Log("登录接口")
     @RequestMapping(value = "/web/login", method = RequestMethod.POST)
     public Object login(@RequestBody @Validated User user) {
         return JsonData.buildSuccess(webDataBeanService.login(user));

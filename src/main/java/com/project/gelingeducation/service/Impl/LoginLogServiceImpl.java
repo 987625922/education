@@ -1,11 +1,11 @@
 package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.common.utils.HttpUtil;
+import com.project.gelingeducation.controller.SpringContextUtils;
 import com.project.gelingeducation.dao.ILoginLogDao;
 import com.project.gelingeducation.dao.IWebDataBeanDao;
 import com.project.gelingeducation.entity.LoginLog;
 import com.project.gelingeducation.entity.User;
-import com.project.gelingeducation.entity.WebDataBean;
 import com.project.gelingeducation.service.ILoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,7 +26,7 @@ public class LoginLogServiceImpl implements ILoginLogService {
     @Override
     public void insert(LoginLog loginLog) {
         loginLog.setLoginTime(new Date());
-        String ip = HttpUtil.getCityInfo(HttpUtil.getIp(HttpUtil.getHttpServletRequest()));
+        String ip = HttpUtil.getCityInfo(HttpUtil.getIp(SpringContextUtils.getHttpServletRequest()));
         loginLog.setIp(ip);
         loginLog.setLocation(HttpUtil.getCityInfo(ip));
         loginLogDao.insert(loginLog);
@@ -51,19 +50,21 @@ public class LoginLogServiceImpl implements ILoginLogService {
     @Transactional
     @Override
     public void saveOrUpdateLoginLogByUid(User user) {
-        Optional<LoginLog> optionalLoginLog = Optional.ofNullable(user.getLoginLog());
-        HttpServletRequest servletRequest = HttpUtil.getHttpServletRequest();
-        String ip = HttpUtil.getIp(servletRequest);
-        optionalLoginLog.ifPresent(loginLog -> {
+        LoginLog loginLog = user.getLoginLog();
+        HttpServletRequest servletRequest = SpringContextUtils.getHttpServletRequest();
+        String ip = "";
+        if (servletRequest != null) {
+            ip = HttpUtil.getIp(servletRequest);
+        }
+        if (loginLog != null) {
             loginLog.setLastLoginTime(loginLog.getLoginTime());
             loginLog.setLocation(HttpUtil.getCityInfo(ip));
             loginLog.setBrowser(HttpUtil.getBrowser(servletRequest));
             loginLog.setLoginTime(new Date());
             loginLog.setUserSystem(HttpUtil.getOsName(servletRequest));
             loginLog.setIp(ip);
-        });
-        optionalLoginLog.orElseGet(() -> {
-            LoginLog loginLog = new LoginLog();
+        } else {
+            loginLog = new LoginLog();
             loginLog.setUser(user);
             loginLog.setLoginTime(new Date());
             loginLog.setBrowser(HttpUtil.getBrowser(servletRequest));
@@ -71,8 +72,7 @@ public class LoginLogServiceImpl implements ILoginLogService {
             loginLog.setLocation(HttpUtil.getCityInfo(ip));
             loginLog.setUserSystem(HttpUtil.getOsName(servletRequest));
             loginLogDao.insert(loginLog);
-            return loginLog;
-        });
+        }
 
     }
 
