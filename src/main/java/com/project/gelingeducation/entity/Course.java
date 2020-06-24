@@ -75,7 +75,9 @@ public class Course implements Serializable {
     @LastModifiedDate
     private Date lastUpdateTime;
 
-    //教师列表
+    /**
+     * 教师列表
+     */
     @ManyToMany(targetEntity = Teacher.class,
             cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(

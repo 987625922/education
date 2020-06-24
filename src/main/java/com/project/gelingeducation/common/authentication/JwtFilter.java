@@ -20,16 +20,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * @author ll
  * @Description: 鉴权登录拦截器
  **/
-
 @Component
 @Slf4j
 public class JwtFilter extends BasicHttpAuthenticationFilter {
 
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();
-    //不用登陆就可以访问的接口，多个用,号隔开
+    /**
+     * 不用登陆就可以访问的接口，多个用,号隔开
+     */
     private String annonUrl = "/web/login,/web/register";
 
     /**
@@ -50,10 +52,13 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         String[] anonUrl = StringUtils.splitByWholeSeparatorPreserveAllTokens(annonUrl, ",");
         boolean match = false;
         for (String u : anonUrl) {
-            if (pathMatcher.match(u, httpServletRequest.getRequestURI()))
+            if (pathMatcher.match(u, httpServletRequest.getRequestURI())) {
                 match = true;
+            }
         }
-        if (match) return true;
+        if (match) {
+            return true;
+        }
         /**
          * 如果是需要登录才能访问的就检查用户是否登录
          */

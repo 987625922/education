@@ -6,7 +6,7 @@ public class ExecutorsUtils {
     ExecutorService es = null;
 
     private void init() {
-        es = new ThreadPoolExecutor(5, 5, 0l, TimeUnit.MILLISECONDS,
+        es = new ThreadPoolExecutor(5, 5, 0L, TimeUnit.MILLISECONDS,
                 new SynchronousQueue<Runnable>(),
                 new ThreadFactory() {
                     @Override

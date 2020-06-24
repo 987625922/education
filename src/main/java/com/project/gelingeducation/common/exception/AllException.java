@@ -46,6 +46,7 @@ public class AllException extends RuntimeException {
         this.code = code;
     }
 
+    @Override
     public String getMessage() {
         return message;
     }

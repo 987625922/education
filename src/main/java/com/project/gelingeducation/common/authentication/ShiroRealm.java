@@ -100,19 +100,23 @@ public class ShiroRealm extends AuthorizingRealm {
                 (String) templateUtil.get(GLConstant.TOKEN_CACHE_PREFIX + encryptToken + "." + account);
 
         // 如果找不到，说明已经失效
-        if (StringUtils.isBlank(encryptTokenInRedis))
+        if (StringUtils.isBlank(encryptTokenInRedis)) {
             throw new AuthenticationException("token已经过期");
+        }
 
-        if (StringUtils.isBlank(account))
+        if (StringUtils.isBlank(account)) {
             throw new AuthenticationException("token校验不通过");
+        }
 
         // 通过用户名查询用户信息
         User user = userService.findUserByAccount(account);
 
-        if (user == null)
+        if (user == null) {
             throw new AuthenticationException("用户名或密码错误");
-        if (!JWTUtil.verify(token, account, user.getPassword()))
+        }
+        if (!JWTUtil.verify(token, account, user.getPassword())) {
             throw new AuthenticationException("token校验不通过");
+        }
 
         return new SimpleAuthenticationInfo(user, token, getName());
     }
