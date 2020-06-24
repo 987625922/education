@@ -1,7 +1,7 @@
 package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.domain.Course;
+import com.project.gelingeducation.entity.Course;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,22 +26,20 @@ public class CourseServiceTest {
         String[] names = {"同步教材：人教版高中数学必修三", "左宗棠-不惧官场潜规则", "同步教材：人教版高中数学必修四"
                 , "同步教材：人教版高中英语必修一", "同步教材：人教版高中英语必修二", "同步教材：人教版高中英语必修四"};
         for (int i = 0; i < names.length; i++) {
-            Course course = new Course();
-            course.setName(names[i]);
-            course.setPrice(1.0);
+            Course course = new Course().setName(names[i]).setPrice(1.0);
             courseService.insert(course);
         }
     }
 
     @Test
     public void pageList() {
-        PageResult pageResult = (PageResult) courseService.getLists(1, 10);
+        PageResult pageResult = (PageResult) courseService.queryAll(1, 10);
         log.debug("==>" + pageResult.toString());
     }
 
     @Test
     public void courseAddTeacher() {
-        courseService.courseAddTeacher(new Long(2), new Long(2));
+        courseService.courseAddTeacher(new Long(1), new Long(1));
     }
 
     @Test

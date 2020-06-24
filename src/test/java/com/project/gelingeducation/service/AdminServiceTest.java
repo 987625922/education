@@ -1,8 +1,8 @@
 package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.domain.Role;
-import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.entity.Role;
+import com.project.gelingeducation.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +29,9 @@ public class AdminServiceTest {
         User user = new User();
         user.setAccount("123456");
         user.setPassword("123456");
+        Role role = new Role();
+        role.setId(43L);
+        user.setRole(role);
         log.debug("findById获取的结果：" + userservice.addUser(user));
 
 //        User user = new User();
@@ -76,7 +79,7 @@ public class AdminServiceTest {
 
     @Test
     public void lists() {
-        PageResult bean = userservice.getLists(1, 3);
+        PageResult bean = (PageResult) userservice.queryAll(1, 3);
         List<User> users = (List<User>) bean.getLists();
         for (User user : users) {
             log.debug("==>  " + user);
@@ -91,7 +94,7 @@ public class AdminServiceTest {
 
     @Test
     public void addRoles() {
-        userservice.addRole(new Long(7), new Long(15));
+        userservice.addRole(new Long(196), new Long(200));
     }
 
     @Test

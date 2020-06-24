@@ -2,8 +2,8 @@ package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.ITeacherDao;
-import com.project.gelingeducation.domain.Teacher;
-import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.entity.Teacher;
+import com.project.gelingeducation.entity.User;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -25,8 +25,14 @@ public class TeacherDaoImpl extends BaseDao implements ITeacherDao {
         return getSession().get(Teacher.class, id);
     }
 
+
     @Override
-    public PageResult getLists(Integer currentPage, Integer pageSize) {
+    public List<Teacher> queryAll() {
+        return getSession().createQuery("FROM Teacher").list();
+    }
+
+    @Override
+    public PageResult queryAll(Integer currentPage, Integer pageSize) {
         Session session = getSession();
 
         String hql = "select count(*) from Teacher";

@@ -1,15 +1,18 @@
 package com.project.gelingeducation.dao;
 
-import com.project.gelingeducation.domain.Subject;
+import com.project.gelingeducation.common.dto.PageResult;
+import com.project.gelingeducation.entity.Subject;
 
 import java.util.List;
 
 public interface ISubjectDao {
-    List findAll();
+    PageResult queryAll(Integer currentPage,Integer pageSize);
+
+    List<Subject> queryAll();
 
     Subject findById(Long id);
 
-    long insert(Subject video);
+    Subject insert(Subject video);
 
     void delect(Long id);
 

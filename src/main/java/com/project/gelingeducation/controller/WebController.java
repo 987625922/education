@@ -1,46 +1,43 @@
 package com.project.gelingeducation.controller;
 
-import com.project.gelingeducation.common.authentication.JWTUtil;
+import com.project.gelingeducation.common.annotation.Log;
+import com.project.gelingeducation.common.controller.BaseController;
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.common.dto.WebIndex;
-import com.project.gelingeducation.common.exception.AllException;
-import com.project.gelingeducation.common.exception.StatusEnum;
-import com.project.gelingeducation.common.utils.MD5Util;
-import com.project.gelingeducation.domain.LoginLog;
-import com.project.gelingeducation.domain.User;
-import com.project.gelingeducation.domain.WebDataBean;
+import com.project.gelingeducation.entity.LoginLog;
+import com.project.gelingeducation.entity.User;
+import com.project.gelingeducation.entity.WebDataBean;
+import com.project.gelingeducation.service.ILoginLogService;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.IWebDataBeanService;
-import com.project.gelingeducation.service.ILoginLogService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
+import javax.validation.Valid;
 
+/**
+ * @Valid 用于验证bean是否符合注解要求
+ */
 @RestController
-public class WebController {
+public class WebController extends BaseController {
 
     @Autowired
     private ILoginLogService loginLogService;
     @Autowired
     private IWebDataBeanService webDataBeanService;
     @Autowired
-    private IUserService UserService;
+    private IUserService userService;
 
-
-    /**
-     * web端首页
-     *
-     * @param id
-     * @return
-     */
-    @RequestMapping(value = "/web/index", method = RequestMethod.GET)
-    public Object index(Long id) {
-        LoginLog loginLog = loginLogService.getByUserId(id);
+    @Log("web端首页")
+    @RequestMapping(value = "/web/index")
+    public Object index() {
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        LoginLog loginLog = loginLogService.getByUserId(user.getId());
         WebDataBean webDataBean = webDataBeanService.getWebDataBean();
         WebIndex webIndex = new WebIndex();
         webIndex.setLastLoginTime(loginLog.getLastLoginTime());
@@ -50,45 +47,15 @@ public class WebController {
         return JsonData.buildSuccess(webIndex);
     }
 
-    /**
-     * 登录接口
-     *
-     * @return
-     */
+//    @Log("登录接口")
     @RequestMapping(value = "/web/login", method = RequestMethod.POST)
-    public Object login(@RequestBody User user) {
-
-        User reUser = UserService.findUserByAccount(user.getAccount());
-
-        if (reUser == null) {
-            throw new AllException(StatusEnum.NO_USER);
-        } else if (!reUser.getPassword().equals(MD5Util.encrypt(user.getAccount().toLowerCase(),
-                user.getPassword()))) {
-            throw new AllException(StatusEnum.ACCOUNT_PASSWORD_ERROR);
-        } else if (reUser.getStatus() == 0) {
-            throw new AllException(StatusEnum.BAN_USER);
-        }
-
-        loginLogService.getByUserIdLoginUpdate(reUser.getId());
-
-        webDataBeanService.userLogin();
-
-        HashMap userMap = new HashMap();
-        userMap.put("id", reUser.getId());
-        userMap.put("token", JWTUtil.sign(reUser.getAccount(), reUser.getPassword()));
-        return JsonData.buildSuccess(userMap);
+    public Object login(@RequestBody @Validated User user) {
+        return JsonData.buildSuccess(webDataBeanService.login(user));
     }
 
-    /**
-     * 注册接口
-     *
-     * @param user
-     * @return
-     */
+    @Log("注册接口")
     @RequestMapping(value = "/web/register", method = RequestMethod.POST)
     public Object register(@RequestBody User user) {
-        return JsonData.buildSuccess(UserService.register(user));
+        return JsonData.buildSuccess(userService.register(user));
     }
-
-
 }

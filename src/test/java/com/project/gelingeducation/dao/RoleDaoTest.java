@@ -1,6 +1,6 @@
 package com.project.gelingeducation.dao;
 
-import com.project.gelingeducation.domain.Role;
+import com.project.gelingeducation.entity.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,29 +1,47 @@
 package com.project.gelingeducation.dao.Impl;
 
+import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.ISubjectDao;
-import com.project.gelingeducation.domain.Subject;
+import com.project.gelingeducation.entity.Subject;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 
 @Repository
-public class SubjectDaoImpl implements ISubjectDao {
-
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    public Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
-
+public class SubjectDaoImpl extends BaseDao implements ISubjectDao {
 
     @Override
-    public List findAll() {
-        return getSession().createQuery("from Subject").getResultList();
+    public PageResult queryAll(Integer currentPage,Integer pageSize) {
+        Session session = getSession();
+
+        String hql = "select count(*) from Subject";
+        Query queryCount = session.createQuery(hql);
+        long allrows = (long) queryCount.uniqueResult();
+
+        TypedQuery<Subject> query = session.createQuery("from Subject");
+        query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
+        query.setMaxResults(pageSize);//得到每页的记录数
+
+        long totalPage = (allrows - 1) / pageSize + 1;
+        List<Subject> list = query.getResultList();
+
+        PageResult pageResult = new PageResult();
+        pageResult.setTotalPages(totalPage);
+        pageResult.setTotalRows(allrows);
+        pageResult.setLists(list);
+        pageResult.setCurrentPage(currentPage);
+        pageResult.setPageSize(pageSize);
+
+        return pageResult;
+    }
+
+    @Override
+    public List<Subject> queryAll() {
+        return getSession().createQuery("FROM Subject").list();
     }
 
     @Override
@@ -32,9 +50,9 @@ public class SubjectDaoImpl implements ISubjectDao {
     }
 
     @Override
-    public long insert(Subject subject) {
+    public Subject insert(Subject subject) {
         getSession().save(subject);
-        return subject.getId();
+        return subject;
     }
 
     @Override

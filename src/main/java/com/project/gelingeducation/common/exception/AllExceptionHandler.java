@@ -3,6 +3,7 @@ package com.project.gelingeducation.common.exception;
 import com.project.gelingeducation.common.dto.JsonData;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -31,9 +32,11 @@ public class AllExceptionHandler {
             return JsonData.buildStatus(StatusEnum.REQUEST_METHOD_NOT_SUPPORT);
         } else if (e instanceof HttpMessageNotReadableException) {
             return JsonData.buildStatus(StatusEnum.HTTP_BODY_MISS);
-        } else if (e instanceof MissingServletRequestParameterException){
+        } else if (e instanceof MissingServletRequestParameterException) {
             return JsonData.buildStatus(StatusEnum.MISS_PARAME_EXCEPTION);
-        }else {
+        } else if (e instanceof RedisConnectionFailureException) {
+            return JsonData.buildStatus(StatusEnum.REDIS_CONNECTTION_FAILUER_EXCEPTION);
+        } else {
             return JsonData.buildError(StatusEnum.UNKNOWD_ERROR.getMessage(),
                     StatusEnum.UNKNOWD_ERROR.getCode());
         }

@@ -1,14 +1,13 @@
 package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
+import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.dao.IRoleDao;
-import com.project.gelingeducation.domain.Permission;
-import com.project.gelingeducation.domain.Role;
-import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.entity.Permission;
+import com.project.gelingeducation.entity.Role;
+import com.project.gelingeducation.entity.User;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
@@ -20,14 +19,7 @@ import java.util.Set;
  *
  */
 @Repository
-public class RoleDaoImpl implements IRoleDao {
-
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    public Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
+public class RoleDaoImpl extends BaseDao implements IRoleDao {
 
 
     @Override
@@ -41,17 +33,19 @@ public class RoleDaoImpl implements IRoleDao {
     }
 
     @Override
-    public List<Role> list() {
+    public List<Role> queryAll() {
         return getSession().createQuery("from Role").list();
     }
 
     @Override
     public void delRoleById(Long id) {
-        getSession().delete(getSession().get(Role.class, id));
+        Session session = getSession();
+        session.createQuery("DELETE FROM Role WHERE id =" + id)
+                .executeUpdate();
     }
 
     @Override
-    public PageResult getRolePageList(Integer currentPage, Integer pageSize) {
+    public PageResult queryAll(Integer currentPage, Integer pageSize) {
         Session session = getSession();
 
         String hql = "select count(*) from Role";//此处的Product是对象
@@ -84,22 +78,14 @@ public class RoleDaoImpl implements IRoleDao {
 
     @Override
     public List selByName(String name) {
-        return getSession().createQuery("from Role where name LIKE '%" + name + "%'").list();
+        return getSession().createQuery("FROM Role WHERE name LIKE '%" + name + "%'").list();
     }
 
     @Override
-    public void delByIds(Long[] ids) {
-        String sql = "";
-        for (int i = 0; i < ids.length; i++) {
-            if (i == 0) {
-                sql = sql + ids[i];
-            } else {
-                sql = sql + "," + ids[i];
-            }
-        }
-        Query query = getSession().createQuery("DELETE FROM Role WHERE id in(" + sql + ")");
+    public void delByIds(String ids) {
+        Query query = getSession().createQuery
+                ("DELETE FROM Role WHERE id in(" + ids + ")");
         query.executeUpdate();
-
     }
 
     @Override
@@ -112,6 +98,19 @@ public class RoleDaoImpl implements IRoleDao {
             permissionList.add(permission);
         }
         return permissionList;
+    }
+
+    @Override
+    public Role getRoleByUserId(Long userId) {
+        return getSession().get(User.class, userId).getRole();
+    }
+
+    @Override
+    public void update(Role role) {
+        Session session = getSession();
+        Role findRole = session.get(Role.class, role.getId());
+        BeanUtil.copyPropertiesIgnoreNull(role, findRole);
+        session.update(findRole);
     }
 
 }

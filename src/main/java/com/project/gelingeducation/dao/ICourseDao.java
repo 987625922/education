@@ -1,14 +1,13 @@
 package com.project.gelingeducation.dao;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.domain.Course;
+import com.project.gelingeducation.entity.Course;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Map;
 
 public interface ICourseDao {
-    List findAll();
+    List queryAll();
 
     Course findById(Long id);
 
@@ -18,7 +17,7 @@ public interface ICourseDao {
 
     void update(Course video) throws IllegalAccessException, InvocationTargetException;
 
-    PageResult getLists(Integer currentPage, Integer pageSize);
+    PageResult queryAll(Integer currentPage, Integer pageSize);
 
     void delMore(String ids);
 

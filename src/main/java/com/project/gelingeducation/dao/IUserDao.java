@@ -1,10 +1,14 @@
 package com.project.gelingeducation.dao;
 
-import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.common.dto.PageResult;
 
+import java.util.List;
+
 public interface IUserDao {
-    PageResult getLists(Integer currentPage, Integer pageSize);
+    PageResult queryAll(Integer currentPage, Integer pageSize);
+
+    List<User> queryAll();
 
     User findById(Long id);
 
@@ -14,7 +18,7 @@ public interface IUserDao {
 
     void delect(Long id);
 
-    void delSel(Long[] ids);
+    void delSel(String ids);
 
     void update(User user);
 

@@ -1,7 +1,6 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.domain.Log;
+import com.project.gelingeducation.entity.Log;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.scheduling.annotation.Async;
 
@@ -16,7 +15,7 @@ public interface ILogService {
      *
      * @return /
      */
-    PageResult queryAll(Integer currentPage, Integer pageSize);
+    Object queryAll(Integer currentPage, Integer pageSize);
 
 
     /**

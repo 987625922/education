@@ -3,8 +3,8 @@ package com.project.gelingeducation.service.Impl;
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.ICourseDao;
 import com.project.gelingeducation.dao.ITeacherDao;
-import com.project.gelingeducation.domain.Course;
-import com.project.gelingeducation.domain.Teacher;
+import com.project.gelingeducation.entity.Course;
+import com.project.gelingeducation.entity.Teacher;
 import com.project.gelingeducation.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
-import java.util.Map;
 
 
 @Service
@@ -24,11 +23,6 @@ public class CourseServiceImpl implements ICourseService {
 
     @Autowired
     private ITeacherDao teacherDao;
-
-    @Override
-    public Object findAll() {
-        return courseDao.findAll();
-    }
 
     @Override
     public Course findById(Long id) {
@@ -52,7 +46,8 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     @Transactional
-    public void update(Course course)  throws IllegalAccessException, InvocationTargetException {
+    public void update(Course course)
+            throws IllegalAccessException, InvocationTargetException {
         course.setLastUpdateTime(new Date());
         courseDao.update(course);
     }
@@ -66,11 +61,11 @@ public class CourseServiceImpl implements ICourseService {
      * @return
      */
     @Override
-    public Object getLists(Integer currentPage, Integer pageSize) {
-        if (currentPage != -1 && pageSize != -1) {
-            return courseDao.getLists(currentPage, pageSize);
+    public Object queryAll(Integer currentPage, Integer pageSize) {
+        if (currentPage != null && pageSize != null) {
+            return courseDao.queryAll(currentPage, pageSize);
         } else {
-            return courseDao.findAll();
+            return courseDao.queryAll();
         }
     }
 

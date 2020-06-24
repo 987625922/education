@@ -1,25 +1,17 @@
 package com.project.gelingeducation.dao.Impl;
 
+import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.IPermissionDao;
-import com.project.gelingeducation.domain.Permission;
+import com.project.gelingeducation.entity.Permission;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class PermissionDaoImpl implements IPermissionDao {
-
-
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    public Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
+public class PermissionDaoImpl extends BaseDao implements IPermissionDao {
 
 
     @Override
@@ -33,9 +25,35 @@ public class PermissionDaoImpl implements IPermissionDao {
     }
 
     @Override
-    public List list() {
+    public List queryAll() {
         return getSession().createQuery("from Permission").list();
     }
+
+    @Override
+    public PageResult queryAll(Integer currentPage, Integer pageSize) {
+        Session session = getSession();
+
+        String hql = "select count(*) from Permission";
+        Query queryCount = session.createQuery(hql);
+        long allrows = (long) queryCount.uniqueResult();
+
+        TypedQuery<Permission> query = session.createQuery("from Permission");
+        query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
+        query.setMaxResults(pageSize);//得到每页的记录数
+
+        long totalPage = (allrows - 1) / pageSize + 1;
+        List<Permission> list = query.getResultList();
+
+        PageResult pageResult = new PageResult();
+        pageResult.setTotalPages(totalPage);
+        pageResult.setTotalRows(allrows);
+        pageResult.setLists(list);
+        pageResult.setCurrentPage(currentPage);
+        pageResult.setPageSize(pageSize);
+
+        return pageResult;
+    }
+
 
     @Override
     public List<Permission> getPermissionListByIds(Long[] ids) {

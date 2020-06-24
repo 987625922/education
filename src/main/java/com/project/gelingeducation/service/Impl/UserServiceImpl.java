@@ -5,15 +5,14 @@ import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.common.exception.StatusEnum;
 import com.project.gelingeducation.common.utils.MD5Util;
 import com.project.gelingeducation.dao.IUserDao;
-import com.project.gelingeducation.domain.Permission;
-import com.project.gelingeducation.domain.Role;
-import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.entity.Permission;
+import com.project.gelingeducation.entity.Role;
+import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.service.IRoleService;
 import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
@@ -21,7 +20,7 @@ import java.util.Set;
 
 @Slf4j
 @Service
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+@Transactional(readOnly = true)
 public class UserServiceImpl implements IUserService {
 
     @Autowired
@@ -37,7 +36,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public User register(User user) {
         if (userDao.findByPhone(user.getAccount()) == null) {
             user.setUserName("管理员");
@@ -56,7 +55,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public User addUser(User user) {
         if (user.getRole() == null) {
             user.setRole(roleService.findDefault());
@@ -96,8 +95,12 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public PageResult getLists(Integer currentPage, Integer pageSize) {
-        return userDao.getLists(currentPage, pageSize);
+    public Object queryAll(Integer currentPage, Integer pageSize) {
+        if (currentPage != null && pageSize != null) {
+            return userDao.queryAll(currentPage, pageSize);
+        }else {
+            return userDao.queryAll();
+        }
     }
 
     /**
@@ -107,7 +110,7 @@ public class UserServiceImpl implements IUserService {
      * @param coverImg
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void updateCoverImg(Long id, String coverImg) {
         userDao.updateCoverImg(id, coverImg);
     }
@@ -118,7 +121,7 @@ public class UserServiceImpl implements IUserService {
      * @param user
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void update(User user) {
         userDao.update(user);
     }
@@ -129,7 +132,7 @@ public class UserServiceImpl implements IUserService {
      * @param newPassword
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void updatePassword(Long id, String oldPassword, String newPassword) {
         User user = userDao.findById(id);
         if (user.getPassword().equals(MD5Util.encrypt(user.getAccount().toLowerCase(),
@@ -147,7 +150,7 @@ public class UserServiceImpl implements IUserService {
      * @param id
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void delUser(Long id) {
         userDao.delect(id);
     }
@@ -158,8 +161,8 @@ public class UserServiceImpl implements IUserService {
      * @param ids
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void delSelUser(Long[] ids) {
+    @Transactional
+    public void delSelUser(String ids) {
         userDao.delSel(ids);
     }
 
@@ -224,7 +227,7 @@ public class UserServiceImpl implements IUserService {
      * @param roleId
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void addRole(Long userId, Long roleId) {
         User user = userDao.findById(userId);
         Role role = roleService.findByRole(roleId);

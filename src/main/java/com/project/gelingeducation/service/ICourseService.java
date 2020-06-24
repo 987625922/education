@@ -1,16 +1,11 @@
 package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.domain.Course;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.project.gelingeducation.entity.Course;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-import java.util.Map;
 
 public interface ICourseService {
-
-    Object findAll();
 
     Course findById(Long id);
 
@@ -20,7 +15,7 @@ public interface ICourseService {
 
     void update(Course course)  throws IllegalAccessException, InvocationTargetException;
 
-    Object getLists(Integer currentPage, Integer pageSize);
+    Object queryAll(Integer currentPage, Integer pageSize);
 
     void batchesDeletes(String ids);
 

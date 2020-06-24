@@ -17,8 +17,8 @@ package com.project.gelingeducation.common.aspect;
 
 import com.project.gelingeducation.common.utils.HttpUtil;
 import com.project.gelingeducation.common.utils.ThrowableUtil;
-import com.project.gelingeducation.domain.Log;
-import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.entity.Log;
+import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.service.ILogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -67,10 +67,10 @@ public class LogAspect {
         currentTime.set(System.currentTimeMillis());
         result = joinPoint.proceed();
         Log log = new Log("INFO", System.currentTimeMillis() - currentTime.get());
-        currentTime.remove();
         HttpServletRequest request = HttpUtil.getHttpServletRequest();
         logService.save(getUsername(), HttpUtil.getBrowser(request), HttpUtil.getIp(request),
                 joinPoint, log);
+        currentTime.remove();
         return result;
     }
 
@@ -83,16 +83,28 @@ public class LogAspect {
      */
     @AfterThrowing(pointcut = "logPointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
-        Log log = new Log("ERROR", System.currentTimeMillis() - currentTime.get());
+        Log log = new Log("ERROR", System.currentTimeMillis()
+                - currentTime.get());
         currentTime.remove();
-        log.setExceptionDetail(ThrowableUtil.getStackTrace(e).substring(0,3000));
+        log.setExceptionDetail(ThrowableUtil.getStackTrace(e).substring(0, 3000));
         HttpServletRequest request = HttpUtil.getHttpServletRequest();
         logService.save(getUsername(), HttpUtil.getBrowser(request), HttpUtil.getIp(request)
                 , (ProceedingJoinPoint) joinPoint, log);
     }
 
     public String getUsername() {
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        return user.getUserName();
+        User user;
+        try {
+            user = (User) SecurityUtils.getSubject().getPrincipal();
+        } catch (Exception e) {
+            return "";
+        }
+
+        if (user == null) {
+            return "";
+        } else {
+            return user.getUserName();
+        }
+
     }
 }

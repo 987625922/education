@@ -1,17 +1,16 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.domain.LoginLog;
-
-import java.util.List;
+import com.project.gelingeducation.entity.LoginLog;
+import com.project.gelingeducation.entity.User;
 
 public interface ILoginLogService {
 
     void insert(LoginLog loginLog);
 
-    List<LoginLog> list();
+    Object queryAll(Integer currentPage,Integer pageSize);
 
     LoginLog getByUserId(Long uid);
 
-    void getByUserIdLoginUpdate(Long uid);
+    void saveOrUpdateLoginLogByUid(User user);
 
 }

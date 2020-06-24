@@ -1,16 +1,14 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.domain.Subject;
-
-import java.util.List;
+import com.project.gelingeducation.entity.Subject;
 
 public interface ISubjectService {
 
-    List<Subject> findAll();
+    Object queryAll(Integer currentPage, Integer pageSize);
 
     Subject findById(Long id);
 
-    long insert(Subject video);
+    Subject insert(Subject video);
 
     void delectd(Long id);
 

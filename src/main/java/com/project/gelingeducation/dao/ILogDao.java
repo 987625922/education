@@ -1,8 +1,7 @@
 package com.project.gelingeducation.dao;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.domain.Log;
-import org.aspectj.lang.ProceedingJoinPoint;
+import com.project.gelingeducation.entity.Log;
 import org.springframework.scheduling.annotation.Async;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,9 +14,9 @@ public interface ILogDao {
      * 分页查询
      * @return /
      */
-    PageResult getList(Integer currentPage, Integer pageSize);
+    PageResult queryAll(Integer currentPage, Integer pageSize);
 
-    List getList();
+    List queryAll();
 
     /**
      * 保存日志数据

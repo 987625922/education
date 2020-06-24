@@ -1,9 +1,9 @@
 package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
-import com.project.gelingeducation.common.utils.BeanUtils;
+import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.dao.ICourseDao;
-import com.project.gelingeducation.domain.Course;
+import com.project.gelingeducation.entity.Course;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -16,7 +16,7 @@ import java.util.List;
 public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
     @Override
-    public List findAll() {
+    public List queryAll() {
         return getSession().createQuery("from Course").getResultList();
     }
 
@@ -40,13 +40,13 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
     public void update(Course course) {
         Session session = getSession();
         Course findCourse = session.get(Course.class, course.getId());
-        BeanUtils.copyPropertiesIgnoreNull(course, findCourse);
+        BeanUtil.copyPropertiesIgnoreNull(course, findCourse);
         session.update(findCourse);
     }
 
 
     @Override
-    public PageResult getLists(Integer currentPage, Integer pageSize) {
+    public PageResult queryAll(Integer currentPage, Integer pageSize) {
         Session session = getSession();
 
         String hql = "select count(*) from Course";

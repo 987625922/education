@@ -2,46 +2,84 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context.xsd
 	http://www.springframework.org/schema/mvc
-	https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd"
+	https://www.springframework.org/schema/mvc/spring-mvc.xsd"
 >
 
     <!-- 导入数据库的相关配置 -->
-    <import resource="classpath:spring/application-data.xml" />
+    <import resource="classpath:spring/application-data.xml"/>
+    <import resource="classpath:spring/application-ohter.xml"/>
 
     <mvc:annotation-driven/>
 
+    <!-- shiro 注解开启 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="shiroRealm"/>
+        <property name="subjectDAO" ref="subjectDao"/>
+        <property name="cacheManager" ref="redisCacheManager"/>
+    </bean>
 
-    <bean id="shiroFilterFactoryBean" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    <bean id="authorizationAttributeSourceAdvisor"
+          class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
-        <!-- 在 Shiro过滤器链上加入 JWTFilter-->
-        <property name="filters">
-            <map>
-                <entry key="jwt" value-ref="JWTFilter"/>
-            </map>
-        </property>
-        <!--所有请求都要经过 jwt过滤器-->
+    </bean>
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
         <property name="filterChainDefinitionMap">
             <map>
                 <entry key="/**" value="jwt"/>
+                <entry key="/web/login" value="anon"/>
+            </map>
+        </property>
+        <property name="filters">
+            <map>
+                <entry key="jwt" value-ref="jwtFilter"/>
             </map>
         </property>
     </bean>
 
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="shiroRealm"/>
+    <bean id="subjectDao" class="org.apache.shiro.mgt.DefaultSubjectDAO">
+        <property name="sessionStorageEvaluator" ref="defaultSessionStorageEvaluator"/>
     </bean>
 
-    <!--<bean id="authorizationAttributeSourceAdvisor"-->
-          <!--class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">-->
-        <!--<property name="securityManager" ref="securityManager"/>-->
-    <!--</bean>-->
+    <bean id="defaultSessionStorageEvaluator"
+          class="org.apache.shiro.mgt.DefaultSessionStorageEvaluator">
+        <property name="sessionStorageEnabled" value="false"/>
+    </bean>
 
+    <bean id="defaultAdvisorAutoProxyCreator"
+          class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+        <property name="proxyTargetClass" value="true"/>
+        <!--/**-->
+        <!--* 解决重复代理问题 github#994-->
+        <!--* 添加前缀判断 不匹配 任何Advisor-->
+        <!--*/-->
+        <property name="usePrefix" value="true"/>
+        <property name="advisorBeanNamePrefix" value="_no_advisor"/>
+    </bean>
+
+    <bean id="lifecycleBeanPostProcessor"
+          class="org.apache.shiro.spring.LifecycleBeanPostProcessor">
+    </bean>
+
+    <!-- 用户的权限保存到redis中 -->
+    <bean id="redisCacheManager" class="org.crazycake.shiro.RedisCacheManager">
+        <property name="redisManager" ref="redisManager"/>
+        <!--//redis中针对不同用户缓存(此处的id需要对应user实体中的id字段,用于唯一标识)-->
+        <property name="principalIdFieldName" value="id"/>
+        <!--        //用户权限信息缓存时间-->
+        <property name="expire" value="200000"/>
+    </bean>
+    <bean id="redisManager" class="org.crazycake.shiro.RedisManager">
+        <property name="host" value="127.0.0.1:6379"/>
+        <property name="timeout" value="10000"/>
+    </bean>
 
     <!-- 开发环境配置文件 -->
     <beans profile="development">

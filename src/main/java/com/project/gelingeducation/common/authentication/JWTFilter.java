@@ -1,16 +1,14 @@
 package com.project.gelingeducation.common.authentication;
 
+import com.project.gelingeducation.common.config.GLConstant;
 import com.project.gelingeducation.common.dto.JsonData;
-import com.project.gelingeducation.common.utils.JsonUtils;
+import com.project.gelingeducation.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -22,31 +20,32 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * shiro跨域认证授权处理拦截器
- */
-@Slf4j
-@Component
-public class JWTFilter extends BasicHttpAuthenticationFilter {
+ * @Description: 鉴权登录拦截器
+ **/
 
-    private static final String TOKEN = "token";
+@Component
+@Slf4j
+public class JwtFilter extends BasicHttpAuthenticationFilter {
+
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();
-
     //不用登陆就可以访问的接口，多个用,号隔开
-    private String annonUrl = "/web/login,/web/register,/api/test/**";
+    private String annonUrl = "/web/login,/web/register";
 
     /**
-     * 判断是否是需要身份判断的url
+     * 执行登录认证
      *
      * @param request
      * @param response
      * @param mappedValue
      * @return
-     * @throws UnauthorizedException
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response,
-                                      Object mappedValue) throws UnauthorizedException {
+                                      Object mappedValue) {
+        /**
+         * 判断是否是需要登录才能访问的链接
+         */
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String[] anonUrl = StringUtils.splitByWholeSeparatorPreserveAllTokens(annonUrl, ",");
         boolean match = false;
@@ -55,47 +54,35 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
                 match = true;
         }
         if (match) return true;
-        if (isLoginAttempt(request, response)) {
-            return executeLogin(request, response);
+        /**
+         * 如果是需要登录才能访问的就检查用户是否登录
+         */
+        try {
+            executeLogin(request, response);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-        return false;
     }
 
-
     /**
-     * 判断请求是否带有token
-     *
-     * @param request
-     * @param response
-     * @return true 就登录
-     */
-    @Override
-    protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
-        HttpServletRequest req = (HttpServletRequest) request;
-        String token = req.getHeader(TOKEN);
-        return token != null;
-    }
-
-
-    /**
-     * 执行登录，登录时执行
+     * 登录检查，提交给realm
      *
      * @param request
      * @param response
      * @return
+     * @throws Exception
      */
     @Override
-    protected boolean executeLogin(ServletRequest request, ServletResponse response) {
+    protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String token = httpServletRequest.getHeader(TOKEN);
-        JWTToken jwtToken = new JWTToken(token);
-        try {
-            getSubject(request, response).login(jwtToken);
-            return true;
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return false;
-        }
+        String token = httpServletRequest.getHeader(GLConstant.TOKEN_SIGN);
+
+        JwtToken jwtToken = new JwtToken(token);
+        // 提交给realm进行登入，如果错误他会抛出异常并被捕获
+        getSubject(request, response).login(jwtToken);
+        // 如果没有抛出异常则代表登入成功，返回true
+        return true;
     }
 
     /**
@@ -105,19 +92,17 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        httpServletResponse.setHeader("Access-control-Allow-Origin",
-                httpServletRequest.getHeader("Origin"));
-        httpServletResponse.setHeader("Access-Control-Allow-Methods",
-                "GET,POST,OPTIONS,PUT,DELETE");
-        httpServletResponse.setHeader("Access-Control-Allow-Headers",
-                httpServletRequest.getHeader("Access-Control-Request-Headers"));
-        // 跨域时会首先发送一个 option请求，这里我们给 option请求直接返回正常状态
+        httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
+        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
+        // 跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
         if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
             httpServletResponse.setStatus(HttpStatus.OK.value());
             return false;
         }
         return super.preHandle(request, response);
     }
+
 
     /**
      * 访问了受保护的页面 没有进行认证的 进入这个方法
@@ -133,7 +118,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         httpResponse.setCharacterEncoding("utf-8");
         httpResponse.setContentType("application/json; charset=utf-8");
         try (PrintWriter out = httpResponse.getWriter()) {
-            String responseJson = JsonUtils.jsonToString(JsonData.buildError("用户未登录",
+            String responseJson = JsonUtil.jsonToString(JsonData.buildError("用户未登录",
                     -103));
             out.print(responseJson);
         } catch (IOException e) {
@@ -141,6 +126,4 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         }
         return false;
     }
-
-
 }

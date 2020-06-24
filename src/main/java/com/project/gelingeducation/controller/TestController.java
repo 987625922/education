@@ -1,6 +1,5 @@
 package com.project.gelingeducation.controller;
 
-import com.project.gelingeducation.common.annotation.Cache;
 import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.service.IVideoService;
@@ -25,7 +24,7 @@ public class TestController {
     @ResponseBody
     public String home() {
 //        int i = 1/0;
-        throw new AllException(-101,"异常输出测试");
+        throw new AllException(-101, "异常输出测试");
 //        return videoService.findAll().toString();
     }
 
@@ -36,12 +35,11 @@ public class TestController {
      * @param userName
      * @return
      */
-    @Cache
+    @Log("注解cache测试")
     @RequestMapping(path = "/get5/{userName}/info", method = RequestMethod.GET)
     @ResponseBody
     public Object req6(@PathVariable(name = "userName") String userName) {
-        return "输入的数据为："+userName;
-//        return JsonData.buildSuccess(userName);
+        return "输入的数据为：" + userName;
     }
 
 }

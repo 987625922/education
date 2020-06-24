@@ -1,15 +1,13 @@
 package com.project.gelingeducation.service.Impl;
 
-import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.common.utils.HttpUtil;
 import com.project.gelingeducation.dao.ILogDao;
-import com.project.gelingeducation.domain.Log;
+import com.project.gelingeducation.entity.Log;
 import com.project.gelingeducation.service.ILogService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
@@ -18,19 +16,23 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 @Service
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+@Transactional(readOnly = true)
 public class LogServiceImpl implements ILogService {
 
     @Autowired
     private ILogDao logDao;
 
     @Override
-    public PageResult queryAll(Integer currentPage, Integer pageSize) {
-        return logDao.getList(currentPage, pageSize);
+    public Object queryAll(Integer currentPage, Integer pageSize) {
+        if (currentPage != null && pageSize != null) {
+            return logDao.queryAll(currentPage, pageSize);
+        }else {
+            return logDao.queryAll();
+        }
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void save(String username, String browser, String ip,
                      ProceedingJoinPoint joinPoint, Log log) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -75,11 +77,13 @@ public class LogServiceImpl implements ILogService {
         logDao.download(logs, response);
     }
 
+    @Transactional
     @Override
     public void delAllByError() {
         logDao.delAllByError();
     }
 
+    @Transactional
     @Override
     public void delAllByInfo() {
         logDao.delAllByInfo();

@@ -1,7 +1,7 @@
 package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.dao.IPermissionDao;
-import com.project.gelingeducation.domain.Permission;
+import com.project.gelingeducation.entity.Permission;
 import com.project.gelingeducation.service.IPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,12 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class PermissionServiceImpl implements IPermissionService {
 
     @Autowired
     private IPermissionDao permissionDao;
 
+    @Transactional
     @Override
     public void add(Permission permission) {
         permissionDao.insertPermission(permission);
@@ -27,8 +28,12 @@ public class PermissionServiceImpl implements IPermissionService {
     }
 
     @Override
-    public List<Permission> list() {
-        return permissionDao.list();
+    public Object queryAll(Integer currentPage,Integer pageSize) {
+        if (currentPage != null && pageSize != null){
+            return permissionDao.queryAll(currentPage, pageSize);
+        }else {
+            return permissionDao.queryAll();
+        }
     }
 
     @Override

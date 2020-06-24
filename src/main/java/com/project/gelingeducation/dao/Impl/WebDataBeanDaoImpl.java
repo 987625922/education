@@ -1,7 +1,7 @@
 package com.project.gelingeducation.dao.Impl;
 
 import com.project.gelingeducation.dao.IWebDataBeanDao;
-import com.project.gelingeducation.domain.WebDataBean;
+import com.project.gelingeducation.entity.WebDataBean;
 import org.springframework.stereotype.Repository;
 
 @Repository

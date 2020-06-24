@@ -1,8 +1,12 @@
 package com.project.gelingeducation.common.authentication;
 
-import com.project.gelingeducation.domain.Permission;
-import com.project.gelingeducation.domain.Role;
-import com.project.gelingeducation.domain.User;
+import com.project.gelingeducation.common.config.GLConstant;
+import com.project.gelingeducation.common.utils.JWTUtil;
+import com.project.gelingeducation.common.utils.RedisTemplateUtil;
+import com.project.gelingeducation.common.utils.TokenUtil;
+import com.project.gelingeducation.entity.Permission;
+import com.project.gelingeducation.entity.Role;
+import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +20,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -24,16 +29,24 @@ import java.util.Set;
 /**
  * 自定义实现 ShiroRealm，包含认证和授权两大模块
  */
-@Component
+@Component(value = "shiroRealm")
 @Slf4j
 public class ShiroRealm extends AuthorizingRealm {
 
+    /**
+     * 不添加@Lazy会报错：
+     * Could not obtain transaction-synchronized Session for current thread
+     */
     @Autowired
+    @Lazy
     private IUserService userService;
+
+    @Autowired
+    RedisTemplateUtil templateUtil;
 
     @Override
     public boolean supports(AuthenticationToken token) {
-        return token instanceof JWTToken;
+        return token instanceof JwtToken;
     }
 
     /**
@@ -44,16 +57,14 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String token = (String) principals.getPrimaryPrincipal();
-        String username = JWTUtil.getUsername(token);
-        User user = userService.findUserByAccount(username);
+        User user = (User) principals.getPrimaryPrincipal();
 
         Set<String> stringRoleList = new HashSet<>();
         Set<String> stringPermissionList = new HashSet<>();
         Role role = user.getRole();
 
         stringRoleList.add(role.getName());
-        Set<Permission> permissionList = userService.findPermissionByUserId(user.getId());
+        Set<Permission> permissionList = role.getPermissions();
         for (Permission p : permissionList) {
             if (p != null) {
                 stringPermissionList.add(p.getPerms());
@@ -81,35 +92,29 @@ public class ShiroRealm extends AuthorizingRealm {
 
         String token = (String) authenticationToken.getCredentials();
 
-        // 从 redis里获取这个 token 主要是判断token是否过期
-//        HttpServletRequest request = HttpUtil.getHttpServletRequest();
-//        String ip = IPUtil.getIpAddr(request);
-//
-//        String encryptToken = FebsUtil.encryptToken(token);
-//        String encryptTokenInRedis = null;
-//        try {
-//            encryptTokenInRedis = redisService.get(FebsConstant.TOKEN_CACHE_PREFIX + encryptToken + "." + ip);
-//        } catch (Exception ignore) {
-//        }
-        // 如果找不到，说明已经失效
-//        if (StringUtils.isBlank(encryptTokenInRedis))
-//            throw new AuthenticationException("token已经过期");
-
         String account = JWTUtil.getUsername(token);
+
+        String encryptToken = TokenUtil.encryptToken(token);
+
+        String encryptTokenInRedis =
+                (String) templateUtil.get(GLConstant.TOKEN_CACHE_PREFIX + encryptToken + "." + account);
+
+        // 如果找不到，说明已经失效
+        if (StringUtils.isBlank(encryptTokenInRedis))
+            throw new AuthenticationException("token已经过期");
 
         if (StringUtils.isBlank(account))
             throw new AuthenticationException("token校验不通过");
-//
-//        // 通过用户名查询用户信息
+
+        // 通过用户名查询用户信息
         User user = userService.findUserByAccount(account);
-//
+
         if (user == null)
             throw new AuthenticationException("用户名或密码错误");
         if (!JWTUtil.verify(token, account, user.getPassword()))
             throw new AuthenticationException("token校验不通过");
 
-        return new SimpleAuthenticationInfo(user, token, "gl_realm");
-
+        return new SimpleAuthenticationInfo(user, token, getName());
     }
 
     /**

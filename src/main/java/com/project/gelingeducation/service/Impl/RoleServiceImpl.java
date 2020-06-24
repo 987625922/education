@@ -1,9 +1,8 @@
 package com.project.gelingeducation.service.Impl;
 
-import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.IRoleDao;
-import com.project.gelingeducation.domain.Permission;
-import com.project.gelingeducation.domain.Role;
+import com.project.gelingeducation.entity.Permission;
+import com.project.gelingeducation.entity.Role;
 import com.project.gelingeducation.service.IPermissionService;
 import com.project.gelingeducation.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class RoleServiceImpl implements IRoleService {
 
     @Autowired
@@ -23,16 +22,18 @@ public class RoleServiceImpl implements IRoleService {
     private IPermissionService permissionService;
 
     @Override
-    @Transactional(readOnly = true)
     public Role findByRole(Long id) {
+
         return roleDao.findById(id);
     }
 
+    @Transactional
     @Override
     public void addRole(Role role) {
         roleDao.insert(role);
     }
 
+    @Transactional
     @Override
     public void addPermissionByIds(Long roleId, Long[] permissionIds) {
         Role role = roleDao.findById(roleId);
@@ -43,19 +44,26 @@ public class RoleServiceImpl implements IRoleService {
         }
     }
 
+
     @Override
-    public List<Role> list() {
-        return roleDao.list();
+    @Transactional
+    public void update(Role role) {
+
     }
 
     @Override
+    @Transactional
     public void delRoleById(Long id) {
         roleDao.delRoleById(id);
     }
 
     @Override
-    public PageResult getRolePageList(Integer currentPage, Integer pageSize) {
-        return roleDao.getRolePageList(currentPage, pageSize);
+    public Object queryAll(Integer currentPage, Integer pageSize) {
+        if (currentPage != null && pageSize != null) {
+            return roleDao.queryAll(currentPage, pageSize);
+        } else {
+            return roleDao.queryAll();
+        }
     }
 
     @Override
@@ -69,7 +77,8 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public void delMoreRolesByIds(Long[] roleIds) {
+    @Transactional
+    public void delMoreRolesByIds(String roleIds) {
         roleDao.delByIds(roleIds);
     }
 
@@ -79,6 +88,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
+    @Transactional
     public void updateRoleAndPermission(Long id, String name, String remark,
                                         Long[] permissionIds) {
         Role role = roleDao.findById(id);
@@ -89,6 +99,11 @@ public class RoleServiceImpl implements IRoleService {
             role.getPermissions().add(permission);
             permission.getRoles().add(role);
         }
+    }
+
+    @Override
+    public Role getRoleByUserId(Long userId) {
+        return roleDao.getRoleByUserId(userId);
     }
 
 

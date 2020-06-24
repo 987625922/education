@@ -1,29 +1,30 @@
 package com.project.gelingeducation.service.Impl;
 
 import com.project.gelingeducation.dao.ISubjectDao;
-import com.project.gelingeducation.domain.Subject;
+import com.project.gelingeducation.entity.Subject;
 import com.project.gelingeducation.service.ISubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 
 @Service
+@Transactional(readOnly = true)
 public class SubjectServiceImpl implements ISubjectService {
 
     @Autowired
     private ISubjectDao subjectDao;
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Subject> findAll() {
-        return subjectDao.findAll();
+    public Object queryAll(Integer currentPage, Integer pageSize) {
+        if (currentPage != null && pageSize != null) {
+            return subjectDao.queryAll(currentPage, pageSize);
+        }else {
+            return subjectDao.queryAll();
+        }
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Subject findById(Long id) {
         return subjectDao.findById(id);
     }
@@ -31,7 +32,7 @@ public class SubjectServiceImpl implements ISubjectService {
 
     @Override
     @Transactional
-    public long insert(Subject video) {
+    public Subject insert(Subject video) {
         return subjectDao.insert(video);
     }
 

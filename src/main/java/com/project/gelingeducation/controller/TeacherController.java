@@ -1,7 +1,8 @@
 package com.project.gelingeducation.controller;
 
+import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.dto.JsonData;
-import com.project.gelingeducation.domain.Teacher;
+import com.project.gelingeducation.entity.Teacher;
 import com.project.gelingeducation.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,25 +14,21 @@ public class TeacherController {
     @Autowired
     private ITeacherService teacherService;
 
+    @Log("获取老师")
     @RequestMapping("/lists")
-    public Object getPagelist(@RequestParam Integer currentPage,
-                              @RequestParam Integer pageSize) {
-        return JsonData.buildSuccess(teacherService.getLists(currentPage, pageSize));
+    public Object queryAll(@RequestParam(required = false) Integer currentPage,
+                              @RequestParam(required = false) Integer pageSize) {
+        return JsonData.buildSuccess(teacherService.queryAll(currentPage, pageSize));
     }
 
-
-    /**
-     * 删除用户
-     *
-     * @param id
-     * @return
-     */
+    @Log("删除老师")
     @RequestMapping(value = "/delete")
-    public Object delTeacher(Long id) {
+    public Object delete(Long id) {
         teacherService.delTeacher(id);
         return JsonData.buildSuccess();
     }
 
+    @Log("添加老师")
     @PostMapping("/add")
     public Object addTeacher(@RequestBody Teacher teacher) {
         teacherService.addTeacher(teacher);
