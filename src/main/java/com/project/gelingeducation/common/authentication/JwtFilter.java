@@ -32,7 +32,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     /**
      * 不用登陆就可以访问的接口，多个用,号隔开
      */
-    private String annonUrl = "/web/login,/web/register";
+    private String annonUrl = "/web/login,/web/register,/web/captcha";
 
     /**
      * 执行登录认证

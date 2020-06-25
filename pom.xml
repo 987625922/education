@@ -263,6 +263,12 @@
             <version>1.7.2</version>
         </dependency>
 
+        <!-- 验证码生成插件 -->
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+            <version>1.6.2</version>
+        </dependency>
 
         <!-- jwt -->
         <dependency>

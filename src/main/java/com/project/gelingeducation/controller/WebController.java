@@ -5,6 +5,7 @@ import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.controller.BaseController;
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.common.dto.WebIndex;
+import com.project.gelingeducation.common.server.ValidateCodeService;
 import com.project.gelingeducation.entity.LoginLog;
 import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.entity.WebDataBean;
@@ -14,14 +15,14 @@ import com.project.gelingeducation.service.IWebDataBeanService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Valid 用于验证bean是否符合注解要求
  * @author LL
+ * @Valid 用于验证bean是否符合注解要求
  */
 @RestController
 public class WebController extends BaseController {
@@ -32,6 +33,8 @@ public class WebController extends BaseController {
     private IWebDataBeanService webDataBeanService;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private ValidateCodeService validateCodeService;
 
     @Log("web端首页")
     @RequestMapping(value = "/web/index")
@@ -58,5 +61,10 @@ public class WebController extends BaseController {
     @RequestMapping(value = "/web/register", method = RequestMethod.POST)
     public Object register(@RequestBody User user) {
         return JsonData.buildSuccess(userService.register(user));
+    }
+
+    @GetMapping("/web/captcha")
+    public void captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        validateCodeService.create(request, response);
     }
 }

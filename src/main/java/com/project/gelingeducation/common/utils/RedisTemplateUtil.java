@@ -7,13 +7,17 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Redis的工具
+ * @author LL
+ */
 @Component
 public class RedisTemplateUtil {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
-    public void set(String key, Object value, int seconds) {
+    public void set(String key, Object value, Long seconds) {
         redisTemplate.opsForValue().set(key, value, seconds, TimeUnit.SECONDS);
     }
 
