@@ -1,4 +1,4 @@
-package com.project.gelingeducation.service.Impl;
+package com.project.gelingeducation.service.impl;
 
 import com.project.gelingeducation.dao.IRoleDao;
 import com.project.gelingeducation.entity.Permission;

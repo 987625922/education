@@ -15,14 +15,17 @@
      http://www.springframework.org/schema/cache
       http://www.springframework.org/schema/cache/spring-cache.xsd"
 >
+    <!--  扫描包下的自动装配  -->
     <context:component-scan base-package="com.project.gelingeducation">
     </context:component-scan>
 
+    <!--  开启注解事务 -->
     <tx:annotation-driven/>
 
     <!-- 启动AspectJ自动代理,即基于注解的aop使用-->
     <aop:aspectj-autoproxy expose-proxy="true">
     </aop:aspectj-autoproxy>
+
     <!-- 开启@Cache注解 -->
     <cache:annotation-driven/>
 
@@ -50,6 +53,7 @@
         <property name="acquireRetryAttempts" value="${jdbc.acquireRetryAttempts}"/>
     </bean>
 
+    <!-- hibernate注解工厂 -->
     <bean name="sessionFactory"
           class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"></property>
@@ -59,7 +63,7 @@
                 <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
                 <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
                 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
-                <!--        开启hibernate的threadlocal-->
+                <!-- 开启hibernate的threadlocal -->
                 <prop key="current_session_context_class">${hibernate.current_session_context_class}</prop>
                 <prop key="hibernate.connection.autocommit">false</prop>
             </props>
@@ -106,6 +110,7 @@
             <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
         </property>
     </bean>
+
     <!--  redis缓存的spring cache manager-->
     <bean id="cacheManager"
           class="com.project.gelingeducation.common.cache.RedisCacheManager">
@@ -116,7 +121,6 @@
             </set>
         </property>
     </bean>
-
 
     <!--                        common                             -->
     <!-- 头像上传 -->
@@ -137,5 +141,4 @@
         <context:property-placeholder
                 location="classpath*:producation/*.properties"/>
     </beans>
-
 </beans>

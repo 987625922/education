@@ -1,18 +1,3 @@
-/*
- *  Copyright 2019-2020 Zheng Jie
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
 package com.project.gelingeducation.entity;
 
 import lombok.Getter;
@@ -25,14 +10,28 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+
+/**
+ * @Author: LL
+ * @Description: 错误日志的entity
+ * 备注：
+ *      1.@NoArgsConstructor 因为创建了一个非空的构造器，这里创建一个空的，
+ *      不然hibernate搜索会报错
+ */
 @Entity
 @Table(name = "sys_log")
 @Accessors(chain = true)
 @Setter
 @Getter
+@NoArgsConstructor
 public class Log implements Serializable {
 
     private static final long serialVersionUID = 7913187238778019641L;
+
+    public Log(String logType, Long time) {
+        this.logType = logType;
+        this.time = time;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -94,9 +93,4 @@ public class Log implements Serializable {
      */
     @CreationTimestamp
     private Timestamp createTime;
-
-    public Log(String logType, Long time) {
-        this.logType = logType;
-        this.time = time;
-    }
 }

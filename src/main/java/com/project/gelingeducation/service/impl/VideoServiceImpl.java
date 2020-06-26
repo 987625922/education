@@ -1,4 +1,4 @@
-package com.project.gelingeducation.service.Impl;
+package com.project.gelingeducation.service.impl;
 
 import com.project.gelingeducation.dao.IVideoDao;
 import com.project.gelingeducation.entity.Video;

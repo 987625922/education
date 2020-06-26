@@ -16,6 +16,10 @@ public interface ILogDao {
      */
     PageResult queryAll(Integer currentPage, Integer pageSize);
 
+    /**
+     * 所有查询
+     * @return /
+     */
     List queryAll();
 
     /**
@@ -41,7 +45,7 @@ public interface ILogDao {
     void download(List<Log> logs, HttpServletResponse response) throws IOException;
 
     /**
-     * 删除所有错误日志
+     * 删除所有error日志
      */
     void delAllByError();
 
@@ -49,4 +53,10 @@ public interface ILogDao {
      * 删除所有INFO日志
      */
     void delAllByInfo();
+
+    /**
+     * 根据id删除
+     * @param id logId
+     */
+    void delOneLog(Long id);
 }

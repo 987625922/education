@@ -6,6 +6,10 @@ import com.project.gelingeducation.service.ILogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @Author: LL
+ * @Description: 错误日志的Controller
+ */
 @RequestMapping("/api/logs")
 @RestController
 public class LogController {
@@ -30,5 +34,11 @@ public class LogController {
     @GetMapping("/delete_error_log")
     public void deleteErrorLog() {
         logService.delAllByError();
+    }
+
+    @Log("删除一个日志")
+    @GetMapping("/delete_one")
+    public void deleteOneLog(@RequestParam Long id) {
+        logService.delOneLog(id);
     }
 }

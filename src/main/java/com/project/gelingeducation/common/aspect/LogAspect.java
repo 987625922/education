@@ -36,7 +36,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 /**
- * 接口日志切面
+ * 接口错误日志切面
+ * @author 98762
  */
 @Component
 @Aspect

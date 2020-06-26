@@ -1,4 +1,4 @@
-package com.project.gelingeducation.dao.Impl;
+package com.project.gelingeducation.dao.impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.dao.IPermissionDao;

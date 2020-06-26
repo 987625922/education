@@ -1,4 +1,4 @@
-package com.project.gelingeducation.service.Impl;
+package com.project.gelingeducation.service.impl;
 
 import com.project.gelingeducation.common.config.GLConstant;
 import com.project.gelingeducation.common.exception.AllException;

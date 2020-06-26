@@ -1,4 +1,4 @@
-package com.project.gelingeducation.dao.Impl;
+package com.project.gelingeducation.dao.impl;
 
 import com.project.gelingeducation.dao.IWebDataBeanDao;
 import com.project.gelingeducation.entity.WebDataBean;
