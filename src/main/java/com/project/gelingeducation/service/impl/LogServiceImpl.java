@@ -55,14 +55,7 @@ public class LogServiceImpl implements ILogService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void save(String username, String browser, String ip, String description,
-                     String methodName, Object[] argValues, String[] argNames, String params, Log log) {
-        log.setRequestIp(ip);
-        log.setAddress(HttpUtil.getCityInfo(log.getRequestIp()));
-        log.setMethod(methodName);
-        log.setUsername(username);
-        log.setParams(params + " }");
-        log.setBrowser(browser);
+    public void save(Log log) {
         logDao.save(log);
     }
 
@@ -115,7 +108,50 @@ public class LogServiceImpl implements ILogService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void delOneLog(Long id) {
-
+        logDao.delOneLog(id);
     }
 
+    /**
+     * 解决了一个日志
+     *
+     * @param id logId
+     */
+    @Override
+    public void solveOne(Long id) {
+        logDao.solveOne(id);
+    }
+
+    /**
+     * 把解决的日志标识为未解决
+     *
+     * @param id logId
+     */
+    @Override
+    public void recurrentOne(Long id) {
+        logDao.recurrentOne(id);
+    }
+
+    /**
+     * 获取未解决的日志
+     *
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public Object queryNoSolveLog(Integer currentPage, Integer pageSize) {
+        return logDao.queryNoSolveLog(currentPage, pageSize);
+    }
+
+    /**
+     * 获取已解决的日志
+     *
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public Object querySolveLog(Integer currentPage, Integer pageSize) {
+        return logDao.querySolveLog(currentPage, pageSize);
+    }
 }

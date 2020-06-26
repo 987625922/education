@@ -1,11 +1,20 @@
 package com.project.gelingeducation.common.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.List;
 
-@Data
+/**
+ * @Author: LL
+ * @Description: 分页的实体类
+ * 备注：
+ */
+
+@Accessors(chain = true)
+@Getter
+@Setter
 public class PageResult implements Serializable {
     /**
      * 当前页码
@@ -17,7 +26,7 @@ public class PageResult implements Serializable {
     private Integer pageSize;
 
     /**
-     * 页码总数
+     * 页码总数(分页的总数)
      */
     private Long totalPages;
 

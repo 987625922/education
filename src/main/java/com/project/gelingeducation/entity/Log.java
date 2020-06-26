@@ -10,7 +10,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-
 /**
  * @Author: LL
  * @Description: 错误日志的entity
@@ -87,6 +86,13 @@ public class Log implements Serializable {
      */
     @Column(columnDefinition = "text")
     private String exceptionDetail;
+
+    /**
+     * 是否解决
+     * 1为解决，其他的为未解决
+     */
+    @Column()
+    private Integer isSolve;
 
     /**
      * 创建日期

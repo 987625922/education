@@ -2,7 +2,6 @@ package com.project.gelingeducation.dao;
 
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.entity.Log;
-import org.springframework.scheduling.annotation.Async;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -12,25 +11,28 @@ public interface ILogDao {
 
     /**
      * 分页查询
+     *
      * @return /
      */
     PageResult queryAll(Integer currentPage, Integer pageSize);
 
     /**
      * 所有查询
+     *
      * @return /
      */
     List queryAll();
 
     /**
      * 保存日志数据
+     *
      * @param log 日志实体
      */
-    @Async
     void save(Log log);
 
     /**
      * 根据id查询异常详情
+     *
      * @param id 日志ID
      * @return Object
      */
@@ -38,7 +40,8 @@ public interface ILogDao {
 
     /**
      * 导出日志
-     * @param logs 待导出的数据
+     *
+     * @param logs     待导出的数据
      * @param response /
      * @throws IOException /
      */
@@ -56,7 +59,36 @@ public interface ILogDao {
 
     /**
      * 根据id删除
+     *
      * @param id logId
      */
     void delOneLog(Long id);
+
+    /**
+     * 解决了一个日志
+     *
+     * @param id logId
+     */
+    void solveOne(Long id);
+
+    /**
+     * 把解决的日志标识为未解决
+     *
+     * @param id logId
+     */
+    void recurrentOne(Long id);
+
+    /**
+     * 获取未解决的日志
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    Object queryNoSolveLog(Integer currentPage, Integer pageSize);
+
+    /**
+     * 获取已解决的日志
+     * @return
+     */
+    Object querySolveLog(Integer currentPage, Integer pageSize);
 }

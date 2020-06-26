@@ -2,7 +2,8 @@ package com.project.gelingeducation.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,6 +14,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @Author: LL
+ * @Description: 课程的实体类
+ * 备注：
+ */
 @Entity
 @Table(name = "course")
 @Accessors(chain = true)

@@ -29,21 +29,18 @@ public class LogDaoImpl extends BaseDao implements ILogDao {
     @Override
     public PageResult queryAll(Integer currentPage, Integer pageSize) {
         Session session = getSession();
+        PageResult pageResult = new PageResult();
 
         String hql = "select count(*) from Log";
         Query queryCount = session.createQuery(hql);
         Long allrows = (Long) queryCount.uniqueResult();
+
         TypedQuery<Course> query = session.createQuery("from Log");
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
         query.setMaxResults(pageSize);//得到每页的记录数
-        Long totalPage = (allrows - 1) / pageSize + 1;
-        List<Course> list = query.getResultList();
-        PageResult pageResult = new PageResult();
-        pageResult.setTotalPages(totalPage);
-        pageResult.setTotalRows(allrows);
-        pageResult.setLists(list);
-        pageResult.setCurrentPage(currentPage);
-        pageResult.setPageSize(pageSize);
+
+        pageResult.setTotalRows(allrows).setCurrentPage(currentPage).setPageSize(pageSize)
+                .setTotalPages((allrows - 1) / pageSize + 1).setLists(query.getResultList());
         return pageResult;
     }
 
@@ -113,6 +110,72 @@ public class LogDaoImpl extends BaseDao implements ILogDao {
      */
     @Override
     public void delOneLog(Long id) {
-        getSession().createQuery("DELETE FROM Log WHERE id = " + id);
+        getSession().createQuery("DELETE FROM Log WHERE id = " + id).executeUpdate();
+    }
+
+    /**
+     * 解决了一个日志
+     *
+     * @param id logId
+     */
+    @Override
+    public void solveOne(Long id) {
+        getSession().createQuery("UPDATE Log WHERE id = " + id + " SET isSolve = 0").executeUpdate();
+    }
+
+    /**
+     * 把解决的日志标识为未解决
+     *
+     * @param id logId
+     */
+    @Override
+    public void recurrentOne(Long id) {
+        getSession().createQuery("UPDATE Log WHERE id = " + id + " SET isSolve = 1").executeUpdate();
+    }
+
+    /**
+     * 获取未解决的日志
+     *
+     * @param currentPage
+     * @param pageSize
+     * @return 分页的日志list
+     */
+    @Override
+    public Object queryNoSolveLog(Integer currentPage, Integer pageSize) {
+        Session session = getSession();
+        PageResult pageResult = new PageResult();
+
+        Long allRows = (Long) session.createQuery("SELECT COUNT(*) FROM Log").uniqueResult();
+
+        TypedQuery<Course> query = session.createQuery("from Log WHERE isSolve <> 0");
+        query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
+        query.setMaxResults(pageSize);//得到每页的记录数
+
+        pageResult.setTotalRows(allRows).setCurrentPage(currentPage).setPageSize(pageSize)
+                .setTotalPages((allRows - 1) / pageSize + 1).setLists(query.getResultList());
+        return pageResult;
+    }
+
+    /**
+     * 获取已解决的日志
+     *
+     * @param currentPage
+     * @param pageSize
+     * @return 分页的日志list
+     */
+    @Override
+    public Object querySolveLog(Integer currentPage, Integer pageSize) {
+        Session session = getSession();
+        PageResult pageResult = new PageResult();
+
+        Long allRows = (Long) session.createQuery("SELECT COUNT(*) FROM Log").uniqueResult();
+
+        TypedQuery<Course> query = session.createQuery("from Log WHERE isSolve = 0");
+        query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
+        query.setMaxResults(pageSize);//得到每页的记录数
+
+        pageResult.setTotalRows(allRows).setCurrentPage(currentPage).setPageSize(pageSize)
+                .setTotalPages((allRows - 1) / pageSize + 1).setLists(query.getResultList());
+        return pageResult;
     }
 }

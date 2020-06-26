@@ -1,7 +1,6 @@
 package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.entity.Log;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.scheduling.annotation.Async;
 
 import javax.servlet.http.HttpServletResponse;
@@ -16,8 +15,9 @@ public interface ILogService {
 
     /**
      * 分页查询
+     *
      * @param currentPage 页下标
-     * @param pageSize 页数
+     * @param pageSize    页数
      * @return 带Log的list的@PageResult
      */
     Object queryAll(Integer currentPage, Integer pageSize);
@@ -33,18 +33,10 @@ public interface ILogService {
     /**
      * 保存日志数据
      *
-     * @param username  用户
-     * @param browser   浏览器
-     * @param ip        请求IP
-     * @param description
-     * @param mehodName
-     * @param argValues
-     * @param argNames
-     * @param log       日志实体
+     * @param log 日志实体
      */
-    void save(String username, String browser, String ip,
-              String description, String mehodName, Object[] argValues
-            , String[] argNames,String params, Log log);
+    @Async
+    void save(Log log);
 
     /**
      * 导出日志
@@ -67,7 +59,38 @@ public interface ILogService {
 
     /**
      * 根据id删除
+     *
      * @param id logId
      */
     void delOneLog(Long id);
+
+    /**
+     * 解决了一个日志
+     *
+     * @param id logId
+     */
+    void solveOne(Long id);
+
+    /**
+     * 把解决的日志标识为未解决
+     *
+     * @param id logId
+     */
+    void recurrentOne(Long id);
+
+    /**
+     * 获取未解决的日志
+     *
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    Object queryNoSolveLog(Integer currentPage, Integer pageSize);
+
+    /**
+     * 获取已解决的日志
+     *
+     * @return
+     */
+    Object querySolveLog(Integer currentPage, Integer pageSize);
 }

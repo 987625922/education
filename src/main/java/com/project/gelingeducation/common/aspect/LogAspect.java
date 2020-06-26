@@ -1,18 +1,3 @@
-/*
- *  Copyright 2019-2020 Zheng Jie
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
 package com.project.gelingeducation.common.aspect;
 
 import com.project.gelingeducation.common.utils.HttpUtil;
@@ -37,6 +22,7 @@ import java.lang.reflect.Method;
 
 /**
  * 接口错误日志切面
+ *
  * @author 98762
  */
 @Component
@@ -62,15 +48,14 @@ public class LogAspect {
 
     /**
      * 配置环绕通知,使用在方法logPointcut()上注册的切入点
-     *
-     * @param joinPoint join point for advice
      */
     @Around("logPointcut()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        Object result;
+        Object result = joinPoint.proceed();
+
         currentTime.set(System.currentTimeMillis());
-        result = joinPoint.proceed();
         Log log = new Log("INFO", System.currentTimeMillis() - currentTime.get());
+
         HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
@@ -85,26 +70,24 @@ public class LogAspect {
                 params.append(" ").append(argNames[i]).append(": ").append(argValues[i]);
             }
         }
-        logService.save(getUsername(), HttpUtil.getBrowser(request), HttpUtil.getIp(request),
-                aopLog.value(), joinPoint.getTarget().getClass().getName() + "." + signature.getName() + "()"
-                , joinPoint.getArgs(), argNames, params.toString(), log);
-        currentTime.remove();
+
+        log.setUsername(getUsername()).setBrowser(HttpUtil.getBrowser(request)).setRequestIp(HttpUtil.getIp(request))
+                .setDescription(aopLog.value()).setMethod(joinPoint.getTarget().getClass().getName() + "." + signature.getName() + "()")
+                .setParams(params.toString() + "}").setAddress(HttpUtil.getCityInfo(log.getRequestIp())).setExceptionDetail("")
+                .setIsSolve(0);
+        logService.save(log);
         return result;
     }
 
-
     /**
      * 配置异常通知
-     *
-     * @param joinPoint join point for advice
-     * @param e         exception
      */
     @AfterThrowing(pointcut = "logPointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
         Log log = new Log("ERROR", System.currentTimeMillis()
                 - currentTime.get());
+
         currentTime.remove();
-        log.setExceptionDetail(ThrowableUtil.getStackTrace(e).substring(0, 3000));
         HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
@@ -119,11 +102,18 @@ public class LogAspect {
                 params.append(" ").append(argNames[i]).append(": ").append(argValues[i]);
             }
         }
-        logService.save(getUsername(), HttpUtil.getBrowser(request), HttpUtil.getIp(request),
-                aopLog.value(), joinPoint.getTarget().getClass().getName() + "." + signature.getName() + "()"
-                , joinPoint.getArgs(), argNames, params.toString(), log);
+        log.setUsername(getUsername()).setBrowser(HttpUtil.getBrowser(request)).setRequestIp(HttpUtil.getIp(request))
+                .setDescription(aopLog.value()).setMethod(joinPoint.getTarget().getClass().getName() + "." + signature.getName() + "()")
+                .setParams(params.toString() + "}").setAddress(HttpUtil.getCityInfo(log.getRequestIp()))
+                .setExceptionDetail(ThrowableUtil.getStackTrace(e).substring(0, 3000)).setIsSolve(0);
+        logService.save(log);
     }
 
+    /**
+     * 通过shiro返回用户名
+     *
+     * @return /
+     */
     public String getUsername() {
         User user;
         try {
@@ -131,12 +121,10 @@ public class LogAspect {
         } catch (Exception e) {
             return "";
         }
-
         if (user == null) {
             return "";
         } else {
             return user.getUserName();
         }
-
     }
 }
