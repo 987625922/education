@@ -9,9 +9,7 @@ import com.project.gelingeducation.service.ILogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -49,41 +47,42 @@ public class LogAspect {
     /**
      * 配置环绕通知,使用在方法logPointcut()上注册的切入点
      */
-    @Around("logPointcut()")
-    public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        Object result = joinPoint.proceed();
-
-        currentTime.set(System.currentTimeMillis());
-        Log log = new Log("INFO", System.currentTimeMillis() - currentTime.get());
-
-        HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
-        com.project.gelingeducation.common.annotation.Log aopLog
-                = method.getAnnotation(com.project.gelingeducation.common.annotation.Log.class);
-        StringBuilder params = new StringBuilder("{");
-        Object[] argValues = joinPoint.getArgs();
-        //参数名称
-        String[] argNames = ((MethodSignature) joinPoint.getSignature()).getParameterNames();
-        if (argValues != null) {
-            for (int i = 0; i < argValues.length; i++) {
-                params.append(" ").append(argNames[i]).append(": ").append(argValues[i]);
-            }
-        }
-
-        log.setUsername(getUsername()).setBrowser(HttpUtil.getBrowser(request)).setRequestIp(HttpUtil.getIp(request))
-                .setDescription(aopLog.value()).setMethod(joinPoint.getTarget().getClass().getName() + "." + signature.getName() + "()")
-                .setParams(params.toString() + "}").setAddress(HttpUtil.getCityInfo(log.getRequestIp())).setExceptionDetail("")
-                .setIsSolve(0);
-        logService.save(log);
-        return result;
-    }
+//    @Around("logPointcut()")
+//    public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
+//        Object result = joinPoint.proceed();
+//
+//        currentTime.set(System.currentTimeMillis());
+//        Log log = new Log("INFO", System.currentTimeMillis() - currentTime.get());
+//
+//        HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
+//        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+//        Method method = signature.getMethod();
+//        com.project.gelingeducation.common.annotation.Log aopLog
+//                = method.getAnnotation(com.project.gelingeducation.common.annotation.Log.class);
+//        StringBuilder params = new StringBuilder("{");
+//        Object[] argValues = joinPoint.getArgs();
+//        //参数名称
+//        String[] argNames = ((MethodSignature) joinPoint.getSignature()).getParameterNames();
+//        if (argValues != null) {
+//            for (int i = 0; i < argValues.length; i++) {
+//                params.append(" ").append(argNames[i]).append(": ").append(argValues[i]);
+//            }
+//        }
+//
+//        log.setUsername(getUsername()).setBrowser(HttpUtil.getBrowser(request)).setRequestIp(HttpUtil.getIp(request))
+//                .setDescription(aopLog.value()).setMethod(joinPoint.getTarget().getClass().getName() + "." + signature.getName() + "()")
+//                .setParams(params.toString() + "}").setAddress(HttpUtil.getCityInfo(log.getRequestIp())).setExceptionDetail("")
+//                .setIsSolve(0);
+//        logService.save(log);
+//        return result;
+//    }
 
     /**
      * 配置异常通知
      */
     @AfterThrowing(pointcut = "logPointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
+        currentTime.set(System.currentTimeMillis());
         Log log = new Log("ERROR", System.currentTimeMillis()
                 - currentTime.get());
 

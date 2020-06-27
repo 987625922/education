@@ -91,7 +91,7 @@ public class Log implements Serializable {
      * 是否解决
      * 1为解决，其他的为未解决
      */
-    @Column()
+    @Column(length = 1)
     private Integer isSolve;
 
     /**

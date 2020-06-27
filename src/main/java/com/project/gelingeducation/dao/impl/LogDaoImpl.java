@@ -35,7 +35,7 @@ public class LogDaoImpl extends BaseDao implements ILogDao {
         Query queryCount = session.createQuery(hql);
         Long allrows = (Long) queryCount.uniqueResult();
 
-        TypedQuery<Course> query = session.createQuery("from Log");
+        TypedQuery<Course> query = session.createQuery("from Log ORDER BY id DESC");
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
         query.setMaxResults(pageSize);//得到每页的记录数
 
@@ -51,7 +51,7 @@ public class LogDaoImpl extends BaseDao implements ILogDao {
      */
     @Override
     public List queryAll() {
-        return getSession().createQuery("FROM Log").getResultList();
+        return getSession().createQuery("FROM Log ORDER BY id DESC").getResultList();
     }
 
     /**
@@ -130,7 +130,7 @@ public class LogDaoImpl extends BaseDao implements ILogDao {
      */
     @Override
     public void recurrentOne(Long id) {
-        getSession().createQuery("UPDATE Log WHERE id = " + id + " SET isSolve = 1").executeUpdate();
+        getSession().createQuery("UPDATE Log SET isSolve = 1 WHERE id = " + id).executeUpdate();
     }
 
     /**
@@ -147,7 +147,7 @@ public class LogDaoImpl extends BaseDao implements ILogDao {
 
         Long allRows = (Long) session.createQuery("SELECT COUNT(*) FROM Log").uniqueResult();
 
-        TypedQuery<Course> query = session.createQuery("from Log WHERE isSolve <> 0");
+        TypedQuery<Course> query = session.createQuery("from Log WHERE isSolve <> 0 ORDER BY id DESC");
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
         query.setMaxResults(pageSize);//得到每页的记录数
 
@@ -170,12 +170,17 @@ public class LogDaoImpl extends BaseDao implements ILogDao {
 
         Long allRows = (Long) session.createQuery("SELECT COUNT(*) FROM Log").uniqueResult();
 
-        TypedQuery<Course> query = session.createQuery("from Log WHERE isSolve = 0");
+        TypedQuery<Course> query = session.createQuery("from Log WHERE isSolve = 0 ORDER BY id DESC");
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
         query.setMaxResults(pageSize);//得到每页的记录数
 
         pageResult.setTotalRows(allRows).setCurrentPage(currentPage).setPageSize(pageSize)
                 .setTotalPages((allRows - 1) / pageSize + 1).setLists(query.getResultList());
         return pageResult;
+    }
+
+    @Override
+    public void delMore(String ids) {
+        getSession().createQuery("DELETE FROM Log WHERE id IN (" + ids + ")").executeUpdate();
     }
 }

@@ -1,6 +1,5 @@
 package com.project.gelingeducation.service.impl;
 
-import com.project.gelingeducation.common.utils.HttpUtil;
 import com.project.gelingeducation.dao.ILogDao;
 import com.project.gelingeducation.entity.Log;
 import com.project.gelingeducation.service.ILogService;
@@ -43,15 +42,7 @@ public class LogServiceImpl implements ILogService {
     /**
      * 保存日志
      *
-     * @param username    用户
-     * @param browser     浏览器
-     * @param ip          请求IP
-     * @param description
-     * @param methodName
-     * @param argValues
-     * @param argNames
-     * @param params
-     * @param log         日志实体
+     * @param log 日志实体
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -126,6 +117,7 @@ public class LogServiceImpl implements ILogService {
      *
      * @param id logId
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void recurrentOne(Long id) {
         logDao.recurrentOne(id);
@@ -138,6 +130,7 @@ public class LogServiceImpl implements ILogService {
      * @param pageSize
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Object queryNoSolveLog(Integer currentPage, Integer pageSize) {
         return logDao.queryNoSolveLog(currentPage, pageSize);
@@ -153,5 +146,15 @@ public class LogServiceImpl implements ILogService {
     @Override
     public Object querySolveLog(Integer currentPage, Integer pageSize) {
         return logDao.querySolveLog(currentPage, pageSize);
+    }
+
+    /**
+     *
+     * @param ids 字符串id
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void delMore(String ids) {
+        logDao.delMore(ids);
     }
 }

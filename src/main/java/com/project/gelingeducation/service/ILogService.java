@@ -93,4 +93,10 @@ public interface ILogService {
      * @return
      */
     Object querySolveLog(Integer currentPage, Integer pageSize);
+
+    /**
+     * 批量删除
+     * @param ids 字符串id
+     */
+    void delMore(String ids);
 }

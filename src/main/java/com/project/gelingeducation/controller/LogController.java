@@ -3,6 +3,7 @@ package com.project.gelingeducation.controller;
 import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.dto.JsonData;
 import com.project.gelingeducation.service.ILogService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -114,4 +115,15 @@ public class LogController {
         return logService.querySolveLog(currentPage, pageSize);
     }
 
+    /**
+     * 批量删除日志
+     * @param ids 字符id
+     * @return
+     */
+    @Log("批量删除日志")
+    @RequestMapping(value = "/batches_delete")
+    public Object delMoreUser(@RequestParam String ids) {
+        logService.delMore(ids);
+        return JsonData.buildSuccess();
+    }
 }
