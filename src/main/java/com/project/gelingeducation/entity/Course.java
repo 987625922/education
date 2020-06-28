@@ -42,16 +42,19 @@ public class Course implements Serializable {
      */
     @Column(name = "name", nullable = false, length = 50)
     private String name;
+
     /**
      * 封面
      */
     @Column(name = "big_img")
     private String bigImg;
+
     /**
      * 备注
      */
     @Column(name = "remark")
     private String remark;
+
     /**
      * 价格
      */
@@ -92,6 +95,20 @@ public class Course implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private Set<Teacher> teachers = new HashSet<>();
 
+    /**
+     * 多对多 视频列表
+     */
+    @ManyToMany(targetEntity = Teacher.class,
+            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "t_course_video",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "video_id"))
+    private Set<Video> videos = new HashSet<>();
+
+    /**
+     * 多对多 专题
+     */
     @ManyToMany(targetEntity = Subject.class,
             cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(

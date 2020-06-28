@@ -7,14 +7,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 
+/**
+ * @Author: LL
+ * @Description: 视频的Service
+ */
 @Service
 @Transactional(readOnly = true)
 public class VideoServiceImpl implements IVideoService {
 
+    /**
+     * 视频实体类的dao
+     */
     @Autowired
     private IVideoDao videoDao;
 
+    /**
+     * 获取视频实体类的lists
+     * 如果没有currentPage就返回所有的lists
+     *
+     * @param currentPage
+     * @param pageSize
+     * @return 分页的Page实体类或者lists
+     */
     @Override
     public Object queryAll(Integer currentPage, Integer pageSize) {
         if (currentPage != null && pageSize != null) {
@@ -24,27 +40,63 @@ public class VideoServiceImpl implements IVideoService {
         }
     }
 
+    /**
+     * 根据id获取视频实体类
+     *
+     * @param id 视频id
+     * @return 视频实体类
+     */
     @Override
     public Video findById(Long id) {
         return videoDao.findById(id);
     }
 
-
+    /**
+     * 添加视频
+     *
+     * @param video 视频实体
+     * @return 视频实体类
+     */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Video insert(Video video) {
+        Date date = new Date();
+        video.setCreateTime(date);
+        video.setLastUpdateTime(date);
         return videoDao.insert(video);
     }
 
+    /**
+     * 删除视频
+     *
+     * @param id 视频id
+     */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void delectd(Long id) {
         videoDao.delect(id);
     }
 
+    /**
+     * 更新视频
+     *
+     * @param video 视频实体
+     */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void updated(Video video) {
+        video.setLastUpdateTime(new Date());
         videoDao.update(video);
+    }
+
+    /**
+     * 批量删除视频
+     *
+     * @param ids 视频id 格式为 1,2,3
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void delMore(String ids) {
+        videoDao.delMore(ids);
     }
 }

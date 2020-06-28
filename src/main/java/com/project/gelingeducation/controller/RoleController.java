@@ -6,8 +6,15 @@ import com.project.gelingeducation.entity.Role;
 import com.project.gelingeducation.service.IRoleService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @Author: LL
+ * @Description: 用户权限角色的Controller
+ */
 @RestController
 @RequestMapping("/api/role")
 public class RoleController {
@@ -19,7 +26,7 @@ public class RoleController {
     @RequestMapping(value = "/lists")
     public Object lists(@RequestParam(required = false) Integer currentPage,
                         @RequestParam(required = false) Integer pageSize) {
-        return JsonData.buildSuccess(roleService);
+        return JsonData.buildSuccess(roleService.queryAll(currentPage, pageSize));
     }
 
     @Log("通过名字获取身份")
@@ -68,7 +75,7 @@ public class RoleController {
 
     @Log("通过用户获取身份")
     @RequestMapping("/find_by_user_id")
-    public Object findRoleByUserId(Long userId){
+    public Object findRoleByUserId(Long userId) {
         return JsonData.buildSuccess(roleService.getRoleByUserId(userId));
     }
 }

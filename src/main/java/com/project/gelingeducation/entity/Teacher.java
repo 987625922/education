@@ -1,7 +1,6 @@
 package com.project.gelingeducation.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -13,10 +12,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @Author: LL
+ * @Description: 老师的实体类
+ */
 @Entity
 @Table(name = "teacher")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 @Accessors(chain = true)
 @Setter
 @Getter
@@ -43,20 +44,32 @@ public class Teacher implements Serializable {
     @Column(name = "remark")
     private String remark;
 
-    //创建时间
+    /**
+     * 创建时间
+     */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time")
     @CreationTimestamp
     private Date createTime;
 
-    //修改时间
+    /**
+     * 修改时间
+     */
     @Column(name = "modify_time")
     private Date modifyTime;
 
+
+    /**
+     * 多对多 课程
+     */
+    @JsonIgnore
     @ManyToMany(mappedBy = "teachers", fetch = FetchType.EAGER)
     private Set<Course> courses = new HashSet<>();
 
-    //mappdBy 映射的是哪一个属性
+    /**
+     * 多对多 教师
+     */
+    @JsonIgnore
     @OneToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
     private Set<Video> videos = new HashSet<>();
 

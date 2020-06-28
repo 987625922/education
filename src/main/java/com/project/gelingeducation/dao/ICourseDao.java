@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public interface ICourseDao {
+
     List queryAll();
 
     Course findById(Long id);

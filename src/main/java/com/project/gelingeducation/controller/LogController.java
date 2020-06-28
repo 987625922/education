@@ -117,7 +117,7 @@ public class LogController {
 
     /**
      * 批量删除日志
-     * @param ids 字符id
+     * @param ids 日志id
      * @return
      */
     @Log("批量删除日志")

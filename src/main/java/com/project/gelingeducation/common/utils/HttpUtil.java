@@ -9,8 +9,6 @@ import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
 import org.lionsoul.ip2region.Util;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -20,7 +18,6 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Objects;
-import java.util.Optional;
 
 
 /**
@@ -73,7 +70,7 @@ public class HttpUtil {
             method = searcher.getClass().getMethod("btreeSearch", String.class);
             DataBlock dataBlock = null;
             if (!Util.isIpAddress(ip)) {
-                log.error("Error: Invalid ip address");
+                log.info("Error: Invalid ip address");
             }
             dataBlock = (DataBlock) method.invoke(searcher, ip);
             return dataBlock.getRegion();
@@ -116,7 +113,6 @@ public class HttpUtil {
             try {
                 ip = InetAddress.getLocalHost().getHostAddress();
             } catch (UnknownHostException e) {
-                e.printStackTrace();
             }
         }
         return ip;
