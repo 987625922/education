@@ -105,17 +105,17 @@ public class VideoController {
     /**
      * 按条件搜索视频列表
      *
-     * @param teacherIds 1,2,3格式的教师id字符串
-     * @param name       视频名
-     * @param courseIds  1,2,3格式的课程id字符串
+     * @param teacherId 教师id
+     * @param name      视频名
+     * @param courseIds 1,2,3格式的课程id字符串
      * @return 分页的视频list列表
      */
     @Log("按条件搜索视频列表")
     @RequestMapping("/search_by_criteria")
-    public Object searchByCriteria(@RequestParam String teacherIds,
+    public Object searchByCriteria(@RequestParam String teacherId,
                                    @RequestParam String name,
                                    @RequestParam String courseIds) {
-        videoService.searchByCriteria(teacherIds, name, courseIds);
+        videoService.searchByCriteria(teacherId, name, courseIds);
         return JsonData.buildSuccess();
     }
 }

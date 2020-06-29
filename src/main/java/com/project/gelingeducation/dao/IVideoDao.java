@@ -67,12 +67,13 @@ public interface IVideoDao {
     /**
      * 按条件搜索视频列表
      *
-     * @param teacherIds 1,2,3格式的教师id字符串
+     *
+     * @param teacherId  教师id
      * @param name       视频名
      * @param courseIds  1,2,3格式的课程id字符串
      * @return 分页的视频list列表
      */
-    Object searchByCriteria(@RequestParam String teacherIds,
-                            @RequestParam String name,
-                            @RequestParam String courseIds);
+    Object searchByCriteria(String teacherId,
+                            String name,
+                            String courseIds);
 }
