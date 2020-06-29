@@ -119,4 +119,23 @@ public class VideoDaoImpl extends BaseDao implements IVideoDao {
                 .createQuery("DELETE FROM Video WHERE id IN (" + ids + ")")
                 .executeUpdate();
     }
+
+    /**
+     * 按条件搜索视频列表
+     *
+     * @param teacherIds 1,2,3格式的教师id字符串
+     * @param name       视频名
+     * @param courseIds  1,2,3格式的课程id字符串
+     * @return 分页的视频list列表
+     */
+    @Override
+    public Object searchByCriteria(String teacherIds, String name,
+                                   String courseIds) {
+        Session session = getSession();
+        String hql = "FROM Video WHERE 1=1";
+        session.createQuery(hql);
+//        if ()
+
+        return null;
+    }
 }

@@ -2,6 +2,7 @@ package com.project.gelingeducation.dao;
 
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.entity.Video;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -62,4 +63,16 @@ public interface IVideoDao {
      * @param ids 视频id 格式为 1,2,3
      */
     void delMore(String ids);
+
+    /**
+     * 按条件搜索视频列表
+     *
+     * @param teacherIds 1,2,3格式的教师id字符串
+     * @param name       视频名
+     * @param courseIds  1,2,3格式的课程id字符串
+     * @return 分页的视频list列表
+     */
+    Object searchByCriteria(@RequestParam String teacherIds,
+                            @RequestParam String name,
+                            @RequestParam String courseIds);
 }
