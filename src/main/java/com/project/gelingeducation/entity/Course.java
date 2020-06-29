@@ -98,7 +98,7 @@ public class Course implements Serializable {
     /**
      * 多对多 视频列表
      */
-    @ManyToMany(targetEntity = Teacher.class,
+    @ManyToMany(targetEntity = Video.class,
             cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "t_course_video",

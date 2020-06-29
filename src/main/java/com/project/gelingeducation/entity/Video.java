@@ -2,6 +2,7 @@ package com.project.gelingeducation.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -64,14 +65,14 @@ public class Video implements Serializable {
      * <p>
      * 视频表维护老师的外键
      */
-    @ManyToOne(targetEntity = Teacher.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Teacher.class, cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     private Teacher teacher;
 
     /**
      * 多对多 课程
      */
-    @ManyToMany(mappedBy = "videos", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "videos", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Course> courses = new HashSet<>();
 
     /**

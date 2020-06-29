@@ -132,17 +132,21 @@ public class VideoDaoImpl extends BaseDao implements IVideoDao {
     public Object searchByCriteria(String teacherId, String name,
                                    String courseIds) {
         Session session = getSession();
-        String hql = "FROM Video WHERE 1=1";
-        session.createQuery(hql);
-        if (teacherId != null && !teacherId.equals("")) {
-            hql += "and teacherId = " + teacherId;
-        }
-        if (name != null && !name.equals("")) {
-            hql += "and name = " + name;
-        }
+        String hql = "FROM Video as video";
         if (courseIds != null && !courseIds.equals("")) {
-            hql += "and name = " + name;
+            hql += " INNER JOIN FETCH video.courses as course";
         }
-        return null;
+        hql += " WHERE 1=1";
+//        if (teacherId != null && !teacherId.equals("")) {
+//            hql += " and video.teacherId = " + teacherId;
+//        }
+//        if (name != null && !name.equals("")) {
+//            hql += " and video.name = '" + name + "'";
+//        }
+        if (courseIds != null && !courseIds.equals("")) {
+            hql += " and course.id = " + courseIds + "";
+        }
+        Query query = session.createQuery(hql);
+        return query.getResultList();
     }
 }
