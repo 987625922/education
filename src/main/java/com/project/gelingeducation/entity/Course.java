@@ -1,12 +1,8 @@
 package com.project.gelingeducation.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,8 +20,6 @@ import java.util.Set;
 @Accessors(chain = true)
 @Setter
 @Getter
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Course implements Serializable {
 
     private static final long serialVersionUID = 2726599374475533725L;
@@ -73,7 +67,6 @@ public class Course implements Serializable {
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time", nullable = false, updatable = false)
-    @CreatedDate
     private Date createTime;
 
     /**
@@ -81,19 +74,7 @@ public class Course implements Serializable {
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_update_time", nullable = false)
-    @LastModifiedDate
     private Date lastUpdateTime;
-
-    /**
-     * 教师列表
-     */
-    @ManyToMany(targetEntity = Teacher.class,
-            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "t_course_teacher",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
-    private Set<Teacher> teachers = new HashSet<>();
 
     /**
      * 多对多 视频列表

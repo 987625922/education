@@ -58,14 +58,6 @@ public class Teacher implements Serializable {
     @Column(name = "modify_time")
     private Date modifyTime;
 
-
-    /**
-     * 多对多 课程
-     */
-    @JsonIgnore
-    @ManyToMany(mappedBy = "teachers", fetch = FetchType.EAGER)
-    private Set<Course> courses = new HashSet<>();
-
     /**
      * 多对多 教师
      */

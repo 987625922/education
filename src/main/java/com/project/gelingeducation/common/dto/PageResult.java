@@ -11,22 +11,23 @@ import java.io.Serializable;
  * @Description: 分页的实体类
  * 备注：
  */
-
 @Accessors(chain = true)
 @Getter
 @Setter
 public class PageResult implements Serializable {
+
     /**
      * 当前页码
      */
     private Integer currentPage;
+
     /**
      * 每页数量
      */
     private Integer pageSize;
 
     /**
-     * 页码总数(分页的总数)
+     * 页码总数(数据库中数据分页之后的总数)
      */
     private Long totalPages;
 
@@ -39,5 +40,4 @@ public class PageResult implements Serializable {
      * 数据模型
      */
     private Object lists;
-
 }

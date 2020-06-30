@@ -37,21 +37,17 @@ public class CourseServiceTest {
         log.debug("==>" + pageResult.toString());
     }
 
-    @Test
-    public void courseAddTeacher() {
-        courseService.courseAddTeacher(new Long(1), new Long(1));
-    }
 
     @Test
     public void selByNameOrStatusOrPriceOrTeacher() {
-        PageResult pageResult = courseService.selByNameOrStatusOrPriceOrTeacher(null, -1,
+        PageResult pageResult = (PageResult) courseService.selByNameOrStatusOrPriceOrTeacher(null, -1,
                 new Double(-1), new Double(-1), new Long(1),
                 new Integer(1), new Integer(10));
         System.out.println();
     }
 
     @Test
-    public void delect(){
+    public void delect() {
         courseService.delect(7L);
     }
 }

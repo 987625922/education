@@ -137,12 +137,12 @@ public class VideoDaoImpl extends BaseDao implements IVideoDao {
             hql += " INNER JOIN FETCH video.courses as course";
         }
         hql += " WHERE 1=1";
-//        if (teacherId != null && !teacherId.equals("")) {
-//            hql += " and video.teacherId = " + teacherId;
-//        }
-//        if (name != null && !name.equals("")) {
-//            hql += " and video.name = '" + name + "'";
-//        }
+        if (teacherId != null && !teacherId.equals("")) {
+            hql += " and video.teacherId = " + teacherId;
+        }
+        if (name != null && !name.equals("")) {
+            hql += " and video.name = '" + name + "'";
+        }
         if (courseIds != null && !courseIds.equals("")) {
             hql += " and course.id = " + courseIds + "";
         }

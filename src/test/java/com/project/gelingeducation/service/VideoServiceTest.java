@@ -6,6 +6,8 @@ import com.project.gelingeducation.entity.Course;
 import com.project.gelingeducation.entity.Teacher;
 import com.project.gelingeducation.entity.Video;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.Set;
 
 /**
  * @Author: LL
@@ -50,12 +52,12 @@ public class VideoServiceTest {
      */
     @Test
     public void insert() {
-        for (int i = 0; i < 10; i++) {
-            Video video = new Video();
-            video.setName("测试的视频").setCreateTime(new Date())
-                    .setLastUpdateTime(new Date());
-            videoService.insert(video);
-        }
+//        for (int i = 0; i < 10; i++) {
+        Video video = new Video();
+        video.setName("测试的视频").setCreateTime(new Date())
+                .setLastUpdateTime(new Date());
+        videoService.insert(video);
+//        }
     }
 
     /**
@@ -82,12 +84,41 @@ public class VideoServiceTest {
     /**
      * 视频添加课程
      */
-    @Test
+    @Test(timeout = 10000000)
+    @Transactional
     public void addVideoCourse() {
-        Video video = videoService.findById(1L);
-        Course course = courseService.findById(1L);
-        //todo 级联更新失败
+//        Video video = videoService.findById(1L);
+//        Course course = courseService.findById(1L);
+//        //todo 级联更新失败
+//        video.getCourses().add(course);
+//        course.getVideos().add(video);
+        Video video = new Video();
+        video.setId(1L);
+        Course course = new Course();
+        course.setId(1L);
+        course.setLastUpdateTime(new Date());
+        course.setName("");
+        course.setCreateTime(new Date());
         video.getCourses().add(course);
-        videoService.updated(video);
+        course.getVideos().add(video);
+        getSession().update(course);
+        getSession().update(video);
+//        videoService.updated(video);
+//        courseService.update(course);
     }
+
+    /**
+     * hibernate的session工厂
+     */
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    /**
+     * 获取线程上ThreadLocal的hibernate session
+     * @return hibernate的session
+     */
+    public Session getSession() {
+        return sessionFactory.getCurrentSession();
+    }
+
 }
