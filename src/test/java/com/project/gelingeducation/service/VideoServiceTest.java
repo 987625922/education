@@ -15,7 +15,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -76,7 +75,7 @@ public class VideoServiceTest {
     @Test
     public void addVideoTeacher() {
         Video video = videoService.findById(1L);
-        Teacher teacher = teacherService.getById(1L);
+        Teacher teacher = teacherService.getById(3L);
         video.setTeacher(teacher);
         videoService.updated(video);
     }
@@ -84,27 +83,17 @@ public class VideoServiceTest {
     /**
      * 视频添加课程
      */
-    @Test(timeout = 10000000)
-    @Transactional
+    @Test
     public void addVideoCourse() {
-//        Video video = videoService.findById(1L);
+        Video video = videoService.findById(1L);
 //        Course course = courseService.findById(1L);
-//        //todo 级联更新失败
-//        video.getCourses().add(course);
-//        course.getVideos().add(video);
-        Video video = new Video();
-        video.setId(1L);
         Course course = new Course();
         course.setId(1L);
-        course.setLastUpdateTime(new Date());
-        course.setName("");
-        course.setCreateTime(new Date());
-        video.getCourses().add(course);
+        //todo 级联更新失败
+//        video.getCourses().add(course);
         course.getVideos().add(video);
-        getSession().update(course);
-        getSession().update(video);
 //        videoService.updated(video);
-//        courseService.update(course);
+        courseService.update(course);
     }
 
     /**

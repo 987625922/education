@@ -2,6 +2,7 @@ package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.entity.Course;
+import com.project.gelingeducation.entity.Subject;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.Date;
+
+/**
+ * @Author: LL
+ * @Description: 课程的测试类
+ * @Date:Create：in 2020/7/1
+ */
 @Slf4j
 @WebAppConfiguration
 @ActiveProfiles("development")
@@ -18,9 +26,21 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class CourseServiceTest {
 
+    /**
+     * 课程的service
+     */
     @Autowired
     private ICourseService courseService;
 
+    /**
+     * 专题的service
+     */
+    @Autowired
+    private ISubjectService subjectService;
+
+    /**
+     * 添加课程
+     */
     @Test
     public void insert() {
         String[] names = {"同步教材：人教版高中数学必修三", "左宗棠-不惧官场潜规则", "同步教材：人教版高中数学必修四"
@@ -31,13 +51,18 @@ public class CourseServiceTest {
         }
     }
 
+    /**
+     * 获取课程的分页类
+     */
     @Test
     public void pageList() {
         PageResult pageResult = (PageResult) courseService.queryAll(1, 10);
         log.debug("==>" + pageResult.toString());
     }
 
-
+    /**
+     * 按条件搜索
+     */
     @Test
     public void selByNameOrStatusOrPriceOrTeacher() {
         PageResult pageResult = (PageResult) courseService.selByNameOrStatusOrPriceOrTeacher(null, -1,
@@ -46,8 +71,31 @@ public class CourseServiceTest {
         System.out.println();
     }
 
+    /**
+     * 删除课程
+     */
     @Test
     public void delect() {
         courseService.delect(7L);
+    }
+
+    /**
+     * 课程添加专题
+     */
+    @Test
+    public void courseAddSubject() {
+//        Subject subject = subjectService.findById(1L);
+//        Course course = courseService.findById(1L);
+//        subject.getCourses().add(course);
+        Course course = new Course();
+        course.setId(1L);
+        course.setName("11111");
+        course.setLastUpdateTime(new Date());
+        Subject subject = new Subject();
+        subject.setId(1L);
+//        subject.getCourses().add(course);
+        course.getSubjects().add(subject);
+//        subjectService.updated(subject);
+        courseService.update(course);
     }
 }

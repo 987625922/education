@@ -1,7 +1,9 @@
 package com.project.gelingeducation.dao.impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
+import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.dao.ISubjectDao;
+import com.project.gelingeducation.entity.Course;
 import com.project.gelingeducation.entity.Subject;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -62,6 +64,9 @@ public class SubjectDaoImpl extends BaseDao implements ISubjectDao {
 
     @Override
     public void update(Subject subject) {
-        getSession().update(subject);
+        Session session = getSession();
+        Subject findSubject = session.get(Subject.class, subject.getId());
+        BeanUtil.copyPropertiesIgnoreNull(subject, findSubject);
+        session.update(findSubject);
     }
 }

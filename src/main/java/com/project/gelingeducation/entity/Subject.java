@@ -44,8 +44,8 @@ public class Subject implements Serializable {
      * 多对多 课程
      */
     @ManyToMany(mappedBy = "subjects",
+            cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     @JsonBackReference
     private Set<Course> courses = new HashSet<>();
-
 }
