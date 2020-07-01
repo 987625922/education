@@ -17,6 +17,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @Author: LL
@@ -82,32 +84,21 @@ public class VideoServiceTest {
 
     /**
      * 视频添加课程
+     * 级联更新模板
      */
     @Test
     public void addVideoCourse() {
-        Video video = videoService.findById(1L);
-//        Course course = courseService.findById(1L);
+        Video video = new Video();
+        video.setId(1L);
+        video.setLastUpdateTime(new Date());
         Course course = new Course();
+        course.setName("111");
         course.setId(1L);
-        //todo 级联更新失败
-//        video.getCourses().add(course);
-        course.getVideos().add(video);
-//        videoService.updated(video);
+        course.setLastUpdateTime(new Date());
+        Set<Video> videoSet = new HashSet<>();
+        videoSet.add(video);
+        course.setVideos(videoSet);
         courseService.update(course);
-    }
-
-    /**
-     * hibernate的session工厂
-     */
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    /**
-     * 获取线程上ThreadLocal的hibernate session
-     * @return hibernate的session
-     */
-    public Session getSession() {
-        return sessionFactory.getCurrentSession();
     }
 
 }

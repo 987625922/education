@@ -1,8 +1,11 @@
 package com.project.gelingeducation.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -70,8 +73,9 @@ public class Video implements Serializable {
     /**
      * 多对多 课程
      */
-    @ManyToMany(mappedBy = "videos", cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "videos", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
     private Set<Course> courses = new HashSet<>();
 
     /**
