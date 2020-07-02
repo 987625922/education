@@ -9,10 +9,10 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.InvocationTargetException;
-
 /**
  * 视频课程的controller
+ *
+ * @author LL
  */
 @RequestMapping("/api/course")
 @RestController
@@ -22,6 +22,13 @@ public class CourseController {
     @Autowired
     private ICourseService courseService;
 
+    /**
+     * 获取视频列表
+     *
+     * @param currentPage 页下标（可空）
+     * @param pageSize    页数（可空）
+     * @return 分页实体类或者全部实体类list
+     */
     @Log("获取所有课程")
 //    @RequiresPermissions("user:root")
     @RequestMapping(value = "/lists")
@@ -30,12 +37,24 @@ public class CourseController {
         return JsonData.buildSuccess(courseService.queryAll(currentPage, pageSize));
     }
 
+    /**
+     * 通过id获取单个课程
+     *
+     * @param id 课程id
+     * @return 课程实体类
+     */
     @Log("通过id获取单个课程")
     @RequestMapping(value = "/find_by_id")
-    public Object findById(Long id) throws Exception {
+    public Object findById(Long id) {
         return JsonData.buildSuccess(courseService.findById(id));
     }
 
+    /**
+     * 添加课程
+     *
+     * @param course 课程实体类
+     * @return /
+     */
     @Log("添加课程")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object add(@RequestBody Course course) {
@@ -43,6 +62,12 @@ public class CourseController {
         return JsonData.buildSuccess();
     }
 
+    /**
+     * 通过id删除课程
+     *
+     * @param id 课程id
+     * @return /
+     */
     @Log("通过id删除课程")
     @RequestMapping(value = "/delete")
     public Object delete(Long id) {
@@ -50,15 +75,27 @@ public class CourseController {
         return JsonData.buildSuccess();
     }
 
+    /**
+     * 更新课程
+     *
+     * @param course 课程实体类
+     * @return /
+     */
     @Log("更新课程")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Object update(@RequestBody Course course) throws InvocationTargetException, IllegalAccessException {
+    public Object update(@RequestBody Course course) {
         courseService.update(course);
         return JsonData.buildSuccess();
     }
 
 
-    @Log("通过id批量删除课程")
+    /**
+     * 通过ids批量删除课程
+     *
+     * @param ids 1，2,3 格式的字符串
+     * @return
+     */
+    @Log("通过ids批量删除课程")
     @RequiresPermissions("user:root")
     @RequestMapping(value = "/batches_delete")
     public Object delMore(String ids) {
@@ -66,7 +103,18 @@ public class CourseController {
         return JsonData.buildSuccess();
     }
 
-
+    /**
+     * 多参数搜索课程
+     *
+     * @param name        课程名
+     * @param status      课程状态
+     * @param startPrice  搜索开始价格
+     * @param endPrice    搜索结束价格
+     * @param teacherId   老师id
+     * @param currentPage 页下标
+     * @param pageSize    页数
+     * @return 分页的课程实体类
+     */
     @Log("多参数搜索课程")
     @RequestMapping(value = "/find_by_name_status_price_teacher")
     public Object findByNameOrStatusOrPriceOrTeacher(@RequestParam(required = false) String name,
@@ -78,5 +126,4 @@ public class CourseController {
         return JsonData.buildSuccess(courseService.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice,
                 endPrice, teacherId, currentPage, pageSize));
     }
-
 }
