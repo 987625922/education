@@ -30,7 +30,6 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
     @Autowired
     RedisTemplateUtil templateUtil;
 
-
     @Override
     public Object login(User user) {
         //通过用户名获取用户
@@ -60,7 +59,6 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         return userMap;
     }
 
-
     @Override
     @Transactional(readOnly = true)
     public WebDataBean getWebDataBean() {
@@ -89,7 +87,5 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         Optional<WebDataBean> optionalWebData = Optional.ofNullable(webDataBeanDao.getOnlyData());
         optionalWebData.ifPresent(webDataBean -> webDataBean.setTodayLoginMun(0L).setTodayLoginIpMun(0L));
     }
-
-
 }
 

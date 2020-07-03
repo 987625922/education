@@ -11,55 +11,109 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * @Author: LL
+ * @Description: 教师的dao
+ */
 @Repository
 public class TeacherDaoImpl extends BaseDao implements ITeacherDao {
 
+    /**
+     * 添加教师
+     *
+     * @param teacher 教师实体类
+     * @return
+     */
     @Override
     public Teacher insert(Teacher teacher) {
         getSession().save(teacher);
         return teacher;
     }
 
+    /**
+     * 通过id获取教师
+     *
+     * @param id 教师id
+     * @return
+     */
     @Override
     public Teacher findById(Long id) {
         return getSession().get(Teacher.class, id);
     }
 
-
+    /**
+     * 获取教师列表
+     *
+     * @return 全部list
+     */
     @Override
     public List<Teacher> queryAll() {
-        return getSession().createQuery("FROM Teacher").list();
+        return getSession().createQuery("FROM Teacher").getResultList();
     }
 
+    /**
+     * 获取教师列表
+     *
+     * @param currentPage 页码
+     * @param pageSize    页数
+     * @return 返回分页实体类
+     */
     @Override
     public PageResult queryAll(Integer currentPage, Integer pageSize) {
         Session session = getSession();
-
         String hql = "select count(*) from Teacher";
         Query queryCount = session.createQuery(hql);
         long allrows = (long) queryCount.uniqueResult();
-
         TypedQuery<User> query = session.createQuery("from Teacher");
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
         query.setMaxResults(pageSize);//得到每页的记录数
-
         long totalPage = (allrows - 1) / pageSize + 1;
         List<User> list = query.getResultList();
-
         PageResult pageResult = new PageResult();
         pageResult.setTotalPages(totalPage);
         pageResult.setTotalRows(allrows);
         pageResult.setLists(list);
         pageResult.setCurrentPage(currentPage);
         pageResult.setPageSize(pageSize);
-
         return pageResult;
     }
 
+    /**
+     * 删除教师
+     *
+     * @param id 教师id
+     * @return /
+     */
     @Override
     public void delete(Long id) {
         getSession().createQuery("DELETE FROM Teacher WHERE id = " + id).executeUpdate();
     }
 
-
+    /**
+     * 搜索教师列表
+     *
+     * @param name        教师名称
+     * @param currentPage 页码
+     * @param pageSize    页数
+     * @return 分页的教师列表
+     */
+    @Override
+    public Object searchCriteria(String name, Integer currentPage, Integer pageSize) {
+        Session session = getSession();
+        String hql = "SELECT COUNT(*) FROM Teacher WHERE name = %" + name + "%";
+        Query queryCount = session.createQuery(hql);
+        long allrows = (long) queryCount.uniqueResult();
+        TypedQuery<User> query = session.createQuery("from Teacher");
+        query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
+        query.setMaxResults(pageSize);//得到每页的记录数
+        long totalPage = (allrows - 1) / pageSize + 1;
+        List<User> list = query.getResultList();
+        PageResult pageResult = new PageResult();
+        pageResult.setTotalPages(totalPage);
+        pageResult.setTotalRows(allrows);
+        pageResult.setLists(list);
+        pageResult.setCurrentPage(currentPage);
+        pageResult.setPageSize(pageSize);
+        return pageResult;
+    }
 }

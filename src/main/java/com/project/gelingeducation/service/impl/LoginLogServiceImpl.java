@@ -20,8 +20,6 @@ public class LoginLogServiceImpl implements ILoginLogService {
 
     @Autowired
     private ILoginLogDao loginLogDao;
-    @Autowired
-    private IWebDataBeanDao webDataBeanDao;
 
     @Override
     public void insert(LoginLog loginLog) {

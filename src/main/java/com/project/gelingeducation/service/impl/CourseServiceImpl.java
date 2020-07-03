@@ -26,12 +26,6 @@ public class CourseServiceImpl implements ICourseService {
     private ICourseDao courseDao;
 
     /**
-     * 教师实体类的dao
-     */
-    @Autowired
-    private ITeacherDao teacherDao;
-
-    /**
      * 根据id获取课程
      *
      * @param id 课程id

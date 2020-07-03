@@ -112,10 +112,10 @@ public class VideoController {
      */
     @Log("按条件搜索视频列表")
     @RequestMapping("/search_by_criteria")
-    public Object searchByCriteria(@RequestParam String teacherId,
-                                   @RequestParam String name,
-                                   @RequestParam String courseIds) {
-        videoService.searchByCriteria(teacherId, name, courseIds);
-        return JsonData.buildSuccess();
+    public Object searchByCriteria(@RequestParam(required = false) String teacherId,
+                                   @RequestParam(required = false) String name,
+                                   @RequestParam(required = false) String courseIds) {
+        return JsonData.buildSuccess(videoService.searchByCriteria(teacherId,
+                name, courseIds));
     }
 }

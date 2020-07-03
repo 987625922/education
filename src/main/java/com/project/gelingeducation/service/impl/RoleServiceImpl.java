@@ -94,7 +94,8 @@ public class RoleServiceImpl implements IRoleService {
         Role role = roleDao.findById(id);
         role.setName(name);
         role.setRemark(remark);
-        List<Permission> permissions = permissionService.getPermissionListByIds(permissionIds);
+        List<Permission> permissions =
+                permissionService.getPermissionListByIds(permissionIds);
         for (Permission permission : permissions) {
             role.getPermissions().add(permission);
             permission.getRoles().add(role);

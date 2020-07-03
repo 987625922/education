@@ -116,7 +116,7 @@ public class CourseController {
      * @return 分页的课程实体类
      */
     @Log("多参数搜索课程")
-    @RequestMapping(value = "/find_by_name_status_price_teacher")
+    @RequestMapping(value = "/searchCriteria")
     public Object findByNameOrStatusOrPriceOrTeacher(@RequestParam(required = false) String name,
                                                      @RequestParam(required = false) Integer status,
                                                      @RequestParam(required = false) Double startPrice,
