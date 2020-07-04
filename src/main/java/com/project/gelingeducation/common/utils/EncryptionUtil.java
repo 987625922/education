@@ -9,7 +9,6 @@ import java.util.Base64;
  */
 public final class EncryptionUtil {
 
-
     /**
      * base64解密
      *

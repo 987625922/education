@@ -2,10 +2,21 @@ package com.project.gelingeducation.common.utils;
 
 import java.util.concurrent.*;
 
+/**
+ * 线程池
+ */
 public class ExecutorsUtils {
+
+    /**
+     * 线程池
+     */
     ExecutorService es = null;
 
+    /**
+     * 线程池的初始化
+     */
     private void init() {
+        //固定5个线程的线程池
         es = new ThreadPoolExecutor(5, 5, 0L, TimeUnit.MILLISECONDS,
                 new SynchronousQueue<Runnable>(),
                 new ThreadFactory() {
@@ -20,14 +31,25 @@ public class ExecutorsUtils {
                 });
     }
 
+    /**
+     * 跑线程
+     *
+     * @param runnable
+     */
     public void execute(Runnable runnable) {
         es.execute(runnable);
     }
 
+    /**
+     * 初始化
+     */
     private ExecutorsUtils() {
         init();
     }
 
+    /**
+     * 静态内部类的单例线程池
+     */
     private static class DaemonExecutorHopler {
         private static ExecutorsUtils instance = new ExecutorsUtils();
     }

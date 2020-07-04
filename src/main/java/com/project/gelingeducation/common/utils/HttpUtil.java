@@ -27,12 +27,14 @@ import java.util.Objects;
  */
 @Slf4j
 public class HttpUtil {
+
+    /**
+     * 没找到地址的返回
+     */
     private static final String UNKNOWN = "unknown";
 
     private HttpUtil() {
-
     }
-
 
     /**
      * 获取浏览器

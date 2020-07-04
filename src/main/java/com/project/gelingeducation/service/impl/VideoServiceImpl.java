@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
 
 /**
@@ -25,11 +27,10 @@ public class VideoServiceImpl implements IVideoService {
 
     /**
      * 获取视频实体类的lists
-     * 如果没有currentPage就返回所有的lists
      *
-     * @param currentPage
-     * @param pageSize
-     * @return 分页的Page实体类或者lists
+     * @param currentPage 页码
+     * @param pageSize    页数
+     * @return 页码为空返回全都list，不为空返回分页实体类
      */
     @Override
     public Object queryAll(Integer currentPage, Integer pageSize) {
@@ -103,13 +104,13 @@ public class VideoServiceImpl implements IVideoService {
     /**
      * 按条件搜索视频列表
      *
-     * @param teacherId  教师id
-     * @param name       视频名
-     * @param courseIds  1,2,3格式的课程id字符串
+     * @param teacherId 教师id
+     * @param name      视频名
+     * @param courseIds 1,2,3格式的课程id字符串
      * @return 分页的视频list列表
      */
     @Override
-    public Object searchByCriteria(String teacherId, String name, String courseIds) {
-        return videoDao.searchByCriteria(teacherId, name, courseIds);
+    public Object searchByCriteria(String teacherId, String name, String courseIds) throws UnsupportedEncodingException {
+        return videoDao.searchByCriteria(teacherId, URLDecoder.decode(name, "UTF-8"), courseIds);
     }
 }

@@ -3,8 +3,13 @@ package com.project.gelingeducation.common.utils;
 import com.project.gelingeducation.common.config.GLConstant;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @Author: LL
+ * @Description: Token工具类
+ */
 @Slf4j
 public class TokenUtil {
+
     /**
      * token 加密
      *
@@ -38,6 +43,4 @@ public class TokenUtil {
             return null;
         }
     }
-
-
 }

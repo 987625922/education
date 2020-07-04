@@ -4,6 +4,11 @@ import javax.crypto.Cipher;
 import java.security.Key;
 import java.security.Security;
 
+/**
+ * DES加密工具类
+ *
+ * @author LL
+ */
 public class DESEncryptionUtil {
 
     //设置默认密匙
@@ -12,6 +17,28 @@ public class DESEncryptionUtil {
     private Cipher encryptCipher = null;
     //解密
     private Cipher decryptCipher = null;
+
+    /**
+     * DES加密
+     * @param strIn
+     * @return
+     */
+    String decrypt(String strIn) {
+        try {
+            return new String(decrypt(hexStr2ByteArr(strIn)));
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    /**
+     * DES解密
+     * @param strIn
+     * @return
+     */
+    String encrypt(String strIn) throws Exception {
+        return byteArr2HexStr(encrypt(strIn.getBytes()));
+    }
 
     private static String byteArr2HexStr(byte[] arrB) {
         int iLen = arrB.length;
@@ -48,10 +75,8 @@ public class DESEncryptionUtil {
     DESEncryptionUtil(String strKey) throws Exception {
         Security.addProvider(new com.sun.crypto.provider.SunJCE());
         Key key = getKey(strKey.getBytes());
-
         encryptCipher = Cipher.getInstance("DES");
         encryptCipher.init(Cipher.ENCRYPT_MODE, key);
-
         decryptCipher = Cipher.getInstance("DES");
         decryptCipher.init(Cipher.DECRYPT_MODE, key);
     }
@@ -60,20 +85,8 @@ public class DESEncryptionUtil {
         return encryptCipher.doFinal(arrB);
     }
 
-    String encrypt(String strIn) throws Exception {
-        return byteArr2HexStr(encrypt(strIn.getBytes()));
-    }
-
     private byte[] decrypt(byte[] arrB) throws Exception {
         return decryptCipher.doFinal(arrB);
-    }
-
-    String decrypt(String strIn) {
-        try {
-            return new String(decrypt(hexStr2ByteArr(strIn)));
-        } catch (Exception e) {
-            return "";
-        }
     }
 
     private Key getKey(byte[] arrBTmp) {

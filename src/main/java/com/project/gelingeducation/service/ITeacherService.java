@@ -2,6 +2,8 @@ package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.entity.Teacher;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * @Author: LL
  * @Description: 教师的Service的接口
@@ -49,5 +51,5 @@ public interface ITeacherService {
      * @param pageSize    页数
      * @return 分页的教师列表
      */
-    Object searchCriteria(String name, Integer currentPage, Integer pageSize);
+    Object searchCriteria(String name, Integer currentPage, Integer pageSize) throws UnsupportedEncodingException;
 }

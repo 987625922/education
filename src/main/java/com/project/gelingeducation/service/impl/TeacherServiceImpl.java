@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 /**
  * @Author: LL
  * @Description: 教师的Service
@@ -81,8 +84,8 @@ public class TeacherServiceImpl implements ITeacherService {
      * @return
      */
     @Override
-    public Object searchCriteria(String name, Integer currentPage, Integer pageSize) {
-        return teacherDao.searchCriteria(name, currentPage, pageSize);
+    public Object searchCriteria(String name, Integer currentPage, Integer pageSize) throws UnsupportedEncodingException {
+        return teacherDao.searchCriteria(URLDecoder.decode(name,"UTF-8"), currentPage, pageSize);
     }
 
 }

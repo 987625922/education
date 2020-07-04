@@ -2,6 +2,8 @@ package com.project.gelingeducation.service;
 
 import com.project.gelingeducation.entity.Video;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * @Author: LL
  * @Description: 视频的Service的接口
@@ -64,5 +66,5 @@ public interface IVideoService {
      */
     Object searchByCriteria(String teacherId,
                             String name,
-                            String courseIds);
+                            String courseIds) throws UnsupportedEncodingException;
 }

@@ -17,19 +17,44 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.Optional;
 
-@Transactional
+/**
+ * @Author: LL
+ * @Description: 视频的Service
+ */
+@Transactional(readOnly = true)
 @Service
 public class WebDataBeanServiceImpl implements IWebDataBeanService {
 
+    /**
+     * 网页特定数据实体类service
+     */
     @Autowired
     private IWebDataBeanDao webDataBeanDao;
+
+    /**
+     * 用户实体类service
+     */
     @Autowired
     private IUserService userService;
+
+    /**
+     * 登录日志实体类service
+     */
     @Autowired
     private ILoginLogService loginLogService;
+
+    /**
+     * rides工具类
+     */
     @Autowired
     RedisTemplateUtil templateUtil;
 
+    /**
+     * 用户登录
+     *
+     * @param user 用户实体类
+     * @return id 和 token
+     */
     @Override
     public Object login(User user) {
         //通过用户名获取用户
@@ -59,12 +84,19 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         return userMap;
     }
 
+    /**
+     * 获取网页特定数据
+     *
+     * @return 网页特定数据实体类
+     */
     @Override
-    @Transactional(readOnly = true)
     public WebDataBean getWebDataBean() {
         return webDataBeanDao.getOnlyData();
     }
 
+    /**
+     * 添加登录数
+     */
     @Override
     public void addLoginMun() {
         //全局登录数据统计
@@ -82,6 +114,9 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         });
     }
 
+    /**
+     * 清空今天的登录数
+     */
     @Override
     public void clearTodayLoginMun() {
         Optional<WebDataBean> optionalWebData = Optional.ofNullable(webDataBeanDao.getOnlyData());

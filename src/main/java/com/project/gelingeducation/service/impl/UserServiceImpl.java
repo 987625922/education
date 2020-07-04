@@ -15,28 +15,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @Author: LL
+ * @Description: user实体类的service
+ */
 @Slf4j
 @Service
 @Transactional(readOnly = true)
 public class UserServiceImpl implements IUserService {
 
+    /**
+     * user实体类的dao
+     */
     @Autowired
     private IUserDao userDao;
 
+    /**
+     * role实体类的dao
+     */
     @Autowired
     private IRoleService roleService;
 
     /**
      * 注册
      *
-     * @param user
-     * @return
+     * @param user 用户实体类
+     * @return 用户实体类
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public User register(User user) {
         if (userDao.findByPhone(user.getAccount()) == null) {
             user.setUserName("管理员");
@@ -51,11 +63,11 @@ public class UserServiceImpl implements IUserService {
     /**
      * 添加用户
      *
-     * @param user
-     * @return
+     * @param user 用户实体类
+     * @return 用户实体类
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public User addUser(User user) {
         if (user.getRole() == null) {
             user.setRole(roleService.findDefault());
@@ -78,8 +90,8 @@ public class UserServiceImpl implements IUserService {
     /**
      * 通过id查找用户
      *
-     * @param id
-     * @return
+     * @param id 用户id
+     * @return 用户实体类
      */
     @Override
     public User findById(Long id) {
@@ -90,9 +102,9 @@ public class UserServiceImpl implements IUserService {
     /**
      * 页面格式的用户的列表
      *
-     * @param currentPage
-     * @param pageSize
-     * @return
+     * @param currentPage 页码
+     * @param pageSize    页数
+     * @return 页码为空返回全都list，不为空返回分页实体类
      */
     @Override
     public Object queryAll(Integer currentPage, Integer pageSize) {
@@ -106,11 +118,11 @@ public class UserServiceImpl implements IUserService {
     /**
      * 更新用户头像
      *
-     * @param id
-     * @param coverImg
+     * @param id 用户id
+     * @param coverImg 头像地址
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void updateCoverImg(Long id, String coverImg) {
         userDao.updateCoverImg(id, coverImg);
     }
@@ -118,21 +130,23 @@ public class UserServiceImpl implements IUserService {
     /**
      * 更新用户
      *
-     * @param user
+     * @param user 用户实体类
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void update(User user) {
         userDao.update(user);
     }
 
     /**
-     * @param id
-     * @param oldPassword
-     * @param newPassword
+     * 修改密码
+     *
+     * @param id 用户id
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void updatePassword(Long id, String oldPassword, String newPassword) {
         User user = userDao.findById(id);
         if (user.getPassword().equals(MD5Util.encrypt(user.getAccount().toLowerCase(),
@@ -147,10 +161,10 @@ public class UserServiceImpl implements IUserService {
     /**
      * 删除用户
      *
-     * @param id
+     * @param id 用户id
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void delUser(Long id) {
         userDao.delect(id);
     }
@@ -158,10 +172,10 @@ public class UserServiceImpl implements IUserService {
     /**
      * 批量删除用户
      *
-     * @param ids
+     * @param ids 1,2,3 id字符串
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void delSelUser(String ids) {
         userDao.delSel(ids);
     }
@@ -169,21 +183,21 @@ public class UserServiceImpl implements IUserService {
     /**
      * 通过名字用户格式的用户的list
      *
-     * @param name
-     * @param currentPage
-     * @param pageSize
-     * @return
+     * @param name 用户名
+     * @param currentPage 页码
+     * @param pageSize    页数
+     * @return 返回分页实体类
      */
     @Override
-    public PageResult selbyname(String name, Integer currentPage, Integer pageSize) {
-        return userDao.selbyname(name, currentPage, pageSize);
+    public PageResult selbyname(String name, Integer currentPage, Integer pageSize) throws UnsupportedEncodingException {
+        return userDao.selbyname(URLDecoder.decode(name,"UTF-8"), currentPage, pageSize);
     }
 
     /**
      * 查找用户
      *
-     * @param account
-     * @return
+     * @param account 账号
+     * @return 用户实体类
      */
     @Override
     public User findUserByAccount(String account) {
@@ -194,8 +208,8 @@ public class UserServiceImpl implements IUserService {
     /**
      * 查找身份
      *
-     * @param id
-     * @return
+     * @param id 用户id
+     * @return 角色实体类
      */
     @Override
     public Role findRoleByUserId(Long id) {
@@ -206,8 +220,8 @@ public class UserServiceImpl implements IUserService {
     /**
      * 查找权限
      *
-     * @param id
-     * @return
+     * @param id 角色id
+     * @return 角色列表
      */
     @Override
     public Set<Permission> findPermissionByUserId(Long id) {
@@ -223,15 +237,14 @@ public class UserServiceImpl implements IUserService {
     /**
      * 添加身份
      *
-     * @param userId
-     * @param roleId
+     * @param userId 用户id
+     * @param roleId 角色id
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void addRole(Long userId, Long roleId) {
         User user = userDao.findById(userId);
         Role role = roleService.findByRole(roleId);
         user.setRole(role);
     }
-
 }

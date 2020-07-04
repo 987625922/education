@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
 
 /**
@@ -115,7 +117,7 @@ public class CourseServiceImpl implements ICourseService {
      */
     @Override
     public Object selByNameOrStatusOrPriceOrTeacher(String name, Integer status, Double startPrice, Double endPrice,
-                                                    Long teacherId, Integer currentPage, Integer pageSize) {
-        return courseDao.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice, endPrice, teacherId, currentPage, pageSize);
+                                                    Long teacherId, Integer currentPage, Integer pageSize) throws UnsupportedEncodingException {
+        return courseDao.selByNameOrStatusOrPriceOrTeacher(URLDecoder.decode(name,"UTF-8"), status, startPrice, endPrice, teacherId, currentPage, pageSize);
     }
 }

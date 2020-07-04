@@ -10,11 +10,17 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 
+/**
+ * @Author: LL
+ * @Description: JWT工具类
+ */
 @Slf4j
 public class JWTUtil {
 
-    //token过期时间为一天
-    private static final long EXPIRE_TIME = 86400L *1000;
+    /**
+     * token过期时间为一天
+     */
+    private static final long EXPIRE_TIME = 86400L * 1000;
 
     /**
      * 校验 token是否正确
