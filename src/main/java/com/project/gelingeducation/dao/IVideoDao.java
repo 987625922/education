@@ -70,10 +70,14 @@ public interface IVideoDao {
      *
      * @param teacherId  教师id
      * @param name       视频名
+     * @param currentPage 页码
+     * @param pageSize    页数
      * @param courseIds  1,2,3格式的课程id字符串
      * @return 分页的视频list列表
      */
     Object searchByCriteria(String teacherId,
                             String name,
-                            String courseIds);
+                            String courseIds,
+                            Integer currentPage,
+                            Integer pageSize);
 }

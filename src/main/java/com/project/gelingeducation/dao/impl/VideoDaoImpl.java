@@ -3,6 +3,7 @@ package com.project.gelingeducation.dao.impl;
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.dao.IVideoDao;
+import com.project.gelingeducation.entity.Course;
 import com.project.gelingeducation.entity.Video;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -81,7 +82,12 @@ public class VideoDaoImpl extends BaseDao implements IVideoDao {
      */
     @Override
     public Video insert(Video video) {
-        getSession().save(video);
+        Session session = getSession();
+        session.save(video);
+        for (Course course : video.getCourses()) {
+            course.getVideos().add(video);
+            session.save(course);
+        }
         return video;
     }
 
@@ -123,30 +129,45 @@ public class VideoDaoImpl extends BaseDao implements IVideoDao {
     /**
      * 按条件搜索视频列表
      *
-     * @param teacherId 教师id
-     * @param name      视频名
-     * @param courseIds 1,2,3格式的课程id字符串
+     * @param teacherId   教师id
+     * @param name        视频名
+     * @param currentPage 页码
+     * @param pageSize    页数
+     * @param courseIds   1,2,3格式的课程id字符串
      * @return 分页的视频list列表
      */
     @Override
     public Object searchByCriteria(String teacherId, String name,
-                                   String courseIds) {
+                                   String courseIds, Integer currentPage, Integer pageSize) {
         Session session = getSession();
-        String hql = "FROM Video as video";
+        StringBuffer hql = new StringBuffer("FROM Video AS video");
         if (courseIds != null && !courseIds.equals("")) {
-            hql += " INNER JOIN FETCH video.courses as course";
+            hql.append(" INNER JOIN FETCH video.courses AS course");
         }
-        hql += " WHERE 1=1";
+        hql.append(" WHERE 1=1");
         if (teacherId != null && !teacherId.equals("")) {
-            hql += " and video.teacherId = " + teacherId;
+            hql.append(" and video.teacherId = " + teacherId);
         }
         if (name != null && !name.equals("")) {
-            hql += " and video.name = '" + name + "'";
+            hql.append(" and video.name LIKE '%" + name + "%'");
         }
         if (courseIds != null && !courseIds.equals("")) {
-            hql += " and course.id = " + courseIds + "";
+            hql.append(" and course.id in (" + courseIds + ")");
         }
-        Query query = session.createQuery(hql);
-        return query.getResultList();
+        Query query = session.createQuery(hql.toString());
+        query.setFirstResult((currentPage - 1) * pageSize);
+        query.setMaxResults(currentPage * pageSize);
+        List<Course> list = query.getResultList();
+        hql.insert(0, "select count(*) ");
+        Query queryCount = session.createQuery(hql.toString().replace("FETCH", ""));
+        Long allrows = (Long) queryCount.uniqueResult();
+        Long totalPage = (allrows - 1) / pageSize + 1;
+        PageResult pageResult = new PageResult();
+        pageResult.setTotalPages(totalPage);
+        pageResult.setTotalRows(allrows);
+        pageResult.setLists(list);
+        pageResult.setCurrentPage(currentPage);
+        pageResult.setPageSize(pageSize);
+        return pageResult;
     }
 }

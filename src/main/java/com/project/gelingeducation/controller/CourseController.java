@@ -9,6 +9,8 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * 视频课程的controller
  *
@@ -122,7 +124,7 @@ public class CourseController {
                                                      @RequestParam(required = false) Double startPrice,
                                                      @RequestParam(required = false) Double endPrice,
                                                      @RequestParam(required = false) Long teacherId,
-                                                     Integer currentPage, Integer pageSize) {
+                                                     Integer currentPage, Integer pageSize) throws UnsupportedEncodingException {
         return JsonData.buildSuccess(courseService.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice,
                 endPrice, teacherId, currentPage, pageSize));
     }

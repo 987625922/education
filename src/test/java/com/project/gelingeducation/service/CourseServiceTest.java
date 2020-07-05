@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 /**
@@ -64,7 +65,7 @@ public class CourseServiceTest {
      * 按条件搜索
      */
     @Test
-    public void selByNameOrStatusOrPriceOrTeacher() {
+    public void selByNameOrStatusOrPriceOrTeacher() throws UnsupportedEncodingException {
         PageResult pageResult = (PageResult) courseService.selByNameOrStatusOrPriceOrTeacher(null, -1,
                 new Double(-1), new Double(-1), new Long(1),
                 new Integer(1), new Integer(10));

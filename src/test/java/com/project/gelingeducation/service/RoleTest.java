@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Slf4j
@@ -83,7 +84,7 @@ public class RoleTest {
     }
 
     @Test
-    public void selByName() {
+    public void selByName() throws UnsupportedEncodingException {
         List<Role> roles = roleService.selByName("d");
         for (int i = 0; i < roles.size(); i++) {
             log.debug("==>" + roles.get(i).getName());

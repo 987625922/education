@@ -1,5 +1,6 @@
 package com.project.gelingeducation.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -75,7 +76,7 @@ public class Video implements Serializable {
      */
     @ManyToMany(mappedBy = "videos", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JsonIgnore
+    @JsonBackReference
     private Set<Course> courses = new HashSet<>();
 
     /**

@@ -125,11 +125,11 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
                                                         Long teacherId, Integer currentPage,
                                                         Integer pageSize) {
         Session session = getSession();
-        StringBuffer hql = new StringBuffer("from Course as course");
+        StringBuffer hql = new StringBuffer("FROM Course AS course");
         if (teacherId != null) {
-            hql.append(" inner join fetch course.teachers as teacher ");
+            hql.append(" INNER JOIN FETCH course.teachers AS teacher ");
         }
-        hql.append(" where 1=1");
+        hql.append(" WHERE 1=1");
         if (teacherId != null) {
             hql.append(" AND teacher.id = " + teacherId);
         }
@@ -147,7 +147,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
         query.setMaxResults(currentPage * pageSize);
         List<Course> list = query.getResultList();
         hql.insert(0, "select count(*) ");
-        Query queryCount = session.createQuery(hql.toString().replace("fetch", ""));
+        Query queryCount = session.createQuery(hql.toString().replace("FETCH", ""));
         Long allrows = (Long) queryCount.uniqueResult();
         Long totalPage = (allrows - 1) / pageSize + 1;
         PageResult pageResult = new PageResult();

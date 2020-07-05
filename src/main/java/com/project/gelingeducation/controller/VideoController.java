@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * @Author: LL
  * @Description: 视频的Controller
@@ -107,6 +109,8 @@ public class VideoController {
      *
      * @param teacherId 教师id
      * @param name      视频名
+     * @param currentPage 页码
+     * @param pageSize    页数
      * @param courseIds 1,2,3格式的课程id字符串
      * @return 分页的视频list列表
      */
@@ -114,8 +118,9 @@ public class VideoController {
     @RequestMapping("/search_by_criteria")
     public Object searchByCriteria(@RequestParam(required = false) String teacherId,
                                    @RequestParam(required = false) String name,
-                                   @RequestParam(required = false) String courseIds) {
+                                   @RequestParam(required = false) String courseIds,
+                                   @RequestParam Integer currentPage, @RequestParam Integer pageSize) throws UnsupportedEncodingException {
         return JsonData.buildSuccess(videoService.searchByCriteria(teacherId,
-                name, courseIds));
+                name, courseIds,currentPage,pageSize));
     }
 }

@@ -7,6 +7,8 @@ import com.project.gelingeducation.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * @Author: LL
  * @Description: 教师实体类的Controller
@@ -71,7 +73,7 @@ public class TeacherController {
     @RequestMapping("/search")
     public Object searchCriteria(@RequestParam String name,
                                  @RequestParam Integer currentPage,
-                                 @RequestParam Integer pageSize) {
+                                 @RequestParam Integer pageSize) throws UnsupportedEncodingException {
         return JsonData.buildSuccess(teacherService.searchCriteria(name, currentPage, pageSize));
     }
 }

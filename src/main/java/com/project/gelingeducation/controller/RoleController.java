@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * @Author: LL
  * @Description: 用户权限角色的Controller
@@ -31,7 +33,7 @@ public class RoleController {
 
     @Log("通过名字获取身份")
     @RequestMapping(value = "/find_by_name")
-    public Object findByName(String name) {
+    public Object findByName(String name) throws UnsupportedEncodingException {
         return JsonData.buildSuccess(roleService.selByName(name));
     }
 

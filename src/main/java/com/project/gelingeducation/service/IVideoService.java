@@ -52,6 +52,7 @@ public interface IVideoService {
 
     /**
      * 批量删除视频
+     *
      * @param ids 视频id 格式为 1,2,3
      */
     void delMore(String ids);
@@ -59,12 +60,14 @@ public interface IVideoService {
     /**
      * 按条件搜索视频列表
      *
-     * @param teacherId  教师id
-     * @param name       视频名
-     * @param courseIds  1,2,3格式的课程id字符串
+     * @param teacherId 教师id
+     * @param name      视频名
+     * @param currentPage 页码
+     * @param pageSize    页数
+     * @param courseIds 1,2,3格式的课程id字符串
      * @return 分页的视频list列表
      */
     Object searchByCriteria(String teacherId,
                             String name,
-                            String courseIds) throws UnsupportedEncodingException;
+                            String courseIds, Integer currentPage, Integer pageSize) throws UnsupportedEncodingException;
 }

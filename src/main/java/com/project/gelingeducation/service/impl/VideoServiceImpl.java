@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service.impl;
 
+import com.project.gelingeducation.common.utils.UrlDeconderUtil;
 import com.project.gelingeducation.dao.IVideoDao;
 import com.project.gelingeducation.entity.Video;
 import com.project.gelingeducation.service.IVideoService;
@@ -106,11 +107,13 @@ public class VideoServiceImpl implements IVideoService {
      *
      * @param teacherId 教师id
      * @param name      视频名
+     * @param currentPage 页码
+     * @param pageSize    页数
      * @param courseIds 1,2,3格式的课程id字符串
      * @return 分页的视频list列表
      */
     @Override
-    public Object searchByCriteria(String teacherId, String name, String courseIds) throws UnsupportedEncodingException {
-        return videoDao.searchByCriteria(teacherId, URLDecoder.decode(name, "UTF-8"), courseIds);
+    public Object searchByCriteria(String teacherId, String name, String courseIds,Integer currentPage,Integer pageSize) throws UnsupportedEncodingException {
+        return videoDao.searchByCriteria(teacherId, UrlDeconderUtil.decode(name, "UTF-8"), courseIds,currentPage,pageSize);
     }
 }

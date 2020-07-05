@@ -6,8 +6,6 @@ import com.project.gelingeducation.entity.Course;
 import com.project.gelingeducation.entity.Teacher;
 import com.project.gelingeducation.entity.Video;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -53,22 +52,22 @@ public class VideoServiceTest {
      */
     @Test
     public void insert() {
-//        for (int i = 0; i < 10; i++) {
-        Video video = new Video();
-        video.setName("测试的视频").setCreateTime(new Date())
-                .setLastUpdateTime(new Date());
-        videoService.insert(video);
-//        }
+        for (int i = 0; i < 10; i++) {
+            Video video = new Video();
+            video.setName("测试的视频").setCreateTime(new Date())
+                    .setLastUpdateTime(new Date());
+            videoService.insert(video);
+        }
     }
 
     /**
      * 条件搜索
      */
     @Test
-    public void searchCriteria() throws JsonProcessingException {
+    public void searchCriteria() throws JsonProcessingException, UnsupportedEncodingException {
         log.info("条件搜索结果：   "
                 + JsonUtil.jsonToString(videoService.searchByCriteria("1",
-                "测试的视频", "1")));
+                "测试的视频", "1", 1, 10)));
     }
 
     /**
