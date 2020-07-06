@@ -1,4 +1,4 @@
-package com.project.gelingeducation.controller;
+package com.project.gelingeducation.common.utils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -10,7 +10,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 @Component
-public class SpringContextUtils implements ApplicationContextAware {
+public class SpringContextUtil implements ApplicationContextAware {
 
 	/**
 	 * 上下文对象实例
@@ -19,7 +19,7 @@ public class SpringContextUtils implements ApplicationContextAware {
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		SpringContextUtils.applicationContext = applicationContext;
+		SpringContextUtil.applicationContext = applicationContext;
 	}
 
 	/**

@@ -2,7 +2,7 @@ package com.project.gelingeducation.common.aspect;
 
 import com.project.gelingeducation.common.utils.HttpUtil;
 import com.project.gelingeducation.common.utils.ThrowableUtil;
-import com.project.gelingeducation.controller.SpringContextUtils;
+import com.project.gelingeducation.common.utils.SpringContextUtil;
 import com.project.gelingeducation.entity.Log;
 import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.service.ILogService;
@@ -56,7 +56,7 @@ public class LogAspect {
         Object result = joinPoint.proceed();
         Log log = new Log("INFO", System.currentTimeMillis() - currentTime.get());
         currentTime.remove();
-        HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
+        HttpServletRequest request = SpringContextUtil.getHttpServletRequest();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         com.project.gelingeducation.common.annotation.Log aopLog
@@ -87,7 +87,7 @@ public class LogAspect {
         Log log = new Log("ERROR", System.currentTimeMillis()
                 - currentTime.get());
         currentTime.remove();
-        HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
+        HttpServletRequest request = SpringContextUtil.getHttpServletRequest();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         com.project.gelingeducation.common.annotation.Log aopLog

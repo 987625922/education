@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,11 +42,40 @@ public class Subject implements Serializable {
     private String bigImg;
 
     /**
+     * 专题备注
+     */
+    @Column(name = "remark")
+    private String remark;
+
+    /**
+     * 价格
+     */
+    @Column(name = "price")
+    private Double price;
+
+    /**
+     * 专题简介
+     */
+    @Column(name = "introduction")
+    private String introduction;
+
+    /**
      * 多对多 课程
      */
-    @ManyToMany(mappedBy = "subjects",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
-    @JsonBackReference
+    @ManyToMany(mappedBy = "subjects", fetch = FetchType.EAGER)
     private Set<Course> courses = new HashSet<>();
+
+    /**
+     * 创建时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_time", nullable = false, updatable = false)
+    private Date createTime;
+
+    /**
+     * 上次更新时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_update_time", nullable = false)
+    private Date lastUpdateTime;
 }

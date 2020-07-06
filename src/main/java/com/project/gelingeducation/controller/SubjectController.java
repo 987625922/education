@@ -6,10 +6,7 @@ import com.project.gelingeducation.entity.Subject;
 import com.project.gelingeducation.service.ISubjectService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -63,7 +60,7 @@ public class SubjectController {
      */
     @Log("添加专题")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Object add(Subject subject) {
+    public Object add(@RequestBody Subject subject) {
         subjectService.insert(subject);
         return JsonData.buildSuccess();
     }
@@ -89,8 +86,38 @@ public class SubjectController {
      */
     @Log("更新专题")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Object update(Subject subject) {
+    public Object update(@RequestBody Subject subject) {
         subjectService.updated(subject);
         return JsonData.buildSuccess();
+    }
+
+    /**
+     * 批量删除专题
+     *
+     * @param ids 1,2,3 格式的专题id
+     * @return
+     */
+    @Log("批量删除专题")
+    @RequestMapping(value = "/batches_deletes", method = RequestMethod.GET)
+    public Object batchesDeletes(String ids) {
+        subjectService.delMore(ids);
+        return JsonData.buildSuccess();
+    }
+
+    /**
+     * 条件搜索
+     *
+     * @param name        专题名称
+     * @param courseIds   1,2,3 格式的字符串id
+     * @param currentPage 页码
+     * @param pageSize    页数
+     * @return 分页实体类
+     */
+    @Log("条件搜索")
+    @RequestMapping(value = "/search_criteria", method = RequestMethod.GET)
+    public Object searchCriteria(String name, String courseIds, Integer currentPage,
+                                 Integer pageSize) {
+        return JsonData.buildSuccess(subjectService.searchCriteria(name, courseIds,
+                currentPage, pageSize));
     }
 }

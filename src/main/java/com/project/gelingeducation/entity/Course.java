@@ -1,5 +1,6 @@
 package com.project.gelingeducation.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
@@ -96,14 +97,13 @@ public class Course implements Serializable {
     /**
      * 多对多 专题
      */
-    @ManyToMany(targetEntity = Subject.class,
-            cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Subject.class)
     @JoinTable(
             name = "t_course_subject",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "subject_id"))
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JsonIgnore
+    @JsonBackReference
     private Set<Subject> subjects = new HashSet<>();
 }
 

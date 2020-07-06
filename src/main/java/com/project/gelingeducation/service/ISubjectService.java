@@ -42,4 +42,22 @@ public interface ISubjectService {
      * @param video 专题实体类
      */
     void updated(Subject video);
+
+    /**
+     * 批量删除专题
+     *
+     * @param ids 视频id 格式为 1,2,3
+     */
+    void delMore(String ids);
+
+    /**
+     * 条件搜索
+     * @param name 专题名称
+     * @param courseIds 1,2,3 格式的字符串id
+     * @param currentPage 页码
+     * @param pageSize 页数
+     * @return 分页实体类
+     */
+    Object searchCriteria(String name, String courseIds, Integer currentPage,
+                          Integer pageSize);
 }

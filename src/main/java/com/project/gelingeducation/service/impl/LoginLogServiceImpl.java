@@ -1,7 +1,7 @@
 package com.project.gelingeducation.service.impl;
 
 import com.project.gelingeducation.common.utils.HttpUtil;
-import com.project.gelingeducation.controller.SpringContextUtils;
+import com.project.gelingeducation.common.utils.SpringContextUtil;
 import com.project.gelingeducation.dao.ILoginLogDao;
 import com.project.gelingeducation.entity.LoginLog;
 import com.project.gelingeducation.entity.User;
@@ -35,7 +35,7 @@ public class LoginLogServiceImpl implements ILoginLogService {
     @Override
     public void insert(LoginLog loginLog) {
         loginLog.setLoginTime(new Date());
-        String ip = HttpUtil.getCityInfo(HttpUtil.getIp(SpringContextUtils.getHttpServletRequest()));
+        String ip = HttpUtil.getCityInfo(HttpUtil.getIp(SpringContextUtil.getHttpServletRequest()));
         loginLog.setIp(ip);
         loginLog.setLocation(HttpUtil.getCityInfo(ip));
         loginLogDao.insert(loginLog);
@@ -77,7 +77,7 @@ public class LoginLogServiceImpl implements ILoginLogService {
     @Override
     public void saveOrUpdateLoginLogByUid(User user) {
         LoginLog loginLog = user.getLoginLog();
-        HttpServletRequest servletRequest = SpringContextUtils.getHttpServletRequest();
+        HttpServletRequest servletRequest = SpringContextUtil.getHttpServletRequest();
         String ip = "";
         if (servletRequest != null) {
             ip = HttpUtil.getIp(servletRequest);
