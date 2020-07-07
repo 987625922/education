@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service.impl;
 
+import com.project.gelingeducation.common.utils.UrlDeconderUtil;
 import com.project.gelingeducation.dao.IRoleDao;
 import com.project.gelingeducation.entity.Permission;
 import com.project.gelingeducation.entity.Role;
@@ -128,7 +129,7 @@ public class RoleServiceImpl implements IRoleService {
      */
     @Override
     public List<Role> selByName(String name) throws UnsupportedEncodingException {
-        return roleDao.selByName(URLDecoder.decode(name, "UTF-8"));
+        return roleDao.selByName(UrlDeconderUtil.decode(name,"UTF-8"));
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service.impl;
 
+import com.project.gelingeducation.common.utils.UrlDeconderUtil;
 import com.project.gelingeducation.dao.ISubjectDao;
 import com.project.gelingeducation.entity.Subject;
 import com.project.gelingeducation.service.ISubjectService;
@@ -109,6 +110,6 @@ public class SubjectServiceImpl implements ISubjectService {
      */
     @Override
     public Object searchCriteria(String name, String courseIds, Integer currentPage, Integer pageSize) {
-        return subjectDao.searchCriteria(name, courseIds, currentPage, pageSize);
+        return subjectDao.searchCriteria(UrlDeconderUtil.decode(name,"UTF-8"), courseIds, currentPage, pageSize);
     }
 }

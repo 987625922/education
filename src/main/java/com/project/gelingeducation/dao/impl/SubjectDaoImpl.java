@@ -6,6 +6,7 @@ import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.dao.ISubjectDao;
 import com.project.gelingeducation.entity.Course;
 import com.project.gelingeducation.entity.Subject;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,7 @@ import java.util.List;
  * @Author: LL
  * @Description: 专题实体类的dao
  */
+@Slf4j
 @Repository
 public class SubjectDaoImpl extends BaseDao implements ISubjectDao {
 
@@ -84,8 +86,8 @@ public class SubjectDaoImpl extends BaseDao implements ISubjectDao {
         Session session = getSession();
         session.save(subject);
         for (Course course : subject.getCourses()) {
+            course.getSubjects().clear();
             course.getSubjects().add(subject);
-            session.update(course);
         }
         return subject;
     }
@@ -112,11 +114,9 @@ public class SubjectDaoImpl extends BaseDao implements ISubjectDao {
         Subject findSubject = session.get(Subject.class, subject.getId());
         BeanUtil.copyPropertiesIgnoreNull(subject, findSubject);
         for (Course course : subject.getCourses()) {
-            course.setName("12");
-            course.getSubjects().add(subject);
-            session.update(course);
+            Course findCourse = session.get(Course.class, course.getId());
+            findCourse.getSubjects().add(subject);
         }
-        session.update(findSubject);
     }
 
     /**

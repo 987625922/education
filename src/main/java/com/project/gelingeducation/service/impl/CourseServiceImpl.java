@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service.impl;
 
+import com.project.gelingeducation.common.utils.UrlDeconderUtil;
 import com.project.gelingeducation.dao.ICourseDao;
 import com.project.gelingeducation.dao.ITeacherDao;
 import com.project.gelingeducation.entity.Course;
@@ -118,6 +119,6 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public Object selByNameOrStatusOrPriceOrTeacher(String name, Integer status, Double startPrice, Double endPrice,
                                                     Long teacherId, Integer currentPage, Integer pageSize) throws UnsupportedEncodingException {
-        return courseDao.selByNameOrStatusOrPriceOrTeacher(URLDecoder.decode(name,"UTF-8"), status, startPrice, endPrice, teacherId, currentPage, pageSize);
+        return courseDao.selByNameOrStatusOrPriceOrTeacher(UrlDeconderUtil.decode(name,"UTF-8"), status, startPrice, endPrice, teacherId, currentPage, pageSize);
     }
 }

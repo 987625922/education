@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service.impl;
 
+import com.project.gelingeducation.common.utils.UrlDeconderUtil;
 import com.project.gelingeducation.dao.ITeacherDao;
 import com.project.gelingeducation.entity.Teacher;
 import com.project.gelingeducation.service.ITeacherService;
@@ -85,7 +86,7 @@ public class TeacherServiceImpl implements ITeacherService {
      */
     @Override
     public Object searchCriteria(String name, Integer currentPage, Integer pageSize) throws UnsupportedEncodingException {
-        return teacherDao.searchCriteria(URLDecoder.decode(name,"UTF-8"), currentPage, pageSize);
+        return teacherDao.searchCriteria(UrlDeconderUtil.decode(name,"UTF-8"), currentPage, pageSize);
     }
 
 }
