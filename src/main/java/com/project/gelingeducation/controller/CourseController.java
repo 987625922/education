@@ -128,4 +128,16 @@ public class CourseController {
         return JsonData.buildSuccess(courseService.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice,
                 endPrice, teacherId, currentPage, pageSize));
     }
+
+    /**
+     * 通过专题id获取课程列表
+     *
+     * @param subjectId 专题id
+     * @return
+     */
+    @Log("通过主题id获取课程列表")
+    @RequestMapping(value = "/getCourseListBySubjectId")
+    public Object getCourseListBySubjectId(Long subjectId) {
+        return JsonData.buildSuccess(courseService.getCourseListBySubjectId(subjectId));
+    }
 }

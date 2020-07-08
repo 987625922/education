@@ -2,8 +2,10 @@ package com.project.gelingeducation.dao.impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.common.utils.BeanUtil;
+import com.project.gelingeducation.common.utils.CollectUtil;
 import com.project.gelingeducation.dao.ICourseDao;
 import com.project.gelingeducation.entity.Course;
+import com.project.gelingeducation.entity.Subject;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -20,6 +22,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
     /**
      * 搜索所有的课程
+     *
      * @return list
      */
     @Override
@@ -29,6 +32,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
     /**
      * 根据id获取课程
+     *
      * @param id 课程id
      * @return 课程实体类
      */
@@ -39,6 +43,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
     /**
      * 添加课程
+     *
      * @param course 课程实体类
      * @return 课程id
      */
@@ -50,6 +55,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
     /**
      * 根据id删除课程
+     *
      * @param id 视频id
      */
     @Override
@@ -61,6 +67,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
     /**
      * 更新课程
+     *
      * @param course 课程实体
      */
     @Override
@@ -73,8 +80,9 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
     /**
      * 根据分页条件获取分页实体类
+     *
      * @param currentPage 页下标
-     * @param pageSize 页数
+     * @param pageSize    页数
      * @return 分页实体类
      */
     @Override
@@ -99,6 +107,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
     /**
      * 批量删除课程
+     *
      * @param ids 格式为1,2,3的课程id
      */
     @Override
@@ -110,20 +119,21 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
 
     /**
      * 根据条件搜索课程分页信息
-     * @param name 课程名
-     * @param status 课程状态
-     * @param startPrice 课程搜索开始的价格
-     * @param endPrice 课程搜索结束的价格
-     * @param teacherId 教师id
+     *
+     * @param name        课程名
+     * @param status      课程状态
+     * @param startPrice  课程搜索开始的价格
+     * @param endPrice    课程搜索结束的价格
+     * @param teacherId   教师id
      * @param currentPage 页面下标
-     * @param pageSize 页数
+     * @param pageSize    页数
      * @return 分页实体类
      */
     @Override
     public Object selByNameOrStatusOrPriceOrTeacher(String name, Integer status,
-                                                        Double startPrice, Double endPrice,
-                                                        Long teacherId, Integer currentPage,
-                                                        Integer pageSize) {
+                                                    Double startPrice, Double endPrice,
+                                                    Long teacherId, Integer currentPage,
+                                                    Integer pageSize) {
         Session session = getSession();
         StringBuffer hql = new StringBuffer("FROM Course AS course");
         if (teacherId != null) {
@@ -157,5 +167,17 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
         pageResult.setCurrentPage(currentPage);
         pageResult.setPageSize(pageSize);
         return pageResult;
+    }
+
+    /**
+     * 通过专题id获取课程列表
+     *
+     * @param subjectId 专题id
+     * @return
+     */
+    @Override
+    public Object getCourseListBySubjectId(Long subjectId) {
+        Subject subject = (Subject) get(Subject.class, subjectId);
+        return CollectUtil.setToList(subject.getCourses());
     }
 }

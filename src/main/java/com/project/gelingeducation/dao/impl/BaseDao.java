@@ -1,8 +1,11 @@
 package com.project.gelingeducation.dao.impl;
 
+import com.project.gelingeducation.common.dto.PageResult;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.Serializable;
 
 /**
  * @Author: LL
@@ -18,10 +21,30 @@ abstract class BaseDao {
 
     /**
      * 获取线程上ThreadLocal的hibernate session
+     *
      * @return hibernate的session
      */
     public Session getSession() {
         return sessionFactory.getCurrentSession();
     }
 
+    /**
+     * 更新一个实体
+     *
+     * @param obj
+     */
+    protected void baseUpdate(Object obj) {
+        getSession().update(obj);
+    }
+
+    /**
+     * 根据主键返回一个实体
+     *
+     * @param clazz
+     * @param id
+     * @return
+     */
+    public Object get(Class<?> clazz, Object id) {
+        return getSession().get(clazz, (Serializable) id);
+    }
 }

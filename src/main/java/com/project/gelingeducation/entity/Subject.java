@@ -62,7 +62,7 @@ public class Subject implements Serializable {
     /**
      * 多对多 课程
      */
-    @ManyToMany(mappedBy = "subjects")
+    @ManyToMany(mappedBy = "subjects",cascade = CascadeType.ALL)
     @JsonBackReference
     private Set<Course> courses = new HashSet<>();
 

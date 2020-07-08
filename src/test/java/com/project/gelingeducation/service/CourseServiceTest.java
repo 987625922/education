@@ -14,6 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author: LL
@@ -98,5 +99,17 @@ public class CourseServiceTest {
         course.getSubjects().add(subject);
 //        subjectService.updated(subject);
         courseService.update(course);
+    }
+
+    /**
+     * 通过专题id获取课程列表
+     */
+    @Test
+    public void getCourseBySubjectId() {
+        List list = (List) courseService.getCourseListBySubjectId(5L);
+        log.info("getCourseBySubjectId " + list.size());
+        list.forEach(o ->
+                log.info("getCourseBySubjectId " + o)
+        );
     }
 }

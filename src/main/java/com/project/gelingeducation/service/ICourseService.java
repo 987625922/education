@@ -71,4 +71,12 @@ public interface ICourseService {
     Object selByNameOrStatusOrPriceOrTeacher(String name, Integer status, Double startPrice,
                                              Double endPrice, Long teacherId,
                                              Integer currentPage, Integer pageSize) throws UnsupportedEncodingException;
+
+    /**
+     * 通过专题id获取课程列表
+     *
+     * @param subjectId 专题id
+     * @return
+     */
+    Object getCourseListBySubjectId(Long subjectId);
 }

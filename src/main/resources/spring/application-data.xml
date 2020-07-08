@@ -51,6 +51,12 @@
         <property name="checkoutTimeout" value="${jdbc.checkoutTimeout}"/>
         <!-- 当获取连接失败重试次数 -->
         <property name="acquireRetryAttempts" value="${jdbc.acquireRetryAttempts}"/>
+        <!-- 解决No operations allowed after connection closed. -->
+        <property name="testConnectionOnCheckin" value="true"/>
+        <property name="automaticTestTable" value="C3P0TestTable"/>
+        <property name="idleConnectionTestPeriod" value="18000"/>
+        <property name="maxIdleTime" value="25000"/>
+        <property name="testConnectionOnCheckout" value="true"/>
     </bean>
 
     <!-- hibernate注解工厂 -->

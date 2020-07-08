@@ -38,8 +38,8 @@ public class SubjectDaoImpl extends BaseDao implements ISubjectDao {
         long allrows = (long) queryCount.uniqueResult();
 
         TypedQuery<Subject> query = session.createQuery("from Subject");
-        query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
-        query.setMaxResults(pageSize);//得到每页的记录数
+        query.setFirstResult((currentPage - 1) * pageSize);
+        query.setMaxResults(pageSize);
 
         long totalPage = (allrows - 1) / pageSize + 1;
         List<Subject> list = query.getResultList();
@@ -110,12 +110,14 @@ public class SubjectDaoImpl extends BaseDao implements ISubjectDao {
      */
     @Override
     public void update(Subject subject) {
-        Session session = getSession();
-        Subject findSubject = session.get(Subject.class, subject.getId());
+        Subject findSubject = (Subject) get(Subject.class, subject.getId());
+        for (Course course : findSubject.getCourses()) {
+            course.getSubjects().clear();
+        }
         BeanUtil.copyPropertiesIgnoreNull(subject, findSubject);
-        for (Course course : subject.getCourses()) {
-            Course findCourse = session.get(Course.class, course.getId());
-            findCourse.getSubjects().add(subject);
+        baseUpdate(findSubject);
+        for (Course course : findSubject.getCourses()) {
+            course.getSubjects().add(findSubject);
         }
     }
 

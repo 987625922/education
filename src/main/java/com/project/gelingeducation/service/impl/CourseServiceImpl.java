@@ -2,16 +2,13 @@ package com.project.gelingeducation.service.impl;
 
 import com.project.gelingeducation.common.utils.UrlDeconderUtil;
 import com.project.gelingeducation.dao.ICourseDao;
-import com.project.gelingeducation.dao.ITeacherDao;
 import com.project.gelingeducation.entity.Course;
-import com.project.gelingeducation.entity.Teacher;
 import com.project.gelingeducation.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.Date;
 
 /**
@@ -119,6 +116,17 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public Object selByNameOrStatusOrPriceOrTeacher(String name, Integer status, Double startPrice, Double endPrice,
                                                     Long teacherId, Integer currentPage, Integer pageSize) throws UnsupportedEncodingException {
-        return courseDao.selByNameOrStatusOrPriceOrTeacher(UrlDeconderUtil.decode(name,"UTF-8"), status, startPrice, endPrice, teacherId, currentPage, pageSize);
+        return courseDao.selByNameOrStatusOrPriceOrTeacher(UrlDeconderUtil.decode(name, "UTF-8"), status, startPrice, endPrice, teacherId, currentPage, pageSize);
+    }
+
+    /**
+     * 通过专题id获取课程列表
+     *
+     * @param subjectId 专题id
+     * @return
+     */
+    @Override
+    public Object getCourseListBySubjectId(Long subjectId) {
+        return courseDao.getCourseListBySubjectId(subjectId);
     }
 }
