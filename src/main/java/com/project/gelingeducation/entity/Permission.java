@@ -1,7 +1,8 @@
 package com.project.gelingeducation.entity;
 
-import com.fasterxml.jackson.annotation.*;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -11,6 +12,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author LL
+ * @Description: 权限实体类
+ */
 @Entity
 @Table(name = "permission")
 @Accessors(chain = true)
@@ -42,7 +47,7 @@ public class Permission implements Serializable {
     /**
      * 权限标识
      */
-    @Column(name = "perms",length = 12, nullable = false)
+    @Column(name = "perms", length = 12, nullable = false)
     private String perms;
 
     @ManyToMany(mappedBy = "permissions", fetch = FetchType.EAGER)

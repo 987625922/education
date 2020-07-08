@@ -152,7 +152,7 @@ public class SubjectDaoImpl extends BaseDao implements ISubjectDao {
         }
         hql.append(" WHERE 1=1");
         if (!Strings.isNullOrEmpty(name)) {
-            hql.append(" AND s.name LIKE %" + name + "%");
+            hql.append(" AND s.name LIKE '%" + name + "%'");
         }
         if (!Strings.isNullOrEmpty(courseIds)) {
             hql.append(" AND c.id in (" + courseIds + ")");

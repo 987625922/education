@@ -1,10 +1,7 @@
 package com.project.gelingeducation.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,6 +10,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author LL
+ * @Description: 登录日志实体类
+ */
 @Entity
 @Table(name = "login_log")
 @Accessors(chain = true)
@@ -29,7 +30,6 @@ public class LoginLog implements Serializable {
     /**
      * 第一次登录时间
      */
-    //默认创建时间
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "first_login_time")
     @CreationTimestamp
@@ -72,10 +72,11 @@ public class LoginLog implements Serializable {
      */
     @Column(name = "ip", length = 20)
     private String ip;
+
     /**
      * 用户表的id
      */
-    @Column(name = "uid",insertable = false,updatable = false)
+    @Column(name = "uid", insertable = false, updatable = false)
     private Long uid;
 
     /**
@@ -83,10 +84,8 @@ public class LoginLog implements Serializable {
      */
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "uid")
-    @JsonIgnore
     private User user;
 
     private transient String loginTimeFrom;
     private transient String loginTimeTo;
-
 }
