@@ -6,6 +6,7 @@ import com.project.gelingeducation.common.utils.CollectUtil;
 import com.project.gelingeducation.dao.ICourseDao;
 import com.project.gelingeducation.entity.Course;
 import com.project.gelingeducation.entity.Subject;
+import com.project.gelingeducation.entity.Video;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -73,13 +74,15 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
      */
     @Override
     public void update(Course course) {
-        Session session = getSession();
-        Course findCourse = session.get(Course.class, course.getId());
+        Course findCourse = (Course) get(Course.class, course.getId());
         BeanUtil.copyPropertiesIgnoreNull(course, findCourse);
-        session.update(findCourse);
+        for (Video video:course.getVideos()){
+            Video findVideo = (Video) get(Video.class,video.getId());
+        }
     }
 
     /**
+     *
      * 根据分页条件获取分页实体类
      *
      * @param currentPage 页下标

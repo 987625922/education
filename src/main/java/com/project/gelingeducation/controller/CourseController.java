@@ -98,7 +98,7 @@ public class CourseController {
      * @return
      */
     @Log("通过ids批量删除课程")
-    @RequiresPermissions("user:root")
+//    @RequiresPermissions("user:root")
     @RequestMapping(value = "/batches_delete")
     public Object delMore(String ids) {
         courseService.batchesDeletes(ids);

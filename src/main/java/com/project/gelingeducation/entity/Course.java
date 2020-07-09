@@ -23,6 +23,7 @@ import java.util.Set;
 @Accessors(chain = true)
 @Setter
 @Getter
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Course implements Serializable {
 
     private static final long serialVersionUID = 2726599374475533725L;
@@ -88,7 +89,6 @@ public class Course implements Serializable {
             name = "t_course_video",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "video_id"))
-    @JsonBackReference
     private Set<Video> videos = new HashSet<>();
 
     /**

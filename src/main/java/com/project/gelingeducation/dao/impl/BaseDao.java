@@ -47,4 +47,5 @@ abstract class BaseDao {
     public Object get(Class<?> clazz, Object id) {
         return getSession().get(clazz, (Serializable) id);
     }
+
 }
