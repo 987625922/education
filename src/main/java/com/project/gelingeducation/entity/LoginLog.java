@@ -1,6 +1,7 @@
 package com.project.gelingeducation.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -82,8 +83,9 @@ public class LoginLog implements Serializable {
     /**
      * @JoinColumn 会在这张表维护一个名为uid的外键id
      */
-    @OneToOne(targetEntity = User.class)
+    @OneToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "uid")
+    @JsonBackReference
     private User user;
 
     private transient String loginTimeFrom;

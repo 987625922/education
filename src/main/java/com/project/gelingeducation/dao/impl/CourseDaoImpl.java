@@ -9,6 +9,7 @@ import com.project.gelingeducation.entity.Subject;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -137,7 +138,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
         Session session = getSession();
         StringBuffer hql = new StringBuffer("FROM Course AS course");
         if (teacherId != null) {
-            hql.append(" INNER JOIN FETCH course.teachers AS teacher ");
+            hql.append(" INNER JOIN FETCH course.videos.teacher AS teacher ");
         }
         hql.append(" WHERE 1=1");
         if (teacherId != null) {
@@ -149,7 +150,7 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
         if (startPrice != null && endPrice != null) {
             hql.append(" AND course.price BETWEEN " + startPrice + " AND " + endPrice);
         }
-        if (!name.isEmpty()) {
+        if (!StringUtils.isEmpty(name)) {
             hql.append(" AND course.name LIKE '%" + name + "%'");
         }
         Query query = session.createQuery(hql.toString());
