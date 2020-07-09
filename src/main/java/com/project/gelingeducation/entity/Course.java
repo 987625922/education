@@ -1,12 +1,11 @@
 package com.project.gelingeducation.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -84,7 +83,7 @@ public class Course implements Serializable {
      * 多对多 视频列表
      */
     @ManyToMany(targetEntity = Video.class,
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "t_course_video",
             joinColumns = @JoinColumn(name = "course_id"),

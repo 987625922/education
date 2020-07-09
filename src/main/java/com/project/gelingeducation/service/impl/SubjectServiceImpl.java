@@ -80,12 +80,12 @@ public class SubjectServiceImpl implements ISubjectService {
     /**
      * 更新专题
      *
-     * @param video 专题实体类
+     * @param subject 专题实体类
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updated(Subject video) {
-        subjectDao.update(video);
+    public void updated(Subject subject) {
+        subjectDao.update(subject);
     }
 
     /**
