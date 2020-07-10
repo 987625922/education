@@ -74,7 +74,7 @@ public class VideoServiceImpl implements IVideoService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delectd(Long id) {
+    public void delete(Long id) {
         videoDao.delect(id);
     }
 
@@ -85,7 +85,7 @@ public class VideoServiceImpl implements IVideoService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updated(Video video) {
+    public void update(Video video) {
         video.setLastUpdateTime(new Date());
         videoDao.update(video);
     }

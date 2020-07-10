@@ -129,4 +129,15 @@ public class CourseServiceImpl implements ICourseService {
     public Object getCourseListBySubjectId(Long subjectId) {
         return courseDao.getCourseListBySubjectId(subjectId);
     }
+
+    /**
+     * 通过视频id获取课程列表
+     *
+     * @param videoId 专题id
+     * @return
+     */
+    @Override
+    public Object getCourseListByVideoId(Long videoId) {
+        return courseDao.getCourseListByVideoId(videoId);
+    }
 }

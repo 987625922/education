@@ -84,4 +84,12 @@ public interface ICourseDao {
      * @return
      */
     Object getCourseListBySubjectId(Long subjectId);
+
+    /**
+     * 通过视频id获取课程列表
+     *
+     * @param videoId 专题id
+     * @return
+     */
+    Object getCourseListByVideoId(Long videoId);
 }

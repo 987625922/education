@@ -62,7 +62,7 @@ public class SpringTest {
 
     @Test
     public void test3() {
-        videoService.delectd(new Long(1));
+        videoService.delete(new Long(1));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class SpringTest {
         Video video = new Video();
         video.setId(new Long(2));
         video.setName("更新测试");
-        videoService.updated(video);
+        videoService.update(video);
     }
 
     @Test

@@ -59,7 +59,7 @@ public class CourseServiceTest {
     @Test
     public void pageList() {
         PageResult pageResult = (PageResult) courseService.queryAll(1, 10);
-        log.debug("==>" + pageResult.toString());
+        log.info("==>" + pageResult.toString());
     }
 
     /**

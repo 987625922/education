@@ -41,14 +41,14 @@ public interface IVideoService {
      *
      * @param id 视频id
      */
-    void delectd(Long id);
+    void delete(Long id);
 
     /**
      * 更新视频
      *
      * @param video 视频实体
      */
-    void updated(Video video);
+    void update(Video video);
 
     /**
      * 批量删除视频

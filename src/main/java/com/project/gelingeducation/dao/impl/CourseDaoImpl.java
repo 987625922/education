@@ -75,14 +75,11 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
     @Override
     public void update(Course course) {
         Course findCourse = (Course) get(Course.class, course.getId());
+        findCourse.getVideos().clear();
         BeanUtil.copyPropertiesIgnoreNull(course, findCourse);
-        for (Video video:course.getVideos()){
-            Video findVideo = (Video) get(Video.class,video.getId());
-        }
     }
 
     /**
-     *
      * 根据分页条件获取分页实体类
      *
      * @param currentPage 页下标
@@ -141,11 +138,11 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
         Session session = getSession();
         StringBuffer hql = new StringBuffer("FROM Course AS course");
         if (teacherId != null) {
-            hql.append(" INNER JOIN FETCH course.videos.teacher AS teacher ");
+            hql.append(" INNER JOIN FETCH course.videos AS video ");
         }
         hql.append(" WHERE 1=1");
         if (teacherId != null) {
-            hql.append(" AND teacher.id = " + teacherId);
+            hql.append(" AND video.teacher.id = " + teacherId);
         }
         if (status != null) {
             hql.append(" AND course.status = " + status);
@@ -183,5 +180,16 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
     public Object getCourseListBySubjectId(Long subjectId) {
         Subject subject = (Subject) get(Subject.class, subjectId);
         return CollectUtil.setToList(subject.getCourses());
+    }
+
+    /**
+     * 通过视频id获取课程列表
+     *
+     * @param videoId 专题id
+     * @return
+     */
+    @Override
+    public Object getCourseListByVideoId(Long videoId) {
+        return CollectUtil.setToList(((Video) get(Video.class, videoId)).getCourses());
     }
 }

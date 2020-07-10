@@ -4,6 +4,7 @@ import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.dao.IVideoDao;
 import com.project.gelingeducation.entity.Course;
+import com.project.gelingeducation.entity.Teacher;
 import com.project.gelingeducation.entity.Video;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -82,12 +83,16 @@ public class VideoDaoImpl extends BaseDao implements IVideoDao {
      */
     @Override
     public Video insert(Video video) {
-        Session session = getSession();
-        session.save(video);
-        for (Course course : video.getCourses()) {
+        video.getCourses().forEach(o -> {
+            Course course = (Course) get(Course.class, o.getId());
             course.getVideos().add(video);
-            session.save(course);
+        });
+        if (video.getTeacher() != null) {
+            Teacher teacher = (Teacher) get(Teacher.class, video.getTeacher().getId());
+            teacher.getVideos().add(video);
+            video.setTeacher(teacher);
         }
+        save(video);
         return video;
     }
 
@@ -98,7 +103,9 @@ public class VideoDaoImpl extends BaseDao implements IVideoDao {
      */
     @Override
     public void delect(Long id) {
-        getSession().delete(getSession().get(Video.class, id));
+        getSession()
+                .createQuery("DELETE From Video WHERE id = " + id)
+                .executeUpdate();
     }
 
     /**
@@ -108,10 +115,13 @@ public class VideoDaoImpl extends BaseDao implements IVideoDao {
      */
     @Override
     public void update(Video video) {
-        Session session = getSession();
-        Video findvideo = session.get(Video.class, video.getId());
+        Video findvideo = (Video) get(Video.class, video.getId());
         BeanUtil.copyPropertiesIgnoreNull(video, findvideo);
-        session.update(findvideo);
+        if (video.getTeacher() != null){
+            Teacher teacher = (Teacher) get(Teacher.class,video.getTeacher().getId());
+            findvideo.setTeacher(teacher);
+        }
+        baseUpdate(findvideo);
     }
 
     /**

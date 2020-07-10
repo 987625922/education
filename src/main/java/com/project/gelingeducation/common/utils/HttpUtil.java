@@ -45,6 +45,9 @@ public class HttpUtil {
     public static String getBrowser(HttpServletRequest request) {
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
         Browser browser = userAgent.getBrowser();
+        if (browser == null) {
+            return "";
+        }
         return browser.getName();
     }
 

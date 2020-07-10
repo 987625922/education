@@ -78,7 +78,7 @@ public class VideoServiceTest {
         Video video = videoService.findById(1L);
         Teacher teacher = teacherService.getById(3L);
         video.setTeacher(teacher);
-        videoService.updated(video);
+        videoService.update(video);
     }
 
     /**

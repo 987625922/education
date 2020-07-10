@@ -1,6 +1,5 @@
 package com.project.gelingeducation.dao.impl;
 
-import com.project.gelingeducation.common.dto.PageResult;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,4 +47,8 @@ abstract class BaseDao {
         return getSession().get(clazz, (Serializable) id);
     }
 
+
+    public void save(Object object) {
+        getSession().merge(object);
+    }
 }

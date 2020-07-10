@@ -2,6 +2,7 @@ package com.project.gelingeducation.common.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @Getter
 @Setter
+@ToString
 public class PageResult implements Serializable {
 
     /**

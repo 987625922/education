@@ -1,6 +1,8 @@
 package com.project.gelingeducation.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -62,8 +64,7 @@ public class Teacher implements Serializable {
      * 多对多 教师
      */
     @JsonIgnore
-    @OneToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "teacher",cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
     private Set<Video> videos = new HashSet<>();
-
-
 }

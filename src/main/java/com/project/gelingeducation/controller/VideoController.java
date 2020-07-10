@@ -74,7 +74,7 @@ public class VideoController {
     @Log("删除视频")
     @RequestMapping(value = "/delete")
     public Object delete(Long id) {
-        videoService.delectd(id);
+        videoService.delete(id);
         return JsonData.buildSuccess();
     }
 
@@ -87,7 +87,7 @@ public class VideoController {
     @Log("更新视频")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Object update(@RequestBody Video video) {
-        videoService.updated(video);
+        videoService.update(video);
         return JsonData.buildSuccess();
     }
 

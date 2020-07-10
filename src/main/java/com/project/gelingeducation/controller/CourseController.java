@@ -140,4 +140,16 @@ public class CourseController {
     public Object getCourseListBySubjectId(Long subjectId) {
         return JsonData.buildSuccess(courseService.getCourseListBySubjectId(subjectId));
     }
+
+    /**
+     * 通过视频id获取课程列表
+     *
+     * @param videoId 专题id
+     * @return
+     */
+    @Log("通过视频id获取课程列表")
+    @RequestMapping(value = "/getCourseListByVideoId")
+    public Object getCourseListByVideoId(Long videoId) {
+        return JsonData.buildSuccess(courseService.getCourseListByVideoId(videoId));
+    }
 }

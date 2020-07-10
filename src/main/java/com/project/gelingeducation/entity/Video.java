@@ -1,12 +1,12 @@
 package com.project.gelingeducation.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,6 +23,8 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "video")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Video implements Serializable {
 
     private static final long serialVersionUID = 124213019183081702L;
@@ -66,7 +68,8 @@ public class Video implements Serializable {
      * <p>
      * 视频表维护老师的外键
      */
-    @ManyToOne(targetEntity = Teacher.class, cascade = CascadeType.ALL,
+    @ManyToOne(targetEntity = Teacher.class,
+            cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     private Teacher teacher;
@@ -74,8 +77,7 @@ public class Video implements Serializable {
     /**
      * 多对多 课程
      */
-    @ManyToMany(mappedBy = "videos", cascade = CascadeType.ALL)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(mappedBy = "videos")
     @JsonBackReference
     private Set<Course> courses = new HashSet<>();
 
