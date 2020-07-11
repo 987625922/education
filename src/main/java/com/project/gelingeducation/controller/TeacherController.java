@@ -59,7 +59,33 @@ public class TeacherController {
     @Log("添加老师")
     @PostMapping("/add")
     public Object addTeacher(@RequestBody Teacher teacher) {
-        teacherService.addTeacher(teacher);
+        teacherService.save(teacher);
+        return JsonData.buildSuccess();
+    }
+
+    /**
+     * 更新教师
+     *
+     * @param teacher 教师实体类
+     * @return /
+     */
+    @Log("更新教师")
+    @PostMapping("/update")
+    public Object updateTeacher(@RequestBody Teacher teacher) {
+        teacherService.update(teacher);
+        return JsonData.buildSuccess();
+    }
+
+    /**
+     * 批量删除教师
+     *
+     * @param ids 1,2,3 格式的专题id
+     * @return
+     */
+    @Log("批量删除教师")
+    @RequestMapping(value = "/batches_delete", method = RequestMethod.GET)
+    public Object batchesDeletes(String ids) {
+        teacherService.delMore(ids);
         return JsonData.buildSuccess();
     }
 

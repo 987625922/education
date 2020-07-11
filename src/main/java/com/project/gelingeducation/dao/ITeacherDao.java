@@ -20,6 +20,14 @@ public interface ITeacherDao {
     Teacher insert(Teacher teacher);
 
     /**
+     * 更新教师
+     *
+     * @param teacher 教师实体类
+     * @return
+     */
+    void update(Teacher teacher);
+
+    /**
      * 通过id获取教师
      *
      * @param id 教师id
@@ -50,6 +58,13 @@ public interface ITeacherDao {
      * @return /
      */
     void delete(Long id);
+
+    /**
+     * 批量删除教师
+     *
+     * @param ids 1,2,3 格式的专题id
+     */
+    void delMore(String ids);
 
     /**
      * 搜索教师列表

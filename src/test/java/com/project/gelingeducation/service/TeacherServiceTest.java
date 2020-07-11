@@ -25,7 +25,7 @@ public class TeacherServiceTest {
         for (int i = 0; i < 10; i++) {
             Teacher teacher = new Teacher();
             teacher.setName("测试教师" + i);
-            teacherService.addTeacher(teacher);
+            teacherService.save(teacher);
         }
     }
 

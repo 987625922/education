@@ -117,10 +117,14 @@ public class VideoDaoImpl extends BaseDao implements IVideoDao {
     public void update(Video video) {
         Video findvideo = (Video) get(Video.class, video.getId());
         BeanUtil.copyPropertiesIgnoreNull(video, findvideo);
-        if (video.getTeacher() != null){
-            Teacher teacher = (Teacher) get(Teacher.class,video.getTeacher().getId());
+        if (video.getTeacher() != null) {
+            Teacher teacher = (Teacher) get(Teacher.class, video.getTeacher().getId());
             findvideo.setTeacher(teacher);
         }
+        video.getCourses().forEach(o -> {
+            Course course = (Course) get(Course.class, o.getId());
+            course.getVideos().add(findvideo);
+        });
         baseUpdate(findvideo);
     }
 

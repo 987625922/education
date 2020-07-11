@@ -33,8 +33,20 @@ public class TeacherServiceImpl implements ITeacherService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Teacher addTeacher(Teacher teacher) {
+    public Teacher save(Teacher teacher) {
         return teacherDao.insert(teacher);
+    }
+
+    /**
+     * 更新教师
+     *
+     * @param teacher 教师实体类
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void update(Teacher teacher) {
+        teacherDao.update(teacher);
     }
 
     /**
@@ -74,6 +86,17 @@ public class TeacherServiceImpl implements ITeacherService {
     @Transactional(rollbackFor = Exception.class)
     public void delTeacher(Long id) {
         teacherDao.delete(id);
+    }
+
+    /**
+     * 批量删除教师
+     *
+     * @param ids 1,2,3 格式的专题id
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void delMore(String ids) {
+        teacherDao.delMore(ids);
     }
 
     /**

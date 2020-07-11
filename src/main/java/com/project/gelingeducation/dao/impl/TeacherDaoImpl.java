@@ -31,6 +31,17 @@ public class TeacherDaoImpl extends BaseDao implements ITeacherDao {
     }
 
     /**
+     * 更新教师
+     *
+     * @param teacher 教师实体类
+     * @return
+     */
+    @Override
+    public void update(Teacher teacher) {
+        baseUpdate(teacher);
+    }
+
+    /**
      * 通过id获取教师
      *
      * @param id 教师id
@@ -86,7 +97,25 @@ public class TeacherDaoImpl extends BaseDao implements ITeacherDao {
      */
     @Override
     public void delete(Long id) {
-        getSession().createQuery("DELETE FROM Teacher WHERE id = " + id).executeUpdate();
+        Teacher teacher = findById(id);
+        teacher.getVideos().forEach(o -> {
+            o.setTeacher(null);
+            baseUpdate(o);
+        });
+        getSession().createQuery("DELETE FROM Teacher WHERE id = " + id)
+                .executeUpdate();
+    }
+
+    /**
+     * 批量删除教师
+     *
+     * @param ids 1,2,3 格式的专题id
+     */
+    @Override
+    public void delMore(String ids) {
+        getSession()
+                .createQuery("DELETE FROM Teacher WHERE id IN (" + ids + ")")
+                .executeUpdate();
     }
 
     /**
@@ -100,10 +129,10 @@ public class TeacherDaoImpl extends BaseDao implements ITeacherDao {
     @Override
     public Object searchCriteria(String name, Integer currentPage, Integer pageSize) {
         Session session = getSession();
-        String hql = "SELECT COUNT(*) FROM Teacher WHERE name = %" + name + "%";
+        String hql = "SELECT COUNT(*) FROM Teacher WHERE name LIKE '%" + name + "%'";
         Query queryCount = session.createQuery(hql);
         long allrows = (long) queryCount.uniqueResult();
-        TypedQuery<User> query = session.createQuery("from Teacher");
+        Query query = session.createQuery("FROM Teacher WHERE name LIKE '%" + name + "%'");
         query.setFirstResult((currentPage - 1) * pageSize);//得到当前页
         query.setMaxResults(pageSize);//得到每页的记录数
         long totalPage = (allrows - 1) / pageSize + 1;
