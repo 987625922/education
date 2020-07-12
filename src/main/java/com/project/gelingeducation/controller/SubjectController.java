@@ -74,7 +74,7 @@ public class SubjectController {
     @Log("删除专题")
     @RequestMapping(value = "/delete")
     public Object delete(Long id) {
-        subjectService.delectd(id);
+        subjectService.delete(id);
         return JsonData.buildSuccess();
     }
 
@@ -87,7 +87,7 @@ public class SubjectController {
     @Log("更新专题")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Object update(@RequestBody Subject subject) {
-        subjectService.updated(subject);
+        subjectService.update(subject);
         return JsonData.buildSuccess();
     }
 

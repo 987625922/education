@@ -35,13 +35,13 @@ public interface ISubjectService {
      * 删除专题
      * @param id 专题id
      */
-    void delectd(Long id);
+    void delete(Long id);
 
     /**
      * 更新专题
      * @param video 专题实体类
      */
-    void updated(Subject video);
+    void update(Subject video);
 
     /**
      * 批量删除专题

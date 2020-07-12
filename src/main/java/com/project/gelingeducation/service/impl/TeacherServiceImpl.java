@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.util.Date;
 
 /**
  * @Author: LL
@@ -34,6 +34,9 @@ public class TeacherServiceImpl implements ITeacherService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Teacher save(Teacher teacher) {
+        Date date = new Date();
+        teacher.setCreateTime(date);
+        teacher.setModifyTime(date);
         return teacherDao.insert(teacher);
     }
 
@@ -46,6 +49,7 @@ public class TeacherServiceImpl implements ITeacherService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(Teacher teacher) {
+        teacher.setModifyTime(new Date());
         teacherDao.update(teacher);
     }
 
@@ -109,7 +113,7 @@ public class TeacherServiceImpl implements ITeacherService {
      */
     @Override
     public Object searchCriteria(String name, Integer currentPage, Integer pageSize) throws UnsupportedEncodingException {
-        return teacherDao.searchCriteria(UrlDeconderUtil.decode(name,"UTF-8"), currentPage, pageSize);
+        return teacherDao.searchCriteria(UrlDeconderUtil.decode(name, "UTF-8"), currentPage, pageSize);
     }
 
 }

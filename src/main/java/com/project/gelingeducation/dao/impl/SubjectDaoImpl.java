@@ -111,14 +111,12 @@ public class SubjectDaoImpl extends BaseDao implements ISubjectDao {
     @Override
     public void update(Subject subject) {
         Subject findSubject = (Subject) get(Subject.class, subject.getId());
-//        for (Course course : findSubject.getCourses()) {
-//            course.getSubjects().clear();
-//        }
         BeanUtil.copyPropertiesIgnoreNull(subject, findSubject);
+        findSubject.getCourses().forEach(o -> {
+            Course course = (Course) get(Course.class, o.getId());
+            course.getSubjects().add(subject);
+        });
         baseUpdate(findSubject);
-//        for (Course course : findSubject.getCourses()) {
-//            course.getSubjects().add(findSubject);
-//        }
     }
 
     /**

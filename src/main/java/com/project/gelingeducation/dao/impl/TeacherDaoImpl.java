@@ -1,6 +1,7 @@
 package com.project.gelingeducation.dao.impl;
 
 import com.project.gelingeducation.common.dto.PageResult;
+import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.dao.ITeacherDao;
 import com.project.gelingeducation.entity.Teacher;
 import com.project.gelingeducation.entity.User;
@@ -38,7 +39,8 @@ public class TeacherDaoImpl extends BaseDao implements ITeacherDao {
      */
     @Override
     public void update(Teacher teacher) {
-        baseUpdate(teacher);
+        Teacher findyTeacher = (Teacher) get(Teacher.class, teacher.getId());
+        BeanUtil.copyPropertiesIgnoreNull(teacher, findyTeacher);
     }
 
     /**
@@ -113,6 +115,14 @@ public class TeacherDaoImpl extends BaseDao implements ITeacherDao {
      */
     @Override
     public void delMore(String ids) {
+        Query query = getSession().createQuery("FROM Teacher WHERE id IN (" + ids + ")");
+        List<Teacher> teachers = query.getResultList();
+        for (Teacher teacher : teachers) {
+            teacher.getVideos().forEach(o ->{
+               o.setTeacher(null);
+               baseUpdate(o);
+            });
+        }
         getSession()
                 .createQuery("DELETE FROM Teacher WHERE id IN (" + ids + ")")
                 .executeUpdate();

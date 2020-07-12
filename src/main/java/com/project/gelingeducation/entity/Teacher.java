@@ -30,16 +30,19 @@ public class Teacher implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     /**
      * 教师名
      */
     @Column(name = "name", length = 50)
     private String name;
+
     /**
      * 头像
      */
     @Column(name = "big_img")
     private String bigImg;
+
     /**
      * 备注
      */
@@ -49,9 +52,7 @@ public class Teacher implements Serializable {
     /**
      * 创建时间
      */
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time")
-    @CreationTimestamp
     private Date createTime;
 
     /**

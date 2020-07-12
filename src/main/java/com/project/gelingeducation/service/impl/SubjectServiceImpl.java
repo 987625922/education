@@ -73,7 +73,7 @@ public class SubjectServiceImpl implements ISubjectService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delectd(Long id) {
+    public void delete(Long id) {
         subjectDao.delect(id);
     }
 
@@ -84,7 +84,7 @@ public class SubjectServiceImpl implements ISubjectService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updated(Subject subject) {
+    public void update(Subject subject) {
         subjectDao.update(subject);
     }
 
