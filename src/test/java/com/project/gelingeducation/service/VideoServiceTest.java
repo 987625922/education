@@ -100,4 +100,11 @@ public class VideoServiceTest {
         courseService.update(course);
     }
 
+    /**
+     * 删除单个视频
+     */
+    @Test
+    public void delete() {
+        videoService.delete(3L);
+    }
 }

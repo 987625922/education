@@ -37,6 +37,16 @@ abstract class BaseDao {
     }
 
     /**
+     * 更新一个实体并马上提交到数据库
+     *
+     * @param object
+     */
+    protected void updateAndFlush(Object object) {
+        getSession().update(object);
+        getSession().flush();
+    }
+
+    /**
      * 根据主键返回一个实体
      *
      * @param clazz
@@ -47,8 +57,23 @@ abstract class BaseDao {
         return getSession().get(clazz, (Serializable) id);
     }
 
-
+    /**
+     * hibernate 保存
+     *
+     * @param object
+     */
     public void save(Object object) {
         getSession().merge(object);
+    }
+
+    /**
+     * hql更新删除语句
+     *
+     * @param queryStirng
+     */
+    public void executeUpdate(String queryStirng) {
+        getSession()
+                .createQuery(queryStirng)
+                .executeUpdate();
     }
 }

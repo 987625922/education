@@ -5,6 +5,7 @@ import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.dao.ITeacherDao;
 import com.project.gelingeducation.entity.Teacher;
 import com.project.gelingeducation.entity.User;
+import com.project.gelingeducation.entity.Video;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -100,12 +101,8 @@ public class TeacherDaoImpl extends BaseDao implements ITeacherDao {
     @Override
     public void delete(Long id) {
         Teacher teacher = findById(id);
-        teacher.getVideos().forEach(o -> {
-            o.setTeacher(null);
-            baseUpdate(o);
-        });
-        getSession().createQuery("DELETE FROM Teacher WHERE id = " + id)
-                .executeUpdate();
+        teacher.getVideos().forEach(video -> video.setTeacher(null));
+        getSession().delete(teacher);
     }
 
     /**
@@ -115,17 +112,15 @@ public class TeacherDaoImpl extends BaseDao implements ITeacherDao {
      */
     @Override
     public void delMore(String ids) {
-        Query query = getSession().createQuery("FROM Teacher WHERE id IN (" + ids + ")");
-        List<Teacher> teachers = query.getResultList();
-        for (Teacher teacher : teachers) {
-            teacher.getVideos().forEach(o ->{
-               o.setTeacher(null);
-               baseUpdate(o);
-            });
+        Query query = getSession().createQuery("FROM Video " +
+                "WHERE teacher_id IN (" + ids + ")");
+        List<Video> videoList = query.getResultList();
+        for (Video video : videoList) {
+            video.setTeacherId(null);
+            video.setTeacher(null);
+            updateAndFlush(video);
         }
-        getSession()
-                .createQuery("DELETE FROM Teacher WHERE id IN (" + ids + ")")
-                .executeUpdate();
+        executeUpdate("DELETE FROM Teacher WHERE id IN (" + ids + ")");
     }
 
     /**

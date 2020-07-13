@@ -65,7 +65,6 @@ public class Teacher implements Serializable {
      * 多对多 教师
      */
     @JsonIgnore
-    @OneToMany(mappedBy = "teacher",cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Set<Video> videos = new HashSet<>();
 }
