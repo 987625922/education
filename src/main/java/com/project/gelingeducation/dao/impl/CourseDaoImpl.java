@@ -75,7 +75,6 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
     @Override
     public void update(Course course) {
         Course findCourse = (Course) get(Course.class, course.getId());
-        findCourse.getVideos().clear();
         BeanUtil.copyPropertiesIgnoreNull(course, findCourse);
     }
 

@@ -24,8 +24,8 @@ import java.util.Set;
 @Accessors(chain = true)
 @Setter
 @Getter
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class
+        ,scope = Video.class, property = "id")
 public class Course implements Serializable {
 
     private static final long serialVersionUID = 2726599374475533725L;

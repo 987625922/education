@@ -85,6 +85,7 @@ public class SubjectServiceImpl implements ISubjectService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(Subject subject) {
+        subject.setLastUpdateTime(new Date());
         subjectDao.update(subject);
     }
 
