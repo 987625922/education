@@ -4,9 +4,7 @@ import com.project.gelingeducation.common.config.GLConstant;
 import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.common.exception.StatusEnum;
 import com.project.gelingeducation.common.utils.*;
-import com.project.gelingeducation.dao.IWebDataBeanDao;
 import com.project.gelingeducation.entity.User;
-import com.project.gelingeducation.entity.WebDataBean;
 import com.project.gelingeducation.service.ILoginLogService;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.IWebDataBeanService;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
-import java.util.Optional;
 
 /**
  * @Author: LL
@@ -24,12 +21,6 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @Service
 public class WebDataBeanServiceImpl implements IWebDataBeanService {
-
-    /**
-     * 网页特定数据实体类service
-     */
-    @Autowired
-    private IWebDataBeanDao webDataBeanDao;
 
     /**
      * 用户实体类service
@@ -72,7 +63,6 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
             loginLogService.saveOrUpdateLoginLogByUid(reUser);
             addLoginMun();
         });
-
         //返回uid和jwtToken
         String token = JWTUtil.sign(reUser.getAccount(), reUser.getPassword());
         HashMap userMap = new HashMap();
@@ -84,34 +74,13 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         return userMap;
     }
 
-    /**
-     * 获取网页特定数据
-     *
-     * @return 网页特定数据实体类
-     */
-    @Override
-    public WebDataBean getWebDataBean() {
-        return webDataBeanDao.getOnlyData();
-    }
 
     /**
      * 添加登录数
      */
     @Override
     public void addLoginMun() {
-        //全局登录数据统计
-        Optional<WebDataBean> optionalWebData = Optional.ofNullable(webDataBeanDao.getOnlyData());
-        optionalWebData.ifPresent(webDataBean -> {
-            webDataBean.setAllLoginMun(webDataBean.getAllLoginMun() + 1);
-            webDataBean.setTodayLoginMun(webDataBean.getTodayLoginMun() + 1);
-            webDataBean.setTodayLoginIpMun(webDataBean.getTodayLoginIpMun() + 1);
-        });
-        //如果没有WebDataBean在数据库就创建
-        optionalWebData.orElseGet(() -> {
-            WebDataBean webDataBean = new WebDataBean();
-            webDataBeanDao.save(webDataBean);
-            return webDataBean;
-        });
+
     }
 
     /**
@@ -119,8 +88,7 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
      */
     @Override
     public void clearTodayLoginMun() {
-        Optional<WebDataBean> optionalWebData = Optional.ofNullable(webDataBeanDao.getOnlyData());
-        optionalWebData.ifPresent(webDataBean -> webDataBean.setTodayLoginMun(0L).setTodayLoginIpMun(0L));
+
     }
 }
 

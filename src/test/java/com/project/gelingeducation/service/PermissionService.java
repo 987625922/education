@@ -25,17 +25,18 @@ public class PermissionService {
 
     @Test
     public void addPermission() {
-//        for (int i = 0; i < 10; i++) {
-//            Permission permission = new Permission();
-//            permission.setName("测试的权限");
-//            permission.setUrl("/");
-//            permissionService.add(permission);
-//        }
+        for (int i = 0; i < 10; i++) {
+            Permission permission = new Permission();
+            permission.setName("测试的权限");
+            permission.setUrl("/");
+            permission.setPerms("user:root");
+            permissionService.add(permission);
+        }
 
-        Permission permission = new Permission();
-        permission.setName("用户编辑");
-        permission.setPerms("user:root");
-        permissionService.add(permission);
+//        Permission permission = new Permission();
+//        permission.setName("用户编辑");
+//        permission.setPerms("user:root");
+//        permissionService.add(permission);
 
 //        Permission permission = new Permission();
 //        permission.setName("用户查看");

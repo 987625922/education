@@ -8,7 +8,6 @@ import com.project.gelingeducation.common.dto.WebIndex;
 import com.project.gelingeducation.common.server.ValidateCodeService;
 import com.project.gelingeducation.entity.LoginLog;
 import com.project.gelingeducation.entity.User;
-import com.project.gelingeducation.entity.WebDataBean;
 import com.project.gelingeducation.service.ILoginLogService;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.IWebDataBeanService;
@@ -59,12 +58,12 @@ public class WebController extends BaseController {
     public Object index() {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         LoginLog loginLog = loginLogService.getByUserId(user.getId());
-        WebDataBean webDataBean = webDataBeanService.getWebDataBean();
+//        WebDataBean webDataBean = webDataBeanService.getWebDataBean();
         WebIndex webIndex = new WebIndex();
         webIndex.setLastLoginTime(loginLog.getLastLoginTime());
-        webIndex.setAllLoginMun(webDataBean.getAllLoginMun());
-        webIndex.setTodayLoginIpMun(webDataBean.getTodayLoginIpMun());
-        webIndex.setTodayLoginMun(webDataBean.getTodayLoginMun());
+//        webIndex.setAllLoginMun(webDataBean.getAllLoginMun());
+//        webIndex.setTodayLoginIpMun(webDataBean.getTodayLoginIpMun());
+//        webIndex.setTodayLoginMun(webDataBean.getTodayLoginMun());
         return JsonData.buildSuccess(webIndex);
     }
 

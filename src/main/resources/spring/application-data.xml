@@ -83,7 +83,6 @@
                 <value>com.project.gelingeducation.entity.Subject</value>
                 <value>com.project.gelingeducation.entity.User</value>
                 <value>com.project.gelingeducation.entity.Video</value>
-                <value>com.project.gelingeducation.entity.WebDataBean</value>
                 <value>com.project.gelingeducation.entity.Teacher</value>
                 <value>com.project.gelingeducation.entity.Log</value>
             </list>

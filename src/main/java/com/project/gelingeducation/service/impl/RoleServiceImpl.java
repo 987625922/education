@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -81,7 +81,8 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(Role role) {
-
+//        role.setLastUpdateTime(new Date());
+        roleDao.update(role);
     }
 
     /**
@@ -129,7 +130,7 @@ public class RoleServiceImpl implements IRoleService {
      */
     @Override
     public List<Role> selByName(String name) throws UnsupportedEncodingException {
-        return roleDao.selByName(UrlDeconderUtil.decode(name,"UTF-8"));
+        return roleDao.selByName(UrlDeconderUtil.decode(name, "UTF-8"));
     }
 
     /**

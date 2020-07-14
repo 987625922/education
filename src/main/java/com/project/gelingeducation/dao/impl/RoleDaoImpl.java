@@ -78,7 +78,7 @@ public class RoleDaoImpl extends BaseDao implements IRoleDao {
 
     @Override
     public List selByName(String name) {
-        return getSession().createQuery("FROM Role WHERE name LIKE '%" + name + "%'").list();
+        return getSession().createQuery("FROM Role WHERE name LIKE '%" + name + "%'").getResultList();
     }
 
     @Override
@@ -110,7 +110,6 @@ public class RoleDaoImpl extends BaseDao implements IRoleDao {
         Session session = getSession();
         Role findRole = session.get(Role.class, role.getId());
         BeanUtil.copyPropertiesIgnoreNull(role, findRole);
-        session.update(findRole);
     }
 
 }

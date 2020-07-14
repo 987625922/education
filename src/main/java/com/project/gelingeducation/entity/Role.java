@@ -43,6 +43,12 @@ public class Role implements Serializable {
     private Date createDate;
 
     /**
+     * 上次更新时间
+     */
+//    @Column(name = "last_update_time", nullable = false)
+//    private Date lastUpdateTime;
+
+    /**
      * 角色备注
      */
     @Column(name = "remark")

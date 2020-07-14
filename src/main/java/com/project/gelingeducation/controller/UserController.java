@@ -22,19 +22,28 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Iterator;
 
-
 /**
- * 管理员controller
+ * @author LL
+ * @Description: 管理员controller
  */
 @Slf4j
 @RestController
 @RequestMapping("/api/user")
-
 public class UserController {
 
+    /**
+     * user实体类的service
+     */
     @Autowired
     private IUserService userService;
 
+    /**
+     * 获取所有的用户
+     *
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
     @Log("获取所有用户")
     @RequestMapping(value = "/lists")
     public Object queryAll(@RequestParam(required = false) Integer currentPage,
@@ -42,6 +51,11 @@ public class UserController {
         return JsonData.buildSuccess(userService.queryAll(currentPage, pageSize));
     }
 
+    /**
+     * 获取用户信息
+     *
+     * @return
+     */
     @Log("获取用户信息")
     @RequestMapping(value = "/get_info")
     public Object getInfo() {
@@ -50,6 +64,14 @@ public class UserController {
         return JsonData.buildSuccess(user);
     }
 
+    /**
+     * 上传用户头像
+     *
+     * @param request
+     * @return
+     * @throws IllegalStateException
+     * @throws IOException
+     */
     @Log("上传用户头像")
     @RequestMapping("/upload_icon")
     public Object springUpload(HttpServletRequest request)
@@ -76,7 +98,6 @@ public class UserController {
                     file.transferTo(new File(path));
                 }
             }
-
             userService.updateCoverImg(Long.valueOf(userId), time);
         } else {
             return JsonData.buildStatus(StatusEnum.UPFILE_IMGAGE_FAILE);
@@ -84,15 +105,27 @@ public class UserController {
         return JsonData.buildSuccess(path);
     }
 
+    /**
+     * 更新用户
+     *
+     * @param user
+     * @return
+     */
     @Log("更新用户")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Object update(@RequestBody User user) throws Exception {
+    public Object update(@RequestBody User user) {
         User shiroUser = (User) SecurityUtils.getSubject().getPrincipal();
         user.setId(shiroUser.getId());
         userService.update(user);
         return JsonData.buildSuccess();
     }
 
+    /**
+     * 修改密码
+     *
+     * @param userPassVo
+     * @return
+     */
     @Log("修改密码")
     @RequestMapping(value = "/update_password", method = RequestMethod.POST)
     public Object updatePassword(@RequestBody UserPassVo userPassVo) {
@@ -102,13 +135,24 @@ public class UserController {
         return JsonData.buildSuccess();
     }
 
-
+    /**
+     * 添加用户
+     *
+     * @param user
+     * @return
+     */
     @Log("添加用户")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object addUser(@RequestBody User user) {
         return JsonData.buildSuccess(userService.addUser(user));
     }
 
+    /**
+     * 删除用户
+     *
+     * @param id
+     * @return
+     */
     @Log("删除用户")
     @RequiresPermissions("user:root")
     @RequestMapping(value = "/delete")
@@ -117,6 +161,12 @@ public class UserController {
         return JsonData.buildSuccess();
     }
 
+    /**
+     * 批量删除用户
+     *
+     * @param ids
+     * @return
+     */
     @Log("批量删除用户")
     @RequiresPermissions("user:root")
     @RequestMapping(value = "/batches_delete")
@@ -125,7 +175,15 @@ public class UserController {
         return JsonData.buildSuccess();
     }
 
-
+    /**
+     * 根据用户名获取用户信息
+     *
+     * @param name        用户名
+     * @param currentPage
+     * @param pageSize
+     * @return
+     * @throws UnsupportedEncodingException
+     */
     @Log("按用户名搜索用户")
     @RequestMapping(value = "/find_by_name")
     public Object findByName(String name, Integer currentPage, Integer pageSize)
@@ -134,6 +192,13 @@ public class UserController {
                 currentPage, pageSize));
     }
 
+    /**
+     * 通过用户id给用户添加身份
+     *
+     * @param userId 用户id
+     * @param roleId 身份id
+     * @return
+     */
     @Log("通过用户id给用户添加身份")
     @RequiresPermissions("user:root")
     @RequestMapping(value = "/add_roles_binding_user_id")
@@ -141,6 +206,4 @@ public class UserController {
         userService.addRole(userId, roleId);
         return JsonData.buildSuccess();
     }
-
-
 }

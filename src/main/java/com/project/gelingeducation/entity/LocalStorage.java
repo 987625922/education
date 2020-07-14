@@ -1,13 +1,15 @@
 package com.project.gelingeducation.entity;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * @Description: 保存文件实体类
+ */
 @Entity
 @Table(name = "local_storage")
 @Accessors(chain = true)

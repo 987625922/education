@@ -116,6 +116,7 @@ public class SubjectDaoImpl extends BaseDao implements ISubjectDao {
             Course course = (Course) get(Course.class, o.getId());
             course.getSubjects().add(findSubject);
         });
+        baseUpdate(findSubject);
     }
 
     /**

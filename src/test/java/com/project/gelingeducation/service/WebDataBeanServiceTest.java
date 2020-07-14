@@ -1,6 +1,5 @@
 package com.project.gelingeducation.service;
 
-import com.project.gelingeducation.entity.WebDataBean;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +16,5 @@ public class WebDataBeanServiceTest {
 
     @Autowired
     private IWebDataBeanService webDataBeanService;
-
-
 
 }
