@@ -1,7 +1,7 @@
 package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.annotation.Log;
-import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.common.dto.JsonResult;
 import com.project.gelingeducation.entity.Video;
 import com.project.gelingeducation.service.IVideoService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,7 @@ public class VideoController {
     @RequestMapping(value = "/lists")
     public Object queryAll(@RequestParam(required = false) Integer currentPage,
                            @RequestParam(required = false) Integer pageSize) {
-        return JsonData.buildSuccess(videoService.queryAll(currentPage, pageSize));
+        return JsonResult.buildSuccess(videoService.queryAll(currentPage, pageSize));
     }
 
     /**
@@ -62,7 +62,7 @@ public class VideoController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object add(@RequestBody Video video) {
         videoService.insert(video);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -75,7 +75,7 @@ public class VideoController {
     @RequestMapping(value = "/delete")
     public Object delete(Long id) {
         videoService.delete(id);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -88,7 +88,7 @@ public class VideoController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Object update(@RequestBody Video video) {
         videoService.update(video);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -101,7 +101,7 @@ public class VideoController {
     @RequestMapping(value = "/batches_delete")
     public Object delMoreUser(@RequestParam String ids) {
         videoService.delMore(ids);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -120,7 +120,7 @@ public class VideoController {
                                    @RequestParam(required = false) String name,
                                    @RequestParam(required = false) String courseIds,
                                    @RequestParam Integer currentPage, @RequestParam Integer pageSize) throws UnsupportedEncodingException {
-        return JsonData.buildSuccess(videoService.searchByCriteria(teacherId,
+        return JsonResult.buildSuccess(videoService.searchByCriteria(teacherId,
                 name, courseIds,currentPage,pageSize));
     }
 }

@@ -1,7 +1,7 @@
 package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.annotation.Log;
-import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.common.dto.JsonResult;
 import com.project.gelingeducation.common.exception.StatusEnum;
 import com.project.gelingeducation.common.vo.UserPassVo;
 import com.project.gelingeducation.entity.User;
@@ -48,7 +48,7 @@ public class UserController {
     @RequestMapping(value = "/lists")
     public Object queryAll(@RequestParam(required = false) Integer currentPage,
                            @RequestParam(required = false) Integer pageSize) {
-        return JsonData.buildSuccess(userService.queryAll(currentPage, pageSize));
+        return JsonResult.buildSuccess(userService.queryAll(currentPage, pageSize));
     }
 
     /**
@@ -61,7 +61,7 @@ public class UserController {
     public Object getInfo() {
         User shiroUser = (User) SecurityUtils.getSubject().getPrincipal();
         User user = userService.findById(shiroUser.getId());
-        return JsonData.buildSuccess(user);
+        return JsonResult.buildSuccess(user);
     }
 
     /**
@@ -100,9 +100,9 @@ public class UserController {
             }
             userService.updateCoverImg(Long.valueOf(userId), time);
         } else {
-            return JsonData.buildStatus(StatusEnum.UPFILE_IMGAGE_FAILE);
+            return JsonResult.buildStatus(StatusEnum.UPFILE_IMGAGE_FAILE);
         }
-        return JsonData.buildSuccess(path);
+        return JsonResult.buildSuccess(path);
     }
 
     /**
@@ -117,7 +117,7 @@ public class UserController {
         User shiroUser = (User) SecurityUtils.getSubject().getPrincipal();
         user.setId(shiroUser.getId());
         userService.update(user);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -132,7 +132,7 @@ public class UserController {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         userService.updatePassword(user.getId(), userPassVo.getOldPass(),
                 userPassVo.getNewPass());
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -144,7 +144,7 @@ public class UserController {
     @Log("添加用户")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object addUser(@RequestBody User user) {
-        return JsonData.buildSuccess(userService.addUser(user));
+        return JsonResult.buildSuccess(userService.addUser(user));
     }
 
     /**
@@ -158,7 +158,7 @@ public class UserController {
     @RequestMapping(value = "/delete")
     public Object delete(Long id) {
         userService.delUser(id);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -172,7 +172,7 @@ public class UserController {
     @RequestMapping(value = "/batches_delete")
     public Object delMoreUser(String ids) {
         userService.delSelUser(ids);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -188,7 +188,7 @@ public class UserController {
     @RequestMapping(value = "/find_by_name")
     public Object findByName(String name, Integer currentPage, Integer pageSize)
             throws UnsupportedEncodingException {
-        return JsonData.buildSuccess(userService.selbyname(URLDecoder.decode(name, "UTF-8"),
+        return JsonResult.buildSuccess(userService.selbyname(URLDecoder.decode(name, "UTF-8"),
                 currentPage, pageSize));
     }
 
@@ -204,6 +204,6 @@ public class UserController {
     @RequestMapping(value = "/add_roles_binding_user_id")
     public Object addRole(Long userId, Long roleId) {
         userService.addRole(userId, roleId);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 }

@@ -1,7 +1,7 @@
 package com.project.gelingeducation.common.authentication;
 
 import com.project.gelingeducation.common.config.GLConstant;
-import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.common.dto.JsonResult;
 import com.project.gelingeducation.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -123,7 +123,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         httpResponse.setCharacterEncoding("utf-8");
         httpResponse.setContentType("application/json; charset=utf-8");
         try (PrintWriter out = httpResponse.getWriter()) {
-            String responseJson = JsonUtil.jsonToString(JsonData.buildError("用户未登录",
+            String responseJson = JsonUtil.jsonToString(JsonResult.buildError("用户未登录",
                     -103));
             out.print(responseJson);
         } catch (IOException e) {

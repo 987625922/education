@@ -1,7 +1,7 @@
 package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.annotation.Log;
-import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.common.dto.JsonResult;
 import com.project.gelingeducation.entity.Subject;
 import com.project.gelingeducation.service.ISubjectService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,7 @@ public class SubjectController {
     @RequestMapping(value = "/lists")
     public Object lists(@RequestParam(required = false) Integer currentPage,
                         @RequestParam(required = false) Integer pageSize) {
-        return JsonData.buildSuccess(subjectService.queryAll(currentPage, pageSize));
+        return JsonResult.buildSuccess(subjectService.queryAll(currentPage, pageSize));
     }
 
     /**
@@ -49,7 +49,7 @@ public class SubjectController {
     @Log("通过id获取专题")
     @RequestMapping(value = "/find_by_id")
     public Object findById(Long id) {
-        return JsonData.buildSuccess(subjectService.findById(id));
+        return JsonResult.buildSuccess(subjectService.findById(id));
     }
 
     /**
@@ -62,7 +62,7 @@ public class SubjectController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object add(@RequestBody Subject subject) {
         subjectService.insert(subject);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -75,7 +75,7 @@ public class SubjectController {
     @RequestMapping(value = "/delete")
     public Object delete(Long id) {
         subjectService.delete(id);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -88,7 +88,7 @@ public class SubjectController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Object update(@RequestBody Subject subject) {
         subjectService.update(subject);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -101,7 +101,7 @@ public class SubjectController {
     @RequestMapping(value = "/batches_deletes", method = RequestMethod.GET)
     public Object batchesDeletes(String ids) {
         subjectService.delMore(ids);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -117,7 +117,7 @@ public class SubjectController {
     @RequestMapping(value = "/search_criteria", method = RequestMethod.GET)
     public Object searchCriteria(String name, String courseIds, Integer currentPage,
                                  Integer pageSize) {
-        return JsonData.buildSuccess(subjectService.searchCriteria(name, courseIds,
+        return JsonResult.buildSuccess(subjectService.searchCriteria(name, courseIds,
                 currentPage, pageSize));
     }
 }

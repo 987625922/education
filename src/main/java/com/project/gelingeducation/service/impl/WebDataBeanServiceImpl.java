@@ -3,6 +3,7 @@ package com.project.gelingeducation.service.impl;
 import com.project.gelingeducation.common.config.GLConstant;
 import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.common.exception.StatusEnum;
+import com.project.gelingeducation.common.server.ValidateCodeService;
 import com.project.gelingeducation.common.utils.*;
 import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.service.ILoginLogService;
@@ -33,7 +34,6 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
      */
     @Autowired
     private ILoginLogService loginLogService;
-
     /**
      * rides工具类
      */
@@ -43,17 +43,17 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
     /**
      * 用户登录
      *
-     * @param user 用户实体类
-     * @return id 和 token
+     * @param account  账号
+     * @param password 密码
+     * @return
      */
     @Override
-    public Object login(User user) {
+    public Object login(String account, String password) {
         //通过用户名获取用户
-        User reUser = userService.findUserByAccount(user.getAccount());
+        User reUser = userService.findUserByAccount(account);
         if (reUser == null) {
             throw new AllException(StatusEnum.NO_USER);
-        } else if (!reUser.getPassword().equals(MD5Util.encrypt(user.getAccount().toLowerCase(),
-                user.getPassword()))) {
+        } else if (!reUser.getPassword().equals(MD5Util.encrypt(account.toLowerCase(), password))) {
             throw new AllException(StatusEnum.ACCOUNT_PASSWORD_ERROR);
         } else if (reUser.getStatus() == 0) {
             throw new AllException(StatusEnum.BAN_USER);
@@ -65,7 +65,7 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         });
         //返回uid和jwtToken
         String token = JWTUtil.sign(reUser.getAccount(), reUser.getPassword());
-        HashMap userMap = new HashMap();
+        HashMap userMap = new HashMap(2);
         userMap.put("id", reUser.getId());
         userMap.put("token", token);
         //设置redis token缓存和过期时间
@@ -80,7 +80,8 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
      */
     @Override
     public void addLoginMun() {
-
+        Integer integer = (Integer) templateUtil.get(GLConstant.ALL_LOGIN_NUM_KEY);
+//        integer.compareTo()
     }
 
     /**

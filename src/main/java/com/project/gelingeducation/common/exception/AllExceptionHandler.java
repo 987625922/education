@@ -1,6 +1,6 @@
 package com.project.gelingeducation.common.exception;
 
-import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.common.dto.JsonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.data.redis.RedisConnectionFailureException;
@@ -21,24 +21,24 @@ public class AllExceptionHandler {
 
     @ExceptionHandler(value = Exception.class) //捕获一个全局的异常
     @ResponseBody //在异常出现时好把bean转换成json返回给前端
-    public JsonData handler(Exception e) {
+    public JsonResult handler(Exception e) {
         log.error("【异常信息】", e);
         if (e instanceof AllException) {
             AllException allException = (AllException) e;
-            return JsonData.buildError(allException.getMessage(),
+            return JsonResult.buildError(allException.getMessage(),
                     allException.getCode());
         } else if (e instanceof UnauthorizedException) {
-            return JsonData.buildStatus(StatusEnum.USER_NO_PERMISSION);
+            return JsonResult.buildStatus(StatusEnum.USER_NO_PERMISSION);
         } else if (e instanceof HttpRequestMethodNotSupportedException) {
-            return JsonData.buildStatus(StatusEnum.REQUEST_METHOD_NOT_SUPPORT);
+            return JsonResult.buildStatus(StatusEnum.REQUEST_METHOD_NOT_SUPPORT);
         } else if (e instanceof HttpMessageNotReadableException) {
-            return JsonData.buildStatus(StatusEnum.HTTP_BODY_MISS);
+            return JsonResult.buildStatus(StatusEnum.HTTP_BODY_MISS);
         } else if (e instanceof MissingServletRequestParameterException) {
-            return JsonData.buildStatus(StatusEnum.MISS_PARAME_EXCEPTION);
+            return JsonResult.buildStatus(StatusEnum.MISS_PARAME_EXCEPTION);
         } else if (e instanceof RedisConnectionFailureException) {
-            return JsonData.buildStatus(StatusEnum.REDIS_CONNECTTION_FAILUER_EXCEPTION);
+            return JsonResult.buildStatus(StatusEnum.REDIS_CONNECTTION_FAILUER_EXCEPTION);
         } else {
-            return JsonData.buildError(StatusEnum.UNKNOWD_ERROR.getMessage(),
+            return JsonResult.buildError(StatusEnum.UNKNOWD_ERROR.getMessage(),
                     StatusEnum.UNKNOWD_ERROR.getCode());
         }
     }

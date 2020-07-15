@@ -3,7 +3,8 @@ package com.project.gelingeducation.entity;
 import lombok.Data;
 
 /**
- * @author MrBird
+ * @Description: 验证码配置类
+ * @author LL
  */
 @Data
 public class ValidateCodeProperties {
@@ -11,7 +12,7 @@ public class ValidateCodeProperties {
     /**
      * 验证码有效时间，单位秒
      */
-    private Long time = 120L;
+    private Long time = 300L;
     /**
      * 验证码类型，可选值 png和 gif
      */

@@ -1,9 +1,8 @@
 package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.annotation.Log;
-import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.common.dto.JsonResult;
 import com.project.gelingeducation.service.ILogService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +30,7 @@ public class LogController {
     @RequestMapping(value = "/lists")
     public Object queryAll(@RequestParam(required = false) Integer currentPage,
                            @RequestParam(required = false) Integer pageSize) {
-        return JsonData.buildSuccess(logService.queryAll(currentPage, pageSize));
+        return JsonResult.buildSuccess(logService.queryAll(currentPage, pageSize));
     }
 
     /**
@@ -41,7 +40,7 @@ public class LogController {
     @GetMapping("/delete_info_log")
     public Object deleteInfoLog() {
         logService.delAllByInfo();
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -51,7 +50,7 @@ public class LogController {
     @GetMapping("/delete_error_log")
     public Object deleteErrorLog() {
         logService.delAllByError();
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -62,7 +61,7 @@ public class LogController {
     @GetMapping("/delete_one")
     public Object deleteOneLog(@RequestParam Long id) {
         logService.delOneLog(id);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -73,7 +72,7 @@ public class LogController {
     @GetMapping("/solve")
     public Object solveOne(@RequestParam Long id) {
         logService.solveOne(id);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -84,7 +83,7 @@ public class LogController {
     @GetMapping("/recurrent")
     public Object recurrentOne(@RequestParam Long id) {
         logService.recurrentOne(id);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -124,6 +123,6 @@ public class LogController {
     @RequestMapping(value = "/batches_delete")
     public Object delMoreUser(@RequestParam String ids) {
         logService.delMore(ids);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 }

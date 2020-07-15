@@ -25,7 +25,7 @@ public class RedisTemplateUtil {
      *
      * @param key     键
      * @param value   值
-     * @param seconds 过期时间 分钟
+     * @param seconds 过期时间 秒
      */
     public void set(String key, Object value, Long seconds) {
         redisTemplate.opsForValue().set(key, value, seconds, TimeUnit.SECONDS);

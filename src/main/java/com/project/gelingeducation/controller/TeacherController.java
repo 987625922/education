@@ -1,7 +1,7 @@
 package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.annotation.Log;
-import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.common.dto.JsonResult;
 import com.project.gelingeducation.entity.Teacher;
 import com.project.gelingeducation.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class TeacherController {
     @RequestMapping("/lists")
     public Object queryAll(@RequestParam(required = false) Integer currentPage,
                            @RequestParam(required = false) Integer pageSize) {
-        return JsonData.buildSuccess(teacherService.queryAll(currentPage, pageSize));
+        return JsonResult.buildSuccess(teacherService.queryAll(currentPage, pageSize));
     }
 
     /**
@@ -47,7 +47,7 @@ public class TeacherController {
     @RequestMapping(value = "/delete")
     public Object delete(Long id) {
         teacherService.delTeacher(id);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -60,7 +60,7 @@ public class TeacherController {
     @PostMapping("/add")
     public Object addTeacher(@RequestBody Teacher teacher) {
         teacherService.save(teacher);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -73,7 +73,7 @@ public class TeacherController {
     @PostMapping("/update")
     public Object updateTeacher(@RequestBody Teacher teacher) {
         teacherService.update(teacher);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -86,7 +86,7 @@ public class TeacherController {
     @RequestMapping(value = "/batches_delete", method = RequestMethod.GET)
     public Object batchesDeletes(String ids) {
         teacherService.delMore(ids);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -100,6 +100,6 @@ public class TeacherController {
     public Object searchCriteria(@RequestParam String name,
                                  @RequestParam Integer currentPage,
                                  @RequestParam Integer pageSize) throws UnsupportedEncodingException {
-        return JsonData.buildSuccess(teacherService.searchCriteria(name, currentPage, pageSize));
+        return JsonResult.buildSuccess(teacherService.searchCriteria(name, currentPage, pageSize));
     }
 }

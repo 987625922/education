@@ -1,6 +1,7 @@
 package com.project.gelingeducation.common.server;
 
 import com.project.gelingeducation.common.config.GLConstant;
+import com.project.gelingeducation.common.dto.VerifyCodeDto;
 import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.common.exception.StatusEnum;
 import com.project.gelingeducation.common.utils.RedisTemplateUtil;
@@ -11,14 +12,9 @@ import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import java.util.UUID;
 
 /**
  * @author LL
@@ -27,43 +23,50 @@ import java.io.IOException;
 @Service
 public class ValidateCodeService {
 
+    /**
+     * redis封装service
+     */
     @Autowired
     private RedisTemplateUtil redisService;
 
     /**
      * 创建验证码
      *
-     * @param request
-     * @param response
-     * @throws IOException
+     * @return 验证码返回类
      */
-    public void create(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession();
-        String key = session.getId();
+    public VerifyCodeDto create() {
+        //验证码基本配置
         ValidateCodeProperties code = new ValidateCodeProperties();
-        setHeader(response, code.getType());
-
+        //验证码图片和code生成类
         Captcha captcha = createCaptcha(code);
+        //验证码
+        String verCode = captcha.text().toLowerCase();
+        //验证码redis保存的key
+        String key = UUID.randomUUID().toString();
+        //保存验证码
         redisService.set(GLConstant.CODE_PREFIX + key,
-                StringUtils.lowerCase(captcha.text()), code.getTime());
-        captcha.out(response.getOutputStream());
+                verCode, code.getTime());
+        return new VerifyCodeDto().setKey(key).setImageBase64(captcha.toBase64());
     }
 
     /**
      * 检查验证码
      *
-     * @param key
-     * @param value
-     * @throws Exception
+     * @param key   redis中保存验证码的key
+     * @param value 验证码
      */
-    public void check(String key, String value){
+    public void check(String key, String value) {
+        //从redis中获取验证码
         Object codeInRedis = redisService.get(GLConstant.CODE_PREFIX + key);
+        //判断输入的验证码是否为空
         if (StringUtils.isBlank(value)) {
             throw new AllException(StatusEnum.NO_LOGIN_INPUT_CODE);
         }
+        //判断从redis获取的验证码是否为空
         if (codeInRedis == null) {
             throw new AllException(StatusEnum.LOGIN_INPUT_CODE_TIMEOUT);
         }
+        //判断验证码和redis中的是否一致
         if (!StringUtils.equalsIgnoreCase(value, String.valueOf(codeInRedis))) {
             throw new AllException(StatusEnum.INPUT_CODE_CODE_ERROR);
         }
@@ -84,22 +87,5 @@ public class ValidateCodeService {
         }
         captcha.setCharType(code.getCharType());
         return captcha;
-    }
-
-    /**
-     * 设置验证码的请求头
-     *
-     * @param response
-     * @param type
-     */
-    private void setHeader(HttpServletResponse response, String type) {
-        if (StringUtils.equalsIgnoreCase(type, ImageType.GIF)) {
-            response.setContentType(MediaType.IMAGE_GIF_VALUE);
-        } else {
-            response.setContentType(MediaType.IMAGE_PNG_VALUE);
-        }
-        response.setHeader(HttpHeaders.PRAGMA, "No-cache");
-        response.setHeader(HttpHeaders.CACHE_CONTROL, "No-cache");
-        response.setDateHeader(HttpHeaders.EXPIRES, 0L);
     }
 }

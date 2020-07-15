@@ -3,7 +3,7 @@ package com.project.gelingeducation.controller;
 import com.project.gelingeducation.common.annotation.Limit;
 import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.controller.BaseController;
-import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.common.dto.JsonResult;
 import com.project.gelingeducation.common.dto.WebIndex;
 import com.project.gelingeducation.common.server.ValidateCodeService;
 import com.project.gelingeducation.entity.LoginLog;
@@ -12,12 +12,13 @@ import com.project.gelingeducation.service.ILoginLogService;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.IWebDataBeanService;
 import org.apache.shiro.SecurityUtils;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * web特定的实体类返回
@@ -64,20 +65,28 @@ public class WebController extends BaseController {
 //        webIndex.setAllLoginMun(webDataBean.getAllLoginMun());
 //        webIndex.setTodayLoginIpMun(webDataBean.getTodayLoginIpMun());
 //        webIndex.setTodayLoginMun(webDataBean.getTodayLoginMun());
-        return JsonData.buildSuccess(webIndex);
+        return JsonResult.buildSuccess(webIndex);
     }
 
     /**
-     * 登录信息
+     * 登录接口
      *
-     * @param user 用户实体
+     * @param account    账号
+     * @param password   密码
+     * @param verifyCode 验证码
+     * @param key        验证码在redis中的key
      * @return 用户实体
      */
     @Limit(key = "login", period = 60, count = 20, name = "登录接口", prefix = "limit")
     @Log("登录接口")
-    @RequestMapping(value = "/web/login", method = RequestMethod.POST)
-    public Object login(@RequestBody @Validated User user) {
-        return JsonData.buildSuccess(webDataBeanService.login(user));
+    @RequestMapping(value = "/web/login")
+    public Object login(@NotBlank(message = "account") String account,
+                        @NotBlank(message = "password") String password,
+                        @NotBlank(message = "verifyCode") String verifyCode,
+                        @NotBlank(message = "key") String key) {
+        //验证验证码是否正确
+        validateCodeService.check(key, verifyCode);
+        return JsonResult.buildSuccess(webDataBeanService.login(account, password));
     }
 
     /**
@@ -88,20 +97,18 @@ public class WebController extends BaseController {
      */
     @Log("注册接口")
     @RequestMapping(value = "/web/register", method = RequestMethod.POST)
-    public Object register(@RequestBody User user) {
-        return JsonData.buildSuccess(userService.register(user));
+    public Object register(@RequestBody @Validated User user) {
+        return JsonResult.buildSuccess(userService.register(user));
     }
 
     /**
      * 登录二维码
      *
-     * @param request  /
-     * @param response /
-     * @throws Exception
+     * @return 返回验证码dto实体类
      */
     @GetMapping("/web/captcha")
     @Limit(key = "get_captcha", period = 60, count = 10, name = "获取验证码", prefix = "limit")
-    public void captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        validateCodeService.create(request, response);
+    public Object captcha() {
+        return JsonResult.buildSuccess(validateCodeService.create());
     }
 }

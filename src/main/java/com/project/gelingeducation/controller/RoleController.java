@@ -1,7 +1,7 @@
 package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.annotation.Log;
-import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.common.dto.JsonResult;
 import com.project.gelingeducation.entity.Role;
 import com.project.gelingeducation.service.IRoleService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -38,7 +38,7 @@ public class RoleController {
     @RequestMapping(value = "/lists")
     public Object lists(@RequestParam(required = false) Integer currentPage,
                         @RequestParam(required = false) Integer pageSize) {
-        return JsonData.buildSuccess(roleService.queryAll(currentPage, pageSize));
+        return JsonResult.buildSuccess(roleService.queryAll(currentPage, pageSize));
     }
 
     /**
@@ -51,7 +51,7 @@ public class RoleController {
     @Log("通过名字获取身份")
     @RequestMapping(value = "/find_by_name")
     public Object findByName(String name) throws UnsupportedEncodingException {
-        return JsonData.buildSuccess(roleService.selByName(name));
+        return JsonResult.buildSuccess(roleService.selByName(name));
     }
 
     /**
@@ -64,7 +64,7 @@ public class RoleController {
     @RequestMapping(value = "/add")
     public Object addRole(@RequestBody Role role) {
         roleService.addRole(role);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -77,7 +77,7 @@ public class RoleController {
     @RequestMapping(value = "/update")
     public Object update(@RequestBody Role role) {
         roleService.update(role);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -91,7 +91,7 @@ public class RoleController {
     @RequestMapping(value = "/batches_deletes")
     public Object delMore(String ids) {
         roleService.delMoreRolesByIds(ids);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -105,7 +105,7 @@ public class RoleController {
     @RequestMapping(value = "/delete")
     public Object delete(Long id) {
         roleService.delRoleById(id);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -118,7 +118,7 @@ public class RoleController {
 //    @RequiresPermissions("user:root")
     @RequestMapping(value = "/find_permission_by_role_id")
     public Object findPermissionById(Long id) {
-        return JsonData.buildSuccess(roleService.getRoleByIdForPermission(id));
+        return JsonResult.buildSuccess(roleService.getRoleByIdForPermission(id));
     }
 
     /**
@@ -129,6 +129,6 @@ public class RoleController {
     @Log("通过用户获取身份")
     @RequestMapping("/find_by_user_id")
     public Object findRoleByUserId(Long userId) {
-        return JsonData.buildSuccess(roleService.getRoleByUserId(userId));
+        return JsonResult.buildSuccess(roleService.getRoleByUserId(userId));
     }
 }

@@ -1,11 +1,10 @@
 package com.project.gelingeducation.controller;
 
 import com.project.gelingeducation.common.annotation.Log;
-import com.project.gelingeducation.common.dto.JsonData;
+import com.project.gelingeducation.common.dto.JsonResult;
 import com.project.gelingeducation.entity.Course;
 import com.project.gelingeducation.service.ICourseService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +35,7 @@ public class CourseController {
     @RequestMapping(value = "/lists")
     public Object lists(@RequestParam(required = false) Integer currentPage,
                         @RequestParam(required = false) Integer pageSize) {
-        return JsonData.buildSuccess(courseService.queryAll(currentPage, pageSize));
+        return JsonResult.buildSuccess(courseService.queryAll(currentPage, pageSize));
     }
 
     /**
@@ -48,7 +47,7 @@ public class CourseController {
     @Log("通过id获取单个课程")
     @RequestMapping(value = "/find_by_id")
     public Object findById(Long id) {
-        return JsonData.buildSuccess(courseService.findById(id));
+        return JsonResult.buildSuccess(courseService.findById(id));
     }
 
     /**
@@ -61,7 +60,7 @@ public class CourseController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object add(@RequestBody Course course) {
         courseService.insert(course);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -74,7 +73,7 @@ public class CourseController {
     @RequestMapping(value = "/delete")
     public Object delete(Long id) {
         courseService.delect(id);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -87,7 +86,7 @@ public class CourseController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Object update(@RequestBody Course course) {
         courseService.update(course);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
 
@@ -102,7 +101,7 @@ public class CourseController {
     @RequestMapping(value = "/batches_delete")
     public Object delMore(String ids) {
         courseService.batchesDeletes(ids);
-        return JsonData.buildSuccess();
+        return JsonResult.buildSuccess();
     }
 
     /**
@@ -125,7 +124,7 @@ public class CourseController {
                                                      @RequestParam(required = false) Double endPrice,
                                                      @RequestParam(required = false) Long teacherId,
                                                      Integer currentPage, Integer pageSize) throws UnsupportedEncodingException {
-        return JsonData.buildSuccess(courseService.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice,
+        return JsonResult.buildSuccess(courseService.selByNameOrStatusOrPriceOrTeacher(name, status, startPrice,
                 endPrice, teacherId, currentPage, pageSize));
     }
 
@@ -138,7 +137,7 @@ public class CourseController {
     @Log("通过主题id获取课程列表")
     @RequestMapping(value = "/getCourseListBySubjectId")
     public Object getCourseListBySubjectId(Long subjectId) {
-        return JsonData.buildSuccess(courseService.getCourseListBySubjectId(subjectId));
+        return JsonResult.buildSuccess(courseService.getCourseListBySubjectId(subjectId));
     }
 
     /**
@@ -150,6 +149,6 @@ public class CourseController {
     @Log("通过视频id获取课程列表")
     @RequestMapping(value = "/getCourseListByVideoId")
     public Object getCourseListByVideoId(Long videoId) {
-        return JsonData.buildSuccess(courseService.getCourseListByVideoId(videoId));
+        return JsonResult.buildSuccess(courseService.getCourseListByVideoId(videoId));
     }
 }
