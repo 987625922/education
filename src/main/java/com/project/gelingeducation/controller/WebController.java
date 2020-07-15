@@ -100,6 +100,7 @@ public class WebController extends BaseController {
      * @throws Exception
      */
     @GetMapping("/web/captcha")
+    @Limit(key = "get_captcha", period = 60, count = 10, name = "获取验证码", prefix = "limit")
     public void captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
         validateCodeService.create(request, response);
     }

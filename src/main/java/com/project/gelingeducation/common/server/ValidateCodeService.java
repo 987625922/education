@@ -21,9 +21,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * 验证码服务
- *
  * @author LL
+ * @Description:验证码服务
  */
 @Service
 public class ValidateCodeService {
@@ -31,7 +30,13 @@ public class ValidateCodeService {
     @Autowired
     private RedisTemplateUtil redisService;
 
-
+    /**
+     * 创建验证码
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     public void create(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         String key = session.getId();
@@ -44,8 +49,14 @@ public class ValidateCodeService {
         captcha.out(response.getOutputStream());
     }
 
-
-    public void check(String key, String value) throws Exception {
+    /**
+     * 检查验证码
+     *
+     * @param key
+     * @param value
+     * @throws Exception
+     */
+    public void check(String key, String value){
         Object codeInRedis = redisService.get(GLConstant.CODE_PREFIX + key);
         if (StringUtils.isBlank(value)) {
             throw new AllException(StatusEnum.NO_LOGIN_INPUT_CODE);
@@ -58,6 +69,12 @@ public class ValidateCodeService {
         }
     }
 
+    /**
+     * 创建随机数
+     *
+     * @param code
+     * @return
+     */
     private Captcha createCaptcha(ValidateCodeProperties code) {
         Captcha captcha = null;
         if (StringUtils.equalsIgnoreCase(code.getType(), ImageType.GIF)) {
@@ -69,6 +86,12 @@ public class ValidateCodeService {
         return captcha;
     }
 
+    /**
+     * 设置验证码的请求头
+     *
+     * @param response
+     * @param type
+     */
     private void setHeader(HttpServletResponse response, String type) {
         if (StringUtils.equalsIgnoreCase(type, ImageType.GIF)) {
             response.setContentType(MediaType.IMAGE_GIF_VALUE);
