@@ -3,6 +3,8 @@ package com.project.gelingeducation.service;
 import com.project.gelingeducation.entity.LoginLog;
 import com.project.gelingeducation.entity.User;
 
+import java.util.List;
+
 /**
  * @Author: LL
  * @Description: 登录日志的service接口
@@ -12,6 +14,7 @@ public interface ILoginLogService {
 
     /**
      * 添加登录日志
+     *
      * @param loginLog
      */
     void insert(LoginLog loginLog);
@@ -23,10 +26,11 @@ public interface ILoginLogService {
      * @param pageSize    页数
      * @return 页码为空返回全都list，不为空返回分页实体类
      */
-    Object queryAll(Integer currentPage,Integer pageSize);
+    Object queryAll(Integer currentPage, Integer pageSize);
 
     /**
      * 获取登录日志
+     *
      * @param uid 用户id
      * @return
      */
@@ -35,8 +39,16 @@ public interface ILoginLogService {
     /**
      * 添加或者更新用户登录日志实体类
      * 如果有了登录日志就更新，没有就插入
+     *
      * @param user 用户实体类
      */
     void saveOrUpdateLoginLogByUid(User user);
 
+    /**
+     * 根据ip获取登录日志
+     *
+     * @param ip
+     * @return
+     */
+    List<LoginLog> getLoginLogByIp(String ip);
 }

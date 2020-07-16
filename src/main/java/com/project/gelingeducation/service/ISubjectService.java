@@ -19,6 +19,7 @@ public interface ISubjectService {
 
     /**
      * 获取专题
+     *
      * @param id 专题id
      * @return 专题实体类
      */
@@ -26,6 +27,7 @@ public interface ISubjectService {
 
     /**
      * 添加专题
+     *
      * @param subject 专题实体类
      * @return
      */
@@ -33,12 +35,14 @@ public interface ISubjectService {
 
     /**
      * 删除专题
+     *
      * @param id 专题id
      */
     void delete(Long id);
 
     /**
      * 更新专题
+     *
      * @param video 专题实体类
      */
     void update(Subject video);
@@ -52,12 +56,20 @@ public interface ISubjectService {
 
     /**
      * 条件搜索
-     * @param name 专题名称
-     * @param courseIds 1,2,3 格式的字符串id
+     *
+     * @param name        专题名称
+     * @param courseIds   1,2,3 格式的字符串id
      * @param currentPage 页码
-     * @param pageSize 页数
+     * @param pageSize    页数
      * @return 分页实体类
      */
     Object searchCriteria(String name, String courseIds, Integer currentPage,
                           Integer pageSize);
+
+    /**
+     * 获取专题的数量
+     *
+     * @return
+     */
+    Long getTotalNumber();
 }

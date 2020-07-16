@@ -1,7 +1,7 @@
 package com.project.gelingeducation.common.authentication;
 
 import com.project.gelingeducation.common.config.GLConstant;
-import com.project.gelingeducation.common.utils.JWTUtil;
+import com.project.gelingeducation.common.utils.JwtUtil;
 import com.project.gelingeducation.common.utils.RedisTemplateUtil;
 import com.project.gelingeducation.common.utils.TokenUtil;
 import com.project.gelingeducation.entity.Permission;
@@ -92,7 +92,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
         String token = (String) authenticationToken.getCredentials();
 
-        String account = JWTUtil.getUsername(token);
+        String account = JwtUtil.getUsername(token);
 
         String encryptToken = TokenUtil.encryptToken(token);
 
@@ -114,7 +114,7 @@ public class ShiroRealm extends AuthorizingRealm {
         if (user == null) {
             throw new AuthenticationException("用户名或密码错误");
         }
-        if (!JWTUtil.verify(token, account, user.getPassword())) {
+        if (!JwtUtil.verify(token, account, user.getPassword())) {
             throw new AuthenticationException("token校验不通过");
         }
 

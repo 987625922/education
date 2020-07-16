@@ -15,7 +15,7 @@ import java.util.Date;
  * @Description: JWT工具类
  */
 @Slf4j
-public class JWTUtil {
+public class JwtUtil {
 
     /**
      * token过期时间为一天

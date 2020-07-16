@@ -111,6 +111,16 @@ public class SubjectServiceImpl implements ISubjectService {
      */
     @Override
     public Object searchCriteria(String name, String courseIds, Integer currentPage, Integer pageSize) {
-        return subjectDao.searchCriteria(UrlDeconderUtil.decode(name,"UTF-8"), courseIds, currentPage, pageSize);
+        return subjectDao.searchCriteria(UrlDeconderUtil.decode(name, "UTF-8"), courseIds, currentPage, pageSize);
+    }
+
+    /**
+     * 获取专题的数量
+     *
+     * @return
+     */
+    @Override
+    public Long getTotalNumber() {
+        return subjectDao.getTotalNumber();
     }
 }

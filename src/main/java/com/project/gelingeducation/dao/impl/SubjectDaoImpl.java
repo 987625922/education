@@ -172,4 +172,16 @@ public class SubjectDaoImpl extends BaseDao implements ISubjectDao {
         pageResult.setPageSize(pageSize);
         return pageResult;
     }
+
+    /**
+     * 获取专题的数量
+     *
+     * @return
+     */
+    @Override
+    public Long getTotalNumber() {
+        String hql = "select count(*) from Subject";
+        Query queryCount = getSession().createQuery(hql);
+        return (Long) queryCount.uniqueResult();
+    }
 }

@@ -3,7 +3,7 @@ package com.project.gelingeducation.service.impl;
 import com.project.gelingeducation.common.dto.PageResult;
 import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.common.exception.StatusEnum;
-import com.project.gelingeducation.common.utils.MD5Util;
+import com.project.gelingeducation.common.utils.Md5Util;
 import com.project.gelingeducation.dao.IUserDao;
 import com.project.gelingeducation.entity.Permission;
 import com.project.gelingeducation.entity.Role;
@@ -53,7 +53,7 @@ public class UserServiceImpl implements IUserService {
         if (userDao.findByPhone(user.getAccount()) == null) {
             user.setUserName("管理员");
             user.setStatus(1);
-            user.setPassword(MD5Util.encrypt(user.getAccount().toLowerCase(), user.getPassword()));
+            user.setPassword(Md5Util.encrypt(user.getAccount().toLowerCase(), user.getPassword()));
             return userDao.insert(user);
         } else {
             throw new AllException(StatusEnum.ACCOUNT_ALREADY_EXISTS);
@@ -75,7 +75,7 @@ public class UserServiceImpl implements IUserService {
         if (userDao.findByPhone(user.getAccount()) == null) {
             user.setUserName("用户名");
             user.setStatus(1);
-            user.setPassword(MD5Util.encrypt(user.getAccount().toLowerCase(), user.getPassword()));
+            user.setPassword(Md5Util.encrypt(user.getAccount().toLowerCase(), user.getPassword()));
             user.setCoverImg("https://timgsa.baidu.com/timg?image&quality=80&size=b9999" +
                     "_10000&sec=1582740929074&di=88ebb0f61e464281d947673187acaa59&imgtype=0" +
                     "&src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2Fthreadcover%2Fbb%2Fa1%2F1" +
@@ -149,9 +149,9 @@ public class UserServiceImpl implements IUserService {
     @Transactional(rollbackFor = Exception.class)
     public void updatePassword(Long id, String oldPassword, String newPassword) {
         User user = userDao.findById(id);
-        if (user.getPassword().equals(MD5Util.encrypt(user.getAccount().toLowerCase(),
+        if (user.getPassword().equals(Md5Util.encrypt(user.getAccount().toLowerCase(),
                 oldPassword))) {
-            user.setPassword(MD5Util.encrypt(user.getAccount().toLowerCase(),
+            user.setPassword(Md5Util.encrypt(user.getAccount().toLowerCase(),
                     newPassword));
         } else {
             throw new AllException(StatusEnum.ACCOUNT_PASSWORD_ERROR);

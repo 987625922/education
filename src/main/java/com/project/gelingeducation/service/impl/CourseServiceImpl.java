@@ -140,4 +140,14 @@ public class CourseServiceImpl implements ICourseService {
     public Object getCourseListByVideoId(Long videoId) {
         return courseDao.getCourseListByVideoId(videoId);
     }
+
+    /**
+     * 获取课程的数量
+     *
+     * @return 课程的数量
+     */
+    @Override
+    public Long getTotalNumber() {
+        return courseDao.getCourserNumber();
+    }
 }

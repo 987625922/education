@@ -10,20 +10,42 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * 登录日志实体类的dao
+ *
+ * @author LL
+ */
 @Repository
 public class LoginLogDaoImpl extends BaseDao implements ILoginLogDao {
 
+    /**
+     * 添加登录日志
+     *
+     * @param loginLog
+     */
     @Override
     public void insert(LoginLog loginLog) {
         getSession().save(loginLog);
     }
 
+    /**
+     * 获取所有的登录日志
+     *
+     * @return
+     */
     @Override
     public List<LoginLog> queryAll() {
         String hql = "from LoginLog";
         return getSession().createQuery(hql).getResultList();
     }
 
+    /**
+     * 分页获取登录日志
+     *
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
     @Override
     public PageResult queryAll(Integer currentPage, Integer pageSize) {
         Session session = getSession();
@@ -49,6 +71,12 @@ public class LoginLogDaoImpl extends BaseDao implements ILoginLogDao {
         return pageResult;
     }
 
+    /**
+     * 根据用户id获取登录日志
+     *
+     * @param uid
+     * @return
+     */
     @Override
     public LoginLog getByUid(Long uid) {
         Query query = getSession().createQuery("from LoginLog where uid=?0");
@@ -57,9 +85,16 @@ public class LoginLogDaoImpl extends BaseDao implements ILoginLogDao {
         return loginLog;
     }
 
+    /**
+     * 根据ip获取登录日志
+     *
+     * @param ip
+     * @return
+     */
     @Override
-    public List getLoginLogByIp(String ip) {
-        Query query = getSession().createQuery("from LoginLog where ip =?0");
+    public List<LoginLog> getLoginLogByIp(String ip) {
+        Query<LoginLog> query = getSession()
+                .createQuery("from LoginLog where ip =?0");
         query.setParameter(0, ip);
         return query.list();
     }

@@ -40,5 +40,4 @@ public class BeanUtil {
     public static void copyPropertiesIgnoreNull(Object src, Object target){
         org.springframework.beans.BeanUtils.copyProperties(src, target, getNullPropertyNames(src));
     }
-
 }

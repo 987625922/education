@@ -4,21 +4,16 @@ import com.project.gelingeducation.common.annotation.Limit;
 import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.controller.BaseController;
 import com.project.gelingeducation.common.dto.JsonResult;
-import com.project.gelingeducation.common.dto.WebIndex;
+import com.project.gelingeducation.common.dto.WebDataDto;
 import com.project.gelingeducation.common.server.ValidateCodeService;
-import com.project.gelingeducation.entity.LoginLog;
 import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.service.ILoginLogService;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.IWebDataBeanService;
-import org.apache.shiro.SecurityUtils;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * web特定的实体类返回
@@ -57,15 +52,7 @@ public class WebController extends BaseController {
     @Log("web端首页")
     @RequestMapping(value = "/web/index")
     public Object index() {
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        LoginLog loginLog = loginLogService.getByUserId(user.getId());
-//        WebDataBean webDataBean = webDataBeanService.getWebDataBean();
-        WebIndex webIndex = new WebIndex();
-        webIndex.setLastLoginTime(loginLog.getLastLoginTime());
-//        webIndex.setAllLoginMun(webDataBean.getAllLoginMun());
-//        webIndex.setTodayLoginIpMun(webDataBean.getTodayLoginIpMun());
-//        webIndex.setTodayLoginMun(webDataBean.getTodayLoginMun());
-        return JsonResult.buildSuccess(webIndex);
+        return JsonResult.buildSuccess(webDataBeanService.getWebData());
     }
 
     /**
@@ -102,7 +89,7 @@ public class WebController extends BaseController {
     }
 
     /**
-     * 登录二维码
+     * 登录验证码
      *
      * @return 返回验证码dto实体类
      */

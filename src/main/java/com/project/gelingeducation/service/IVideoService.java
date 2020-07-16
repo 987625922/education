@@ -70,4 +70,11 @@ public interface IVideoService {
     Object searchByCriteria(String teacherId,
                             String name,
                             String courseIds, Integer currentPage, Integer pageSize) throws UnsupportedEncodingException;
+
+    /**
+     * 获取视频的数量
+     *
+     * @return 视频数量
+     */
+    Long getTotalNumber();
 }

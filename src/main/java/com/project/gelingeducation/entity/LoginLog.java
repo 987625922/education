@@ -87,7 +87,4 @@ public class LoginLog implements Serializable {
     @JoinColumn(name = "uid")
     @JsonBackReference
     private User user;
-
-    private transient String loginTimeFrom;
-    private transient String loginTimeTo;
 }

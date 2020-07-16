@@ -191,4 +191,16 @@ public class CourseDaoImpl extends BaseDao implements ICourseDao {
     public Object getCourseListByVideoId(Long videoId) {
         return CollectUtil.setToList(((Video) get(Video.class, videoId)).getCourses());
     }
+
+    /**
+     * 获取课程的数量
+     *
+     * @return 课程的数量
+     */
+    @Override
+    public Long getCourserNumber() {
+        String hql = "select count(*) from Course";
+        Query queryCount = getSession().createQuery(hql);
+        return (Long) queryCount.uniqueResult();
+    }
 }

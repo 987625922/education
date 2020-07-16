@@ -18,8 +18,8 @@ public class TokenUtil {
      */
     public static String encryptToken(String token) {
         try {
-            DESEncryptionUtil encryptUtil =
-                    new DESEncryptionUtil(GLConstant.TOKEN_CACHE_PREFIX);
+            DesEncryptionUtil encryptUtil =
+                    new DesEncryptionUtil(GLConstant.TOKEN_CACHE_PREFIX);
             return encryptUtil.encrypt(token);
         } catch (Exception e) {
             log.info("token加密失败：", e);
@@ -35,8 +35,8 @@ public class TokenUtil {
      */
     public static String decryptToken(String encryptToken) {
         try {
-            DESEncryptionUtil encryptUtil =
-                    new DESEncryptionUtil(GLConstant.TOKEN_CACHE_PREFIX);
+            DesEncryptionUtil encryptUtil =
+                    new DesEncryptionUtil(GLConstant.TOKEN_CACHE_PREFIX);
             return encryptUtil.decrypt(encryptToken);
         } catch (Exception e) {
             log.info("token解密失败：", e);

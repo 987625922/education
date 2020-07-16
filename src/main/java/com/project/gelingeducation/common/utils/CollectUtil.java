@@ -6,7 +6,7 @@ import java.util.Set;
 
 /**
  * @Author: LL
- * @Description:
+ * @Description: 集合工具类
  * @Date:Create：in 2020/7/8 17:09
  */
 public class CollectUtil {

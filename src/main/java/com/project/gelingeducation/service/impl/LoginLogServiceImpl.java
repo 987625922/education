@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author: LL
@@ -30,6 +31,7 @@ public class LoginLogServiceImpl implements ILoginLogService {
 
     /**
      * 添加登录日志
+     *
      * @param loginLog
      */
     @Override
@@ -59,6 +61,7 @@ public class LoginLogServiceImpl implements ILoginLogService {
 
     /**
      * 获取登录日志
+     *
      * @param uid 用户id
      * @return
      */
@@ -71,6 +74,7 @@ public class LoginLogServiceImpl implements ILoginLogService {
     /**
      * 添加或者更新用户登录日志实体类
      * 如果有了登录日志就更新，没有就插入
+     *
      * @param user 用户实体类
      */
     @Transactional(rollbackFor = Exception.class)
@@ -99,5 +103,10 @@ public class LoginLogServiceImpl implements ILoginLogService {
             loginLog.setUserSystem(HttpUtil.getOsName(servletRequest));
             loginLogDao.insert(loginLog);
         }
+    }
+
+    @Override
+    public List<LoginLog> getLoginLogByIp(String ip) {
+        return loginLogDao.getLoginLogByIp(ip);
     }
 }

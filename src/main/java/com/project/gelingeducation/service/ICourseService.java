@@ -87,4 +87,11 @@ public interface ICourseService {
      * @return
      */
     Object getCourseListByVideoId(Long videoId);
+
+    /**
+     * 获取课程的数量
+     *
+     * @return 课程的数量
+     */
+    Long getTotalNumber();
 }

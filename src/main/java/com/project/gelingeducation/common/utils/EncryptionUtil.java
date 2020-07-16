@@ -1,11 +1,14 @@
 package com.project.gelingeducation.common.utils;
 
 import com.project.gelingeducation.common.exception.AllException;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
 /**
  * base64 加密与解密
+ *
+ * @author LL
  */
 public final class EncryptionUtil {
 
@@ -14,7 +17,6 @@ public final class EncryptionUtil {
      *
      * @param encodedText
      * @return
-     * @throws UnsupportedEncodingException
      */
     public static String encodeBASE64(String encodedText) {
         final Base64.Decoder decoder = Base64.getDecoder();

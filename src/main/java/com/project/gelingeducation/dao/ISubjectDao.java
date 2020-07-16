@@ -66,12 +66,20 @@ public interface ISubjectDao {
 
     /**
      * 条件搜索
-     * @param name 专题名称
-     * @param courseIds 1,2,3 格式的字符串id
+     *
+     * @param name        专题名称
+     * @param courseIds   1,2,3 格式的字符串id
      * @param currentPage 页码
-     * @param pageSize 页数
+     * @param pageSize    页数
      * @return 分页实体类
      */
     Object searchCriteria(String name, String courseIds, Integer currentPage,
                           Integer pageSize);
+
+    /**
+     * 获取专题的数量
+     *
+     * @return
+     */
+    Long getTotalNumber();
 }

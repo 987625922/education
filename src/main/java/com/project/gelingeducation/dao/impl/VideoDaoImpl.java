@@ -184,4 +184,16 @@ public class VideoDaoImpl extends BaseDao implements IVideoDao {
         pageResult.setPageSize(pageSize);
         return pageResult;
     }
+
+    /**
+     * 获取视频的数量
+     *
+     * @return 视频数量
+     */
+    @Override
+    public Long getVideosNumber() {
+        String hql = "select count(*) from Video";
+        Query queryCount = getSession().createQuery(hql);
+        return (Long) queryCount.uniqueResult();
+    }
 }

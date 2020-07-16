@@ -37,13 +37,15 @@ public class HttpUtil {
     }
 
     /**
-     * 获取浏览器
+     * 获取浏览器名字
      *
      * @param request
      * @return
      */
     public static String getBrowser(HttpServletRequest request) {
-        UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
+        //通过UserAgent获取request中的信息
+        UserAgent userAgent =
+                UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
         Browser browser = userAgent.getBrowser();
         if (browser == null) {
             return "";
@@ -52,14 +54,16 @@ public class HttpUtil {
     }
 
     /**
-     * 获取城市
+     * 通过ip地址获取城市
      *
      * @param ip
      * @return
      */
     public static String getCityInfo(String ip) {
+        //ip2region数据库搜索类
         DbSearcher searcher = null;
         try {
+            //获取db数据库
             URL url = HttpUtil.class.getResource("/ip2region/ip2region.db");
             String dbPath = url.getPath();
             File file = new File(dbPath);
@@ -67,17 +71,19 @@ public class HttpUtil {
                 String tmpDir = System.getProperties().getProperty("java.io.tmpdir");
                 dbPath = tmpDir + "ip.db";
                 file = new File(dbPath);
-                FileUtils.copyInputStreamToFile(Objects.requireNonNull(HttpUtil.class.getClassLoader().getResourceAsStream("classpath:ip2region/ip2region.db")), file);
+                FileUtils.copyInputStreamToFile(Objects.requireNonNull(HttpUtil.class.getClassLoader()
+                        .getResourceAsStream("classpath:ip2region/ip2region.db")), file);
             }
             DbConfig config = new DbConfig();
             searcher = new DbSearcher(config, dbPath);
-            Method method = null;
-            method = searcher.getClass().getMethod("btreeSearch", String.class);
-            DataBlock dataBlock = null;
+            Method method = searcher.getClass().getMethod("btreeSearch", String.class);
+            //判断ip地址是否正确
             if (!Util.isIpAddress(ip)) {
                 log.info("Error: Invalid ip address");
             }
-            dataBlock = (DataBlock) method.invoke(searcher, ip);
+            //搜索获取ip地址的城市
+            DataBlock dataBlock = (DataBlock) method.invoke(searcher, ip);
+            //获取城市
             return dataBlock.getRegion();
         } catch (Exception e) {
             log.info("获取IP地址失败，{}", e.getMessage());

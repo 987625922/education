@@ -15,12 +15,16 @@
  */
 package com.project.gelingeducation.common.vo;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 修改密码的 Vo 类
+ *
+ * @author LL
  */
-@Data
+@Setter
+@Getter
 public class UserPassVo {
 
     private String oldPass;

@@ -104,15 +104,25 @@ public class VideoServiceImpl implements IVideoService {
     /**
      * 按条件搜索视频列表
      *
-     * @param teacherId 教师id
-     * @param name      视频名
+     * @param teacherId   教师id
+     * @param name        视频名
      * @param currentPage 页码
      * @param pageSize    页数
-     * @param courseIds 1,2,3格式的课程id字符串
+     * @param courseIds   1,2,3格式的课程id字符串
      * @return 分页的视频list列表
      */
     @Override
-    public Object searchByCriteria(String teacherId, String name, String courseIds,Integer currentPage,Integer pageSize) throws UnsupportedEncodingException {
-        return videoDao.searchByCriteria(teacherId, UrlDeconderUtil.decode(name, "UTF-8"), courseIds,currentPage,pageSize);
+    public Object searchByCriteria(String teacherId, String name, String courseIds, Integer currentPage, Integer pageSize) throws UnsupportedEncodingException {
+        return videoDao.searchByCriteria(teacherId, UrlDeconderUtil.decode(name, "UTF-8"), courseIds, currentPage, pageSize);
+    }
+
+    /**
+     * 获取视频的数量
+     *
+     * @return 视频数量
+     */
+    @Override
+    public Long getTotalNumber() {
+        return videoDao.getVideosNumber();
     }
 }

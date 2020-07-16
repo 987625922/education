@@ -4,6 +4,7 @@ import java.util.concurrent.*;
 
 /**
  * 线程池
+ * @author LL
  */
 public class ExecutorsUtils {
 
@@ -18,16 +19,13 @@ public class ExecutorsUtils {
     private void init() {
         //固定5个线程的线程池
         es = new ThreadPoolExecutor(5, 5, 0L, TimeUnit.MILLISECONDS,
-                new SynchronousQueue<Runnable>(),
-                new ThreadFactory() {
-                    @Override
-                    public Thread newThread(Runnable r) {
-                        Thread t = new Thread(r);
-                        //把线程设置为守护线程，主线程退出后，强制销毁
-                        t.setDaemon(true);
-                        System.out.println("create " + t);
-                        return t;
-                    }
+                new SynchronousQueue<>(),
+                r -> {
+                    Thread t = new Thread(r);
+                    //把线程设置为守护线程，主线程退出后，强制销毁
+                    t.setDaemon(true);
+                    System.out.println("create " + t);
+                    return t;
                 });
     }
 

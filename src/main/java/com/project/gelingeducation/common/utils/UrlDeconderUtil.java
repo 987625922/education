@@ -5,14 +5,15 @@ import java.net.URLDecoder;
 
 /**
  * @Author: LL
- * @Description:
+ * @Description: URL编码解密
  * @Date:Create：in 2020/7/6 9:52
  */
 public class UrlDeconderUtil {
 
     /**
      * URL编码解密
-     * @param s 解密字符串
+     *
+     * @param s   解密字符串
      * @param enc 字符串编码
      * @return 解密的字符串
      */

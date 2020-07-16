@@ -9,7 +9,7 @@ import java.security.Security;
  *
  * @author LL
  */
-public class DESEncryptionUtil {
+public class DesEncryptionUtil {
 
     //设置默认密匙
     private static String strDefaultKey = "defaultKey";
@@ -68,11 +68,11 @@ public class DESEncryptionUtil {
         return arrOut;
     }
 
-    public DESEncryptionUtil() throws Exception {
+    public DesEncryptionUtil() throws Exception {
         this(strDefaultKey);
     }
 
-    DESEncryptionUtil(String strKey) throws Exception {
+    DesEncryptionUtil(String strKey) throws Exception {
         Security.addProvider(new com.sun.crypto.provider.SunJCE());
         Key key = getKey(strKey.getBytes());
         encryptCipher = Cipher.getInstance("DES");

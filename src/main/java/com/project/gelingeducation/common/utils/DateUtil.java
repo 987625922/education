@@ -1,7 +1,9 @@
 package com.project.gelingeducation.common.utils;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * Data工具类
@@ -32,5 +34,18 @@ public class DateUtil {
     public static String formatFullTime(LocalDateTime localDateTime, String pattern) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
         return localDateTime.format(dateTimeFormatter);
+    }
+
+    /**
+     * 判断时间是否是当天
+     *
+     * @param date
+     * @return
+     */
+    public static boolean dateIsToday(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat(FULL_TIME_PATTERN);
+        String dateStr = format.format(date);
+        String todayDateStr = format.format(date);
+        return todayDateStr.equals(dateStr);
     }
 }

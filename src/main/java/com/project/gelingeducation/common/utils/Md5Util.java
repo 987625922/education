@@ -8,7 +8,8 @@ import org.apache.shiro.util.ByteSource;
  * @Author: LL
  * @Description: MD5加密工具类
  */
-public class MD5Util {
+public class Md5Util {
+
     private static final String ALGORITH_NAME = "md5";
 
     private static final int HASH_ITERATIONS = 5;

@@ -21,10 +21,11 @@ public enum StatusEnum {
     REDIS_CONNECT_ERROR(-3406, "redis连接出错"),
     MISS_PARAME_EXCEPTION(-3407, "缺少参数"),
     REDIS_CONNECTTION_FAILUER_EXCEPTION(-3408, "redis连接失败"),
-    LIMIT_ACCESS_EXCEPTION(-3409,"接口访问超出频率限制"),
-    NO_LOGIN_INPUT_CODE(-3410,"请输入验证码"),
-    LOGIN_INPUT_CODE_TIMEOUT(-3411,"验证码已过期"),
-    INPUT_CODE_CODE_ERROR(-3412,"验证码不正确");
+    LIMIT_ACCESS_EXCEPTION(-3409, "接口访问超出频率限制"),
+    NO_LOGIN_INPUT_CODE(-3410, "请输入验证码"),
+    LOGIN_INPUT_CODE_TIMEOUT(-3411, "验证码已过期"),
+    INPUT_CODE_CODE_ERROR(-3412, "验证码不正确"),
+    GET_SHIRO_USER_ERROR(-3413, "获取shiro的user不成功");
 
     /**
      * 状态码
