@@ -186,9 +186,11 @@ public class UserController {
      */
     @Log("按用户名搜索用户")
     @RequestMapping(value = "/find_by_name")
-    public Object findByName(String name, Integer currentPage, Integer pageSize)
+    public Object findByName(String name, Integer currentPage,
+                             Integer pageSize)
             throws UnsupportedEncodingException {
-        return JsonResult.buildSuccess(userService.selbyname(URLDecoder.decode(name, "UTF-8"),
+        return JsonResult.buildSuccess(
+                userService.selbyname(URLDecoder.decode(name, "UTF-8"),
                 currentPage, pageSize));
     }
 

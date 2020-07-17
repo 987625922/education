@@ -4,7 +4,6 @@ import com.project.gelingeducation.common.annotation.Limit;
 import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.controller.BaseController;
 import com.project.gelingeducation.common.dto.JsonResult;
-import com.project.gelingeducation.common.dto.WebDataDto;
 import com.project.gelingeducation.common.server.ValidateCodeService;
 import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.service.ILoginLogService;
@@ -14,6 +13,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * web特定的实体类返回
@@ -70,10 +71,11 @@ public class WebController extends BaseController {
     public Object login(@NotBlank(message = "account") String account,
                         @NotBlank(message = "password") String password,
                         @NotBlank(message = "verifyCode") String verifyCode,
-                        @NotBlank(message = "key") String key) {
+                        @NotBlank(message = "key") String key
+                        , HttpServletRequest request) {
         //验证验证码是否正确
         validateCodeService.check(key, verifyCode);
-        return JsonResult.buildSuccess(webDataBeanService.login(account, password));
+        return JsonResult.buildSuccess(webDataBeanService.login(account, password,request));
     }
 
     /**

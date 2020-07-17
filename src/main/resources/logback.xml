@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds" debug="false">
     <contextName>education</contextName>
-    <property name="log.charset" vale="UTF-8" />
-    <property name="log.pattern" value="%black(%contextName-) %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{36}) - %gray(%msg%n)" />
+    <property name="log.charset" vale="UTF-8"/>
+    <!-- 输出日志样式 -->
+    <property name="log.pattern"
+              value="%black(%contextName-) %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{36}) - %gray(%msg%n)"/>
+    <!-- 输出的日志路径 -->
     <property name="logback.logdir" value="D:\\gelingeducation\\logs"/>
-    <property name="logback.appname" value="logDemo"/>
+    <!-- 输出的日志名称 -->
+    <property name="logback.appname" value="geling-log"/>
 
     <!--输出到控制台-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -50,33 +54,33 @@
 
     <!--普通日志输出到控制台  TRACE < DEBUG < INFO <  WARN < ERROR -->
     <root level="INFO">
-        <appender-ref ref="console" />
-        <appender-ref ref="errorfile" />
+        <appender-ref ref="console"/>
+        <appender-ref ref="errorfile"/>
     </root>
 
     <!--监控sql日志输出 -->
     <logger name="jdbc.sqlonly" level="INFO" additivity="false">
-        <appender-ref ref="console" />
+        <appender-ref ref="console"/>
     </logger>
 
     <logger name="jdbc.resultset" level="ERROR" additivity="false">
-        <appender-ref ref="console" />
+        <appender-ref ref="console"/>
     </logger>
 
     <!--  如想看到表格数据，将OFF改为INFO  -->
     <logger name="jdbc.resultsettable" level="OFF" additivity="false">
-        <appender-ref ref="console" />
+        <appender-ref ref="console"/>
     </logger>
 
     <logger name="jdbc.connection" level="OFF" additivity="false">
-        <appender-ref ref="console" />
+        <appender-ref ref="console"/>
     </logger>
 
     <logger name="jdbc.sqltiming" level="OFF" additivity="false">
-        <appender-ref ref="console" />
+        <appender-ref ref="console"/>
     </logger>
 
     <logger name="jdbc.audit" level="OFF" additivity="false">
-        <appender-ref ref="console" />
+        <appender-ref ref="console"/>
     </logger>
 </configuration>

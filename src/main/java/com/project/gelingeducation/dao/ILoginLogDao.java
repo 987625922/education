@@ -50,4 +50,8 @@ public interface ILoginLogDao {
      * @return
      */
     List getLoginLogByIp(String ip);
+    /**
+     * 更新日志实体类
+     */
+    void update(LoginLog loginLog);
 }

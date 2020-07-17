@@ -3,6 +3,8 @@ package com.project.gelingeducation.service;
 import com.project.gelingeducation.common.dto.WebDataDto;
 import com.project.gelingeducation.entity.User;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @Author: LL
  * @Description: 视频的Service
@@ -16,7 +18,7 @@ public interface IWebDataBeanService {
      * @param password 密码
      * @return id 和 token
      */
-    Object login(String account, String password);
+    Object login(String account, String password, HttpServletRequest request);
 
     /**
      * 添加登录数
@@ -33,4 +35,9 @@ public interface IWebDataBeanService {
      * @return
      */
     WebDataDto getWebData();
+
+    /**
+     * 添加今天登录的ip数量
+     */
+    void addTodayIpNum();
 }

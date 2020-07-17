@@ -44,8 +44,9 @@ public class HttpUtil {
      */
     public static String getBrowser(HttpServletRequest request) {
         //通过UserAgent获取request中的信息
+        String userAgant = request.getHeader("User-Agent");
         UserAgent userAgent =
-                UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
+                UserAgent.parseUserAgentString(userAgant);
         Browser browser = userAgent.getBrowser();
         if (browser == null) {
             return "";

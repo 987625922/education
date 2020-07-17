@@ -99,5 +99,15 @@ public class LoginLogDaoImpl extends BaseDao implements ILoginLogDao {
         return query.list();
     }
 
+    /**
+     * 更新日志实体类
+     *
+     * @param loginLog
+     */
+    @Override
+    public void update(LoginLog loginLog) {
+        baseUpdate(loginLog);
+    }
+
 
 }

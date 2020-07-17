@@ -15,6 +15,8 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @Author: LL
@@ -63,7 +65,7 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
      * @return
      */
     @Override
-    public Object login(String account, String password) {
+    public Object login(String account, String password,HttpServletRequest request) {
         //通过用户名获取用户
         User reUser = userService.findUserByAccount(account);
         if (reUser == null) {
@@ -76,7 +78,7 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         //添加登录数量
         addLoginMun(reUser);
         //更新登录log,可以开启一个格外的线程去处理
-        ExecutorsUtils.getInstance().execute(() -> loginLogService.saveOrUpdateLoginLogByUid(reUser));
+        ExecutorsUtils.getInstance().execute(() -> loginLogService.saveOrUpdateLoginLogByUid(reUser,request));
         //返回uid和jwtToken
         String token = JwtUtil.sign(reUser.getAccount(), reUser.getPassword());
         HashMap userMap = new HashMap(2);
@@ -118,19 +120,24 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
             //获取request的ip
             String ip = HttpUtil.getIp(servletRequest);
             if (!StringUtils.isEmpty(ip)) {
-                //用户名获取登录信息
-                LoginLog loginLog = loginLogService.getByUserId(user.getId());
-                //判断用户是否当天登录过
-                if (DateUtil.dateIsToday(loginLog.getLoginTime())) {
-                    //判断用户当天登录的ip是否相等
-                    if (!loginLog.getIp().equals(ip)) {
-                        Integer todayLoginIpNum = (Integer) templateUtil.get(GLConstant.TODAY_LOGIN_IP_NUM_KEY);
-                        if (todayLoginIpNum != null) {
-                            todayLoginIpNum++;
-                        } else {
-                            todayLoginIpNum = 1;
+                //根据ip获取登录信息列表
+                List<LoginLog> loginLogList = loginLogService.getLoginLogByIp(ip);
+                //如果登录信息列表为空说明此ip没有登录过，ip数量加一
+                if (loginLogList == null) {
+                    addTodayIpNum();
+                }
+                //登录列表不为空
+                else {
+                    //此ip今天是否登录过
+                    AtomicBoolean isTodayLogin = new AtomicBoolean(false);
+                    loginLogList.forEach(loginLog -> {
+                        if (DateUtil.dateIsToday(loginLog.getLoginTime())) {
+                            isTodayLogin.set(true);
                         }
-                        templateUtil.set(GLConstant.TODAY_LOGIN_IP_NUM_KEY, String.valueOf(todayLoginIpNum));
+                    });
+                    //如果次ip今天没有登录，ip数量加一
+                    if (!isTodayLogin.get()) {
+                        addTodayIpNum();
                     }
                 }
             }
@@ -178,6 +185,24 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         //设置视频数量
         dataDto.setVideosNum(videoService.getTotalNumber());
         return dataDto;
+    }
+
+    /**
+     * 添加今天登录的ip数量
+     */
+    @Override
+    public void addTodayIpNum() {
+        //获取ip登录次数
+        String todayLoginIpNumKeyStr = (String) templateUtil.get(GLConstant.TODAY_LOGIN_IP_NUM_KEY);
+        //判断ip登录数是否为空，为空就赋值
+        if (todayLoginIpNumKeyStr == null) {
+            todayLoginIpNumKeyStr = "0";
+        }
+        Integer todayLoginIpNumKey = Integer.valueOf(todayLoginIpNumKeyStr);
+        //ip数量加一
+        todayLoginIpNumKey++;
+        //ip数量存入缓存
+        templateUtil.set(GLConstant.TODAY_LOGIN_IP_NUM_KEY, String.valueOf(todayLoginIpNumKey));
     }
 }
 

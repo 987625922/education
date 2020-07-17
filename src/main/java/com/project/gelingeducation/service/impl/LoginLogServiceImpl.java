@@ -79,28 +79,27 @@ public class LoginLogServiceImpl implements ILoginLogService {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void saveOrUpdateLoginLogByUid(User user) {
+    public void saveOrUpdateLoginLogByUid(User user, HttpServletRequest request) {
         LoginLog loginLog = user.getLoginLog();
-        HttpServletRequest servletRequest = SpringContextUtil.getHttpServletRequest();
-        String ip = "";
-        if (servletRequest != null) {
-            ip = HttpUtil.getIp(servletRequest);
-        }
+        //获取ip地址
+        String ip = HttpUtil.getIp(request);
+        //查看账号是否有登录日志，有就更新，没有就插入
         if (loginLog != null) {
             loginLog.setLastLoginTime(loginLog.getLoginTime());
             loginLog.setLocation(HttpUtil.getCityInfo(ip));
-            loginLog.setBrowser(HttpUtil.getBrowser(servletRequest));
+            loginLog.setBrowser(HttpUtil.getBrowser(request));
             loginLog.setLoginTime(new Date());
-            loginLog.setUserSystem(HttpUtil.getOsName(servletRequest));
+            loginLog.setUserSystem(HttpUtil.getOsName(request));
             loginLog.setIp(ip);
+            loginLogDao.update(loginLog);
         } else {
             loginLog = new LoginLog();
             loginLog.setUser(user);
             loginLog.setLoginTime(new Date());
-            loginLog.setBrowser(HttpUtil.getBrowser(servletRequest));
+            loginLog.setBrowser(HttpUtil.getBrowser(request));
             loginLog.setIp(ip);
             loginLog.setLocation(HttpUtil.getCityInfo(ip));
-            loginLog.setUserSystem(HttpUtil.getOsName(servletRequest));
+            loginLog.setUserSystem(HttpUtil.getOsName(request));
             loginLogDao.insert(loginLog);
         }
     }

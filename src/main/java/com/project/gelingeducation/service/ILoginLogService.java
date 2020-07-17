@@ -3,6 +3,7 @@ package com.project.gelingeducation.service;
 import com.project.gelingeducation.entity.LoginLog;
 import com.project.gelingeducation.entity.User;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -42,7 +43,7 @@ public interface ILoginLogService {
      *
      * @param user 用户实体类
      */
-    void saveOrUpdateLoginLogByUid(User user);
+    void saveOrUpdateLoginLogByUid(User user, HttpServletRequest request);
 
     /**
      * 根据ip获取登录日志
