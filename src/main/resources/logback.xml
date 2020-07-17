@@ -7,6 +7,7 @@
               value="%black(%contextName-) %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{36}) - %gray(%msg%n)"/>
     <!-- 输出的日志路径 -->
     <property name="logback.logdir" value="D:\\gelingeducation\\logs"/>
+    <property name="logback.logdir" value="gelingeducation-log\\logs"/>
     <!-- 输出的日志名称 -->
     <property name="logback.appname" value="geling-log"/>
 

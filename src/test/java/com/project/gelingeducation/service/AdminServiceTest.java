@@ -15,7 +15,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import java.util.List;
 
 @Slf4j
-@ActiveProfiles("development")
+//@ActiveProfiles("development")
+@ActiveProfiles("producation")
 @WebAppConfiguration
 @ContextConfiguration(locations = {"/spring/application-data.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,9 +30,6 @@ public class AdminServiceTest {
         User user = new User();
         user.setAccount("123456");
         user.setPassword("123456");
-        Role role = new Role();
-        role.setId(43L);
-        user.setRole(role);
         log.debug("findById获取的结果：" + userservice.addUser(user));
 
 //        User user = new User();
