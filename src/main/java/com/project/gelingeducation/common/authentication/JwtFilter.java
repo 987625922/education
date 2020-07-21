@@ -29,6 +29,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();
+
     /**
      * 不用登陆就可以访问的接口，多个用,号隔开
      */

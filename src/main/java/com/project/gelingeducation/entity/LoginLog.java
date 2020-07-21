@@ -32,8 +32,7 @@ public class LoginLog implements Serializable {
      * 第一次登录时间
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "first_login_time")
-    @CreationTimestamp
+    @Column(name = "first_login_time", nullable = false, updatable = false)
     private Date firstLoginTime;
 
     /**
@@ -76,6 +75,8 @@ public class LoginLog implements Serializable {
 
     /**
      * 用户表的id
+     * insertable = false 表示该列不可以插入
+     * updateable = false 表示该列不可以更新
      */
     @Column(name = "uid", insertable = false, updatable = false)
     private Long uid;

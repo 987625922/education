@@ -25,11 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class WebController extends BaseController {
     /**
-     * 登录log的service
-     */
-    @Autowired
-    private ILoginLogService loginLogService;
-    /**
      * web特定的实体类返回service
      */
     @Autowired

@@ -86,20 +86,6 @@ public class User implements Serializable {
     private Integer status = 1;
 
     /**
-     * 创建时间
-     */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_time")
-    @CreationTimestamp
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    @Column(name = "modify_time")
-    private Date modifyTime;
-
-    /**
      * 角色id
      */
     @Column(name = "role_id", insertable = false, updatable = false)
@@ -108,8 +94,7 @@ public class User implements Serializable {
     /**
      * 身份列表
      */
-    @ManyToOne(targetEntity = Role.class, cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Role.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
@@ -118,4 +103,17 @@ public class User implements Serializable {
      */
     @OneToOne(targetEntity = LoginLog.class, mappedBy = "user")
     private LoginLog loginLog;
+
+    /**
+     * 创建时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_time", nullable = false, updatable = false)
+    private Date createTime;
+
+    /**
+     * 修改时间
+     */
+    @Column(name = "modify_time", nullable = false)
+    private Date modifyTime;
 }

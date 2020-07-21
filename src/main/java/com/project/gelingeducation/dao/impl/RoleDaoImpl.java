@@ -68,14 +68,6 @@ public class RoleDaoImpl extends BaseDao implements IRoleDao {
         return pageResult;
     }
 
-
-    @Override
-    public Role findDefault() {
-        Query query = getSession().createQuery("from Role where is_default=?0");
-        query.setParameter(0, 1);
-        return (Role) query.uniqueResult();
-    }
-
     @Override
     public List selByName(String name) {
         return getSession().createQuery("FROM Role WHERE name LIKE '%" + name + "%'").getResultList();

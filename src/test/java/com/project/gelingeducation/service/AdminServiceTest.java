@@ -15,8 +15,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import java.util.List;
 
 @Slf4j
-//@ActiveProfiles("development")
-@ActiveProfiles("producation")
+@ActiveProfiles("development")
+//@ActiveProfiles("producation")
 @WebAppConfiguration
 @ContextConfiguration(locations = {"/spring/application-data.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,24 +25,19 @@ public class AdminServiceTest {
     @Autowired
     private IUserService userservice;
 
+    @Autowired
+    private IRoleService roleService;
+
     @Test
     public void insert() {
+        Role role = roleService.findByRole(10L);
         User user = new User();
         user.setAccount("123456");
         user.setPassword("123456");
-        log.debug("findById获取的结果：" + userservice.addUser(user));
-
-//        User user = new User();
-//        user.setAccount("editor");
-//        user.setPassword("editor");
-//        log.debug("findById获取的结果：" + userservice.addUser(user));
-
-//        for (int i = 0; i < 20; i++) {
-//            User user = new User();
-//            user.setAccount(String.valueOf(System.currentTimeMillis()).substring(5));
-//            user.setPassword("123456");
-//            userservice.addUser(user);
-//        }
+        user.setRole(role);
+        role.getUsers().add(user);
+        userservice.addUser(user);
+        roleService.update(role);
     }
 
     @Test

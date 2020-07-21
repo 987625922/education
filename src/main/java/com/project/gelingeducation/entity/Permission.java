@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -29,29 +28,48 @@ public class Permission implements Serializable {
     @GeneratedValue
     private Long id;
 
+    /**
+     * 权限名
+     */
     @Column(name = "name", length = 24)
     private String name;
 
-    //创建时间
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_time")
-    @CreationTimestamp
-    private Date createDate;
-
+    /**
+     * 权限备注
+     */
     @Column(name = "remark")
     private String remark;
 
+    /**
+     * 权限链接
+     */
     @Column(name = "url")
     private String url;
 
     /**
      * 权限标识
      */
-    @Column(name = "perms", length = 12, nullable = false)
+    @Column(name = "perms", length = 20, nullable = false)
     private String perms;
 
-    @ManyToMany(mappedBy = "permissions", fetch = FetchType.EAGER)
+    /**
+     * 多对多 权限 - 角色
+     */
+    @ManyToMany(mappedBy = "permissions")
     @JsonIgnore
     private Set<Role> roles = new HashSet<>();
 
+    /**
+     * 创建时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_time", nullable = false, updatable = false)
+    private Date createDate;
+
+    /**
+     * 上次更新时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_update_time", nullable = false)
+    private Date lastUpdateTime;
 }

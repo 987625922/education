@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -69,17 +70,16 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public User addUser(User user) {
-        if (user.getRole() == null) {
-            user.setRole(roleService.findDefault());
-        }
         if (userDao.findByPhone(user.getAccount()) == null) {
             user.setUserName("用户名");
             user.setStatus(1);
-            user.setPassword(Md5Util.encrypt(user.getAccount().toLowerCase(), user.getPassword()));
-            user.setCoverImg("https://timgsa.baidu.com/timg?image&quality=80&size=b9999" +
-                    "_10000&sec=1582740929074&di=88ebb0f61e464281d947673187acaa59&imgtype=0" +
-                    "&src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2Fthreadcover%2Fbb%2Fa1%2F1" +
-                    "988382.jpg");
+            //对用户密码进行md5加密，再存入数据库
+            user.setPassword(Md5Util.encrypt(user.getAccount().toLowerCase(),
+                    user.getPassword()));
+            user.setCoverImg("");
+            Date date = new Date();
+            user.setCreateTime(date);
+            user.setModifyTime(date);
             return userDao.insert(user);
         } else {
             throw new AllException(StatusEnum.ACCOUNT_ALREADY_EXISTS);
@@ -110,7 +110,7 @@ public class UserServiceImpl implements IUserService {
     public Object queryAll(Integer currentPage, Integer pageSize) {
         if (currentPage != null && pageSize != null) {
             return userDao.queryAll(currentPage, pageSize);
-        }else {
+        } else {
             return userDao.queryAll();
         }
     }
@@ -118,7 +118,7 @@ public class UserServiceImpl implements IUserService {
     /**
      * 更新用户头像
      *
-     * @param id 用户id
+     * @param id       用户id
      * @param coverImg 头像地址
      */
     @Override
@@ -141,7 +141,7 @@ public class UserServiceImpl implements IUserService {
     /**
      * 修改密码
      *
-     * @param id 用户id
+     * @param id          用户id
      * @param oldPassword 旧密码
      * @param newPassword 新密码
      */
@@ -183,14 +183,14 @@ public class UserServiceImpl implements IUserService {
     /**
      * 通过名字用户格式的用户的list
      *
-     * @param name 用户名
+     * @param name        用户名
      * @param currentPage 页码
      * @param pageSize    页数
      * @return 返回分页实体类
      */
     @Override
     public PageResult selbyname(String name, Integer currentPage, Integer pageSize) throws UnsupportedEncodingException {
-        return userDao.selbyname(URLDecoder.decode(name,"UTF-8"), currentPage, pageSize);
+        return userDao.selbyname(URLDecoder.decode(name, "UTF-8"), currentPage, pageSize);
     }
 
     /**

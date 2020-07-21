@@ -50,21 +50,23 @@ public class Teacher implements Serializable {
     private String remark;
 
     /**
-     * 创建时间
-     */
-    @Column(name = "create_time")
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    @Column(name = "modify_time")
-    private Date modifyTime;
-
-    /**
      * 多对多 教师
      */
     @JsonIgnore
     @OneToMany(mappedBy = "teacher", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Set<Video> videos = new HashSet<>();
+
+    /**
+     * 创建时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_time", nullable = false, updatable = false)
+    private Date createTime;
+
+    /**
+     * 修改时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "modify_time", nullable = false)
+    private Date modifyTime;
 }

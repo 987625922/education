@@ -13,6 +13,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 @Slf4j
@@ -33,12 +35,6 @@ public class RoleTest {
         Role role = new Role();
         role.setRemark("运营维护");
         role.setName("editor");
-        role.setIsDefault(1);
-        Permission permission = new Permission();
-        permission.setId(191L);
-        permission.setName("用户编辑");
-        permission.setPerms("user:root");
-        role.getPermissions().add(permission);
         roleService.addRole(role);
 
 //        Role role = new Role();
@@ -71,8 +67,8 @@ public class RoleTest {
 
     @Test
     public void list() {
-        PageResult pageResult = (PageResult)roleService.queryAll(1,3);
-        for (Role role : (List<Role>)pageResult.getLists()) {
+        PageResult pageResult = (PageResult) roleService.queryAll(1, 3);
+        for (Role role : (List<Role>) pageResult.getLists()) {
             log.info("==>" + role);
         }
     }
@@ -100,11 +96,22 @@ public class RoleTest {
         }
     }
 
-    @Test
-    public void updateRoleAndPermission() {
-        Long[] permissionIds = {30L, 31L};
-        roleService.updateRoleAndPermission(104L, "11",
-                "", permissionIds);
-    }
 
+    /**
+     * 添加最初的角色
+     */
+    @Test
+    public void addRoleDefault() {
+        List<Permission> permissionServiceList = (List<Permission>) permissionService.queryAll(null, null);
+        Date date = new Date();
+        Role role = new Role();
+        role.setRemark("角色：超级管理员");
+        role.setName("admin");
+        role.setCreateDate(date);
+        role.setLastUpdateTime(date);
+        HashSet<Permission> permissionHashSet = new HashSet<>();
+        permissionServiceList.forEach(p -> permissionHashSet.add(p));
+        role.getPermissions().addAll(permissionHashSet);
+        roleService.addRole(role);
+    }
 }

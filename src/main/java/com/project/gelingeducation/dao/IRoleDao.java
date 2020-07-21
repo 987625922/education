@@ -18,8 +18,6 @@ public interface IRoleDao {
 
     PageResult queryAll(Integer currentPage, Integer pageSize);
 
-    Role findDefault();
-
     List selByName(String name);
 
     void delByIds(String ids);

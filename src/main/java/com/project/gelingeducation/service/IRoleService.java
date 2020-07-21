@@ -36,7 +36,7 @@ public interface IRoleService {
     void addPermissionByIds(Long roleId,Long[] permissionIds);
 
     /**
-     * 添加角色
+     * 更新角色
      *
      * @param role 角色实体类
      */
@@ -58,12 +58,6 @@ public interface IRoleService {
      */
     Object queryAll(Integer currentPage, Integer pageSize);
 
-    /**
-     * 搜索创建账号默认的角色
-     *
-     * @return
-     */
-    Role findDefault();
 
     /**
      * 根据匹配角色名搜索角色list
@@ -91,12 +85,10 @@ public interface IRoleService {
     /**
      * 更新角色和权限
      *
-     * @param id            角色id
-     * @param name          角色名
-     * @param remark        角色备注
+     * @param role            角色实体
      * @param permissionIds 1,2,3 权限id字符串
      */
-    void updateRoleAndPermission(Long id,String name,String remark,
+    void updateRoleAndPermission(Role role,
                                  Long[] permissionIds);
     /**
      * 根据用户id获取角色

@@ -4,11 +4,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @Author: LL
@@ -97,6 +97,7 @@ public class Log implements Serializable {
     /**
      * 创建日期
      */
-    @CreationTimestamp
-    private Timestamp createTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_time", nullable = false, updatable = false)
+    private Date createTime;
 }

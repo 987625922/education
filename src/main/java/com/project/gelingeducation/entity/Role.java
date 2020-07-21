@@ -36,30 +36,10 @@ public class Role implements Serializable {
     private String name;
 
     /**
-     * 创建时间
-     */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_time")
-    private Date createDate;
-
-    /**
-     * 上次更新时间
-     */
-//    @Column(name = "last_update_time", nullable = false)
-//    private Date lastUpdateTime;
-
-    /**
      * 角色备注
      */
     @Column(name = "remark")
     private String remark;
-
-    /**
-     * 是否是用户创建时的默认身份
-     * 0为不是默认注册时的身份,1为默认
-     */
-    @Column(name = "is_default", nullable = false)
-    private Integer isDefault = 0;
 
     /**
      * 一对多 用户
@@ -71,10 +51,23 @@ public class Role implements Serializable {
     /**
      * 多对多 权限
      */
-    @ManyToMany(targetEntity = Permission.class
-            , cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Permission.class, fetch = FetchType.EAGER)
     @JoinTable(name = "t_role_permission",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private Set<Permission> permissions = new HashSet<>();
+
+    /**
+     * 创建时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_time", nullable = false, updatable = false)
+    private Date createDate;
+
+    /**
+     * 上次更新时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_update_time", nullable = false)
+    private Date lastUpdateTime;
 }

@@ -69,6 +69,27 @@ public class Course implements Serializable {
     private Integer status = 1;
 
     /**
+     * 多对多 视频列表
+     */
+    @ManyToMany(targetEntity = Video.class,fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "t_course_video",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "video_id"))
+    private Set<Video> videos = new HashSet<>();
+
+    /**
+     * 多对多 专题
+     */
+    @ManyToMany(targetEntity = Subject.class)
+    @JoinTable(
+            name = "t_course_subject",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id"))
+    @JsonBackReference
+    private Set<Subject> subjects = new HashSet<>();
+
+    /**
      * 创建时间
      */
     @Temporal(TemporalType.TIMESTAMP)
@@ -81,29 +102,6 @@ public class Course implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_update_time", nullable = false)
     private Date lastUpdateTime;
-
-    /**
-     * 多对多 视频列表
-     */
-    @ManyToMany(targetEntity = Video.class,
-            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "t_course_video",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "video_id"))
-    private Set<Video> videos = new HashSet<>();
-
-    /**
-     * 多对多 专题
-     */
-    @ManyToMany(targetEntity = Subject.class,
-            cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "t_course_subject",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "subject_id"))
-    @JsonBackReference
-    private Set<Subject> subjects = new HashSet<>();
 }
 
 

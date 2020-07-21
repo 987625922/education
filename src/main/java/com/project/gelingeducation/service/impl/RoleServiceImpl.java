@@ -1,5 +1,6 @@
 package com.project.gelingeducation.service.impl;
 
+import com.project.gelingeducation.common.utils.BeanUtil;
 import com.project.gelingeducation.common.utils.UrlDeconderUtil;
 import com.project.gelingeducation.dao.IRoleDao;
 import com.project.gelingeducation.entity.Permission;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -112,15 +112,6 @@ public class RoleServiceImpl implements IRoleService {
         }
     }
 
-    /**
-     * 搜索创建账号默认的角色
-     *
-     * @return
-     */
-    @Override
-    public Role findDefault() {
-        return roleDao.findDefault();
-    }
 
     /**
      * 根据匹配角色名搜索角色list
@@ -158,18 +149,14 @@ public class RoleServiceImpl implements IRoleService {
     /**
      * 更新角色和权限
      *
-     * @param id            角色id
-     * @param name          角色名
-     * @param remark        角色备注
+     * @param role          角色实体
      * @param permissionIds 1,2,3 权限id字符串
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateRoleAndPermission(Long id, String name, String remark,
-                                        Long[] permissionIds) {
-        Role role = roleDao.findById(id);
-        role.setName(name);
-        role.setRemark(remark);
+    public void updateRoleAndPermission(Role role, Long[] permissionIds) {
+        Role findRole = roleDao.findById(role.getId());
+        BeanUtil.copyPropertiesIgnoreNull(role,findRole);
         List<Permission> permissions =
                 permissionService.getPermissionListByIds(permissionIds);
         for (Permission permission : permissions) {
