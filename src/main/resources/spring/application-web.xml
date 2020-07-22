@@ -30,6 +30,12 @@
                 <!-- 顺序不能颠倒 -->
                 <entry key="/web/login" value="anon"/>
                 <entry key="/**" value="authc"/>
+                <entry key="/**" value="jwt"/>
+            </map>
+        </property>
+        <property name="filters">
+            <map>
+                <entry key="jwt" value-ref="jwtFilter"/>
             </map>
         </property>
         <!--配置shiro默认登录界面地址，前后端分离中登录界面跳转应由前端路由控制，

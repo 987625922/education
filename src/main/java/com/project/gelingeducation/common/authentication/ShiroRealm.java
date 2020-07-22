@@ -96,7 +96,7 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
             throws AuthenticationException {
         //获取用户输入的token
-        String account = (String) authenticationToken.getPrincipal();
+        String account = (String) authenticationToken.getCredentials();
         //从token中获取账号
 //        String account = JwtUtil.getUsername(token);
 //        //加密token

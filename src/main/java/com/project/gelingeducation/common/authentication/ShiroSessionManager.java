@@ -17,7 +17,7 @@ public class ShiroSessionManager extends DefaultWebSessionManager {
     /**
      * 定义常量
      */
-    private static final String AUTHORIZARION = "Authorization";
+    public static final String AUTHORIZARION = "Authorization";
     private static final String REFERENCED_SESSION_ID_SOURCE = "Stateless request";
 
     /**

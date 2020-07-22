@@ -1,15 +1,9 @@
 package com.project.gelingeducation.common.authentication;
 
-import com.project.gelingeducation.common.config.GLConstant;
-import com.project.gelingeducation.common.dto.JsonResult;
-import com.project.gelingeducation.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
-import org.apache.shiro.web.util.WebUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
@@ -17,23 +11,15 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.net.URLEncoder;
 
 /**
  * @author ll
  * @Description: 鉴权登录拦截器
  **/
-//@Component
+@Component
 @Slf4j
 public class JwtFilter extends BasicHttpAuthenticationFilter {
-
-
-    private AntPathMatcher pathMatcher = new AntPathMatcher();
-
-    /**
-     * 不用登陆就可以访问的接口，多个用,号隔开
-     */
-    private String annonUrl = "/web/login,/web/register,/web/captcha";
 
     /**
      * 执行登录认证
@@ -46,33 +32,35 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response,
                                       Object mappedValue) {
-        /**
-         * 判断是否是需要登录才能访问的链接
-         */
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String[] anonUrl = StringUtils.splitByWholeSeparatorPreserveAllTokens(annonUrl, ",");
-        boolean match = false;
-        for (String u : anonUrl) {
-            if (pathMatcher.match(u, httpServletRequest.getRequestURI())) {
-                match = true;
+        //判断请求的请求头是否带上 "Token"
+        if (((HttpServletRequest) request).getHeader(ShiroSessionManager.AUTHORIZARION) != null) {
+            //如果存在，则进入 executeLogin 方法执行登入，检查 token 是否正确
+            try {
+                executeLogin(request, response);
+                return true;
+            } catch (Exception e) {
+                //token 错误
+                responseError(response, e.getMessage());
             }
         }
-        if (match) {
-            return true;
-        }
-        /**
-         * 如果是需要登录才能访问的就检查用户是否登录
-         */
-        try {
-            executeLogin(request, response);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        //如果请求头不存在 Token，则可能是执行登陆操作或者是游客状态访问
+        // ，无需检查 token，直接返回 true
+        return true;
     }
 
     /**
-     * 登录检查，提交给realm
+     * 判断用户是否想要登入。
+     * 检测 header 里面是否包含 Token 字段
+     */
+    @Override
+    protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
+        HttpServletRequest req = (HttpServletRequest) request;
+        String token = req.getHeader(ShiroSessionManager.AUTHORIZARION);
+        return token != null;
+    }
+
+    /**
+     * 执行登录操作
      *
      * @param request
      * @param response
@@ -82,7 +70,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String token = httpServletRequest.getHeader(GLConstant.TOKEN_SIGN);
+        String token = httpServletRequest.getHeader(ShiroSessionManager.AUTHORIZARION);
 
         JwtToken jwtToken = new JwtToken(token);
         // 提交给realm进行登入，如果错误他会抛出异常并被捕获
@@ -109,27 +97,17 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         return super.preHandle(request, response);
     }
 
-
     /**
-     * 访问了受保护的页面 没有进行认证的 进入这个方法
-     *
-     * @param request
-     * @param response
-     * @return
+     * 将非法请求跳转到 /unauthorized/**
      */
-    @Override
-    protected boolean sendChallenge(ServletRequest request, ServletResponse response) {
-        HttpServletResponse httpResponse = WebUtils.toHttp(response);
-        httpResponse.setStatus(HttpStatus.OK.value());
-        httpResponse.setCharacterEncoding("utf-8");
-        httpResponse.setContentType("application/json; charset=utf-8");
-        try (PrintWriter out = httpResponse.getWriter()) {
-            String responseJson = JsonUtil.jsonToString(JsonResult.buildError("用户未登录",
-                    -103));
-            out.print(responseJson);
+    private void responseError(ServletResponse response, String message) {
+        try {
+            HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+            //设置编码，否则中文字符在重定向时会变为空字符串
+            message = URLEncoder.encode(message, "UTF-8");
+            httpServletResponse.sendRedirect("/unauthorized/" + message);
         } catch (IOException e) {
-            log.error("sendChallenge error：", e);
+            log.error(e.getMessage());
         }
-        return false;
     }
 }
