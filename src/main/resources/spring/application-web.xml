@@ -16,71 +16,49 @@
 
     <!-- controller注解开启 -->
     <mvc:annotation-driven/>
-
-    <!-- shiro 注解开启 -->
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="shiroRealm"/>
-        <property name="subjectDAO" ref="subjectDao"/>
-        <property name="cacheManager" ref="redisCacheManager"/>
-    </bean>
-
-    <!--  shiro 注解开启  -->
+    <!-- 开启shiro-aop注解支持-->
     <bean id="authorizationAttributeSourceAdvisor"
           class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
-
-    <!--  shiro过滤器工厂  -->
-    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    <!-- shiro基础配置 -->
+    <bean id="shiroFilterFactory"
+          class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="filterChainDefinitionMap">
             <map>
-                <entry key="/**" value="jwt"/>
+                <!-- 顺序不能颠倒 -->
                 <entry key="/web/login" value="anon"/>
+                <entry key="/**" value="authc"/>
             </map>
         </property>
-        <property name="filters">
-            <map>
-                <entry key="jwt" value-ref="jwtFilter"/>
-            </map>
-        </property>
+        <!--配置shiro默认登录界面地址，前后端分离中登录界面跳转应由前端路由控制，
+        后台仅返回json数据-->
+        <property name="loginUrl" value="/web/unauth"/>
     </bean>
 
-    <!--  shiro subject实体的Dao配置  -->
-    <bean id="subjectDao" class="org.apache.shiro.mgt.DefaultSubjectDAO">
-        <property name="sessionStorageEvaluator" ref="defaultSessionStorageEvaluator"/>
+    <!-- 安全管理器 -->
+    <bean id="securityManager"
+          class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!-- 自定义session管理 -->
+        <property name="sessionManager" ref="sessionManager"/>
+        <property name="cacheManager" ref="shiroCacheManager"/>
+        <!-- 自定义realm验证-->
+        <property name="realm" ref="shiroRealm"/>
     </bean>
 
-    <!--  shiro session存储状态的控制  -->
-    <bean id="defaultSessionStorageEvaluator"
-          class="org.apache.shiro.mgt.DefaultSessionStorageEvaluator">
-        <property name="sessionStorageEnabled" value="false"/>
+    <!-- 身份验证器 -->
+    <bean id="shiroRealm" class="com.project.gelingeducation.common.authentication.ShiroRealm">
+        <property name="credentialsMatcher" ref="hashedCredentialsMatcher"/>
     </bean>
 
-    <!--  spring aop 注解的创建者  -->
-    <bean id="defaultAdvisorAutoProxyCreator"
-          class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
-        <property name="proxyTargetClass" value="true"/>
-        <!--/**-->
-        <!--* 解决重复代理问题 github#994-->
-        <!--* 添加前缀判断 不匹配 任何Advisor-->
-        <!--*/-->
-        <property name="usePrefix" value="true"/>
-        <property name="advisorBeanNamePrefix" value="_no_advisor"/>
-    </bean>
-
-    <!--  shiro的生命周期  -->
-    <bean id="lifecycleBeanPostProcessor"
-          class="org.apache.shiro.spring.LifecycleBeanPostProcessor">
-    </bean>
-
-    <!-- 用户的权限保存到redis中 -->
-    <bean id="redisCacheManager" class="org.crazycake.shiro.RedisCacheManager">
-        <property name="redisManager" ref="redisManager"/>
-        <!--//redis中针对不同用户缓存(此处的id需要对应user实体中的id字段,用于唯一标识)-->
-        <property name="principalIdFieldName" value="id"/>
-        <!--        //用户权限信息缓存时间-->
-        <property name="expire" value="200000"/>
+    <!-- 凭证匹配器
+     将密码校验交给Shiro的SimpleAuthenticationInfo进行处理,在这里做匹配配置
+     -->
+    <bean id="hashedCredentialsMatcher"
+          class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="md5"/>
+        <property name="hashIterations" value="5"/>
     </bean>
 
     <!--  基于shiroCacheManager的RedisManager  -->
@@ -88,6 +66,108 @@
         <property name="host" value="127.0.0.1:6379"/>
         <property name="timeout" value="10000"/>
     </bean>
+
+    <!--  配置Cache管理器
+          用于往Redis存储权限和角色标识 -->
+    <bean id="shiroCacheManager"
+          class="org.crazycake.shiro.RedisCacheManager">
+        <property name="redisManager" ref="redisManager"/>
+        <!--//redis中针对不同用户缓存
+        (此处的id需要对应user实体中的id字段,用于唯一标识)-->
+        <property name="principalIdFieldName" value="id"/>
+        <!--        //用户权限信息缓存时间-->
+        <property name="expire" value="200000"/>
+    </bean>
+    <!-- sessionId生成器 -->
+    <bean id="sessionIdGenerator"
+          class="com.project.gelingeducation.common.authentication.ShiroSessionIdGenerator"/>
+
+    <!-- 配置RedisSessionDAO -->
+    <bean id="redisSessionDAO"
+          class="org.crazycake.shiro.RedisSessionDAO">
+        <property name="redisManager" ref="redisManager"/>
+        <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+        <property name="keyPrefix" value="shiro:session:"/>
+        <property name="expire" value="1800"/>
+    </bean>
+
+    <!-- 配置session管理器 -->
+    <bean id="sessionManager"
+          class="com.project.gelingeducation.common.authentication.ShiroSessionManager">
+        <property name="sessionDAO" ref="redisSessionDAO"/>
+    </bean>
+
+    <!-- shiro 注解开启 -->
+    <!--<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">-->
+    <!--<property name="realm" ref="shiroRealm"/>-->
+    <!--<property name="subjectDAO" ref="subjectDao"/>-->
+    <!--<property name="cacheManager" ref="redisCacheManager"/>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;  shiro 注解开启  &ndash;&gt;-->
+    <!--<bean id="authorizationAttributeSourceAdvisor"-->
+    <!--class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">-->
+    <!--<property name="securityManager" ref="securityManager"/>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;  shiro过滤器工厂  &ndash;&gt;-->
+    <!--<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">-->
+    <!--<property name="securityManager" ref="securityManager"/>-->
+    <!--<property name="filterChainDefinitionMap">-->
+    <!--<map>-->
+    <!--<entry key="/**" value="jwt"/>-->
+    <!--<entry key="/web/login" value="anon"/>-->
+    <!--</map>-->
+    <!--</property>-->
+    <!--<property name="filters">-->
+    <!--<map>-->
+    <!--<entry key="jwt" value-ref="jwtFilter"/>-->
+    <!--</map>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;  shiro subject实体的Dao配置  &ndash;&gt;-->
+    <!--<bean id="subjectDao" class="org.apache.shiro.mgt.DefaultSubjectDAO">-->
+    <!--<property name="sessionStorageEvaluator" ref="defaultSessionStorageEvaluator"/>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;  shiro session存储状态的控制  &ndash;&gt;-->
+    <!--<bean id="defaultSessionStorageEvaluator"-->
+    <!--class="org.apache.shiro.mgt.DefaultSessionStorageEvaluator">-->
+    <!--<property name="sessionStorageEnabled" value="false"/>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;  spring aop 注解的创建者  &ndash;&gt;-->
+    <!--<bean id="defaultAdvisorAutoProxyCreator"-->
+    <!--class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">-->
+    <!--<property name="proxyTargetClass" value="true"/>-->
+    <!--&lt;!&ndash;/**&ndash;&gt;-->
+    <!--&lt;!&ndash;* 解决重复代理问题 github#994&ndash;&gt;-->
+    <!--&lt;!&ndash;* 添加前缀判断 不匹配 任何Advisor&ndash;&gt;-->
+    <!--&lt;!&ndash;*/&ndash;&gt;-->
+    <!--<property name="usePrefix" value="true"/>-->
+    <!--<property name="advisorBeanNamePrefix" value="_no_advisor"/>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;  shiro的生命周期  &ndash;&gt;-->
+    <!--<bean id="lifecycleBeanPostProcessor"-->
+    <!--class="org.apache.shiro.spring.LifecycleBeanPostProcessor">-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash; 用户的权限保存到redis中 &ndash;&gt;-->
+    <!--<bean id="redisCacheManager" class="org.crazycake.shiro.RedisCacheManager">-->
+    <!--<property name="redisManager" ref="redisManager"/>-->
+    <!--&lt;!&ndash;//redis中针对不同用户缓存(此处的id需要对应user实体中的id字段,用于唯一标识)&ndash;&gt;-->
+    <!--<property name="principalIdFieldName" value="id"/>-->
+    <!--&lt;!&ndash;        //用户权限信息缓存时间&ndash;&gt;-->
+    <!--<property name="expire" value="200000"/>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;  基于shiroCacheManager的RedisManager  &ndash;&gt;-->
+    <!--<bean id="redisManager" class="org.crazycake.shiro.RedisManager">-->
+    <!--<property name="host" value="127.0.0.1:6379"/>-->
+    <!--<property name="timeout" value="10000"/>-->
+    <!--</bean>-->
 
     <!-- 开发环境配置文件 -->
     <beans profile="development">

@@ -14,9 +14,17 @@ public class Md5Util {
 
     private static final int HASH_ITERATIONS = 5;
 
-    public static String encrypt(String username, String password) {
-        String source = StringUtils.lowerCase(username);
+    /**
+     * 对密码进行5次md5加密，盐为账号
+     *
+     * @param salt     账号
+     * @param password 密码
+     * @return
+     */
+    public static String encrypt(String salt, String password) {
+        String source = StringUtils.lowerCase(salt);
         password = StringUtils.lowerCase(password);
-        return new SimpleHash(ALGORITH_NAME, password, ByteSource.Util.bytes(source), HASH_ITERATIONS).toHex();
+        return new SimpleHash(ALGORITH_NAME, password,
+                ByteSource.Util.bytes(source), HASH_ITERATIONS).toHex();
     }
 }

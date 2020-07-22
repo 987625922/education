@@ -13,6 +13,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 import java.io.Serializable;
 import java.util.concurrent.Callable;
 
+/**
+ * spring-cache对redis的缓存实现
+ *
+ * @author LL
+ */
 @Slf4j
 public class RedisCache implements Cache {
 

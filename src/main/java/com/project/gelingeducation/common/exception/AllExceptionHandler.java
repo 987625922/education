@@ -2,6 +2,8 @@ package com.project.gelingeducation.common.exception;
 
 import com.project.gelingeducation.common.dto.JsonResult;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 全局异常处理控制器
+ *
  * @author LL
  */
 @Slf4j
@@ -37,10 +40,11 @@ public class AllExceptionHandler {
             return JsonResult.buildStatus(StatusEnum.MISS_PARAME_EXCEPTION);
         } else if (e instanceof RedisConnectionFailureException) {
             return JsonResult.buildStatus(StatusEnum.REDIS_CONNECTTION_FAILUER_EXCEPTION);
-        } else {
+        } else if (e instanceof AuthenticationException){
+            return JsonResult.buildStatus(StatusEnum.USER_NO_PERMISSION);
+        }else {
             return JsonResult.buildError(StatusEnum.UNKNOWD_ERROR.getMessage(),
                     StatusEnum.UNKNOWD_ERROR.getCode());
         }
     }
-
 }

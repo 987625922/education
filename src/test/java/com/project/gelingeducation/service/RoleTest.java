@@ -30,6 +30,25 @@ public class RoleTest {
     @Autowired
     private IPermissionService permissionService;
 
+    /**
+     * 添加最初的角色
+     */
+    @Test
+    public void addRoleDefault() {
+        List<Permission> permissionServiceList
+                = (List<Permission>) permissionService.queryAll(null, null);
+        Date date = new Date();
+        Role role = new Role();
+        role.setRemark("角色：超级管理员");
+        role.setName("admin");
+        role.setCreateDate(date);
+        role.setLastUpdateTime(date);
+        HashSet<Permission> permissionHashSet = new HashSet<>();
+        permissionServiceList.forEach(p -> permissionHashSet.add(p));
+        role.getPermissions().addAll(permissionHashSet);
+        roleService.addRole(role);
+    }
+
     @Test
     public void addRole() {
         Role role = new Role();
@@ -94,24 +113,5 @@ public class RoleTest {
         for (Permission permission : permissions) {
             log.debug("==>" + permission.getName());
         }
-    }
-
-
-    /**
-     * 添加最初的角色
-     */
-    @Test
-    public void addRoleDefault() {
-        List<Permission> permissionServiceList = (List<Permission>) permissionService.queryAll(null, null);
-        Date date = new Date();
-        Role role = new Role();
-        role.setRemark("角色：超级管理员");
-        role.setName("admin");
-        role.setCreateDate(date);
-        role.setLastUpdateTime(date);
-        HashSet<Permission> permissionHashSet = new HashSet<>();
-        permissionServiceList.forEach(p -> permissionHashSet.add(p));
-        role.getPermissions().addAll(permissionHashSet);
-        roleService.addRole(role);
     }
 }

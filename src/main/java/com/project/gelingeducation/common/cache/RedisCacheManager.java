@@ -5,6 +5,10 @@ import org.springframework.cache.support.AbstractCacheManager;
 
 import java.util.Collection;
 
+/**
+ * spring-cache对redis封装的缓存管理器
+ * @author LL
+ */
 public class RedisCacheManager extends AbstractCacheManager {
 
     private Collection<? extends RedisCache> caches;

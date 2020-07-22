@@ -80,13 +80,13 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         //更新登录log,可以开启一个格外的线程去处理
         ExecutorsUtils.getInstance().execute(() -> loginLogService.saveOrUpdateLoginLogByUid(reUser,request));
         //返回uid和jwtToken
-        String token = JwtUtil.sign(reUser.getAccount(), reUser.getPassword());
+//        String token = JwtUtil.sign(reUser.getAccount(), reUser.getPassword());
         HashMap userMap = new HashMap(2);
         userMap.put("id", reUser.getId());
-        userMap.put("token", token);
-        //设置redis token缓存和过期时间
-        templateUtil.set(GLConstant.TOKEN_CACHE_PREFIX + TokenUtil.encryptToken(token)
-                + "." + reUser.getAccount(), token, GLConstant.TOKEN_CACHE_TIME_SECONDS);
+        userMap.put("token", ShiroUtil.getSession().getId().toString());
+//        //设置redis token缓存和过期时间
+//        templateUtil.set(GLConstant.TOKEN_CACHE_PREFIX + TokenUtil.encryptToken(token)
+//                + "." + reUser.getAccount(), token, GLConstant.TOKEN_CACHE_TIME_SECONDS);
         return userMap;
     }
 

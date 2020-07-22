@@ -24,36 +24,6 @@ public class PermissionService {
     @Autowired
     private IPermissionService permissionService;
 
-    @Test
-    public void addPermission() {
-        Permission permission = new Permission();
-        permission.setName("测试的权限");
-        permission.setUrl("/");
-        permission.setPerms("user:root");
-        permissionService.add(permission);
-    }
-
-    @Test
-    public void getPermissionListByIds() {
-        Long[] ids = {29L, 30L, 31L};
-        List<Permission> list = permissionService.getPermissionListByIds(ids);
-        for (Permission permission : list) {
-            log.debug("==>" + permission.getName());
-        }
-    }
-
-    @Test
-    public void addPersmission() {
-        Permission permission = new Permission();
-        permission.setName("用户编辑");
-        permission.setPerms("user:root");
-        Role role = new Role();
-        role.setName("123");
-        role.setId(170L);
-        permission.getRoles().add(role);
-        permissionService.add(permission);
-    }
-
     /**
      * 添加最初的权限
      */
@@ -115,5 +85,35 @@ public class PermissionService {
         permission6.setCreateDate(date);
         permission6.setLastUpdateTime(date);
         permissionService.add(permission6);
+    }
+
+    @Test
+    public void addPermission() {
+        Permission permission = new Permission();
+        permission.setName("测试的权限");
+        permission.setUrl("/");
+        permission.setPerms("user:root");
+        permissionService.add(permission);
+    }
+
+    @Test
+    public void getPermissionListByIds() {
+        Long[] ids = {29L, 30L, 31L};
+        List<Permission> list = permissionService.getPermissionListByIds(ids);
+        for (Permission permission : list) {
+            log.debug("==>" + permission.getName());
+        }
+    }
+
+    @Test
+    public void addPersmission() {
+        Permission permission = new Permission();
+        permission.setName("用户编辑");
+        permission.setPerms("user:root");
+        Role role = new Role();
+        role.setName("123");
+        role.setId(170L);
+        permission.getRoles().add(role);
+        permissionService.add(permission);
     }
 }

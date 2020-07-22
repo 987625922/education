@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -81,7 +82,7 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(Role role) {
-//        role.setLastUpdateTime(new Date());
+        role.setLastUpdateTime(new Date());
         roleDao.update(role);
     }
 
@@ -156,7 +157,7 @@ public class RoleServiceImpl implements IRoleService {
     @Transactional(rollbackFor = Exception.class)
     public void updateRoleAndPermission(Role role, Long[] permissionIds) {
         Role findRole = roleDao.findById(role.getId());
-        BeanUtil.copyPropertiesIgnoreNull(role,findRole);
+        BeanUtil.copyPropertiesIgnoreNull(role, findRole);
         List<Permission> permissions =
                 permissionService.getPermissionListByIds(permissionIds);
         for (Permission permission : permissions) {
@@ -166,7 +167,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     /**
-     * 根据用户id获取角色
+     * 根据用户id获取用户的角色
      *
      * @param userId 用户id
      * @return 角色id

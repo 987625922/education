@@ -1,12 +1,11 @@
 package com.project.gelingeducation.common.authentication;
 
-import com.project.gelingeducation.common.config.GLConstant;
-import com.project.gelingeducation.common.utils.JwtUtil;
 import com.project.gelingeducation.common.utils.RedisTemplateUtil;
-import com.project.gelingeducation.common.utils.TokenUtil;
+import com.project.gelingeducation.common.utils.ShiroUtil;
 import com.project.gelingeducation.entity.Permission;
 import com.project.gelingeducation.entity.Role;
 import com.project.gelingeducation.entity.User;
+import com.project.gelingeducation.service.IRoleService;
 import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +18,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -27,9 +27,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 自定义实现 ShiroRealm，包含认证和授权两大模块
+ * 账号密码匹配和权限匹配
  */
-@Component(value = "shiroRealm")
 @Slf4j
 public class ShiroRealm extends AuthorizingRealm {
 
@@ -40,17 +39,22 @@ public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     @Lazy
     private IUserService userService;
+    @Autowired
+    @Lazy
+    private IRoleService roleService;
 
     @Autowired
     RedisTemplateUtil templateUtil;
 
-    @Override
-    public boolean supports(AuthenticationToken token) {
-        return token instanceof JwtToken;
-    }
+//    @Override
+//    public boolean supports(AuthenticationToken token) {
+//        return token instanceof JwtToken;
+//    }
 
     /**
-     * 进行权限校验的时候回调用
+     * 授权权限
+     * 用户进行权限验证时候shiro会去缓存中早，如果查不到，
+     * 就会执行这个方法去查权限，并放入缓存中
      *
      * @param principals
      * @return
@@ -61,8 +65,11 @@ public class ShiroRealm extends AuthorizingRealm {
 
         Set<String> stringRoleList = new HashSet<>();
         Set<String> stringPermissionList = new HashSet<>();
-        Role role = user.getRole();
-
+        Role role = roleService.getRoleByUserId(user.getId());
+        //查询角色和权限
+        if (role == null || role.getPermissions() == null) {
+            throw new AuthenticationException("角色为空");
+        }
         stringRoleList.add(role.getName());
         Set<Permission> permissionList = role.getPermissions();
         for (Permission p : permissionList) {
@@ -70,11 +77,10 @@ public class ShiroRealm extends AuthorizingRealm {
                 stringPermissionList.add(p.getPerms());
             }
         }
-
+        //将查询到的权限和角色分别传入AuthorizationInfo
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         simpleAuthorizationInfo.setRoles(stringRoleList);
         simpleAuthorizationInfo.setStringPermissions(stringPermissionList);
-
         return simpleAuthorizationInfo;
     }
 
@@ -89,36 +95,42 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
             throws AuthenticationException {
-
-        String token = (String) authenticationToken.getCredentials();
-
-        String account = JwtUtil.getUsername(token);
-
-        String encryptToken = TokenUtil.encryptToken(token);
-
-        String encryptTokenInRedis =
-                (String) templateUtil.get(GLConstant.TOKEN_CACHE_PREFIX + encryptToken + "." + account);
-
+        //获取用户输入的token
+        String account = (String) authenticationToken.getPrincipal();
+        //从token中获取账号
+//        String account = JwtUtil.getUsername(token);
+//        //加密token
+//        String encryptToken = TokenUtil.encryptToken(token);
+        //使用加密的token获取redis的缓存
+//        String encryptTokenInRedis =
+//                (String) templateUtil.get(GLConstant.TOKEN_CACHE_PREFIX + encryptToken + "." + account);
         // 如果找不到，说明已经失效
-        if (StringUtils.isBlank(encryptTokenInRedis)) {
-            throw new AuthenticationException("token已经过期");
-        }
-
-        if (StringUtils.isBlank(account)) {
-            throw new AuthenticationException("token校验不通过");
-        }
-
+//        if (StringUtils.isBlank(encryptTokenInRedis)) {
+//            throw new AuthenticationException("token已经过期");
+//        }
+//        //校验从token中获取的账号
+//        if (StringUtils.isBlank(account)) {
+//            throw new AuthenticationException("token校验不通过");
+//        }
         // 通过用户名查询用户信息
         User user = userService.findUserByAccount(account);
 
         if (user == null) {
             throw new AuthenticationException("用户名或密码错误");
         }
-        if (!JwtUtil.verify(token, account, user.getPassword())) {
-            throw new AuthenticationException("token校验不通过");
-        }
-
-        return new SimpleAuthenticationInfo(user, token, getName());
+//        if (!JwtUtil.verify(token, account, user.getPassword())) {
+//            throw new AuthenticationException("token校验不通过");
+//        }
+        //进行验证
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
+                user,
+                user.getPassword(),
+                ByteSource.Util.bytes(StringUtils.lowerCase(user.getAccount().toLowerCase())),
+                getName()
+        );
+        //登录成功之后，开始踢人（清除缓存和session）
+        ShiroUtil.deleteCache(account, true);
+        return authenticationInfo;
     }
 
     /**

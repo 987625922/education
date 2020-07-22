@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,6 +48,7 @@ public class LogServiceImpl implements ILogService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void save(Log log) {
+        log.setCreateTime(new Date());
         logDao.save(log);
     }
 

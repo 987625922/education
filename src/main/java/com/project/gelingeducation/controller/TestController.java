@@ -3,6 +3,7 @@ package com.project.gelingeducation.controller;
 import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.exception.AllException;
 import com.project.gelingeducation.service.IVideoService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,4 +43,12 @@ public class TestController {
         return "输入的数据为：" + userName;
     }
 
+
+    @RequiresPermissions("admin:add")
+    @Log("权限测试用")
+    @ResponseBody
+    @RequestMapping("/check")
+    public Object checkAuthorization() {
+        return "测试成功!!";
+    }
 }

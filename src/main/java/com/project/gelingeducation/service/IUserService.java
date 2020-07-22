@@ -93,7 +93,8 @@ public interface IUserService {
      * @param pageSize    页数
      * @return 返回分页实体类
      */
-    PageResult selbyname(String name, Integer currentPage, Integer pageSize) throws UnsupportedEncodingException;
+    PageResult selbyname(String name, Integer currentPage,
+                         Integer pageSize) throws UnsupportedEncodingException;
 
     /**
      * 查找用户
@@ -126,5 +127,4 @@ public interface IUserService {
      * @param roleId 角色id
      */
     void addRole(Long userId, Long roleId);
-
 }

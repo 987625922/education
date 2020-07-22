@@ -23,7 +23,7 @@ import java.io.PrintWriter;
  * @author ll
  * @Description: 鉴权登录拦截器
  **/
-@Component
+//@Component
 @Slf4j
 public class JwtFilter extends BasicHttpAuthenticationFilter {
 

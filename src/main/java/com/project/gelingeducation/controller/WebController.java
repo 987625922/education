@@ -4,11 +4,14 @@ import com.project.gelingeducation.common.annotation.Limit;
 import com.project.gelingeducation.common.annotation.Log;
 import com.project.gelingeducation.common.controller.BaseController;
 import com.project.gelingeducation.common.dto.JsonResult;
+import com.project.gelingeducation.common.exception.StatusEnum;
 import com.project.gelingeducation.common.server.ValidateCodeService;
 import com.project.gelingeducation.entity.User;
-import com.project.gelingeducation.service.ILoginLogService;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.IWebDataBeanService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -67,10 +70,15 @@ public class WebController extends BaseController {
                         @NotBlank(message = "password") String password,
                         @NotBlank(message = "verifyCode") String verifyCode,
                         @NotBlank(message = "key") String key
-                        , HttpServletRequest request) {
+            , HttpServletRequest request) {
         //验证验证码是否正确
-        validateCodeService.check(key, verifyCode);
-        return JsonResult.buildSuccess(webDataBeanService.login(account, password,request));
+//        validateCodeService.check(key, verifyCode);
+        //验证身份和登录
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(account, password);
+        //验证成功进行登录
+        subject.login(token);
+        return JsonResult.buildSuccess(webDataBeanService.login(account, password, request));
     }
 
     /**
@@ -94,5 +102,17 @@ public class WebController extends BaseController {
     @Limit(key = "get_captcha", period = 60, count = 10, name = "获取验证码", prefix = "limit")
     public Object captcha() {
         return JsonResult.buildSuccess(validateCodeService.create());
+    }
+
+    /**
+     * 未登录
+     *
+     * @Author Sans
+     * @CreateTime 2019/6/20 9:22
+     */
+    @RequestMapping("/web/unauth")
+    public Object unauth() {
+        return JsonResult.buildError(StatusEnum.NO_LOGIN.getMessage(),
+                StatusEnum.NO_LOGIN.getCode());
     }
 }

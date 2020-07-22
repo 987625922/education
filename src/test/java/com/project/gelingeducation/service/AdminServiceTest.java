@@ -30,14 +30,16 @@ public class AdminServiceTest {
 
     @Test
     public void insert() {
-        Role role = roleService.findByRole(10L);
         User user = new User();
         user.setAccount("123456");
         user.setPassword("123456");
-        user.setRole(role);
-        role.getUsers().add(user);
         userservice.addUser(user);
-        roleService.update(role);
+        userservice.addRole(user.getId(), 10L);
+
+//        User user = new User();
+//        user.setAccount("654321");
+//        user.setPassword("654321");
+//        userservice.addUser(user);
     }
 
     @Test
