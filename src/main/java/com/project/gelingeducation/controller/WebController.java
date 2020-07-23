@@ -6,12 +6,10 @@ import com.project.gelingeducation.common.controller.BaseController;
 import com.project.gelingeducation.common.dto.JsonResult;
 import com.project.gelingeducation.common.exception.StatusEnum;
 import com.project.gelingeducation.common.server.ValidateCodeService;
+import com.project.gelingeducation.common.utils.ShiroUtil;
 import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.service.IUserService;
 import com.project.gelingeducation.service.IWebDataBeanService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -109,5 +107,16 @@ public class WebController extends BaseController {
     public Object unauth() {
         return JsonResult.buildError(StatusEnum.NO_LOGIN.getMessage(),
                 StatusEnum.NO_LOGIN.getCode());
+    }
+
+    /**
+     * 登出
+     *
+     * @return
+     */
+    @RequestMapping("/web/logout")
+    public Object logout() {
+        ShiroUtil.logout();
+        return JsonResult.buildSuccess("登出成功！");
     }
 }

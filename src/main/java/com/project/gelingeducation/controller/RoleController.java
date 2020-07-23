@@ -77,6 +77,8 @@ public class RoleController {
     @RequestMapping(value = "/update")
     public Object update(@RequestBody Role role) {
         roleService.update(role);
+        //todo 更新身份需要清除缓存
+//        ShiroUtil.deleteCache(account,false);
         return JsonResult.buildSuccess();
     }
 
@@ -123,6 +125,7 @@ public class RoleController {
 
     /**
      * 通过用户获取身份
+     *
      * @param userId 用户id
      * @return
      */
