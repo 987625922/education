@@ -38,6 +38,12 @@
                 <entry key="/web/login" value="anon"/>
                 <entry key="/web/captcha" value="anon"/>
                 <entry key="/**" value="authc"/>
+                <entry key="/**" value="jwt"/>
+            </map>
+        </property>
+        <property name="filters">
+            <map>
+                <entry key="jwt" value-ref="jwtFilter"/>
             </map>
         </property>
         <property name="filters">
