@@ -43,11 +43,6 @@
         </property>
         <property name="filters">
             <map>
-                <entry key="jwt" value-ref="jwtFilter"/>
-            </map>
-        </property>
-        <property name="filters">
-            <map>
                 <entry key="authc" value-ref="crosShiroFilter"/>
             </map>
         </property>
