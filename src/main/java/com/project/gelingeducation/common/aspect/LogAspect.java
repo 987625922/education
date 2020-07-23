@@ -2,7 +2,7 @@ package com.project.gelingeducation.common.aspect;
 
 import com.project.gelingeducation.common.utils.HttpUtil;
 import com.project.gelingeducation.common.utils.ShiroUtil;
-import com.project.gelingeducation.common.utils.SpringContextUtil;
+import com.project.gelingeducation.common.utils.SpringUtil;
 import com.project.gelingeducation.common.utils.ThrowableUtil;
 import com.project.gelingeducation.entity.Log;
 import com.project.gelingeducation.service.ILogService;
@@ -64,7 +64,7 @@ public class LogAspect {
         //删除时间戳的保存
         currentTime.remove();
         //获取servlet
-        HttpServletRequest request = SpringContextUtil.getHttpServletRequest();
+        HttpServletRequest request = SpringUtil.getHttpServletRequest();
         //获取MethodSignature，包括反射需要的Method和Class
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         //获取Method
@@ -112,7 +112,7 @@ public class LogAspect {
         //删除时间戳
         currentTime.remove();
         //获取servlet
-        HttpServletRequest request = SpringContextUtil.getHttpServletRequest();
+        HttpServletRequest request = SpringUtil.getHttpServletRequest();
         //获取MethodSignature，包括反射需要的Method和Class
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         //获取Method

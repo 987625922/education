@@ -113,5 +113,4 @@ gelingeducation
 
 ##### 待办
         1. swagger的接入
-        2. 首页和各种服务器信息的接入
         

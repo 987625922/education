@@ -10,10 +10,7 @@ import com.project.gelingeducation.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -21,7 +18,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -45,11 +41,6 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
     RedisTemplateUtil templateUtil;
-
-//    @Override
-//    public boolean supports(AuthenticationToken token) {
-//        return token instanceof JwtToken;
-//    }
 
     /**
      * 授权权限
@@ -97,30 +88,14 @@ public class ShiroRealm extends AuthorizingRealm {
             throws AuthenticationException {
         //获取用户输入的token
         String account = (String) authenticationToken.getPrincipal();
-        //从token中获取账号
-//        String account = JwtUtil.getUsername(token);
-//        //加密token
-//        String encryptToken = TokenUtil.encryptToken(token);
-        //使用加密的token获取redis的缓存
-//        String encryptTokenInRedis =
-//                (String) templateUtil.get(GLConstant.TOKEN_CACHE_PREFIX + encryptToken + "." + account);
-        // 如果找不到，说明已经失效
-//        if (StringUtils.isBlank(encryptTokenInRedis)) {
-//            throw new AuthenticationException("token已经过期");
-//        }
-//        //校验从token中获取的账号
-//        if (StringUtils.isBlank(account)) {
-//            throw new AuthenticationException("token校验不通过");
-//        }
         // 通过用户名查询用户信息
         User user = userService.findUserByAccount(account);
 
         if (user == null) {
-            throw new AuthenticationException("用户名或密码错误");
+            throw new AuthenticationException("用户不存在");
+        } else if (user.getStatus() != 1) {
+            throw new LockedAccountException("账号被锁定");
         }
-//        if (!JwtUtil.verify(token, account, user.getPassword())) {
-//            throw new AuthenticationException("token校验不通过");
-//        }
         //进行验证
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 user,

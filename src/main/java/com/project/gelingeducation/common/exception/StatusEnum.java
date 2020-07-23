@@ -25,7 +25,8 @@ public enum StatusEnum {
     NO_LOGIN_INPUT_CODE(-3410, "请输入验证码"),
     LOGIN_INPUT_CODE_TIMEOUT(-3411, "验证码已过期"),
     INPUT_CODE_CODE_ERROR(-3412, "验证码不正确"),
-    GET_SHIRO_USER_ERROR(-3413, "获取shiro的user不成功");
+    GET_SHIRO_USER_ERROR(-3413, "获取shiro的user不成功"),
+    ACCOUNT_NON_EXIST(-3414,"用户不存在");
 
     /**
      * 状态码

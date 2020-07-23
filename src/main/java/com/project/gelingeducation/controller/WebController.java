@@ -72,12 +72,7 @@ public class WebController extends BaseController {
                         @NotBlank(message = "key") String key
             , HttpServletRequest request) {
         //验证验证码是否正确
-//        validateCodeService.check(key, verifyCode);
-        //验证身份和登录
-        Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(account, password);
-        //验证成功进行登录
-        subject.login(token);
+        validateCodeService.check(key, verifyCode);
         return JsonResult.buildSuccess(webDataBeanService.login(account, password, request));
     }
 

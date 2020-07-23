@@ -1,5 +1,6 @@
 package com.project.gelingeducation.common.authentication;
 
+import com.project.gelingeducation.common.config.GLConstant;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.util.StringUtils;
@@ -17,7 +18,6 @@ public class ShiroSessionManager extends DefaultWebSessionManager {
     /**
      * 定义常量
      */
-    private static final String AUTHORIZARION = "Authorization";
     private static final String REFERENCED_SESSION_ID_SOURCE = "Stateless request";
 
     /**
@@ -38,7 +38,7 @@ public class ShiroSessionManager extends DefaultWebSessionManager {
      */
     @Override
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
-        String token = WebUtils.toHttp(request).getHeader(AUTHORIZARION);
+        String token = WebUtils.toHttp(request).getHeader(GLConstant.TOKEN_SIGN);
         //如果请求头中存在token则从请求头中获取token
         if (!StringUtils.isEmpty(token)) {
             //这里逻辑是不允许使用默认的规则从cookie里面提取token，只能通过 Authorization 的handler来获取，

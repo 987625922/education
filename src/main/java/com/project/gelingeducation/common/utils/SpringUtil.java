@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Description:Spring上下文获取工具类
  */
 @Component
-public class SpringContextUtil implements ApplicationContextAware {
+public class SpringUtil implements ApplicationContextAware {
 
     /**
      * 上下文对象实例
@@ -23,7 +23,7 @@ public class SpringContextUtil implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        SpringContextUtil.applicationContext = applicationContext;
+        SpringUtil.applicationContext = applicationContext;
     }
 
     /**

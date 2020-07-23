@@ -11,4 +11,5 @@ http://www.springframework.org/schema/beans/spring-beans.xsd
 
     <!-- 配置定时任务的线程池 -->
     <task:scheduler id="myScheduler" pool-size="5"/>
+
 </beans>

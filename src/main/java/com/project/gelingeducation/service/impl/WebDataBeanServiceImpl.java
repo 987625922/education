@@ -8,6 +8,12 @@ import com.project.gelingeducation.common.utils.*;
 import com.project.gelingeducation.entity.LoginLog;
 import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.service.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,28 +71,32 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
      * @return
      */
     @Override
-    public Object login(String account, String password,HttpServletRequest request) {
-        //通过用户名获取用户
-        User reUser = userService.findUserByAccount(account);
-        if (reUser == null) {
-            throw new AllException(StatusEnum.NO_USER);
-        } else if (!reUser.getPassword().equals(Md5Util.encrypt(account.toLowerCase(), password))) {
-            throw new AllException(StatusEnum.ACCOUNT_PASSWORD_ERROR);
-        } else if (reUser.getStatus() == 0) {
-            throw new AllException(StatusEnum.BAN_USER);
-        }
+    public Object login(String account, String password, HttpServletRequest request) {
+//        try {
+            //验证身份和登录
+            Subject subject = SecurityUtils.getSubject();
+            UsernamePasswordToken token = new UsernamePasswordToken(account, password);
+            //验证成功进行登录
+            subject.login(token);
+//        } catch (IncorrectCredentialsException e) {
+//            //shiro抛异常，账号密码错误
+//            throw new AllException(StatusEnum.ACCOUNT_PASSWORD_ERROR);
+//        } catch (LockedAccountException e) {
+//            //用户被锁定
+//            throw new AllException(StatusEnum.BAN_USER);
+//        } catch (AuthenticationException e) {
+//            //realm抛异常，账号不存在
+//            throw new AllException(StatusEnum.ACCOUNT_NON_EXIST);
+//        }
+        //通过shiro获取账号
+        User user = ShiroUtil.getUser();
         //添加登录数量
-        addLoginMun(reUser);
+        addLoginMun(user);
         //更新登录log,可以开启一个格外的线程去处理
-        ExecutorsUtils.getInstance().execute(() -> loginLogService.saveOrUpdateLoginLogByUid(reUser,request));
-        //返回uid和jwtToken
-//        String token = JwtUtil.sign(reUser.getAccount(), reUser.getPassword());
+        ExecutorsUtils.getInstance().execute(() -> loginLogService.saveOrUpdateLoginLogByUid(user, request));
         HashMap userMap = new HashMap(2);
-        userMap.put("id", reUser.getId());
+        userMap.put("id", user.getId());
         userMap.put("token", ShiroUtil.getSession().getId().toString());
-//        //设置redis token缓存和过期时间
-//        templateUtil.set(GLConstant.TOKEN_CACHE_PREFIX + TokenUtil.encryptToken(token)
-//                + "." + reUser.getAccount(), token, GLConstant.TOKEN_CACHE_TIME_SECONDS);
         return userMap;
     }
 
@@ -115,7 +125,7 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
         todayLoginNum++;
 
         //获取request
-        HttpServletRequest servletRequest = SpringContextUtil.getHttpServletRequest();
+        HttpServletRequest servletRequest = SpringUtil.getHttpServletRequest();
         if (servletRequest != null) {
             //获取request的ip
             String ip = HttpUtil.getIp(servletRequest);
