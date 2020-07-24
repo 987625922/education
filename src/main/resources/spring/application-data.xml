@@ -16,7 +16,10 @@
       http://www.springframework.org/schema/cache/spring-cache.xsd"
 >
     <!--  扫描包下的自动装配  -->
-    <context:component-scan base-package="com.project.gelingeducation">
+    <context:component-scan
+            base-package="com.project.gelingeducation">
+        <context:exclude-filter expression="org.springframework.stereotype.Controller"
+                                type="annotation" />
     </context:component-scan>
 
     <!--  开启注解事务 -->
@@ -27,7 +30,7 @@
     </aop:aspectj-autoproxy>
 
     <!-- 开启@Cache注解 -->
-    <cache:annotation-driven/>
+    <!--<cache:annotation-driven/>-->
 
     <!--                         hibernate                                -->
     <bean id="transactionManager"
@@ -62,7 +65,9 @@
     <!-- hibernate注解工厂 -->
     <bean name="sessionFactory"
           class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <!-- 配置数据源 -->
         <property name="dataSource" ref="dataSource"></property>
+        <!-- hibernate的配置 -->
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
@@ -74,19 +79,8 @@
                 <prop key="hibernate.connection.autocommit">false</prop>
             </props>
         </property>
-        <property name="annotatedClasses">
-            <list>
-                <value>com.project.gelingeducation.entity.Course</value>
-                <value>com.project.gelingeducation.entity.LoginLog</value>
-                <value>com.project.gelingeducation.entity.Permission</value>
-                <value>com.project.gelingeducation.entity.Role</value>
-                <value>com.project.gelingeducation.entity.Subject</value>
-                <value>com.project.gelingeducation.entity.User</value>
-                <value>com.project.gelingeducation.entity.Video</value>
-                <value>com.project.gelingeducation.entity.Teacher</value>
-                <value>com.project.gelingeducation.entity.Log</value>
-            </list>
-        </property>
+        <!-- orm 扫描包下的类，创建到数据库中 -->
+        <property name="packagesToScan" value="com.project.gelingeducation.entity"/>
     </bean>
 
     <!--                        redis                                -->

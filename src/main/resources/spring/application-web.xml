@@ -17,6 +17,14 @@
     <!-- controller注解开启 -->
     <mvc:annotation-driven/>
 
+    <!-- 自动注入controller -->
+    <context:component-scan base-package="com.project.gelingeducation.controller">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 静态资源交给web容器处理 -->
+    <mvc:default-servlet-handler/>
+
     <!-- 解决跨域问题 -->
     <mvc:cors>
         <mvc:mapping path="/**"/>
@@ -38,7 +46,6 @@
                 <entry key="/web/login" value="anon"/>
                 <entry key="/web/captcha" value="anon"/>
                 <entry key="/**" value="authc"/>
-                <entry key="/**" value="jwt"/>
             </map>
         </property>
         <property name="filters">

@@ -3,6 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    <!-- 作用：该元素用来声明应用范围(整个WEB项目)内的上下文初始化参数。
+        param-name 设定上下文的参数名称。必须是唯一名称
+        param-value 设定的参数名称的值 -->
+    <!-- String paramValue=getServletContext().getInitParameter("contextConfigLocation") -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:spring/application-web.xml
+        </param-value>
+    </context-param>
 
     <servlet>
         <servlet-name>dispatcher</servlet-name>
@@ -20,7 +30,7 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-
+    <!-- shiro的过滤器 -->
     <filter>
         <filter-name>shiroFilterFactory</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -47,11 +57,31 @@
             <!-- 设置编码格式 -->
             <param-value>utf-8</param-value>
         </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>CharacterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <!-- 允许返回延迟加载的对象在controller加载使用 在前后端分离的时候会跨域有问题，待解决 -->
+    <!--<filter>-->
+    <!--<filter-name>hibernateFilter</filter-name>-->
+    <!--<filter-class>-->
+    <!--org.springframework.orm.hibernate5.support.OpenSessionInViewFilter-->
+    <!--</filter-class>-->
+    <!--<init-param>-->
+    <!--<param-name>sessionFactoryBeanName</param-name>-->
+    <!--<param-value>sessionFactory</param-value>-->
+    <!--</init-param>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+    <!--<filter-name>hibernateFilter</filter-name>-->
+    <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
 
     <!-- 添加日志监听器 -->
     <context-param>
