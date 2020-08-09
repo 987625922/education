@@ -3,7 +3,8 @@ package com.project.gelingeducation.common.exception;
 import com.project.gelingeducation.common.dto.JsonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -40,9 +41,15 @@ public class AllExceptionHandler {
             return JsonResult.buildStatus(StatusEnum.MISS_PARAME_EXCEPTION);
         } else if (e instanceof RedisConnectionFailureException) {
             return JsonResult.buildStatus(StatusEnum.REDIS_CONNECTTION_FAILUER_EXCEPTION);
-        } else if (e instanceof AuthenticationException){
-            return JsonResult.buildStatus(StatusEnum.USER_NO_PERMISSION);
-        }else {
+        } else if (e instanceof IncorrectCredentialsException) {
+            //shiro抛异常，账号密码错误
+            return JsonResult.buildStatus(StatusEnum.ACCOUNT_PASSWORD_ERROR);
+        } else if (e instanceof LockedAccountException) {
+            //用户被锁定
+            return JsonResult.buildStatus(StatusEnum.BAN_USER);
+        } else if (e instanceof AuthenticationException) {
+            return JsonResult.buildStatus(StatusEnum.ACCOUNT_NON_EXIST);
+        } else {
             return JsonResult.buildError(StatusEnum.UNKNOWD_ERROR.getMessage(),
                     StatusEnum.UNKNOWD_ERROR.getCode());
         }

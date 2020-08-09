@@ -71,7 +71,8 @@ public class WebController extends BaseController {
             , HttpServletRequest request) {
         //验证验证码是否正确
         validateCodeService.check(key, verifyCode);
-        return JsonResult.buildSuccess(webDataBeanService.login(account, password, request));
+        return JsonResult.buildSuccess(webDataBeanService.login(account,
+                password, request));
     }
 
     /**

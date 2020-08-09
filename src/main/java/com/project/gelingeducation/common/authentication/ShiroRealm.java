@@ -90,7 +90,6 @@ public class ShiroRealm extends AuthorizingRealm {
         String account = (String) authenticationToken.getPrincipal();
         // 通过用户名查询用户信息
         User user = userService.findUserByAccount(account);
-
         if (user == null) {
             throw new AuthenticationException("用户不存在");
         } else if (user.getStatus() != 1) {

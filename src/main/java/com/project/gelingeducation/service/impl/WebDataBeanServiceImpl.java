@@ -2,16 +2,11 @@ package com.project.gelingeducation.service.impl;
 
 import com.project.gelingeducation.common.config.GLConstant;
 import com.project.gelingeducation.common.dto.WebDataDto;
-import com.project.gelingeducation.common.exception.AllException;
-import com.project.gelingeducation.common.exception.StatusEnum;
 import com.project.gelingeducation.common.utils.*;
 import com.project.gelingeducation.entity.LoginLog;
 import com.project.gelingeducation.entity.User;
 import com.project.gelingeducation.service.*;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,22 +67,11 @@ public class WebDataBeanServiceImpl implements IWebDataBeanService {
      */
     @Override
     public Object login(String account, String password, HttpServletRequest request) {
-//        try {
-            //验证身份和登录
-            Subject subject = SecurityUtils.getSubject();
-            UsernamePasswordToken token = new UsernamePasswordToken(account, password);
-            //验证成功进行登录
-            subject.login(token);
-//        } catch (IncorrectCredentialsException e) {
-//            //shiro抛异常，账号密码错误
-//            throw new AllException(StatusEnum.ACCOUNT_PASSWORD_ERROR);
-//        } catch (LockedAccountException e) {
-//            //用户被锁定
-//            throw new AllException(StatusEnum.BAN_USER);
-//        } catch (AuthenticationException e) {
-//            //realm抛异常，账号不存在
-//            throw new AllException(StatusEnum.ACCOUNT_NON_EXIST);
-//        }
+        //验证身份和登录
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(account, password);
+        //验证成功进行登录
+        subject.login(token);
         //通过shiro获取账号
         User user = ShiroUtil.getUser();
         //添加登录数量
